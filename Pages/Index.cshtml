@@ -1,0 +1,230 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Gamex Olkusz - Remonty dróg i wynajem maszyn budowlanych";
+    ViewData["Description"] = "GAMEX z Olkusza oferuje profesjonalne remonty dróg oraz wynajem maszyn budowlanych w woj. Małopolskim. Skontaktuj się i sprawdź naszą ofertę!";
+    ViewData["Keywords"] = "GAMEX, Olkusz, remonty dróg, wynajem maszyn budowlanych, minikoparki, koparki, ładowarki, usługi budowlane, Małopolskie";
+}
+
+<section class="home-hero">
+    <img src="~/images/budowa-drogi.webp"
+         class="home-hero-bg"
+         alt="Budowa drogi asfaltowej w Olkuszu - firma Gamex"
+         fetchpriority="high" />
+
+    <div class="home-hero-overlay"></div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="home-hero-content">
+                    <h1 class="display-1">
+                        Budujemy drogi.
+                        <span>Budujemy przyszłość.</span>
+                    </h1>
+
+                    <p class="lead">
+                        GAMEX to ponad 30 lat doświadczenia w budowie i modernizacji
+                        infrastruktury drogowej w Małopolsce. Stawiamy na jakość, która przetrwa pokolenia.
+                    </p>
+
+                    <div class="home-hero-actions">
+                        <a asp-page="/Kontakt" class="btn-gamex btn-primary-gamex btn-lg">
+                            Skontaktuj się z nami
+                        </a>
+                        <a asp-page="/Realizacje" class="btn-gamex btn-secondary-gamex btn-lg">
+                            Zobacz realizacje
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="o-nas" class="home-section container">
+    <div class="row align-items-center g-5">
+        <div class="col-lg-6">
+            <h2>Doświadczenie w budownictwie drogowym od 1994 roku</h2>
+            <p>
+                Od 1994 roku realizujemy profesjonalne projekty drogowe i budowlane,
+                łącząc solidne rzemiosło z nowoczesnymi technologiami. Jako lider w regionie Olkusza,
+                każda inwestycja to dla nas odpowiedzialność i gwarancja najwyższej jakości.
+            </p>
+        </div>
+        <div class="col-lg-6">
+            <div class="home-image-wrapper">
+                <img src="~/images/koparki.webp"
+                     class="img-fluid rounded-4"
+                     alt="Park maszynowy Gamex Olkusz - nowoczesne koparki i ładowarki"
+                     loading="lazy"
+                     width="600" height="400">
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="home-values">
+    <div class="container">
+        <h2 class="text-center mb-5 text-white">Dlaczego warto wybrać Gamex?</h2>
+
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="value-card">
+                    <h3>Precyzja</h3>
+                    <p>Każdy detal ma znaczenie – od planowania po finalną warstwę asfaltu.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="value-card">
+                    <h3>Nowoczesny sprzęt</h3>
+                    <p>Własny park maszynowy pozwala nam na pełną niezależność i terminowość.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="value-card">
+                    <h3>Zaufanie</h3>
+                    <p>Budujemy trwałe relacje z gminami oraz inwestorami prywatnymi w całym regionie.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="home-section container">
+    <div class="row align-items-center g-5 flex-lg-row-reverse">
+        <div class="col-lg-6">
+            <h2>Kompleksowe usługi drogowe i brukarskie</h2>
+            <p>
+                Realizujemy budowy i remonty dróg, chodników, kanalizacji oraz
+                infrastruktury technicznej. Oferujemy nowoczesne rozwiązania drogowe
+                dla sektora publicznego i prywatnego na terenie województwa małopolskiego.
+            </p>
+        </div>
+        <div class="col-lg-6">
+            <div class="home-image-wrapper">
+                <img src="~/images/ukladanie-asfaltu.webp"
+                     class="img-fluid rounded-4"
+                     alt="Prace drogowe Gamex - układanie nawierzchni asfaltowej"
+                     loading="lazy"
+                     width="600" height="400">
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="home-cta">
+    <div class="container text-center">
+        <h2>Masz projekt drogowy do zrealizowania?</h2>
+        <p>Skontaktuj się z nami w celu uzyskania darmowej wyceny i konsultacji.</p>
+        <a asp-page="/Contact" class="btn btn-lg btn-gamex btn-primary-gamex">
+            Bezpłatna wycena
+        </a>
+    </div>
+</section>
+
+<section class="home-partners">
+    <div class="container">
+        <p class="partners-title h5">Pracujemy na sprzęcie renomowanych producentów</p>
+
+        <div class="partners-logos">
+            <img src="~/images/producenci/Bobcat.webp" alt="Logo Bobcat" loading="lazy" width="120" height="40" />
+            <img src="~/images/producenci/Caterpillar.webp" alt="Logo Caterpillar" loading="lazy" width="120" height="40" />
+            <img src="~/images/producenci/JCB.webp" alt="Logo JCB" loading="lazy" width="120" height="40" />
+            <img src="~/images/producenci/Komatsu.webp" alt="Logo Komatsu" loading="lazy" width="120" height="40" />
+            <img src="~/images/producenci/Manitou.webp" alt="Logo Manitou" loading="lazy" width="120" height="40" />
+        </div>
+    </div>
+</section>
+
+@section Schema {
+    <script type="application/ld+json">
+        {
+          "@@context": "https://schema.org",
+          "@@graph": [
+            {
+              "@@type": "LocalBusiness",
+              "@@id": "https://gamex-olkusz.pl/#localbusiness",
+              "name": "Gamex",
+              "image": "https://gamex-olkusz.pl/logo.png",
+              "url": "https://gamex-olkusz.pl",
+              "telephone": "+48 601 450 146",
+              "email": "gamexolkusz@poczta.fm",
+              "priceRange": "$$",
+              "address": {
+                "@@type": "PostalAddress",
+                "streetAddress": "Osiek 233",
+                "addressLocality": "Olkusz",
+                "postalCode": "32-300",
+                "addressCountry": "PL"
+              },
+              "geo": {
+                "@@type": "GeoCoordinates",
+                "latitude": 50.25996667365257,
+                "longitude": 19.603288130684327
+              },
+              "openingHoursSpecification": {
+                "@@type": "OpeningHoursSpecification",
+                "dayOfWeek": [
+                  "Monday",
+                  "Tuesday",
+                  "Wednesday",
+                  "Thursday",
+                  "Friday",
+                  "Saturday"
+                ],
+                "opens": "06:00",
+                "closes": "16:00"
+              },
+              "areaServed": {
+                "@@type": "City",
+                "name": "Olkusz"
+              },
+              "hasOfferCatalog": {
+                "@@type": "OfferCatalog",
+                "name": "Usługi Budowlane i Drogowe",
+                "itemListElement": [
+                  {
+                    "@@type": "Offer",
+                    "itemOffered": {
+                      "@@type": "Service",
+                      "name": "Remonty dróg i roboty drogowe"
+                    }
+                  },
+                  {
+                    "@@type": "Offer",
+                    "itemOffered": {
+                      "@@type": "Service",
+                      "name": "Wypożyczenie maszyn budowlanych (koparki, ładowarki)"
+                    }
+                  },
+                  {
+                    "@@type": "Offer",
+                    "itemOffered": {
+                      "@@type": "Service",
+                      "name": "Usługi brukarskie"
+                    }
+                  },
+                   {
+                    "@@type": "Offer",
+                    "itemOffered": {
+                      "@@type": "Service",
+                      "name": "Wykonanie kanalizacji"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "@@type": "WebSite",
+              "@@id": "https://gamex-olkusz.pl/#website",
+              "url": "https://gamex-olkusz.pl",
+              "name": "Gamex - Budowa dróg i wynajem maszyn Olkusz",
+              "publisher": {
+                "@@id": "https://gamex-olkusz.pl/#localbusiness"
+              }
+            }
+          ]
+        }
+    </script>
+}

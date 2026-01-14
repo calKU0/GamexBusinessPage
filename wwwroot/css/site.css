@@ -1,0 +1,906 @@
+html, body {
+    font-size: 14px;
+    background-color: #0B1020;
+    color: #E8EBF5;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+}
+
+.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
+    color: var(--bs-secondary-color);
+    text-align: end;
+}
+
+.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
+    text-align: start;
+}
+
+/* ===============================
+   GAMEX BUTTONS
+================================ */
+
+.btn-gamex {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.6rem;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    letter-spacing: 0.3px;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    white-space: nowrap;
+}
+
+/* PRIMARY – Contact */
+.btn-primary-gamex {
+    background: linear-gradient(135deg, #F58A1F, #FF9F43);
+    color: #0B1020;
+    box-shadow: 0 12px 30px rgba(245, 138, 31, 0.35);
+}
+
+    .btn-primary-gamex:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 18px 45px rgba(245, 138, 31, 0.55);
+        color: #0B1020;
+    }
+
+/* SECONDARY – Realizacje */
+.btn-secondary-gamex {
+    background: rgba(255, 255, 255, 0.08);
+    color: #E8EBF5;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(6px);
+}
+
+    .btn-secondary-gamex:hover {
+        background: rgba(0, 163, 224, 0.15);
+        border-color: #00A3E0;
+        color: #E8EBF5;
+        transform: translateY(-2px);
+    }
+
+/* Mobile stacking */
+@media (max-width: 576px) {
+    .home-hero-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .btn-gamex {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+/* ===============================
+   NAVBAR – DARK THEME
+================================ */
+
+.gamex-navbar {
+    /* Zmiana z relative na absolute */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    /* Pozosta³e Twoje style bez zmian */
+    background: rgba(11, 16, 32, 0.4); /* Zmniejszy³em opacity do 0.4, by lepiej by³o widaæ Hero */
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Delikatniejsza linia */
+    padding: 0.8rem 0;
+    z-index: 1050;
+}
+
+.navbar-logo {
+    height: 42px;
+    width: auto;
+}
+
+/* Nav links */
+.gamex-navbar .nav-link {
+    color: #E8EBF5;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+    padding: 0.5rem 0.75rem;
+    position: relative;
+    transition: color 0.25s ease;
+}
+
+    /* Hover underline animation */
+    .gamex-navbar .nav-link::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -4px;
+        width: 0;
+        height: 2px;
+        background: #00A3E0;
+        transition: width 0.25s ease;
+    }
+
+    /* Show underline on hover or focus */
+    .gamex-navbar .nav-link:hover::before,
+    .gamex-navbar .nav-link:focus::before,
+    .gamex-navbar .nav-item.dropdown.show > .nav-link::before {
+        width: 100%;
+    }
+
+    .gamex-navbar .nav-link:hover {
+        color: #00A3E0;
+    }
+
+        .gamex-navbar .nav-link:hover::after {
+            width: 100%;
+        }
+
+/* CTA button (Dotacje) */
+.gamex-navbar .nav-cta {
+    background: linear-gradient(135deg, #F58A1F, #FF9F43);
+    color: #0B1020 !important;
+    border-radius: 8px;
+    padding: 0.45rem 1.2rem;
+    font-weight: 600;
+    box-shadow: 0 6px 15px rgba(245, 138, 31, 0.3);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: none;
+    display: inline-block;
+}
+
+    .gamex-navbar .nav-cta::before{
+        display: none;
+    }
+
+    .gamex-navbar .nav-cta:hover {
+        transform: translateY(-3px) scale(1.03);
+        box-shadow: 0 12px 25px rgba(245, 138, 31, 0.45);
+        filter: brightness(1.05);
+        color: #0B1020 !important;
+    }
+
+    .gamex-navbar .nav-cta:active {
+        transform: translateY(-1px) scale(0.98);
+        box-shadow: 0 5px 10px rgba(245, 138, 31, 0.3);
+    }
+
+/* Mobile */
+.navbar-toggler {
+    border-color: #2A3160;
+}
+
+.navbar-toggler-icon {
+    filter: invert(1);
+}
+
+/* ===============================
+   DOTACJE – EU LOGO
+================================ */
+
+.nav-dotacje {
+    margin-left: 1rem;
+}
+
+.dotacje-link {
+    display: flex;
+    align-items: center;
+    padding: 0.25rem;
+    border-radius: 10px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dotacje-logo {
+    height: 38px;
+    width: auto;
+    filter: brightness(0.95);
+}
+
+/* Subtle premium hover */
+.dotacje-link:hover {
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 8px 24px rgba(0, 163, 224, 0.35);
+}
+
+/* Mobile scaling */
+@media (max-width: 991px) {
+    .dotacje-logo {
+        height: 32px;
+        margin-top: 0.5rem;
+    }
+}
+
+/* ===============================
+   DROPDOWN – OFERTA
+================================ */
+
+.gamex-dropdown {
+    background: rgba(15, 20, 45, 0.95);
+    border: 1px solid #2A3160;
+    border-radius: 14px;
+    padding: 0.4rem;
+    margin-top: 0.6rem;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+}
+
+    /* Dropdown items */
+    .gamex-dropdown .dropdown-item {
+        color: #E8EBF5;
+        font-weight: 500;
+        border-radius: 10px;
+        padding: 0.55rem 0.9rem;
+        transition: background 0.25s ease, color 0.25s ease;
+    }
+
+        /* Hover */
+        .gamex-dropdown .dropdown-item:hover {
+            background: linear-gradient( 135deg, rgba(0, 163, 224, 0.25), rgba(245, 138, 31, 0.2) );
+            color: #FFFFFF;
+        }
+
+/* Remove Bootstrap caret for dark navbar */
+.gamex-navbar .dropdown-toggle::after {
+    display: none; /* hide the default arrow */
+}
+
+/* Remove default caret background */
+.navbar .dropdown-toggle::after {
+    margin-left: 0.4rem;
+    vertical-align: middle;
+}
+
+.gamex-navbar .dropdown-hover-wrapper::after {
+    height: 0.6rem; /* ensures no gap */
+}
+
+@media (min-width: 992px) {
+    .nav-item.dropdown {
+        position: relative;
+    }
+
+    .gamex-dropdown {
+        display: block !important;
+        opacity: 0;
+        visibility: hidden;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        margin-top: 10px !important;
+        transition: all 0.2s ease-in-out;
+        transform: translateY(10px);
+        pointer-events: none;
+    }
+
+    .nav-item.dropdown:hover > .dropdown-hover-wrapper > .gamex-dropdown {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+        pointer-events: auto;
+    }
+
+    .gamex-dropdown::before {
+        content: "";
+        position: absolute;
+        top: -15px; 
+        left: 0;
+        right: 0;
+        height: 15px;
+        background: transparent;
+    }
+}
+
+/* ===============================
+   HOME PAGE
+================================ */
+
+.home-hero {
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    background: #0B1020;
+}
+
+/* Nowa klasa dla obrazka t³a */
+.home-hero-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Wype³nia ca³¹ przestrzeñ jak background-size: cover */
+    object-position: center;
+    z-index: 1;
+    /* Animacja przeniesiona z ::before */
+    animation: heroZoom 20s infinite alternate ease-in-out;
+    backface-visibility: hidden;
+    will-change: transform;
+}
+
+.home-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(75deg, rgba(11, 16, 32, 0.95) 0%, rgba(11, 16, 32, 0.6) 50%, transparent 100%);
+    z-index: 2; /* Nad obrazkiem */
+}
+
+.home-hero .container {
+    position: relative;
+    z-index: 3; /* Nad overlayem */
+}
+
+@keyframes heroZoom {
+    from {
+        transform: scale(1);
+    }
+
+    to {
+        transform: scale(1.1);
+    }
+}
+
+.home-hero-content {
+    position: relative;
+    padding: 2rem 0;
+}
+
+.home-hero h1 {
+    font-size: clamp(2.5rem, 5vw, 4rem); /* Elastyczna wielkoœæ czcionki */
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -1px;
+    margin-bottom: 1.5rem;
+}
+
+    .home-hero h1 span {
+        color: #00A3E0;
+        display: block; /* Przenosi "Budujemy przysz³oœæ" do nowej linii dla lepszego rytmu */
+    }
+
+.home-hero p {
+    max-width: 550px;
+    color: #B6BCD6;
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin-bottom: 2.5rem;
+}
+
+.home-hero-actions {
+    display: flex;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+}
+
+/* Sections */
+.home-section {
+    padding: 5rem 0;
+}
+
+    .home-section h2 {
+        color: #E8EBF5;
+        margin-bottom: 1rem;
+    }
+
+    .home-section p {
+        color: #B6BCD6;
+        line-height: 1.7;
+    }
+
+/* Values */
+.home-values {
+    background: #141A33;
+    padding: 4rem 0;
+}
+
+.value-card {
+    background: #0B1020;
+    border-radius: 16px;
+    padding: 2rem;
+    height: 100%;
+}
+
+    .value-card h3 {
+        color: #00A3E0;
+        margin-bottom: 0.5rem;
+    }
+
+/* CTA */
+.home-cta {
+    padding: 4rem 0;
+    background: radial-gradient( circle at top, rgba(245, 138, 31, 0.25), transparent 70% );
+}
+
+/* Partners */
+.home-partners {
+    padding: 3rem 0 4rem;
+}
+
+.partners-title {
+    text-align: center;
+    color: #B6BCD6;
+    margin-bottom: 2rem;
+}
+
+.partners-logos {
+    display: flex;
+    justify-content: center;
+    gap: 2.5rem;
+    flex-wrap: wrap;
+}
+
+    .partners-logos img {
+        max-height: 45px;
+        filter: grayscale(100%) brightness(0.9);
+        opacity: 0.8;
+    }
+
+/* ===============================
+   HOME IMAGES
+================================ */
+
+.home-image-wrapper {
+    max-width: 420px; /* KEY: limits size */
+    width: 100%;
+    position: relative;
+}
+
+    .home-image-wrapper img {
+        width: 100%;
+        border-radius: 16px;
+        display: block;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.04);
+    }
+
+    /* Subtle accent frame */
+    .home-image-wrapper::before {
+        content: "";
+        position: absolute;
+        inset: -12px;
+        border-radius: 22px;
+        background: linear-gradient( 135deg, rgba(0, 163, 224, 0.25), rgba(245, 138, 31, 0.15) );
+        z-index: -1;
+    }
+
+/* Mobile: keep it calm */
+@media (max-width: 991px) {
+    .home-image-wrapper {
+        max-width: 100%;
+    }
+
+        .home-image-wrapper::before {
+            inset: -8px;
+        }
+}
+
+/* ===============================
+   OFERTA PAGE – CARDS
+================================ */
+
+.oferta-hero {
+    padding: 6rem 0 4rem;
+    background: radial-gradient(circle at center, rgba(0, 163, 224, 0.1), transparent 70%);
+}
+
+    .oferta-hero h1 span {
+        color: #00A3E0;
+    }
+
+.oferta-card {
+    background: #141A33;
+    border: 1px solid #2A3160;
+    border-radius: 24px;
+    padding: 3rem 2rem;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+/* Ikony w kartach */
+.card-icon {
+    font-size: 3.5rem;
+    margin-bottom: 1.5rem;
+    filter: drop-shadow(0 10px 15px rgba(0,0,0,0.3));
+    transition: transform 0.3s ease;
+}
+
+.oferta-card h3 {
+    color: #FFFFFF;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.oferta-card p {
+    color: #B6BCD6;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+/* Hover efekty dla kart */
+.oferta-card:hover {
+    transform: translateY(-10px);
+    border-color: #00A3E0;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+    .oferta-card:hover .card-icon {
+        transform: scale(1.1) rotate(5deg);
+    }
+
+/* Specyficzne akcenty dla konkretnych kart */
+.card-machinery:hover {
+    box-shadow: 0 20px 50px rgba(245, 138, 31, 0.15);
+}
+
+.card-roads:hover {
+    box-shadow: 0 20px 50px rgba(0, 163, 224, 0.15);
+}
+
+/* Dekoracyjne t³o wewn¹trz karty (po najechaniu) */
+.oferta-card::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 50%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+}
+
+.oferta-card:hover::before {
+    opacity: 1;
+}
+
+/* Responsywnoœæ */
+@media (max-width: 768px) {
+    .oferta-hero {
+        padding: 4rem 0 2rem;
+    }
+
+    .oferta-card {
+        padding: 2.5rem 1.5rem;
+    }
+}
+
+/* ===============================
+   DOTACJE PAGE
+================================ */
+
+.dotacje-hero {
+    padding: 5rem 0 3rem;
+    background: radial-gradient( circle at top, rgba(0, 163, 224, 0.15), transparent 70% );
+}
+
+.dotacje-hero-logo {
+    max-height: 120px;
+    margin-bottom: 1.5rem;
+}
+
+.dotacje-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #E8EBF5;
+}
+
+.dotacje-subtitle {
+    color: #B6BCD6;
+    font-size: 1.1rem;
+}
+
+.dotacje-content {
+    padding-bottom: 4rem;
+}
+
+.dotacje-card {
+    background: #141A33;
+    border-radius: 16px;
+    padding: 3rem;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+}
+
+    .dotacje-card h2 {
+        margin-top: 2.5rem;
+        margin-bottom: 1rem;
+        font-size: 1.3rem;
+        color: #00A3E0;
+    }
+
+    .dotacje-card p,
+    .dotacje-card li {
+        color: #E8EBF5;
+        line-height: 1.7;
+    }
+
+.dotacje-list {
+    padding-left: 1.2rem;
+}
+
+    .dotacje-list li {
+        margin-bottom: 0.5rem;
+    }
+
+.dotacje-values {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid #2A3160;
+}
+
+    .dotacje-values span {
+        display: block;
+        color: #B6BCD6;
+        font-size: 0.9rem;
+    }
+
+    .dotacje-values strong {
+        font-size: 1.2rem;
+        color: #F58A1F;
+    }
+
+.dotacje-hashtags {
+    margin-top: 2rem;
+    color: #8A90B2;
+    font-size: 0.9rem;
+}
+
+/* ===============================
+   KONTAKT PAGE
+================================ */
+
+.kontakt-hero {
+    padding: 5rem 0 3rem;
+    background: radial-gradient( circle at top, rgba(0, 163, 224, 0.18), transparent 70% );
+}
+
+.kontakt-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #E8EBF5;
+}
+
+.kontakt-subtitle {
+    color: #B6BCD6;
+    font-size: 1.1rem;
+}
+
+.kontakt-content {
+    padding-bottom: 4rem;
+}
+
+.kontakt-card {
+    background: #141A33;
+    border-radius: 16px;
+    padding: 2.5rem;
+    height: 100%;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.35);
+}
+
+    .kontakt-card h3 {
+        margin-bottom: 1.5rem;
+        color: #00A3E0;
+    }
+
+.firma-name {
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.kontakt-list {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 1.5rem;
+}
+
+    .kontakt-list li {
+        margin-bottom: 0.6rem;
+    }
+
+    .kontakt-list a {
+        color: #E8EBF5;
+        text-decoration: none;
+    }
+
+        .kontakt-list a:hover {
+            color: #00A3E0;
+        }
+
+.kontakt-meta {
+    border-top: 1px solid #2A3160;
+    padding-top: 1rem;
+    color: #B6BCD6;
+}
+
+/* FORM */
+.kontakt-form .form-label {
+    color: #B6BCD6;
+}
+
+.kontakt-form .form-control {
+    background: #0B1020;
+    border: 1px solid #2A3160;
+    color: #E8EBF5;
+}
+
+    .kontakt-form .form-control:focus {
+        border-color: #00A3E0;
+        box-shadow: none;
+    }
+
+.kontakt-submit {
+    background: linear-gradient(135deg, #F58A1F, #FF9F43);
+    color: #0B1020;
+    font-weight: 600;
+    border-radius: 8px;
+    padding: 0.6rem 1.5rem;
+}
+
+/* MAP */
+.kontakt-map iframe {
+    width: 100%;
+    height: 420px;
+    border: 0;
+    filter: grayscale(20%) brightness(0.9);
+}
+
+
+/* ===============================
+   GAMEX FOOTER – DARK THEME
+================================ */
+
+.gamex-footer {
+    background: #0B1020;
+    border-top: 1px solid #2A3160;
+    padding: 5rem 0 2rem;
+    color: #B6BCD6;
+    position: relative;
+    overflow: hidden;
+}
+
+    /* Subtelny gradient w tle stopki dla g³êbi */
+    .gamex-footer::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 300px;
+        height: 300px;
+        background: radial-gradient(circle, rgba(0, 163, 224, 0.05) 0%, transparent 70%);
+        pointer-events: none;
+    }
+
+.footer-logo {
+    height: 45px;
+    width: auto;
+}
+
+.footer-description {
+    line-height: 1.8;
+    font-size: 0.95rem;
+}
+
+.footer-title {
+    color: #FFFFFF;
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+    /* Akcent pod tytu³em sekcji */
+    .footer-title::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -8px;
+        width: 30px;
+        height: 2px;
+        background: #00A3E0;
+    }
+
+/* Style linków */
+.footer-links {
+    list-style: none;
+    padding: 0;
+}
+
+    .footer-links li {
+        margin-bottom: 0.8rem;
+    }
+
+    .footer-links a {
+        color: #B6BCD6;
+        text-decoration: none;
+        transition: all 0.25s ease;
+        display: inline-block;
+    }
+
+        .footer-links a:hover {
+            color: #00A3E0;
+            transform: translateX(5px);
+        }
+
+/* Dane kontaktowe */
+.footer-contact {
+    list-style: none;
+    padding: 0;
+}
+
+    .footer-contact li {
+        display: flex;
+        gap: 12px;
+        margin-bottom: 1rem;
+        align-items: flex-start;
+    }
+
+.contact-icon {
+    font-size: 1.1rem;
+}
+
+.footer-contact a {
+    color: #E8EBF5;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+    .footer-contact a:hover {
+        color: #F58A1F;
+    }
+
+/* Dolna belka copyright */
+.footer-bottom {
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(42, 49, 96, 0.5);
+    font-size: 0.85rem;
+}
+
+.footer-author strong {
+    color: #00A3E0;
+}
+
+/* Responsywnoœæ dla stopki */
+@media (max-width: 768px) {
+    .gamex-footer {
+        padding: 3rem 0 1.5rem;
+        text-align: center;
+    }
+
+    .footer-title::after {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .footer-contact li {
+        justify-content: center;
+    }
+
+    .footer-links a:hover {
+        transform: translateY(-2px);
+    }
+}

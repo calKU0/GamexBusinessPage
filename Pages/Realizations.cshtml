@@ -1,0 +1,119 @@
+﻿@page "/realizacje"
+@model GamexBusinessPage.Pages.RealizacjeModel
+@{
+    ViewData["Title"] = "Realizacje Gamex Olkusz – Remonty dróg i wynajem maszyn budowlanych";
+    ViewData["Description"] = "Zobacz realizacje Gamex z Olkusza – wykonane remonty dróg i projekty z wykorzystaniem wynajmowanego sprzętu budowlanego w woj. Małopolskim.";
+    ViewData["Keywords"] = "Gamex, Olkusz, realizacje, remonty dróg, wynajem maszyn budowlanych, minikoparki, koparki, ładowarki, Małopolskie";
+}
+
+@section Schema {
+    <script type="application/ld+json">
+        {
+          "@@context": "https://schema.org",
+          "@@graph": [
+            {
+              "@@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@@type": "ListItem",
+                  "position": 1,
+                  "name": "Strona główna",
+                  "item": "https://gamex-olkusz.pl"
+                },
+                {
+                  "@@type": "ListItem",
+                  "position": 2,
+                  "name": "Realizacje",
+                  "item": "https://gamex-olkusz.pl/realizacje"
+                }
+              ]
+            },
+            {
+              "@@type": "CollectionPage",
+              "name": "Realizacje i projekty budowlane Gamex",
+              "description": "Galeria zrealizowanych inwestycji drogowych, prac brukarskich oraz wyburzeń na terenie Olkusza i okolic.",
+              "url": "https://gamex-olkusz.pl/realizacje",
+              "mainEntity": {
+                "@@type": "ItemList",
+                "itemListElement": [
+                  {
+                    "@@type": "ListItem",
+                    "position": 1,
+                    "url": "https://gamex-olkusz.pl/realizacje/remont-drogi-olkusz"
+                  },
+                  {
+                    "@@type": "ListItem",
+                    "position": 2,
+                    "url": "https://gamex-olkusz.pl/realizacje/parking-osiek"
+                  },
+                  {
+                    "@@type": "ListItem",
+                    "position": 3,
+                    "url": "https://gamex-olkusz.pl/realizacje/wyburzenie-hali"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+    </script>
+}
+
+@* @section Schema {
+    <script type="application/ld+json">
+        {
+          "@@context": "https://schema.org",
+          "@@graph": [
+            {
+              "@@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@@type": "ListItem",
+                  "position": 1,
+                  "name": "Strona główna",
+                  "item": "https://gamex-olkusz.pl"
+                },
+                {
+                  "@@type": "ListItem",
+                  "position": 2,
+                  "name": "Realizacje",
+                  "item": "https://gamex-olkusz.pl/realizacje"
+                },
+                {
+                  "@@type": "ListItem",
+                  "position": 3,
+                  "name": "Remont parkingu - Olkusz Centrum",
+                  "item": "https://gamex-olkusz.pl/realizacje/remont-parkingu-olkusz"
+                }
+              ]
+            },
+            {
+              "@@type": "Project",
+              "name": "Generalny remont nawierzchni parkingu",
+              "description": "Kompleksowa wymiana nawierzchni, korytowanie, podbudowa z kruszywa oraz ułożenie nowej kostki brukowej o powierzchni 500m2.",
+              "image": [
+                "https://gamex-olkusz.pl/images/realizacje/parking-1.jpg",
+                "https://gamex-olkusz.pl/images/realizacje/parking-2.jpg"
+              ],
+              "startDate": "2024-05-01",
+              "endDate": "2024-05-20",
+              "location": {
+                "@@type": "Place",
+                "name": "Centrum Handlowe Olkusz",
+                "address": {
+                  "@@type": "PostalAddress",
+                  "addressLocality": "Olkusz",
+                  "addressRegion": "Małopolskie"
+                }
+              },
+              "organizer": {
+                "@@type": "LocalBusiness",
+                "name": "Gamex",
+                "url": "https://gamex-olkusz.pl"
+              },
+              "status": "https://schema.org/Completed"
+            }
+          ]
+        }
+    </script>
+} *@

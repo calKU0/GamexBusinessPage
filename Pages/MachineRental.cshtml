@@ -1,0 +1,72 @@
+﻿@page "/oferta/wypozyczenie-maszyn"
+@model GamexBusinessPage.Pages.MachineRentalModel
+@{
+    ViewData["Title"] = "Wypożyczalnia maszyn budowlanych Gamex Olkusz";
+    ViewData["Description"] = "Gamex w Olkuszu oferuje wynajem maszyn budowlanych – koparki, minikoparki, ładowarki i inne sprzęty. Sprawdź naszą ofertę w woj. Małopolskim.";
+    ViewData["Keywords"] = "Gamex, Olkusz, wynajem maszyn budowlanych, wypożyczalnia koparek, minikoparki, ładowarki, sprzęt budowlany, Małopolskie";
+}
+
+@section Schema {
+    <script type="application/ld+json">
+        {
+          "@@context": "https://schema.org",
+          "@@graph": [
+            {
+              "@@type": "BreadcrumbList",
+              "itemListElement": [
+                { "@@type": "ListItem", "position": 1, "name": "Strona główna", "item": "https://gamex-olkusz.pl" },
+                { "@@type": "ListItem", "position": 2, "name": "Oferta", "item": "https://gamex-olkusz.pl/oferta" },
+                { "@@type": "ListItem", "position": 3, "name": "Wypożyczenie maszyn", "item": "https://gamex-olkusz.pl/oferta/wypozyczenie-maszyn" }
+              ]
+            },
+            {
+              "@@type": "Service",
+              "name": "Wynajem maszyn budowlanych z operatorem",
+              "description": "Oferujemy wynajem koparek, ładowarek i sprzętu drogowego na terenie Olkusza.",
+              "provider": { "@@type": "LocalBusiness", "name": "Gamex" },
+              "hasOfferCatalog": {
+                "@@type": "OfferCatalog",
+                "name": "Dostępny sprzęt",
+                "itemListElement": [
+                  { "@@type": "Offer", "itemOffered": { "@@type": "Service", "name": "Wynajem koparki gąsienicowej" } },
+                  { "@@type": "Offer", "itemOffered": { "@@type": "Service", "name": "Wynajem minikoparki" } }
+                ]
+              }
+            }
+          ]
+        }
+    </script>
+}
+
+@* @section Schema {
+    <script type="application/ld+json">
+        {
+          "@@context": "https://schema.org",
+          "@@graph": [
+            {
+              "@@type": "BreadcrumbList",
+              "itemListElement": [
+                { "@@type": "ListItem", "position": 1, "name": "Strona główna", "item": "https://gamex-olkusz.pl" },
+                { "@@type": "ListItem", "position": 2, "name": "Oferta", "item": "https://gamex-olkusz.pl/oferta" },
+                { "@@type": "ListItem", "position": 3, "name": "Wypożyczenie maszyn", "item": "https://gamex-olkusz.pl/oferta/wypozyczenie-maszyn" },
+                { "@@type": "ListItem", "position": 4, "name": "Koparka JCB 3CX", "item": "https://gamex-olkusz.pl/oferta/wypozyczenie-maszyn/koparka-jcb" }
+              ]
+            },
+            {
+              "@@type": "Product",
+              "name": "Wynajem Koparki JCB 3CX z operatorem",
+              "description": "Uniwersalna koparko-ładowarka JCB 3CX do prac ziemnych, wykopów i załadunku. Wynajem na godziny lub dni w Olkuszu i okolicach.",
+              "image": "https://gamex-olkusz.pl/images/maszyny/jcb-3cx.webp",
+              "brand": { "@@type": "Brand", "name": "JCB" },
+              "offers": {
+                "@@type": "Offer",
+                "availability": "https://schema.org/InStock",
+                "priceCurrency": "PLN",
+                "url": "https://gamex-olkusz.pl/oferta/wypozyczenie-maszyn/koparka-jcb",
+                "seller": { "@@type": "LocalBusiness", "name": "Gamex" }
+              }
+            }
+          ]
+        }
+    </script>
+} *@

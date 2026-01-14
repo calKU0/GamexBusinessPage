@@ -1,0 +1,89 @@
+﻿@page "/oferta"
+@model GamexBusinessPage.Pages.OfertaModel
+@{
+    ViewData["Title"] = "Oferta Gamex Olkusz – Maszyny budowlane i remonty dróg";
+    ViewData["Description"] = "Poznaj pełną ofertę Gamex w Olkuszu – wynajem maszyn budowlanych i profesjonalne usługi remontu dróg w woj. Małopolskim.";
+    ViewData["Keywords"] = "Gamex, Olkusz, oferta, wynajem maszyn budowlanych, remonty dróg, usługi budowlane, Małopolskie";
+}
+
+<div class="container py-5">
+    <div class="oferta-page">
+        <header class="oferta-hero text-center">
+            <div class="container">
+                <h1 class="display-4 fw-bold">Nasza <span>Oferta</span></h1>
+                <p class="lead mx-auto" style="max-width: 700px;">
+                    Dostarczamy kompleksowe rozwiązania dla budownictwa drogowego.
+                    Wybierz interesujący Cię obszar, aby dowiedzieć się więcej.
+                </p>
+            </div>
+        </header>
+
+        <section class="container pb-5">
+            <div class="row g-4 justify-content-center">
+
+                <div class="col-lg-5 col-md-6">
+                    <div class="oferta-card card-machinery">
+                        <div class="card-content">
+                            <div class="card-icon">🚜</div>
+                            <h3>Wypożyczenie maszyn</h3>
+                            <p>Profesjonalny sprzęt budowlany wraz z doświadczoną obsługą operatorską dla Twojej inwestycji.</p>
+                            <a asp-page="/Oferta/WypozyczenieMaszyn" class="btn-gamex btn-primary-gamex">
+                                Zobacz maszyny
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-5 col-md-6">
+                    <div class="oferta-card card-roads">
+                        <div class="card-content">
+                            <div class="card-icon">🛣️</div>
+                            <h3>Remonty dróg</h3>
+                            <p>Kompleksowa budowa i modernizacja nawierzchni bitumicznych, chodników oraz infrastruktury towarzyszącej.</p>
+                            <a asp-page="/Oferta/RemontyDrog" class="btn-gamex btn-secondary-gamex">
+                                Sprawdź szczegóły
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </div>
+</div>
+
+@section Schema {
+    <script type="application/ld+json">
+        {
+          "@@context": "https://schema.org",
+          "@@graph": [
+            {
+              "@@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@@type": "ListItem",
+                  "position": 1,
+                  "name": "Strona główna",
+                  "item": "https://gamex-olkusz.pl"
+                },
+                {
+                  "@@type": "ListItem",
+                  "position": 2,
+                  "name": "Oferta",
+                  "item": "https://gamex-olkusz.pl/oferta"
+                }
+              ]
+            },
+            {
+              "@@type": "Service",
+              "name": "Kompleksowe usługi budowlane i drogowe",
+              "provider": {
+                "@@type": "LocalBusiness",
+                "name": "Gamex",
+                "image": "https://gamex-olkusz.pl/logo.png"
+              }
+            }
+          ]
+        }
+    </script>
+}

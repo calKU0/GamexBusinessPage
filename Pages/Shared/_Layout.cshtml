@@ -1,0 +1,148 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="index, follow">
+    <meta name="keywords" content=@ViewData["Keywords"]>
+    <meta name="description" content=@ViewData["Description"]>
+    <title>@ViewData["Title"]</title>
+    <script type="importmap"></script>
+    <link rel="canonical" href="https://gamex-olkusz.pl">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/GamexBusinessPage.styles.css" asp-append-version="true" />
+    <link rel="preload" href="~/images/budowa-drogi.webp" as="image" fetchpriority="high">
+    @* @await RenderSectionAsync("Schema", required: false) *@
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg gamex-navbar">
+            <div class="container">
+                <!-- Logo -->
+                <a class="navbar-brand d-flex align-items-center" asp-area="" asp-page="/Index">
+                    <img src="~/images/logo.svg" alt="Gamex Logo" class="navbar-logo" />
+                </a>
+
+                <!-- Mobile toggle -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#gamexNavbar"
+                        aria-controls="gamexNavbar" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Links -->
+                <div class="collapse navbar-collapse" id="gamexNavbar">
+                    <ul class="navbar-nav ms-auto align-items-center gap-lg-3">
+
+                        <li class="nav-item">
+                            <a class="nav-link" asp-page="/Index" asp-fragment="o-nas">O nas</a>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <div class="dropdown-hover-wrapper">
+                                <a class="nav-link dropdown-toggle" asp-page="/Offer">Oferta</a>
+
+                                <ul class="dropdown-menu dropdown-menu-dark gamex-dropdown">
+                                    <li><a class="dropdown-item" asp-page="/RoadRenovation">Remonty dróg</a></li>
+                                    <li><a class="dropdown-item" asp-page="/MachineRental">Wypożyczenie maszyn</a></li>
+                                </ul>
+                            </div>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" asp-page="/Realizations">Realizacje</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link nav-cta" asp-page="/Contact">Kontakt</a>
+                        </li>
+
+                        <!-- Dotacje EU Image -->
+                        <li class="nav-item nav-dotacje">
+                            <a asp-page="/Dotation" class="dotacje-link" aria-label="Dotacje Unii Europejskiej">
+                                <img src="~/images/unia-europejska.webp" alt="Dotacje Unii Europejskiej" class="dotacje-logo" />
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main role="main">
+        @RenderBody()
+    </main>
+
+    <footer class="gamex-footer">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6">
+                    <div class="footer-info">
+                        <img src="~/images/logo.svg" alt="Gamex Logo" class="footer-logo mb-3" />
+                        <p class="footer-description">
+                            Od 1994 roku budujemy infrastrukturę, która łączy. Profesjonalizm, nowoczesny park maszynowy i trzydziestoletnie doświadczenie w branży drogowej.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-6">
+                    <h5 class="footer-title">Nawigacja</h5>
+                    <ul class="footer-links">
+                        <li><a asp-page="/Index">Strona główna</a></li>
+                        <li><a asp-page="/Index" asp-fragment="o-nas">O nas</a></li>
+                        <li><a asp-page="/Realization">Realizacje</a></li>
+                        <li><a asp-page="/Dotation">Dotacje EU</a></li>
+                        <li><a asp-page="/Contact">Kontakt</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="footer-title">Nasza Oferta</h5>
+                    <ul class="footer-links">
+                        <li><a asp-page="/RoadRenovation">Remonty dróg</a></li>
+                        <li><a asp-page="/MachineRental">Wynajem maszyn</a></li>
+                        <li><a asp-page="/Offer">Pełna oferta</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="footer-title">Biuro</h5>
+                    <ul class="footer-contact">
+                        <li>
+                            <span class="contact-icon">📍</span>
+                            <span>Osiek 233, 32-300 Osiek</span>
+                        </li>
+                        <li>
+                            <span class="contact-icon">📞</span>
+                            <a href="tel:+48123456789">+48 601 450 146</a>
+                        </li>
+                        <li>
+                            <span class="contact-icon">✉️</span>
+                            <a href="mailto:gamexolkusz@poczta.fm">gamexolkusz@poczta.fm</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <div class="row align-items-center">
+                    <div class="col-md-6 text-center text-md-start">
+                        <p class="mb-0">&copy; 2026 Gamex Olkusz. Wszelkie prawa zastrzeżone.</p>
+                    </div>
+                    <div class="col-md-6 text-center text-md-end">
+                        <p class="mb-0 pb-0 footer-author">Projekt i realizacja: <a href="https://portfolio.kkurowski.com" target="_blank" class="text-decoration-none"><strong>Krzysztof Kurowski</strong></a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
