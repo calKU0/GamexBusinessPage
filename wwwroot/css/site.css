@@ -165,7 +165,7 @@ body {
     display: inline-block;
 }
 
-    .gamex-navbar .nav-cta::before{
+    .gamex-navbar .nav-cta::before {
         display: none;
     }
 
@@ -297,7 +297,7 @@ body {
     .gamex-dropdown::before {
         content: "";
         position: absolute;
-        top: -15px; 
+        top: -15px;
         left: 0;
         right: 0;
         height: 15px;
@@ -319,16 +319,14 @@ body {
     background: #0B1020;
 }
 
-/* Nowa klasa dla obrazka t³a */
 .home-hero-bg {
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Wype³nia ca³¹ przestrzeñ jak background-size: cover */
+    object-fit: cover; /* Zastêpuje background-size: cover */
     object-position: center;
     z-index: 1;
-    /* Animacja przeniesiona z ::before */
     animation: heroZoom 20s infinite alternate ease-in-out;
     backface-visibility: hidden;
     will-change: transform;
@@ -443,13 +441,23 @@ body {
     justify-content: center;
     gap: 2.5rem;
     flex-wrap: wrap;
+    align-items: center;
 }
 
     .partners-logos img {
+        width: 120px;
+        height: auto;
         max-height: 45px;
+        object-fit: contain;
         filter: grayscale(100%) brightness(0.9);
         opacity: 0.8;
+        transition: all 0.3s ease;
     }
+
+        .partners-logos img:hover {
+            filter: grayscale(0%) brightness(1);
+            opacity: 1;
+        }
 
 /* ===============================
    HOME IMAGES
@@ -463,6 +471,7 @@ body {
 
     .home-image-wrapper img {
         width: 100%;
+        height: auto;
         border-radius: 16px;
         display: block;
         box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.04);
@@ -767,7 +776,6 @@ body {
     border: 0;
     filter: grayscale(20%) brightness(0.9);
 }
-
 
 /* ===============================
    GAMEX FOOTER – DARK THEME

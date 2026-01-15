@@ -1,18 +1,23 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="robots" content="index, follow">
-    <meta name="keywords" content=@ViewData["Keywords"]>
-    <meta name="description" content=@ViewData["Description"]>
+    <meta name="keywords" content="@ViewData["Keywords"]">
+    <meta name="description" content="@ViewData["Description"]">
     <title>@ViewData["Title"]</title>
-    <script type="importmap"></script>
+
     <link rel="canonical" href="https://gamex-olkusz.pl">
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/GamexBusinessPage.styles.css" asp-append-version="true" />
+
     <link rel="preload" href="~/images/budowa-drogi.webp" as="image" fetchpriority="high">
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" media="print" onload="this.media='all'">
+    <noscript>
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css">
+    </noscript>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    @* <link rel="stylesheet" href="~/GamexBusinessPage.styles.css" asp-append-version="true" /> *@
     @await RenderSectionAsync("Schema", required: false)
 </head>
 <body>
@@ -88,7 +93,7 @@
                 </div>
 
                 <div class="col-lg-2 col-md-6">
-                    <h5 class="footer-title">Nawigacja</h5>
+                    <h3 class="footer-title">Nawigacja</h3>
                     <ul class="footer-links">
                         <li><a asp-page="/Index">Strona główna</a></li>
                         <li><a asp-page="/Index" asp-fragment="o-nas">O nas</a></li>
@@ -99,7 +104,7 @@
                 </div>
 
                 <div class="col-lg-3 col-md-6">
-                    <h5 class="footer-title">Nasza Oferta</h5>
+                    <h3 class="footer-title">Nasza Oferta</h3>
                     <ul class="footer-links">
                         <li><a asp-page="/RoadRenovation">Remonty dróg</a></li>
                         <li><a asp-page="/MachineRental">Wynajem maszyn</a></li>
@@ -108,7 +113,7 @@
                 </div>
 
                 <div class="col-lg-3 col-md-6">
-                    <h5 class="footer-title">Biuro</h5>
+                    <h3 class="footer-title">Biuro</h3>
                     <ul class="footer-contact">
                         <li>
                             <span class="contact-icon">📍</span>
@@ -139,9 +144,9 @@
         </div>
     </footer>
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    @* <script src="~/lib/jquery/dist/jquery.min.js"></script> *@
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js" defer></script>
+    @* <script src="~/js/site.js" asp-append-version="true"></script> *@
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>
