@@ -1,0 +1,20 @@
+{
+  "roboty_ziemne": [
+    "Niwelacja terenu",
+    "Korytowanie",
+    "Wykopy pod fundamenty",
+    "Zbieranie humusu",
+    "Rekultywacja",
+    "Wykopy w¹skoprzestrzenne",
+    "Wykopy szerokoprzestrzenne",
+    "Nasypy"
+  ],
+  "roboty_drogowe": [
+    "Kompleksowe wykonywanie inwestycji drogowych",
+    "Wykonywanie kanalizacji",
+    "Uk³adanie kostki, krawê¿ników, obrze¿y, a¿urów",
+    "K³adzenie nawierzchni bitumicznych",
+    "Frezowanie nawierzchni bitumicznych",
+    "Wykonywanie oœwietlenia ulicznego"
+  ]
+}

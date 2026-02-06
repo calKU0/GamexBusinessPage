@@ -1,0 +1,353 @@
+{
+  "koparko_ladowarki": [
+    {
+      "model": "JCB 4CX",
+      "rok_produkcji": 2025,
+      "wyposazenie": [
+        "joystick",
+        "dualdrive",
+        "szybkoz³¹cze przód, ty³",
+        "³y¿ka skarpowa uchylna, ³y¿ka 30cm, 60 cm",
+        "³y¿ka przód 4w1",
+        "oœwietlenie led",
+        "fotel pneumatyczny",
+        "radio"
+      ]
+    },
+    {
+      "model": "JCB 3CX",
+      "rok_produkcji": 2018,
+      "wyposazenie": [
+        "joystick",
+        "³y¿ka skarpowa, ³y¿ka 30cm, 60 cm",
+        "szybkoz³¹cze ty³",
+        "³y¿ka przód 4w1"
+      ]
+    },
+    {
+      "model": "JCB 3CX",
+      "rok_produkcji": 2016,
+      "wyposazenie": [
+        "dŸwignie X",
+        "³y¿ka skarpowa, ³y¿ka 30cm, 60 cm",
+        "szybkoz³¹cze ty³",
+        "³y¿ka przód 4w1"
+      ],
+      "opcje_wynajmu": "Mo¿liwoœæ wynajmu z zamiatark¹ 2,75m i frezark¹ 40cm lub m³otem do kucia"
+    }
+  ],
+  "minikoparki": [
+    {
+      "model": "JCB 16-C1",
+      "rok_produkcji": 2018,
+      "waga": "1,7t",
+      "wyposazenie": [
+        "³y¿ka skarpowa uchylna",
+        "lemiesz rozk³adany",
+        "rozsuwane podwozie",
+        "g¹sienice gumowe",
+        "kogut"
+      ]
+    },
+    {
+      "model": "JCB 19-C1",
+      "rok_produkcji": 2025,
+      "waga": "1,9t",
+      "wyposazenie": [
+        "³y¿ka skarpowa uchylna",
+        "szybkoz³¹cze mechaniczne",
+        "lemiesz rozk³adany",
+        "rozsuwane podwozie",
+        "g¹sienice gumowe",
+        "kogut",
+        "radio"
+      ]
+    }
+  ],
+  "midikoparki": [
+    {
+      "model": "JCB 50-Z2",
+      "rok_produkcji": 2025,
+      "waga": "5t",
+      "wyposazenie": [
+        "³y¿ka skarpowa uchylna, ³y¿ka 60cm, 30cm",
+        "szybkoz³¹cze mechaniczne",
+        "3 linie hydrauliczne",
+        "lemiesz",
+        "g¹sienice gumowe",
+        "kogut",
+        "radio"
+      ]
+    }
+  ],
+  "koparki": [
+    {
+      "model": "Atlas 160 Wsr",
+      "rok_produkcji": 2016,
+      "waga": "17t",
+      "wyposazenie": [
+        "³y¿ka skarpowa uchylna, ³y¿ka kopi¹ca 90cm (zêby lub lemiesz)",
+        "szybkoz³¹cze atlas",
+        "radio",
+        "klimatyzacja",
+        "fotel pneumatyczny",
+        "lemiesz",
+        "kogut",
+        "oœwietlenie led"
+      ]
+    },
+    {
+      "model": "Atlas 175 Wsr",
+      "rok_produkcji": 2025,
+      "waga": "18t",
+      "wyposazenie": [
+        "d³ugi wysiêgnik 2x ³amany",
+        "g³owica uchylno-obrotowa",
+        "³y¿ki: skarpowa 2m, skandynawska, kopi¹ca 80cm, trapezowa",
+        "osprzêt: wid³y, nó¿ do asfaltu, zrywak",
+        "2x szybkoz³¹cze hydrauliczne",
+        "radio",
+        "klimatyzacja",
+        "fotel pneumatyczny",
+        "lemiesz",
+        "podpory",
+        "kogut",
+        "oœwietlenie led"
+      ]
+    },
+    {
+      "model": "Volvo ECR 235",
+      "rok_produkcji": 2015,
+      "waga": "27t",
+      "wyposazenie": [
+        "krótki ty³",
+        "banan",
+        "g³owica uchylno-obrotowa",
+        "³y¿ka skandynawska, ³y¿ka 90cm, wid³y",
+        "lemiesz",
+        "fotel pneumatyczny",
+        "oœwietlenie led 360*",
+        "radio",
+        "klimatyzacja",
+        "kogut"
+      ]
+    },
+    {
+      "model": "Volvo EC300EL",
+      "rok_produkcji": 2017,
+      "waga": "35t",
+      "wyposazenie": [
+        "szybkoz³¹cze hydrauliczne",
+        "³y¿ka kopi¹ca z lemieszem 1,4m",
+        "radio",
+        "oœwietlenie led 360",
+        "klimatyzacja",
+        "fotel pneumatyczny",
+        "kogut"
+      ]
+    }
+  ],
+  "mini_ladowarki": [
+    {
+      "model": "Bobcat S76",
+      "rok_produkcji": 2025,
+      "waga": "3,7t",
+      "wyposazenie": [
+        "szybkoz³¹cze mechaniczne",
+        "³y¿ka ³aduj¹ca z zêbami",
+        "wid³y",
+        "kamera cofania",
+        "zamiatarka",
+        "radio",
+        "klimatyzacja",
+        "kogut"
+      ]
+    }
+  ],
+  "ladowarki_teleskopowe": [
+    {
+      "model": "Manitou MRT 2260",
+      "waga": "18t",
+      "parametry": {
+        "maksymalny_udzwig": "6t",
+        "maksymalna_wysokosc_podnoszenia": "21m",
+        "maksymalny_wysieg": "18m"
+      },
+      "wyposazenie": [
+        "wid³y",
+        "kosz",
+        "wci¹garka",
+        "klimatyzacja",
+        "fotel pneumatyczny",
+        "kogut"
+      ]
+    }
+  ],
+  "przesiewacze": [
+    {
+      "model": "Tesab TS1340",
+      "rok_produkcji": 2025,
+      "waga": "23t",
+      "parametry": {
+        "typ": "dwupok³adowy",
+        "kosz_zasypowy": "6 m3",
+        "wydajnosc": "do 420 t/godz.",
+        "sito": "3.6 m x 1.3 m"
+      }
+    }
+  ],
+  "walce": [
+    {
+      "model": "Hamm 13i",
+      "rok_produkcji": 2013,
+      "waga": "4t",
+      "wyposazenie": [
+        "bêbny stalowe",
+        "zraszanie wod¹",
+        "zagniatacz krawêdzi",
+        "kogut",
+        "oœwietlenie"
+      ]
+    },
+    {
+      "model": "Hamm DV+ 70i",
+      "rok_produkcji": 2015,
+      "waga": "7t",
+      "wyposazenie": [
+        "bêbny stalowe dzielone",
+        "zraszanie wod¹",
+        "wibracja + oscylacja",
+        "zagniatacz krawêdzi",
+        "klimatyzacja",
+        "oœwietlenie led 360",
+        "radio",
+        "kogut"
+      ]
+    },
+    {
+      "model": "Bomag BW 154 ACP-5 AM",
+      "rok_produkcji": 2025,
+      "waga": "8,5t",
+      "wyposazenie": [
+        "bêben stalowy przód (wibracja/oscylacja)",
+        "bêben gumowy ty³",
+        "zraszanie wod¹",
+        "zagniatacz krawêdzi",
+        "nó¿ do krawêdzi",
+        "oœwietlenie led 360",
+        "kamery 360",
+        "klimatyzacja",
+        "kogut"
+      ]
+    }
+  ],
+  "rozkladarki_asfaltu": [
+    {
+      "model": "Vogele S800i",
+      "rok_produkcji": 2024,
+      "waga": "6,5t",
+      "parametry": {
+        "szerokosc_ukladania": "1,2m-2,2m (3,5m z poszerzeniami)",
+        "niwelacja": "Vogele",
+        "grzanie_stolu": "elektryczne"
+      },
+      "wyposazenie": [ "oœwietlenie robocze", "kogut" ]
+    },
+    {
+      "model": "Vogele 1800-3i",
+      "rok_produkcji": 2024,
+      "waga": "22t",
+      "parametry": {
+        "szerokosc_ukladania": "2,55m-5m (7m z poszerzeniami)",
+        "niwelacja": "Vogele",
+        "grzanie_stolu": "elektryczne"
+      },
+      "wyposazenie": [ "urz¹dzenie zraszania maszyny", "oœwietlenie robocze", "kogut" ]
+    },
+    {
+      "model": "Volvo ABG7280B",
+      "rok_produkcji": 2011,
+      "waga": "20,5t",
+      "parametry": {
+        "szerokosc_ukladania": "2,55m-5m (6,5m z poszerzeniami)",
+        "niwelacja": "moba",
+        "grzanie_stolu": "brak (tylko do kruszywa, betonu)"
+      },
+      "wyposazenie": [ "oœwietlenie robocze", "kogut" ]
+    }
+  ],
+  "frezarki": [
+    {
+      "model": "Wirtgen W150-Fi",
+      "rok_produkcji": 2024,
+      "waga": "24,5t",
+      "parametry": {
+        "szerokosc_robocza": "1,5m",
+        "maksymalna_glebokosc_robocza": "30cm"
+      },
+      "wyposazenie": [ "oœwietlenie robocze led", "kogut" ],
+      "uwagi": "Wynajem tylko z operatorem"
+    }
+  ],
+  "wozidla": [
+    {
+      "model": "Mecalac Revotruck",
+      "rok_produkcji": 2025,
+      "waga": "6,5t",
+      "parametry": {
+        "ladownosc": "9t"
+      },
+      "wyposazenie": [
+        "obrotowa kabina",
+        "obrotowy kiper",
+        "4 ko³a skrêtne",
+        "oœwietlenie robocze",
+        "kogut"
+      ]
+    }
+  ],
+  "zasilacze_pneumatyczne": [
+    {
+      "marka": "Atlas Copco",
+      "rok_produkcji": 2025,
+      "waga": "749kg",
+      "parametry": {
+        "cisnienie_robocze": "7 bar"
+      },
+      "wyposazenie": [ "regulowana wysokoœæ zaczepu", "m³ot do kucia" ]
+    }
+  ],
+  "zageszczarki": [
+    {
+      "model": "Bomag BPR 60/65 D",
+      "rok_produkcji": 2025,
+      "waga": "460kg",
+      "wyposazenie": [ "ekonomizer", "biegi przód-ty³", "odpalanie rozrusznikiem" ]
+    },
+    {
+      "marka": "Atlas Copco",
+      "wyposazenie": [ "biegi przód-ty³", "odpalanie rozrusznikiem" ]
+    }
+  ],
+  "ciagniki": [
+    {
+      "typ": "Traktor + przyczepa",
+      "rok_produkcji": 2006,
+      "parametry": {
+        "naped": "4x4",
+        "predkosc": "40 km/h",
+        "skrzynia": "Dynashift 4 + 4 pó³biegi",
+        "ladownosc_przyczepy": "20t"
+      },
+      "wyposazenie": [
+        "3 linie hydrauliczne",
+        "wyjœcie pneumatyczne",
+        "przyczepa 2 osiowa",
+        "amortyzacja przedniego mostu",
+        "radio",
+        "fotel pneumatyczny",
+        "kogut"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "materialy_sypkie": [
+    {
+      "pojazd": "Samochody 4-osiowe",
+      "limit_wagowy": "do 17 ton"
+    },
+    {
+      "pojazd": "Ci¹gniki siod³owe",
+      "limit_wagowy": "do 26 ton"
+    }
+  ],
+  "transport_niskopodwoziowy_laweta": [
+    {
+      "pojazd": "Naczepa niskopodwoziowa",
+      "limit_wagowy": "do 25 ton"
+    },
+    {
+      "pojazd": "Laweta 3-osiowa",
+      "limit_wagowy": "do 13 ton"
+    }
+  ],
+  "transport_hds": [
+    {
+      "pojazd": "Samochody 2-osiowe"
+    }
+  ]
+}
