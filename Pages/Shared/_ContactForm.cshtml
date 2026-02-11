@@ -3,28 +3,28 @@
 <form method="post" class="kontakt-form">
     <div class="row g-3">
         <div class="col-md-6">
-            <label class="form-label">Imię i nazwisko</label>
-            <input type="text" class="form-control" name="name" required />
+            <label for="contact-name" class="form-label">Imię i nazwisko</label>
+            <input type="text" id="contact-name" class="form-control" name="name" required />
         </div>
 
         <div class="col-md-6">
-            <label class="form-label">Adres e-mail</label>
-            <input type="email" class="form-control" name="email" required />
+            <label for="contact-email" class="form-label">Adres e-mail</label>
+            <input type="email" id="contact-email" class="form-control" name="email" required />
         </div>
 
         <div class="col-md-6">
-            <label class="form-label">Telefon</label>
-            <input type="tel" class="form-control" name="phone" />
+            <label for="contact-phone" class="form-label">Telefon</label>
+            <input type="tel" id="contact-phone" class="form-control" name="phone" />
         </div>
 
         <div class="col-md-6">
-            <label class="form-label">Temat</label>
-            <input type="text" class="form-control" name="subject" />
+            <label for="contact-subject" class="form-label">Temat</label>
+            <input type="text" id="contact-subject" class="form-control" name="subject" />
         </div>
 
         <div class="col-12">
-            <label class="form-label">Maszyna@(Model.IsMachineLocked ? "" : " (opcjonalnie)")</label>
-            <select class="form-select" name="machine" @(Model.IsMachineLocked ? "disabled" : "")>
+            <label for="contact-machine" class="form-label">Maszyna@(Model.IsMachineLocked ? "" : " (opcjonalnie)")</label>
+            <select id="contact-machine" class="form-select" name="machine" @(Model.IsMachineLocked ? "disabled" : "")>
                 <option value="">Wybierz maszynę</option>
                 @foreach (var machine in Model.Machines)
                 {
@@ -40,8 +40,8 @@
         </div>
 
         <div class="col-12">
-            <label class="form-label">Wiadomość</label>
-            <textarea rows="5" class="form-control" name="message" required></textarea>
+            <label for="contact-message" class="form-label">Wiadomość</label>
+            <textarea id="contact-message" rows="5" class="form-control" name="message" required></textarea>
         </div>
 
         <div class="col-12 text-end">
