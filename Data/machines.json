@@ -6,14 +6,14 @@
       "image": "",
       "production_year": 2025,
       "equipment": [
-        "joystick",
-        "dualdrive",
-        "szybkozłącze przód, tył",
-        "łyżka skarpowa uchylna, łyżka 30cm, 60 cm",
-        "łyżka przed 4w1",
-        "oświetlenie led",
-        "fotel pneumatyczny",
-        "radio"
+        "Joystick",
+        "Dualdrive",
+        "Szybkozłącze przód, tył",
+        "Łyżka skarpowa uchylna, łyżka 30cm, 60 cm",
+        "Łyżka przed 4w1",
+        "Oświetlenie led",
+        "Fotel pneumatyczny",
+        "Radio"
       ]
     },
     {
@@ -22,10 +22,10 @@
       "image": null,
       "production_year": 2018,
       "equipment": [
-        "joystick",
-        "łyżka skarpowa, łyżka 30cm, 60 cm",
-        "szybkozłącze tył",
-        "łyżka przód 4w1"
+        "Joystick",
+        "Łyżka skarpowa, łyżka 30cm, 60 cm",
+        "Szybkozłącze tył",
+        "Łyżka przód 4w1"
       ]
     },
     {
@@ -34,10 +34,10 @@
       "image": null,
       "production_year": 2016,
       "equipment": [
-        "dźwignie X",
-        "łyżka skarpowa, łyżka 30cm, 60 cm",
-        "szybkozłącze tył",
-        "łyżka przód 4w1"
+        "Dźwignie X",
+        "Łyżka skarpowa, łyżka 30cm, 60 cm",
+        "Szybkozłącze tył",
+        "Łyżka przód 4w1"
       ],
       "rental_options": "Możliwość wynajmu z zamiatarką 2,75m i frezarką 40cm lub młotem do kucia"
     }
@@ -50,11 +50,11 @@
       "production_year": 2018,
       "weight": "1,7t",
       "equipment": [
-        "łyżka skarpowa uchylna",
-        "lemiesz rozkładany",
-        "rozsuwane podwozie",
-        "gąsienice gumowe",
-        "kogut"
+        "Łyżka skarpowa uchylna",
+        "Lemiesz rozkładany",
+        "Rozsuwane podwozie",
+        "Gąsienice gumowe",
+        "Kogut"
       ]
     },
     {
@@ -64,13 +64,13 @@
       "production_year": 2025,
       "weight": "1,9t",
       "equipment": [
-        "łyżka skarpowa uchylna",
-        "szybkozłącze mechaniczne",
-        "lemiesz rozkładany",
-        "rozsuwane podwozie",
-        "gąsienice gumowe",
-        "kogut",
-        "radio"
+        "Łyżka skarpowa uchylna",
+        "Szybkozłącze mechaniczne",
+        "Lemiesz rozkładany",
+        "Rozsuwane podwozie",
+        "Gąsienice gumowe",
+        "Kogut",
+        "Radio"
       ]
     }
   ],
@@ -82,13 +82,13 @@
       "production_year": 2025,
       "weight": "5t",
       "equipment": [
-        "łyżka skarpowa uchylna, łyżka 60cm, 30cm",
-        "szybkozłącze mechaniczne",
+        "Łyżka skarpowa uchylna, łyżka 60cm, 30cm",
+        "Szybkozłącze mechaniczne",
         "3 linie hydrauliczne",
-        "lemiesz",
-        "gąsienice gumowe",
-        "kogut",
-        "radio"
+        "Lemiesz",
+        "Gąsienice gumowe",
+        "Kogut",
+        "Radio"
       ]
     }
   ],
@@ -100,14 +100,14 @@
       "production_year": 2016,
       "weight": "17t",
       "equipment": [
-        "łyżka skarpowa uchylna, łyżka kopiąca 90cm (zęby lub lemiesz)",
-        "szybkozłącze atlas",
-        "radio",
-        "klimatyzacja",
-        "fotel pneumatyczny",
-        "lemiesz",
-        "kogut",
-        "oświetlenie led"
+        "Łyżka skarpowa uchylna, łyżka kopiąca 90cm (zęby lub lemiesz)",
+        "Szybkozłącze atlas",
+        "Radio",
+        "Klimatyzacja",
+        "Fotel pneumatyczny",
+        "Lemiesz",
+        "Kogut",
+        "Oświetlenie led"
       ]
     },
     {
@@ -117,18 +117,18 @@
       "production_year": 2025,
       "weight": "18t",
       "equipment": [
-        "długi wysięgnik 2x łamany",
-        "głowica uchylno-obrotowa",
-        "łyżki: skarpowa 2m, skandynawska, kopiąca 80cm, trapezowa",
-        "osprzęt: widły, nóż do asfaltu, zrywak",
+        "Długi wysięgnik 2x łamany",
+        "Głowica uchylno-obrotowa",
+        "Łyżki: skarpowa 2m, skandynawska, kopiąca 80cm, trapezowa",
+        "Osprzęt: widły, nóż do asfaltu, zrywak",
         "2x szybkozłącze hydrauliczne",
-        "radio",
-        "klimatyzacja",
-        "fotel pneumatyczny",
-        "lemiesz",
-        "podpory",
-        "kogut",
-        "oświetlenie led"
+        "Radio",
+        "Klimatyzacja",
+        "Fotel pneumatyczny",
+        "Lemiesz",
+        "Podpory",
+        "Kogut",
+        "Oświetlenie led"
       ]
     },
     {
@@ -138,16 +138,16 @@
       "production_year": 2015,
       "weight": "27t",
       "equipment": [
-        "krótki tył",
-        "banan",
-        "głowica uchylno-obrotowa",
-        "łyżka skandynawska, łyżka 90cm, widły",
-        "lemiesz",
-        "fotel pneumatyczny",
-        "oświetlenie led 360*",
-        "radio",
-        "klimatyzacja",
-        "kogut"
+        "Krótki tył",
+        "Banan",
+        "Głowica uchylno-obrotowa",
+        "Łyżka skandynawska, łyżka 90cm, widły",
+        "Lemiesz",
+        "Fotel pneumatyczny",
+        "Oświetlenie led 360*",
+        "Radio",
+        "Klimatyzacja",
+        "Kogut"
       ]
     },
     {
@@ -157,13 +157,13 @@
       "production_year": 2017,
       "weight": "35t",
       "equipment": [
-        "szybkozłącze hydrauliczne",
-        "łyżka kopiąca z lemieszem 1,4m",
-        "radio",
-        "oświetlenie led 360",
-        "klimatyzacja",
-        "fotel pneumatyczny",
-        "kogut"
+        "Szybkozłącze hydrauliczne",
+        "Łyżka kopiąca z lemieszem 1,4m",
+        "Radio",
+        "Oświetlenie led 360",
+        "Klimatyzacja",
+        "Fotel pneumatyczny",
+        "Kogut"
       ]
     }
   ],
@@ -175,14 +175,14 @@
       "production_year": 2025,
       "weight": "3,7t",
       "equipment": [
-        "szybkozłącze mechaniczne",
-        "łyżka ładująca z zębami",
-        "widły",
-        "kamera cofania",
-        "zamiatarka",
-        "radio",
-        "klimatyzacja",
-        "kogut"
+        "Szybkozłącze mechaniczne",
+        "Łyżka ładująca z zębami",
+        "Widły",
+        "Kamera cofania",
+        "Zamiatarka",
+        "Radio",
+        "Klimatyzacja",
+        "Kogut"
       ]
     }
   ],
@@ -198,12 +198,12 @@
         "max_reach": "18m"
       },
       "equipment": [
-        "widły",
-        "kosz",
-        "wciągarka",
-        "klimatyzacja",
-        "fotel pneumatyczny",
-        "kogut"
+        "Widły",
+        "Kosz",
+        "Wciągarka",
+        "Klimatyzacja",
+        "Fotel pneumatyczny",
+        "Kogut"
       ]
     }
   ],
@@ -215,7 +215,7 @@
       "production_year": 2025,
       "weight": "23t",
       "specifications": {
-        "type": "dwupokładowy",
+        "type": "Dwupokładowy",
         "hopper_capacity": "6 m3",
         "throughput": "do 420 t/godz.",
         "screen_size": "3.6 m x 1.3 m"
@@ -230,11 +230,11 @@
       "production_year": 2013,
       "weight": "4t",
       "equipment": [
-        "bębny stalowe",
-        "zraszanie wodą",
-        "zagniatacz krawędzi",
-        "kogut",
-        "oświetlenie"
+        "Bębny stalowe",
+        "Zraszanie wodą",
+        "Zagniatacz krawędzi",
+        "Kogut",
+        "Oświetlenie"
       ]
     },
     {
@@ -244,14 +244,14 @@
       "production_year": 2015,
       "weight": "7t",
       "equipment": [
-        "bębny stalowe dzielone",
-        "zraszanie wodą",
-        "wibracja + oscylacja",
-        "zagniatacz krawędzi",
-        "klimatyzacja",
-        "oświetlenie led 360",
-        "radio",
-        "kogut"
+        "Bębny stalowe dzielone",
+        "Zraszanie wodą",
+        "Wibracja + oscylacja",
+        "Zagniatacz krawędzi",
+        "Klimatyzacja",
+        "Oświetlenie led 360",
+        "Radio",
+        "Kogut"
       ]
     },
     {
@@ -261,15 +261,15 @@
       "production_year": 2025,
       "weight": "8,5t",
       "equipment": [
-        "bęben stalowy przód (wibracja/oscylacja)",
-        "bęben gumowy tył",
-        "zraszanie wodą",
-        "zagniatacz krawędzi",
-        "nóż do krawędzi",
-        "oświetlenie led 360",
-        "kamery 360",
-        "klimatyzacja",
-        "kogut"
+        "Bęben stalowy przód (wibracja/oscylacja)",
+        "Bęben gumowy tył",
+        "Zraszanie wodą",
+        "Zagniatacz krawędzi",
+        "Nóż do krawędzi",
+        "Oświetlenie led 360",
+        "Kamery 360",
+        "Klimatyzacja",
+        "Kogut"
       ]
     }
   ],
@@ -283,9 +283,9 @@
       "specifications": {
         "paving_width": "1,2m-2,2m (3,5m z poszerzeniami)",
         "leveling": "Vogele",
-        "screed_heating": "elektryczne"
+        "screed_heating": "Elektryczne"
       },
-      "equipment": [ "oświetlenie robocze", "kogut" ]
+      "equipment": [ "Oświetlenie robocze", "Kogut" ]
     },
     {
       "model": "1800-3i",
@@ -296,9 +296,9 @@
       "specifications": {
         "paving_width": "2,55m-5m (7m z poszerzeniami)",
         "leveling": "Vogele",
-        "screed_heating": "elektryczne"
+        "screed_heating": "Elektryczne"
       },
-      "equipment": [ "urządzenie zraszania maszyny", "oświetlenie robocze", "kogut" ]
+      "equipment": [ "Urządzenie zraszania maszyny", "Oświetlenie robocze", "Kogut" ]
     },
     {
       "model": "ABG7280B",
@@ -308,10 +308,10 @@
       "weight": "20,5t",
       "specifications": {
         "paving_width": "2,55m-5m (6,5m z poszerzeniami)",
-        "leveling": "moba",
-        "screed_heating": "brak (tylko do kruszywa, betonu)"
+        "leveling": "Moba",
+        "screed_heating": "Brak (tylko do kruszywa, betonu)"
       },
-      "equipment": [ "oświetlenie robocze", "kogut" ]
+      "equipment": [ "Oświetlenie robocze", "Kogut" ]
     }
   ],
   "milling_machines": [
@@ -325,7 +325,7 @@
         "working_width": "1,5m",
         "max_working_depth": "30cm"
       },
-      "equipment": [ "oświetlenie robocze led", "kogut" ],
+      "equipment": [ "Oświetlenie robocze led", "Kogut" ],
       "notes": "Wynajem tylko z operatorem"
     }
   ],
@@ -340,11 +340,11 @@
         "payload": "9t"
       },
       "equipment": [
-        "obrotowa kabina",
-        "obrotowy kiper",
+        "Obrotowa kabina",
+        "Obrotowy kiper",
         "4 koła skrętne",
-        "oświetlenie robocze",
-        "kogut"
+        "Oświetlenie robocze",
+        "Kogut"
       ]
     }
   ],
@@ -358,7 +358,7 @@
       "specifications": {
         "working_pressure": "7 bar"
       },
-      "equipment": [ "regulowana wysokość zaczepu", "młot do kucia" ]
+      "equipment": [ "Regulowana wysokość zaczepu", "Młot do kucia" ]
     }
   ],
   "compactors": [
@@ -368,12 +368,12 @@
       "image": null,
       "production_year": 2025,
       "weight": "460kg",
-      "equipment": [ "ekonomizer", "biegi przód-tył", "odpalanie rozrusznikiem" ]
+      "equipment": [ "Ekonomizer", "Biegi przód-tył", "Odpalanie rozrusznikiem" ]
     },
     {
       "brand": "Atlas Copco",
       "image": "",
-      "equipment": [ "biegi przód-tył", "odpalanie rozrusznikiem" ]
+      "equipment": [ "Biegi przód-tył", "Odpalanie rozrusznikiem" ]
     }
   ],
   "tractors": [
@@ -390,12 +390,12 @@
       },
       "equipment": [
         "3 linie hydrauliczne",
-        "wyjście pneumatyczne",
-        "przyczepa 2 osiowa",
-        "amortyzacja przedniego mostu",
-        "radio",
-        "fotel pneumatyczny",
-        "kogut"
+        "Wyjście pneumatyczne",
+        "Przyczepa 2 osiowa",
+        "Amortyzacja przedniego mostu",
+        "Radio",
+        "Fotel pneumatyczny",
+        "Kogut"
       ]
 
     }
