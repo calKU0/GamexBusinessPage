@@ -1,20 +1,90 @@
 {
-  "roboty_ziemne": [
-    "Niwelacja terenu",
-    "Korytowanie",
-    "Wykopy pod fundamenty",
-    "Zbieranie humusu",
-    "Rekultywacja",
-    "Wykopy w箂koprzestrzenne",
-    "Wykopy szerokoprzestrzenne",
-    "Nasypy"
+  "earthworks": [
+    {
+      "name": "Niwelacja terenu",
+      "description": "Precyzyjne wyr贸wnanie gruntu pod inwestycje budowlane i drogowe.",
+      "image": "",
+      "highlight": "Dok艂adne przygotowanie pod budow臋"
+    },
+    {
+      "name": "Korytowanie",
+      "description": "Usuwanie warstw gruntu pod przysz艂e nawierzchnie i konstrukcje drogowe.",
+      "image": "",
+      "highlight": "Solidna baza pod nawierzchni臋"
+    },
+    {
+      "name": "Wykopy pod fundamenty",
+      "description": "Wykopy pod domy, hale i obiekty przemys艂owe z zachowaniem norm.",
+      "image": "",
+      "highlight": "Bezpieczne i stabilne posadowienie"
+    },
+    {
+      "name": "Zbieranie humusu",
+      "description": "Zdejmowanie warstwy urodzajnej ziemi przed rozpocz臋ciem prac ziemnych.",
+      "image": "",
+      "highlight": "Optymalne przygotowanie terenu"
+    },
+    {
+      "name": "Rekultywacja",
+      "description": "Przywracanie terenom zielonym ich funkcjonalno艣ci po pracach budowlanych.",
+      "image": "",
+      "highlight": "Estetyczne wyko艅czenie inwestycji"
+    },
+    {
+      "name": "Wykopy w膮skoprzestrzenne",
+      "description": "Dok艂adne wykopy pod instalacje w trudnym terenie i przy ograniczonej przestrzeni.",
+      "image": "",
+      "highlight": "Precyzja w trudnych warunkach"
+    },
+    {
+      "name": "Wykopy szerokoprzestrzenne",
+      "description": "Szerokie wykopy pod obiekty in偶ynieryjne, zbiorniki i du偶e fundamenty.",
+      "image": "",
+      "highlight": "Szybka realizacja du偶ych zlece艅"
+    },
+    {
+      "name": "Nasypy",
+      "description": "Tworzenie nasyp贸w drogowych i budowlanych wraz z odpowiednim zag臋szczeniem.",
+      "image": "",
+      "highlight": "Stabilne pod艂o偶e na lata"
+    }
   ],
-  "roboty_drogowe": [
-    "Kompleksowe wykonywanie inwestycji drogowych",
-    "Wykonywanie kanalizacji",
-    "Uk砤danie kostki, kraw昕nik體, obrze縴, a縰r體",
-    "K砤dzenie nawierzchni bitumicznych",
-    "Frezowanie nawierzchni bitumicznych",
-    "Wykonywanie o渨ietlenia ulicznego"
+  "roadworks": [
+    {
+      "name": "Kompleksowe inwestycje drogowe",
+      "description": "Pe艂na realizacja inwestycji od przygotowania terenu po odbi贸r nawierzchni.",
+      "image": "",
+      "highlight": "Jedna ekipa, kompleksowa obs艂uga"
+    },
+    {
+      "name": "Wykonywanie kanalizacji",
+      "description": "Budowa kanalizacji deszczowej i sanitarnej z nowoczesnymi rozwi膮zaniami.",
+      "image": "",
+      "highlight": "Sprawne odprowadzenie w贸d"
+    },
+    {
+      "name": "Uk艂adanie kostki i obrze偶y",
+      "description": "Profesjonalne brukowanie plac贸w, chodnik贸w i alejek z estetycznym wyko艅czeniem.",
+      "image": "",
+      "highlight": "Estetyka i trwa艂o艣膰"
+    },
+    {
+      "name": "Nawierzchnie bitumiczne",
+      "description": "Uk艂adanie nowych nawierzchni asfaltowych na drogach, parkingach i dojazdach.",
+      "image": "",
+      "highlight": "G艂adka i wytrzyma艂a nawierzchnia"
+    },
+    {
+      "name": "Frezowanie nawierzchni",
+      "description": "Usuwanie zu偶ytych warstw asfaltu i przygotowanie pod nowe u艂o偶enie.",
+      "image": "",
+      "highlight": "Szybkie od艣wie偶enie jezdni"
+    },
+    {
+      "name": "O艣wietlenie uliczne",
+      "description": "Projekt i wykonanie o艣wietlenia drogowego zapewniaj膮cego bezpiecze艅stwo.",
+      "image": "",
+      "highlight": "Bezpiecze艅stwo po zmroku"
+    }
   ]
 }

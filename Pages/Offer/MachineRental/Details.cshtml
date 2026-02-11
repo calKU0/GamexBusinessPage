@@ -1,0 +1,135 @@
+@page "/oferta/wypozyczenie-maszyn/{slug}"
+@using GamexBusinessPage.Models
+@model GamexBusinessPage.Pages.MachineRental.DetailsModel
+@{
+    var machine = Model.Machine!;
+}
+
+<div class="machine-details-page">
+    <div class="container-fluid">
+        <nav aria-label="breadcrumb" class="machine-breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-page="/Index">Strona główna</a></li>
+                <li class="breadcrumb-item"><a asp-page="/Offer/Offer">Oferta</a></li>
+                <li class="breadcrumb-item"><a asp-page="/Offer/MachineRental/MachineRental">Wypożyczenie maszyn</a></li>
+                <li class="breadcrumb-item active" aria-current="page">@machine.DisplayName</li>
+            </ol>
+        </nav>
+
+        <div class="row g-4">
+            <section class="col-lg-12">
+                <header class="machine-details-header">
+                    <p class="machine-card-category">@machine.CategoryDisplayName</p>
+                    <h1 class="display-6 fw-bold">@machine.DisplayName</h1>
+                </header>
+
+                <div class="row g-4">
+                    <div class="col-lg-6">
+                        <div class="machine-details-media">
+                            @if (!string.IsNullOrWhiteSpace(machine.Image))
+                            {
+                                <img src="@Url.Content(machine.Image)" alt="@machine.DisplayName" />
+                            }
+                            else
+                            {
+                                <div class="machine-placeholder">Brak zdjęcia</div>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="machine-detail-card">
+                            <h2 class="h5 mb-3">Podstawowe informacje</h2>
+                            <dl class="row mb-0 machine-basic-info gx-2">
+                                @if (!string.IsNullOrWhiteSpace(machine.Brand))
+                                {
+                                    <dt class="col-sm-4">Marka</dt>
+                                    <dd class="col-sm-8">@machine.Brand</dd>
+                                }
+                                @if (!string.IsNullOrWhiteSpace(machine.Model))
+                                {
+                                    <dt class="col-sm-4">Model</dt>
+                                    <dd class="col-sm-8">@machine.Model</dd>
+                                }
+                                @if (!string.IsNullOrWhiteSpace(machine.Type))
+                                {
+                                    <dt class="col-sm-4">Typ</dt>
+                                    <dd class="col-sm-8">@machine.Type</dd>
+                                }
+                                @if (machine.ProductionYear.HasValue)
+                                {
+                                    <dt class="col-sm-4">Rok produkcji</dt>
+                                    <dd class="col-sm-8">@machine.ProductionYear</dd>
+                                }
+                                @if (!string.IsNullOrWhiteSpace(machine.Weight))
+                                {
+                                    <dt class="col-sm-4">Waga</dt>
+                                    <dd class="col-sm-8">@machine.Weight</dd>
+                                }
+                            </dl>
+                        </div>
+
+                        @if (machine.Specifications.Count > 0)
+                        {
+                            <section class="machine-parameters-card">
+                                <h2 class="h5 mb-3">Parametry</h2>
+                                <dl class="machine-parameters-list">
+                                    @foreach (var param in machine.Specifications)
+                                    {
+                                        <dt>@MachineCatalog.GetSpecificationDisplayName(param.Key)</dt>
+                                        <dd>@param.Value</dd>
+                                    }
+                                </dl>
+                            </section>
+                        }
+
+                        @if (machine.Equipment.Count > 0)
+                        {
+                            <section class="machine-equipment-card">
+                                <h2 class="h5 mb-3">Wyposażenie</h2>
+                                <ul class="machine-equipment-list">
+                                    @foreach (var element in machine.Equipment)
+                                    {
+                                        <li>@element</li>
+                                    }
+                                </ul>
+                            </section>
+                        }
+                    </div>
+                </div>
+
+                @if (!string.IsNullOrWhiteSpace(machine.RentalOptions))
+                {
+                    <section class="machine-section">
+                        <h2 class="h4">Opcje wynajmu</h2>
+                        <p>@machine.RentalOptions</p>
+                    </section>
+                }
+
+                @if (!string.IsNullOrWhiteSpace(machine.Notes))
+                {
+                    <section class="machine-section">
+                        <h2 class="h4">Uwagi</h2>
+                        <p>@machine.Notes</p>
+                    </section>
+                }
+
+                <section class="machine-contact-section">
+                    <div class="machine-contact-card">
+                        <h2 class="h4">Zapytaj o tę maszynę</h2>
+                        @await Html.PartialAsync("_ContactForm", Model.ContactForm)
+                    </div>
+                </section>
+            </section>
+        </div>
+    </div>
+</div>
+
+@section Schema {
+    @if (!string.IsNullOrWhiteSpace(Model.SchemaJson))
+    {
+        <script type="application/ld+json">
+            @Html.Raw(Model.SchemaJson)
+        </script>
+    }
+}

@@ -1,7 +1,17 @@
+using GamexBusinessPage.Services;
+using System.Text;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddRouting(options => options.LowercaseUrls = true);
+builder.Services.AddMemoryCache();
+builder.Services.AddOutputCache(options =>
+{
+    options.AddBasePolicy(builder => builder.Expire(TimeSpan.FromMinutes(5)));
+});
+builder.Services.AddSingleton<CatalogCache>();
 
 var app = builder.Build();
 
@@ -22,5 +32,53 @@ app.UseAuthorization();
 app.MapStaticAssets();
 app.MapRazorPages()
    .WithStaticAssets();
+
+app.UseOutputCache();
+
+app.MapGet("/sitemap.xml", async (CatalogCache catalogCache, HttpContext context) =>
+{
+    var baseUrl = "https://gamex-olkusz.pl";
+    var sb = new StringBuilder();
+    sb.AppendLine("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+    sb.AppendLine("<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">");
+
+    // Static pages
+    var staticPages = new[]
+    {
+        "",
+        "/kontakt",
+        "/dotacja",
+        "/realizacje",
+        "/oferta",
+        "/oferta/wypozyczenie-maszyn",
+        "/oferta/uslugi",
+        "/oferta/transport"
+    };
+
+    foreach (var page in staticPages)
+    {
+        sb.AppendLine("  <url>");
+        sb.AppendLine($"    <loc>{baseUrl}{page}</loc>");
+        sb.AppendLine("    <changefreq>weekly</changefreq>");
+        sb.AppendLine("    <priority>0.8</priority>");
+        sb.AppendLine("  </url>");
+    }
+
+    // Dynamic pages (Machines)
+    var catalog = catalogCache.GetMachineCatalog();
+    foreach (var machine in catalog.Machines)
+    {
+        sb.AppendLine("  <url>");
+        sb.AppendLine($"    <loc>{baseUrl}/oferta/wypozyczenie-maszyn/{machine.Slug}</loc>");
+        sb.AppendLine("    <changefreq>monthly</changefreq>");
+        sb.AppendLine("    <priority>0.6</priority>");
+        sb.AppendLine("  </url>");
+    }
+
+    sb.AppendLine("</urlset>");
+
+    context.Response.ContentType = "application/xml";
+    await context.Response.WriteAsync(sb.ToString());
+});
 
 app.Run();

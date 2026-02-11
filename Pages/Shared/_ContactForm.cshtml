@@ -1,0 +1,53 @@
+@model GamexBusinessPage.Models.ContactFormViewModel
+
+<form method="post" class="kontakt-form">
+    <div class="row g-3">
+        <div class="col-md-6">
+            <label class="form-label">Imię i nazwisko</label>
+            <input type="text" class="form-control" name="name" required />
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label">Adres e-mail</label>
+            <input type="email" class="form-control" name="email" required />
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label">Telefon</label>
+            <input type="tel" class="form-control" name="phone" />
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label">Temat</label>
+            <input type="text" class="form-control" name="subject" />
+        </div>
+
+        <div class="col-12">
+            <label class="form-label">Maszyna@(Model.IsMachineLocked ? "" : " (opcjonalnie)")</label>
+            <select class="form-select" name="machine" @(Model.IsMachineLocked ? "disabled" : "")>
+                <option value="">Wybierz maszynę</option>
+                @foreach (var machine in Model.Machines)
+                {
+                    <option value="@machine.Slug" selected="@(machine.Slug == Model.SelectedMachineSlug)">
+                        @machine.DisplayName
+                    </option>
+                }
+            </select>
+            @if (Model.IsMachineLocked && !string.IsNullOrWhiteSpace(Model.SelectedMachineSlug))
+            {
+                <input type="hidden" name="machine" value="@Model.SelectedMachineSlug" />
+            }
+        </div>
+
+        <div class="col-12">
+            <label class="form-label">Wiadomość</label>
+            <textarea rows="5" class="form-control" name="message" required></textarea>
+        </div>
+
+        <div class="col-12 text-end">
+            <button type="submit" class="btn kontakt-submit">
+                Wyślij wiadomość
+            </button>
+        </div>
+    </div>
+</form>

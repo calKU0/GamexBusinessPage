@@ -1,0 +1,77 @@
+@page "/oferta/transport"
+@model GamexBusinessPage.Pages.Transport.TransportModel
+
+<div class="offer-subpage">
+    <div class="transport-page">
+        <div class="container-fluid">
+            <header class="transport-hero text-center">
+                <h1 class="display-5 fw-bold">Transport materiałów i maszyn</h1>
+                <p class="lead mx-auto">
+                    Własna flota transportowa gwarantuje szybkie i bezpieczne dostawy kruszyw, maszyn oraz ładunków specjalnych.
+                </p>
+            </header>
+
+            <div class="row g-4">
+                <aside class="col-lg-2">
+                    @await Html.PartialAsync("_MachineCategoryList", new GamexBusinessPage.Models.CategoryLinkViewModel(Model.CategoryLinks))
+                </aside>
+
+                <section class="col-lg-9">
+                    <div class="transport-grid">
+                        @foreach (var category in Model.FilteredCategories)
+                        {
+                            <section class="transport-category">
+                                <div class="transport-category-header">
+                                    <h2>@category.DisplayName</h2>
+                                    <p>Wybierz rozwiązanie dopasowane do rodzaju ładunku.</p>
+                                </div>
+
+                                <div class="row g-4">
+                                    @foreach (var transport in category.Transports)
+                                    {
+                                        <div class="col-md-6 col-xl-4">
+                                            <a class="transport-card service-card-link" asp-page="/Contact">
+                                                <div class="transport-card-media">
+                                                    @if (!string.IsNullOrWhiteSpace(transport.Image))
+                                                    {
+                                                        <img src="@Url.Content(transport.Image)" alt="@transport.Vehicle" loading="lazy" />
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="machine-placeholder">Brak zdjęcia</div>
+                                                    }
+                                                </div>
+                                                <div class="transport-card-body">
+                                                    <p class="machine-card-category">@transport.CategoryDisplayName</p>
+                                                    <h3>@transport.Vehicle</h3>
+                                                    <p>@transport.Description</p>
+                                                    @if (!string.IsNullOrWhiteSpace(transport.WeightLimit))
+                                                    {
+                                                        <div class="transport-limit">Limit: @transport.WeightLimit</div>
+                                                    }
+                                                    @if (!string.IsNullOrWhiteSpace(transport.Highlight))
+                                                    {
+                                                        <span class="transport-highlight">@transport.Highlight</span>
+                                                    }
+                                                </div>
+                                            </a>
+                                        </div>
+                                    }
+                                </div>
+                            </section>
+                        }
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Schema {
+    @if (!string.IsNullOrWhiteSpace(Model.SchemaJson))
+    {
+        <script type="application/ld+json">
+            @Html.Raw(Model.SchemaJson)
+        </script>
+    }
+}

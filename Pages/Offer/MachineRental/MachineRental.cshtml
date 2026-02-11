@@ -1,0 +1,72 @@
+﻿@page "/oferta/wypozyczenie-maszyn"
+@model GamexBusinessPage.Pages.MachineRental.MachineRentalModel
+
+<div class="offer-subpage">
+    <div class="machine-rental-page">
+        <div class="container-fluid">
+            <header class="machine-rental-hero text-center">
+                <h1 class="display-5 fw-bold">Wypożyczalnia maszyn budowlanych</h1>
+                <p class="lead mx-auto">
+                    Poznaj nasz park maszynowy. Każda maszyna jest dostępna z obsługą operatorską i gotowa do pracy w całej Małopolsce.
+                </p>
+            </header>
+
+            <div class="row g-4">
+                <aside class="col-lg-2">
+                    @await Html.PartialAsync("_MachineCategoryList", new GamexBusinessPage.Models.CategoryLinkViewModel(Model.CategoryLinks))
+                </aside>
+
+                <section class="col-lg-9">
+                    @if (Model.Machines.Count == 0)
+                    {
+                        <div class="machine-empty-state">
+                            Brak maszyn w tej kategorii. Wybierz inną kategorię lub sprawdź wszystkie maszyny.
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="row g-4">
+                            @foreach (var machine in Model.Machines)
+                            {
+                                <div class="col-md-6 col-xl-4">
+                                    <div class="machine-card">
+                                        <div class="machine-card-media">
+                                            @if (!string.IsNullOrWhiteSpace(machine.Image))
+                                            {
+                                                <img src="@Url.Content(machine.Image)" alt="@machine.DisplayName" loading="lazy" />
+                                            }
+                                            else
+                                            {
+                                                <div class="machine-placeholder">Brak zdjęcia</div>
+                                            }
+                                        </div>
+                                        <div class="machine-card-body">
+                                            <div class="machine-card-header">
+                                                <p class="machine-card-category">@machine.CategoryDisplayName</p>
+                                                <h3 class="machine-card-title">@machine.DisplayName</h3>
+                                            </div>
+                                            <div class="machine-card-actions">
+                                                <a class="btn-gamex machine-card-cta" asp-page="/Offer/MachineRental/Details" asp-route-slug="@machine.Slug">
+                                                    Zobacz szczegóły
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Schema {
+    @if (!string.IsNullOrWhiteSpace(Model.SchemaJson))
+    {
+        <script type="application/ld+json">
+            @Html.Raw(Model.SchemaJson)
+        </script>
+    }
+}

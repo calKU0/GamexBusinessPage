@@ -1,27 +1,42 @@
 {
-  "materialy_sypkie": [
+  "bulk_materials": [
     {
-      "pojazd": "Samochody 4-osiowe",
-      "limit_wagowy": "do 17 ton"
+      "vehicle": "Samochody 4-osiowe",
+      "description": "Sprawny transport kruszyw, piasku i ziemi na place budowy.",
+      "image": "",
+      "weight_limit": "do 17 ton",
+      "highlight": "Szybkie dostawy na budowę"
     },
     {
-      "pojazd": "Ci�gniki siod�owe",
-      "limit_wagowy": "do 26 ton"
+      "vehicle": "Ciągniki siodłowe",
+      "description": "Transport dużych ilości materiałów sypkich w krótkim czasie.",
+      "image": "",
+      "weight_limit": "do 26 ton",
+      "highlight": "Maksymalna ładowność"
     }
   ],
-  "transport_niskopodwoziowy_laweta": [
+  "lowbed_transport_and_trailer": [
     {
-      "pojazd": "Naczepa niskopodwoziowa",
-      "limit_wagowy": "do 25 ton"
+      "vehicle": "Naczepa niskopodwoziowa",
+      "description": "Bezpieczny przewóz maszyn budowlanych i gabarytów.",
+      "image": "",
+      "weight_limit": "do 25 ton",
+      "highlight": "Transport ciężkiego sprzętu"
     },
     {
-      "pojazd": "Laweta 3-osiowa",
-      "limit_wagowy": "do 13 ton"
+      "vehicle": "Laweta 3-osiowa",
+      "description": "Elastyczny transport mniejszych maszyn i urządzeń.",
+      "image": "",
+      "weight_limit": "do 13 ton",
+      "highlight": "Mobilność na krótkich trasach"
     }
   ],
-  "transport_hds": [
+  "truck_crane_transport": [
     {
-      "pojazd": "Samochody 2-osiowe"
+      "vehicle": "Samochody 2-osiowe",
+      "description": "Transport z rozładunkiem dzięki HDS — idealne na place budowy.",
+      "image": "",
+      "highlight": "Załadunek i rozładunek na miejscu"
     }
   ]
 }

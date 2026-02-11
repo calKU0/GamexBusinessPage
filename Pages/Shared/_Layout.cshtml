@@ -8,14 +8,18 @@
     <meta name="description" content="@ViewData["Description"]">
     <title>@ViewData["Title"]</title>
 
-    <link rel="canonical" href="https://gamex-olkusz.pl">
+    <link rel="canonical" href="@(ViewData["CanonicalUrl"] ?? $"https://gamex-olkusz.pl{Context.Request.Path}")" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="@ViewData["Title"]" />
+    <meta property="og:description" content="@ViewData["Description"]" />
+    <meta property="og:url" content="@(ViewData["CanonicalUrl"] ?? $"https://gamex-olkusz.pl{Context.Request.Path}")" />
+    <meta property="og:image" content="@(ViewData["OgImage"] ?? "https://gamex-olkusz.pl/images/logo.png")" />
+    <meta property="og:site_name" content="Gamex Olkusz" />
+    <meta property="og:locale" content="pl_PL" />
 
     <link rel="preload" href="~/images/budowa-drogi.webp" as="image" fetchpriority="high">
 
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" media="print" onload="this.media='all'">
-    <noscript>
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css">
-    </noscript>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     @* <link rel="stylesheet" href="~/GamexBusinessPage.styles.css" asp-append-version="true" /> *@
     @await RenderSectionAsync("Schema", required: false)
@@ -47,11 +51,12 @@
 
                         <li class="nav-item dropdown">
                             <div class="dropdown-hover-wrapper">
-                                <a class="nav-link dropdown-toggle" asp-page="/Offer">Oferta</a>
+                                <a class="nav-link dropdown-toggle" asp-page="/Offer/Offer">Oferta</a>
 
                                 <ul class="dropdown-menu dropdown-menu-dark gamex-dropdown">
-                                    <li><a class="dropdown-item" asp-page="/RoadRenovation">Remonty dróg</a></li>
-                                    <li><a class="dropdown-item" asp-page="/MachineRental">Wypożyczenie maszyn</a></li>
+                                    <li><a class="dropdown-item" asp-page="/Offer/MachineRental/MachineRental">Wypożyczenie maszyn</a></li>
+                                    <li><a class="dropdown-item" asp-page="/Offer/Services/Services">Usługi</a></li>
+                                    <li><a class="dropdown-item" asp-page="/Offer/Transport/Transport">Transport</a></li>
                                 </ul>
                             </div>
                         </li>
@@ -97,7 +102,7 @@
                     <ul class="footer-links">
                         <li><a asp-page="/Index">Strona główna</a></li>
                         <li><a asp-page="/Index" asp-fragment="o-nas">O nas</a></li>
-                        <li><a asp-page="/Realization">Realizacje</a></li>
+                        <li><a asp-page="/Realizations">Realizacje</a></li>
                         <li><a asp-page="/Dotation">Dotacje EU</a></li>
                         <li><a asp-page="/Contact">Kontakt</a></li>
                     </ul>
@@ -106,9 +111,10 @@
                 <div class="col-lg-3 col-md-6">
                     <h3 class="footer-title">Nasza Oferta</h3>
                     <ul class="footer-links">
-                        <li><a asp-page="/RoadRenovation">Remonty dróg</a></li>
-                        <li><a asp-page="/MachineRental">Wynajem maszyn</a></li>
-                        <li><a asp-page="/Offer">Pełna oferta</a></li>
+                        <li><a asp-page="/Offer/MachineRental/MachineRental">Wynajem maszyn</a></li>
+                        <li><a asp-page="/Offer/Services/Services">Usługi</a></li>
+                        <li><a asp-page="/Offer/Transport/Transport">Transport</a></li>
+                        <li><a asp-page="/Offer/Offer">Pełna oferta</a></li>
                     </ul>
                 </div>
 

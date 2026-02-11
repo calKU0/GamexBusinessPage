@@ -1,0 +1,74 @@
+﻿@page "/oferta/uslugi"
+@model GamexBusinessPage.Pages.Services.RoadRenovationModel
+
+
+<div class="offer-subpage">
+    <div class="services-page" id="services-top">
+        <div class="container-fluid">
+            <header class="services-hero text-center">
+                <h1 class="display-5 fw-bold">Usługi drogowe i ziemne</h1>
+                <p class="lead mx-auto">
+                    Kompleksowa obsługa inwestycji drogowych i ziemnych. Sprawdź zakres naszych usług i wybierz rozwiązania dopasowane do Twojej inwestycji.
+                </p>
+            </header>
+
+            <div class="row g-4">
+                <aside class="col-lg-2">
+                    @await Html.PartialAsync("_MachineCategoryList", new GamexBusinessPage.Models.CategoryLinkViewModel(Model.CategoryLinks))
+                </aside>
+
+                <section class="col-lg-9">
+                    <div class="services-grid">
+                        @foreach (var category in Model.FilteredCategories)
+                        {
+                            <section class="services-category" id="@category.Key">
+                                <div class="services-category-header">
+                                    <h2>@category.DisplayName</h2>
+                                    <p>Profesjonalne wsparcie od planowania po realizację.</p>
+                                </div>
+
+                                <div class="row g-4">
+                                    @foreach (var service in category.Services)
+                                    {
+                                        <div class="col-md-6 col-xl-4">
+                                            <a class="service-card service-card-link" asp-page="/Contact" asp-fragment="kontakt-formularz">
+                                                <div class="service-card-media">
+                                                    @if (!string.IsNullOrWhiteSpace(service.Image))
+                                                    {
+                                                        <img src="@Url.Content(service.Image)" alt="@service.Name" loading="lazy" />
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="machine-placeholder">Brak zdjęcia</div>
+                                                    }
+                                                </div>
+                                                <div class="service-card-body">
+                                                    <p class="machine-card-category">@service.CategoryDisplayName</p>
+                                                    <h3>@service.Name</h3>
+                                                    <p>@service.Description</p>
+                                                    @if (!string.IsNullOrWhiteSpace(service.Highlight))
+                                                    {
+                                                        <span class="service-highlight">@service.Highlight</span>
+                                                    }
+                                                </div>
+                                            </a>
+                                        </div>
+                                    }
+                                </div>
+                            </section>
+                        }
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Schema {
+    @if (!string.IsNullOrWhiteSpace(Model.SchemaJson))
+    {
+        <script type="application/ld+json">
+            @Html.Raw(Model.SchemaJson)
+        </script>
+    }
+}
