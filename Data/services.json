@@ -3,88 +3,74 @@
     {
       "name": "Niwelacja terenu",
       "description": "Precyzyjne wyrównanie gruntu pod inwestycje budowlane i drogowe.",
-      "image": "",
-      "highlight": "Dokładne przygotowanie pod budowę"
+      "image": ""
     },
     {
       "name": "Korytowanie",
       "description": "Usuwanie warstw gruntu pod przyszłe nawierzchnie i konstrukcje drogowe.",
-      "image": "",
-      "highlight": "Solidna baza pod nawierzchnię"
+      "image": ""
     },
     {
       "name": "Wykopy pod fundamenty",
       "description": "Wykopy pod domy, hale i obiekty przemysłowe z zachowaniem norm.",
-      "image": "",
-      "highlight": "Bezpieczne i stabilne posadowienie"
+      "image": ""
     },
     {
       "name": "Zbieranie humusu",
       "description": "Zdejmowanie warstwy urodzajnej ziemi przed rozpoczęciem prac ziemnych.",
-      "image": "",
-      "highlight": "Optymalne przygotowanie terenu"
+      "image": ""
     },
     {
       "name": "Rekultywacja",
       "description": "Przywracanie terenom zielonym ich funkcjonalności po pracach budowlanych.",
-      "image": "",
-      "highlight": "Estetyczne wykończenie inwestycji"
+      "image": ""
     },
     {
       "name": "Wykopy wąskoprzestrzenne",
       "description": "Dokładne wykopy pod instalacje w trudnym terenie i przy ograniczonej przestrzeni.",
-      "image": "",
-      "highlight": "Precyzja w trudnych warunkach"
+      "image": ""
     },
     {
       "name": "Wykopy szerokoprzestrzenne",
       "description": "Szerokie wykopy pod obiekty inżynieryjne, zbiorniki i duże fundamenty.",
-      "image": "",
-      "highlight": "Szybka realizacja dużych zleceń"
+      "image": ""
     },
     {
       "name": "Nasypy",
       "description": "Tworzenie nasypów drogowych i budowlanych wraz z odpowiednim zagęszczeniem.",
-      "image": "",
-      "highlight": "Stabilne podłoże na lata"
+      "image": ""
     }
   ],
   "roadworks": [
     {
       "name": "Kompleksowe inwestycje drogowe",
       "description": "Pełna realizacja inwestycji od przygotowania terenu po odbiór nawierzchni.",
-      "image": "",
-      "highlight": "Jedna ekipa, kompleksowa obsługa"
+      "image": ""
     },
     {
       "name": "Wykonywanie kanalizacji",
       "description": "Budowa kanalizacji deszczowej i sanitarnej z nowoczesnymi rozwiązaniami.",
-      "image": "",
-      "highlight": "Sprawne odprowadzenie wód"
+      "image": ""
     },
     {
       "name": "Układanie kostki i obrzeży",
       "description": "Profesjonalne brukowanie placów, chodników i alejek z estetycznym wykończeniem.",
-      "image": "",
-      "highlight": "Estetyka i trwałość"
+      "image": ""
     },
     {
       "name": "Nawierzchnie bitumiczne",
       "description": "Układanie nowych nawierzchni asfaltowych na drogach, parkingach i dojazdach.",
-      "image": "",
-      "highlight": "Gładka i wytrzymała nawierzchnia"
+      "image": ""
     },
     {
       "name": "Frezowanie nawierzchni",
-      "description": "Usuwanie zużytych warstw asfaltu i przygotowanie pod nowe ułożenie.",
-      "image": "",
-      "highlight": "Szybkie odświeżenie jezdni"
+      "description": "Usuwanie zużytych warstw asfaltu i przygotowanie pod nowe nawierzchnie.",
+      "image": ""
     },
     {
       "name": "Oświetlenie uliczne",
-      "description": "Projekt i wykonanie oświetlenia drogowego zapewniającego bezpieczeństwo.",
-      "image": "",
-      "highlight": "Bezpieczeństwo po zmroku"
+      "description": "Wykonanie oświetlenia drogowego zapewniającego bezpieczeństwo.",
+      "image": ""
     }
   ]
 }

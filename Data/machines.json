@@ -17,7 +17,7 @@
       ]
     },
     {
-      "model": "3CX",
+      "model": "3CX1",
       "brand": "JCB",
       "image": null,
       "production_year": 2018,
@@ -371,7 +371,8 @@
       "equipment": [ "Ekonomizer", "Biegi przód-tył", "Odpalanie rozrusznikiem" ]
     },
     {
-      "brand": "Atlas Copco",
+      "brand": "Atlas",
+      "model": "Copco1",
       "image": "",
       "equipment": [ "Biegi przód-tył", "Odpalanie rozrusznikiem" ]
     }
@@ -379,7 +380,7 @@
   "tractors": [
     {
       "type": "Traktor + przyczepa",
-      "brand": "Nieznana",
+      "brand": "Massey Ferguson",
       "image": null,
       "production_year": 2006,
       "specifications": {
@@ -397,7 +398,6 @@
         "Fotel pneumatyczny",
         "Kogut"
       ]
-
     }
   ]
 }

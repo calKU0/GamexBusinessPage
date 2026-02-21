@@ -4,15 +4,13 @@
       "vehicle": "Samochody 4-osiowe",
       "description": "Sprawny transport kruszyw, piasku i ziemi na place budowy.",
       "image": "",
-      "weight_limit": "do 17 ton",
-      "highlight": "Szybkie dostawy na budowę"
+      "weight_limit": "17 ton"
     },
     {
       "vehicle": "Ciągniki siodłowe",
       "description": "Transport dużych ilości materiałów sypkich w krótkim czasie.",
       "image": "",
-      "weight_limit": "do 26 ton",
-      "highlight": "Maksymalna ładowność"
+      "weight_limit": "26 ton"
     }
   ],
   "lowbed_transport_and_trailer": [
@@ -20,23 +18,20 @@
       "vehicle": "Naczepa niskopodwoziowa",
       "description": "Bezpieczny przewóz maszyn budowlanych i gabarytów.",
       "image": "",
-      "weight_limit": "do 25 ton",
-      "highlight": "Transport ciężkiego sprzętu"
+      "weight_limit": "25 ton"
     },
     {
       "vehicle": "Laweta 3-osiowa",
       "description": "Elastyczny transport mniejszych maszyn i urządzeń.",
       "image": "",
-      "weight_limit": "do 13 ton",
-      "highlight": "Mobilność na krótkich trasach"
+      "weight_limit": "13 ton"
     }
   ],
   "truck_crane_transport": [
     {
       "vehicle": "Samochody 2-osiowe",
       "description": "Transport z rozładunkiem dzięki HDS — idealne na place budowy.",
-      "image": "",
-      "highlight": "Załadunek i rozładunek na miejscu"
+      "image": ""
     }
   ]
 }
