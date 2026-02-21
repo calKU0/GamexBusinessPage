@@ -46,7 +46,7 @@
                         <div class="card-content">
                             <div class="card-icon">🚚</div>
                             <h3>Transport</h3>
-                            <p>Transport materiałów sypkich, maszyn i ładunków HDS z szybką realizacją na terenie Małopolski.</p>
+                            <p>Transport materiałów sypkich, maszyn i ładunków HDS z szybką realizacją na terenie Małopolski, Śląska oraz województwa świętokrzyskiego.</p>
                             <a asp-page="/Offer/Transport/Transport" class="btn-gamex btn-secondary-gamex">
                                 Zobacz opcje
                             </a>
@@ -59,38 +59,11 @@
     </div>
 </div>
 
-@* @section Schema {
-    <script type="application/ld+json">
-        {
-          "@@context": "https://schema.org",
-          "@@graph": [
-            {
-              "@@type": "BreadcrumbList",
-              "itemListElement": [
-                {
-                  "@@type": "ListItem",
-                  "position": 1,
-                  "name": "Strona główna",
-                  "item": "https://gamex-olkusz.pl"
-                },
-                {
-                  "@@type": "ListItem",
-                  "position": 2,
-                  "name": "Oferta",
-                  "item": "https://gamex-olkusz.pl/oferta"
-                }
-              ]
-            },
-            {
-              "@@type": "Service",
-              "name": "Kompleksowe usługi budowlane i drogowe",
-              "provider": {
-                "@@type": "LocalBusiness",
-                "name": "Gamex",
-                "image": "https://gamex-olkusz.pl/logo.png"
-              }
-            }
-          ]
-        }
-    </script>
-} *@
+@section Schema {
+    @if (!string.IsNullOrWhiteSpace(Model.SchemaJson))
+    {
+        <script type="application/ld+json">
+            @Html.Raw(Model.SchemaJson)
+        </script>
+    }
+}

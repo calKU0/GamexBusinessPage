@@ -2,11 +2,10 @@ using GamexBusinessPage.Models;
 using GamexBusinessPage.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Linq;
+using Microsoft.AspNetCore.OutputCaching;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Microsoft.AspNetCore.OutputCaching;
 
 namespace GamexBusinessPage.Pages.Transport;
 
@@ -73,9 +72,11 @@ public class TransportModel : PageModel
         }
 
         var baseUrl = "https://gamex-olkusz.pl";
+
+        var localBusiness = SchemaFactory.GetLocalBusinessSchema(baseUrl);
+
         var breadcrumbSchema = new Dictionary<string, object?>
         {
-            ["@context"] = "https://schema.org",
             ["@type"] = "BreadcrumbList",
             ["itemListElement"] = new object[]
             {
@@ -105,29 +106,40 @@ public class TransportModel : PageModel
 
         var transportListSchema = new Dictionary<string, object?>
         {
-            ["@context"] = "https://schema.org",
             ["@type"] = "ItemList",
+            ["name"] = "Transport materiałów i maszyn Gamex Olkusz",
             ["itemListElement"] = FilteredCategories
                 .SelectMany(transportCategory => transportCategory.Transports)
-                .Select((transport, index) => new Dictionary<string, object?>
+                .Select((transport, index) =>
                 {
-                    ["@type"] = "ListItem",
-                    ["position"] = index + 1,
-                    ["item"] = new Dictionary<string, object?>
+                    var transportServiceItem = new Dictionary<string, object?>
                     {
                         ["@type"] = "Service",
                         ["name"] = transport.Vehicle,
                         ["description"] = transport.Description,
-                        ["areaServed"] = "Małopolskie",
-                        ["provider"] = new Dictionary<string, object?> { ["@type"] = "Organization", ["name"] = "Gamex" }
-                    }
+                        ["provider"] = new Dictionary<string, object?>
+                        {
+                            ["@id"] = localBusiness["@id"]
+                        },
+                        ["areaServed"] = localBusiness["areaServed"],
+                        ["serviceType"] = "Transport materiałów i maszyn"
+                    };
+
+                    SchemaFactory.ApplyRating(transportServiceItem, "4.0", 6);
+
+                    return new Dictionary<string, object?>
+                    {
+                        ["@type"] = "ListItem",
+                        ["position"] = index + 1,
+                        ["item"] = transportServiceItem
+                    };
                 }).ToArray()
         };
 
         var schemaGraph = new Dictionary<string, object?>
         {
             ["@context"] = "https://schema.org",
-            ["@graph"] = new object[] { breadcrumbSchema, transportListSchema }
+            ["@graph"] = new object[] { breadcrumbSchema, transportListSchema, localBusiness }
         };
 
         SchemaJson = JsonSerializer.Serialize(schemaGraph, new JsonSerializerOptions

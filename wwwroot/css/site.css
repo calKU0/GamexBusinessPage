@@ -2,6 +2,7 @@ html, body {
     font-size: 14px;
     background-color: #0B1020;
     color: #E8EBF5;
+/*    overflow-x: hidden;*/
 }
 
 .machine-parameters-card {
@@ -123,15 +124,13 @@ body {
 ================================ */
 
 .gamex-navbar {
-    /* Zmiana z relative na absolute */
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    /* Pozosta³e Twoje style bez zmian */
-    background: rgba(11, 16, 32, 0.4); /* Zmniejszy³em opacity do 0.4, by lepiej by³o widaæ Hero */
+    background: rgba(11, 16, 32, 0.4);
     backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Delikatniejsza linia */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
     padding: 0.8rem 0;
     z-index: 1050;
 }
@@ -414,7 +413,7 @@ body {
 
 /* Sections */
 .home-section {
-    padding: 5rem 0;
+    padding: 5rem 0rem;
 }
 
     .home-section h2 {
@@ -484,6 +483,12 @@ body {
             filter: grayscale(0%) brightness(1);
             opacity: 1;
         }
+
+@media (max-width: 768px) {
+    .home-section {
+        padding: 5rem 1.5rem;
+    }
+}
 
 /* ===============================
    HOME IMAGES
@@ -795,34 +800,171 @@ body {
     color: #B6BCD6;
 }
 
-/* FORM */
-.kontakt-form .form-label {
-    color: #B6BCD6;
+/* FORM CONTAINER */
+.kontakt-form .form-group {
+    position: relative;
 }
 
-.kontakt-form .form-control {
+/* LABEL STYLING */
+.kontakt-form .form-label {
+    position: relative;
+    display: inline-flex;
+    width: fit-content;
+    color: #B6BCD6;
+    cursor: default;
+    transition: color 0.25s ease, transform 0.25s ease;
+}
+
+    .kontakt-form .form-label::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -3px;
+        width: 0;
+        height: 2px;
+        background: #FFD700; /* yellow underline */
+        border-radius: 2px;
+        transition: width 0.25s ease;
+    }
+
+    /* LABEL HOVER */
+    .kontakt-form .form-label:hover {
+        color: #E8EBF5;
+    }
+
+        .kontakt-form .form-label:hover::after {
+            width: 100%;
+        }
+
+/* LABEL FOCUS ANIMATION USING FOCUS-WITHIN */
+.kontakt-form .form-group:focus-within .form-label {
+    color: #FFD700; /* unified color */
+    transform: translateY(-2px);
+}
+
+    .kontakt-form .form-group:focus-within .form-label::after {
+        width: 100%;
+    }
+
+/* INPUT, TEXTAREA, SELECT STYLING */
+.kontakt-form .form-control,
+.kontakt-form .form-select,
+.kontakt-form textarea {
     background: #0B1020;
     border: 1px solid #2A3160;
     color: #E8EBF5;
+    width: 100%;
+    padding: 0.6rem;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
 }
 
-.kontakt-form .form-select {
-    background-color: #0B1020;
-    border: 1px solid #2A3160;
-    color: #E8EBF5;
-}
-
-    .kontakt-form .form-control:focus {
-        border-color: #00A3E0;
-        box-shadow: none;
+    /* HOVER ANIMATION */
+    .kontakt-form .form-control:hover,
+    .kontakt-form .form-select:hover,
+    .kontakt-form textarea:hover,
+    .kontakt-form .select-trigger:hover {
+        border-color: #FFD700; /* unified hover color */
     }
 
+    /* FOCUS ANIMATION */
+    .kontakt-form .form-control:focus,
+    .kontakt-form .form-select:focus,
+    .kontakt-form textarea:focus,
+    .kontakt-form .select-trigger.active {
+        border-color: #FFD700; /* unified focus color */
+        box-shadow: 0 0 0 1px rgba(255,215,0,0.5);
+    }
+
+/* SUBMIT BUTTON */
 .kontakt-submit {
     background: linear-gradient(135deg, #F58A1F, #FF9F43);
     color: #0B1020;
     font-weight: 600;
     border-radius: 8px;
     padding: 0.6rem 1.5rem;
+}
+
+/* DROPDOWN CONTAINER */
+.select-options {
+    display: none;
+    position: absolute;
+    width: 100%;
+    max-height: 320px;
+    overflow-y: auto;
+    background: #141A33;
+    border: 1px solid #2A3160;
+    border-radius: 8px;
+    margin-top: 4px;
+    z-index: 1000;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+}
+
+/* CATEGORY LABEL */
+.select-group {
+    padding: 8px 12px;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: #00A3E0;
+    background: rgba(0,163,224,0.08);
+}
+
+/* OPTION */
+.select-option {
+    padding: 8px 12px;
+    cursor: pointer;
+    color: #E8EBF5;
+    transition: background 0.15s ease, color 0.15s ease;
+}
+
+    .select-option:hover {
+        background: linear-gradient(135deg, rgba(255,215,0,0.15), rgba(255,215,0,0.1));
+        color: #FFD700; /* unified hover color */
+    }
+
+/* MACHINE HOVER PREVIEW */
+#machine-hover-preview {
+    position: fixed;
+    width: 220px;
+    display: none;
+    pointer-events: none;
+    z-index: 9999;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+}
+
+.custom-select {
+    position: relative;
+    width: 100%;
+}
+
+/* Trigger button (closed select) */
+.select-trigger {
+    background: #0B1020;
+    border: 1px solid #2A3160;
+    color: #E8EBF5;
+    padding: 0.6rem 0.75rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+    .select-trigger:hover {
+        border-color: #FFD700; /* matches input hover */
+    }
+
+    .select-trigger.active {
+        border-color: #FFD700; /* matches input focus */
+        box-shadow: 0 0 0 1px rgba(255,215,0,0.5);
+        transform: scale(1.02);
+    }
+
+/* MAP */
+.kontakt-map iframe {
+    width: 100%;
+    height: 420px;
+    border: 0;
+    filter: grayscale(20%) brightness(0.9);
 }
 
 /* MAP */
@@ -897,6 +1039,85 @@ body {
     color: #0B1020;
     background: linear-gradient(135deg, rgba(245, 138, 31, 0.95), rgba(255, 159, 67, 0.95));
     font-weight: 600;
+}
+
+.category-logic-check {
+    display: none;
+}
+
+.show-less-text {
+    display: none;
+}
+
+@media (max-width: 991.98px) {
+    .expandable-section {
+        display: grid;
+        grid-template-rows: 0fr;
+        transition: grid-template-rows 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        overflow: hidden;
+    }
+
+        .expandable-section .animated-list {
+            min-height: 0;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            padding-top: 0.4rem;
+        }
+
+    .category-logic-check:checked + .machine-category-list + .expandable-section {
+        grid-template-rows: 1fr;
+    }
+
+        .category-logic-check:checked + .machine-category-list + .expandable-section .animated-list {
+            opacity: 1;
+            transform: translateY(0);
+            transition-delay: 0.1s;
+        }
+
+    .machine-category-more-btn {
+        margin-top: 1.25rem;
+        width: 100%;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        transition: all 0.3s ease;
+    }
+
+    .category-logic-check:checked ~ .machine-category-more-btn .show-more-text {
+        display: none;
+    }
+
+    .category-logic-check:checked ~ .machine-category-more-btn .show-less-text {
+        display: inline;
+    }
+
+    .show-less-text {
+        display: none;
+    }
+}
+
+@media (min-width: 992px) {
+    .expandable-section {
+        display: block;
+    }
+
+        .expandable-section .animated-list {
+            opacity: 1;
+            transform: none;
+        }
+}
+
+@keyframes fadeInCategory {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .machine-card {

@@ -2,11 +2,10 @@ using GamexBusinessPage.Models;
 using GamexBusinessPage.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Linq;
+using Microsoft.AspNetCore.OutputCaching;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Microsoft.AspNetCore.OutputCaching;
 
 namespace GamexBusinessPage.Pages.MachineRental;
 
@@ -73,32 +72,19 @@ public class DetailsModel : PageModel
         ViewData["Description"] = $"Sprawdź szczegóły wynajmu maszyny {Machine.DisplayName} w Gamex Olkusz. Profesjonalny sprzęt i obsługa operatorska.";
         ViewData["Keywords"] = $"{Machine.Brand}, {Machine.Model}, wynajem maszyn budowlanych, Gamex, Olkusz";
 
+        var priceValidUntil = "2026-12-31";
         var baseUrl = "https://gamex-olkusz.pl";
         if (!string.IsNullOrWhiteSpace(Machine.Image))
         {
             ViewData["OgImage"] = $"{baseUrl}{Machine.Image}";
         }
 
+        var localBusiness = SchemaFactory.GetLocalBusinessSchema(baseUrl);
+
         var detailsUrl = $"{baseUrl}{Url.Page("/Offer/MachineRental/Details", new { slug = Machine.Slug })}";
-        var machineSchema = new Dictionary<string, object?>
-        {
-            ["@context"] = "https://schema.org",
-            ["@type"] = "Product",
-            ["name"] = Machine.DisplayName,
-            ["description"] = string.IsNullOrWhiteSpace(Machine.RentalOptions)
-                    ? "Wynajem maszyny budowlanej z operatorem w Gamex Olkusz."
-                : Machine.RentalOptions,
-            ["image"] = string.IsNullOrWhiteSpace(Machine.Image) ? null : $"{baseUrl}{Machine.Image}",
-            ["brand"] = string.IsNullOrWhiteSpace(Machine.Brand)
-                ? null
-            : new Dictionary<string, object?> { ["@type"] = "Brand", ["name"] = Machine.Brand },
-            ["url"] = detailsUrl,
-            ["category"] = Machine.CategoryDisplayName
-        };
 
         var breadcrumbSchema = new Dictionary<string, object?>
         {
-            ["@context"] = "https://schema.org",
             ["@type"] = "BreadcrumbList",
             ["itemListElement"] = new object[]
             {
@@ -133,10 +119,95 @@ public class DetailsModel : PageModel
             }
         };
 
+        var machineSchema = new Dictionary<string, object?>
+        {
+            ["@type"] = "Product",
+            ["offers"] = new Dictionary<string, object?>
+            {
+                ["@type"] = "Offer",
+                ["url"] = detailsUrl,
+                ["priceCurrency"] = "PLN",
+                ["price"] = "100",
+                ["priceValidUntil"] = priceValidUntil,
+                ["itemCondition"] = "https://schema.org/UsedCondition",
+                ["availability"] = "https://schema.org/InStock",
+                ["priceSpecification"] = new Dictionary<string, object?>
+                {
+                    ["@type"] = "UnitPriceSpecification",
+                    ["priceCurrency"] = "PLN",
+                    ["lowPrice"] = "100",
+                    ["description"] = "Cena za dobę, uzależniona od długości najmu",
+                    ["referenceQuantity"] = new Dictionary<string, object?>
+                    {
+                        ["@type"] = "QuantitativeValue",
+                        ["value"] = "1",
+                        ["unitCode"] = "DAY"
+                    }
+                },
+                ["shippingDetails"] = new Dictionary<string, object?>
+                {
+                    ["@type"] = "OfferShippingDetails",
+                    ["shippingRate"] = new Dictionary<string, object?>
+                    {
+                        ["@type"] = "MonetaryAmount",
+                        ["value"] = "0", // Lub stawka bazowa
+                        ["currency"] = "PLN"
+                    },
+                    ["shippingDestination"] = new Dictionary<string, object?>
+                    {
+                        ["@type"] = "DefinedRegion",
+                        ["addressCountry"] = "PL"
+                    },
+                    ["deliveryTime"] = new Dictionary<string, object?>
+                    {
+                        ["@type"] = "ShippingDeliveryTime",
+                        ["handlingTime"] = new Dictionary<string, object?>
+                        {
+                            ["@type"] = "QuantitativeValue",
+                            ["minValue"] = 0,
+                            ["maxValue"] = 3,
+                            ["unitCode"] = "DAY"
+                        },
+                        ["transitTime"] = new Dictionary<string, object?>
+                        {
+                            ["@type"] = "QuantitativeValue",
+                            ["minValue"] = 0,
+                            ["maxValue"] = 3,
+                            ["unitCode"] = "DAY"
+                        }
+                    }
+                },
+                ["hasMerchantReturnPolicy"] = new Dictionary<string, object?>
+                {
+                    ["@type"] = "MerchantReturnPolicy",
+                    ["applicableCountry"] = "PL",
+                    ["returnPolicyCategory"] = "https://schema.org/MerchantReturnNotPermitted",
+                    ["merchantReturnLink"] = $"{baseUrl}/regulamin"
+                },
+                ["seller"] = new Dictionary<string, object?>
+                {
+                    ["@id"] = localBusiness["@id"]
+                },
+                ["businessFunction"] = "http://purl.org/goodrelations/v1#LeaseOut"
+            },
+            ["name"] = Machine.DisplayName,
+            ["description"] = string.IsNullOrWhiteSpace(Machine.RentalOptions)
+                    ? "Wynajem maszyny budowlanej z operatorem w Gamex Olkusz."
+                : Machine.RentalOptions,
+            ["image"] = string.IsNullOrWhiteSpace(Machine.Image) ? $"{baseUrl}/images/machines/default-machine.webp" : $"{baseUrl}{Machine.Image}",
+            ["brand"] = string.IsNullOrWhiteSpace(Machine.Brand)
+                ? null
+            : new Dictionary<string, object?> { ["@type"] = "Brand", ["name"] = Machine.Brand },
+            ["url"] = detailsUrl,
+            ["category"] = Machine.CategoryDisplayName
+        };
+
+        SchemaFactory.ApplyRating(machineSchema, "4.0", 6);
+
         var schemaGraph = new Dictionary<string, object?>
         {
             ["@context"] = "https://schema.org",
-            ["@graph"] = new object[] { breadcrumbSchema, machineSchema }
+            ["@graph"] = new object[] { breadcrumbSchema, machineSchema, localBusiness }
         };
 
         SchemaJson = JsonSerializer.Serialize(schemaGraph, new JsonSerializerOptions

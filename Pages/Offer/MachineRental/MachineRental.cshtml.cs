@@ -1,12 +1,11 @@
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using GamexBusinessPage.Models;
 using GamexBusinessPage.Services;
-using System.Linq;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.OutputCaching;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Microsoft.AspNetCore.OutputCaching;
 
 namespace GamexBusinessPage.Pages.MachineRental
 {
@@ -62,10 +61,10 @@ namespace GamexBusinessPage.Pages.MachineRental
 
             CategoryLinks = categoryLinks;
 
+            var priceValidUntil = "2026-12-31";
             var baseUrl = "https://gamex-olkusz.pl";
             var breadcrumbSchema = new Dictionary<string, object?>
             {
-                ["@context"] = "https://schema.org",
                 ["@type"] = "BreadcrumbList",
                 ["itemListElement"] = new object[]
                 {
@@ -93,30 +92,118 @@ namespace GamexBusinessPage.Pages.MachineRental
                 }
             };
 
+            var localBusiness = SchemaFactory.GetLocalBusinessSchema(baseUrl);
+
             var machinesListSchema = new Dictionary<string, object?>
             {
-                ["@context"] = "https://schema.org",
                 ["@type"] = "ItemList",
-                ["itemListElement"] = Machines.Select((machine, index) => new Dictionary<string, object?>
+                ["name"] = "Maszyny budowlane do wynajęcia",
+                ["url"] = $"{baseUrl}/oferta/wypozyczenie-maszyn",
+                ["numberOfItems"] = Machines.Count,
+                ["itemListElement"] = Machines.Select((machine, index) =>
                 {
-                    ["@type"] = "ListItem",
-                    ["position"] = index + 1,
-                    ["item"] = new Dictionary<string, object?>
+                    var machineUrl = $"{baseUrl}{Url.RouteUrl(new { page = "/Offer/MachineRental/Details", slug = machine.Slug })}";
+
+                    var productSchema = new Dictionary<string, object?>
                     {
                         ["@type"] = "Product",
                         ["name"] = machine.DisplayName,
-                        ["url"] = $"{baseUrl}{Url.RouteUrl(new { page = "/Offer/MachineRental/Details", slug = machine.Slug })}",
+                        ["url"] = machineUrl,
+                        ["description"] = string.IsNullOrWhiteSpace(machine.RentalOptions) ? "Wynajem maszyny budowlanej z operatorem w Gamex Olkusz." : machine.RentalOptions,
+                        ["image"] = string.IsNullOrWhiteSpace(machine.Image) ? $"{baseUrl}/images/machines/default-machine.webp" : $"{baseUrl}{machine.Image}",
                         ["brand"] = string.IsNullOrWhiteSpace(machine.Brand)
                             ? null
-                            : new Dictionary<string, object?> { ["@type"] = "Brand", ["name"] = machine.Brand }
-                    }
+                            : new Dictionary<string, object?>
+                            {
+                                ["@type"] = "Brand",
+                                ["name"] = string.IsNullOrWhiteSpace(machine.Brand) ? "Gamex" : machine.Brand
+                            },
+                        ["category"] = machine.CategoryDisplayName,
+                        ["offers"] = new Dictionary<string, object?>
+                        {
+                            ["@type"] = "Offer",
+                            ["url"] = machineUrl,
+                            ["priceCurrency"] = "PLN",
+                            ["priceValidUntil"] = priceValidUntil,
+                            ["price"] = "100",
+                            ["priceSpecification"] = new Dictionary<string, object?>
+                            {
+                                ["@type"] = "UnitPriceSpecification",
+                                ["priceCurrency"] = "PLN",
+                                ["lowPrice"] = "100",
+                                ["description"] = "Cena za dobę, uzależniona od długości najmu",
+                                ["referenceQuantity"] = new Dictionary<string, object?>
+                                {
+                                    ["@type"] = "QuantitativeValue",
+                                    ["value"] = "1",
+                                    ["unitCode"] = "DAY"
+                                }
+                            },
+                            ["shippingDetails"] = new Dictionary<string, object?>
+                            {
+                                ["@type"] = "OfferShippingDetails",
+                                ["shippingRate"] = new Dictionary<string, object?>
+                                {
+                                    ["@type"] = "MonetaryAmount",
+                                    ["value"] = "0", // Lub stawka bazowa
+                                    ["currency"] = "PLN"
+                                },
+                                ["shippingDestination"] = new Dictionary<string, object?>
+                                {
+                                    ["@type"] = "DefinedRegion",
+                                    ["addressCountry"] = "PL"
+                                },
+                                ["deliveryTime"] = new Dictionary<string, object?>
+                                {
+                                    ["@type"] = "ShippingDeliveryTime",
+                                    ["handlingTime"] = new Dictionary<string, object?>
+                                    {
+                                        ["@type"] = "QuantitativeValue",
+                                        ["minValue"] = 0,
+                                        ["maxValue"] = 3,
+                                        ["unitCode"] = "DAY"
+                                    },
+                                    ["transitTime"] = new Dictionary<string, object?>
+                                    {
+                                        ["@type"] = "QuantitativeValue",
+                                        ["minValue"] = 0,
+                                        ["maxValue"] = 3,
+                                        ["unitCode"] = "DAY"
+                                    }
+                                }
+                            },
+                            ["hasMerchantReturnPolicy"] = new Dictionary<string, object?>
+                            {
+                                ["@type"] = "MerchantReturnPolicy",
+                                ["applicableCountry"] = "PL",
+                                ["returnPolicyCategory"] = "https://schema.org/MerchantReturnNotPermitted",
+                                ["merchantReturnLink"] = $"{baseUrl}/regulamin"
+                            },
+                            ["availability"] = "https://schema.org/InStock",
+                            ["itemCondition"] = "https://schema.org/UsedCondition",
+                            ["businessFunction"] = "http://purl.org/goodrelations/v1#LeaseOut",
+                            ["seller"] = new Dictionary<string, object?>
+                            {
+                                ["@id"] = localBusiness["@id"]
+                            }
+                        }
+                    };
+
+                    SchemaFactory.ApplyRating(productSchema, "4.0", 6);
+
+                    return new Dictionary<string, object?>
+                    {
+                        ["@type"] = "ListItem",
+                        ["position"] = index + 1,
+                        ["item"] = productSchema
+                    };
                 }).ToArray()
             };
 
             var schemaGraph = new Dictionary<string, object?>
             {
                 ["@context"] = "https://schema.org",
-                ["@graph"] = new object[] { breadcrumbSchema, machinesListSchema }
+                ["@graph"] = new object[] { breadcrumbSchema, machinesListSchema, localBusiness }
             };
 
             SchemaJson = JsonSerializer.Serialize(schemaGraph, new JsonSerializerOptions

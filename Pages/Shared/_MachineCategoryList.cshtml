@@ -2,14 +2,51 @@
 
 <div class="machine-category-panel">
     <h2 class="machine-category-title">Kategorie</h2>
-    <ul class="machine-category-list">
-        @foreach (var link in Model.Links)
-        {
-            <li>
-                <a class="machine-category-link @(link.IsActive ? "is-active" : "")" href="@link.Url">
-                    @link.Label
-                </a>
-            </li>
-        }
-    </ul>
+
+    @if (Model.Links.Count > 4)
+    {
+        <input type="checkbox" id="category-toggle" class="category-logic-check" />
+
+        <ul class="machine-category-list">
+            @foreach (var link in Model.Links.Take(3))
+            {
+                <li>
+                    <a class="machine-category-link @(link.IsActive ? "is-active" : "")" href="@link.Url">
+                        @link.Label
+                    </a>
+                </li>
+            }
+        </ul>
+
+        <div class="expandable-section">
+            <ul class="machine-category-list animated-list">
+                @foreach (var link in Model.Links.Skip(3))
+                {
+                    <li>
+                        <a class="machine-category-link @(link.IsActive ? "is-active" : "")" href="@link.Url">
+                            @link.Label
+                        </a>
+                    </li>
+                }
+            </ul>
+        </div>
+
+        <label for="category-toggle" class="btn-gamex btn-secondary-gamex machine-category-more-btn d-lg-none">
+            <span class="show-more-text">Pokaż więcej</span>
+            <span class="show-less-text">Zwiń</span>
+        </label>
+    }
+    else
+    {
+        <ul class="machine-category-list">
+            @foreach (var link in Model.Links)
+            {
+                <li>
+                    <a class="machine-category-link @(link.IsActive ? "is-active" : "")" href="@link.Url">
+                        @link.Label
+                    </a>
+                </li>
+            }
+        </ul>
+    }
 </div>

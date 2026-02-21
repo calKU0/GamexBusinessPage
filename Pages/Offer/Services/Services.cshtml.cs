@@ -1,12 +1,11 @@
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using GamexBusinessPage.Models;
 using GamexBusinessPage.Services;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.OutputCaching;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Linq;
-using Microsoft.AspNetCore.OutputCaching;
 
 namespace GamexBusinessPage.Pages.Services
 {
@@ -73,9 +72,11 @@ namespace GamexBusinessPage.Pages.Services
             }
 
             var baseUrl = "https://gamex-olkusz.pl";
+
+            var localBusiness = SchemaFactory.GetLocalBusinessSchema(baseUrl);
+
             var breadcrumbSchema = new Dictionary<string, object?>
             {
-                ["@context"] = "https://schema.org",
                 ["@type"] = "BreadcrumbList",
                 ["itemListElement"] = new object[]
                 {
@@ -103,31 +104,50 @@ namespace GamexBusinessPage.Pages.Services
                 }
             };
 
+            var services = FilteredCategories
+                .SelectMany(serviceCategory => serviceCategory.Services)
+                .ToList();
+
             var servicesListSchema = new Dictionary<string, object?>
             {
-                ["@context"] = "https://schema.org",
                 ["@type"] = "ItemList",
-                ["itemListElement"] = FilteredCategories
-                    .SelectMany(serviceCategory => serviceCategory.Services)
-                    .Select((service, index) => new Dictionary<string, object?>
+                ["name"] = "Usługi drogowe Gamex",
+                ["url"] = $"{baseUrl}/oferta/uslugi",
+                ["numberOfItems"] = services.Count,
+                ["itemListOrder"] = "https://schema.org/ItemListOrderAscending",
+                ["itemListElement"] = services
+                    .Select((service, index) =>
                     {
-                        ["@type"] = "ListItem",
-                        ["position"] = index + 1,
-                        ["item"] = new Dictionary<string, object?>
+                        var serviceUrl = $"{baseUrl}/oferta/uslugi#{service.Name.Replace(" ", "-").ToLower()}";
+
+                        var serviceItem = new Dictionary<string, object?>
                         {
                             ["@type"] = "Service",
                             ["name"] = service.Name,
                             ["description"] = service.Description,
-                            ["areaServed"] = "Małopolskie",
-                            ["provider"] = new Dictionary<string, object?> { ["@type"] = "Organization", ["name"] = "Gamex" }
-                        }
+                            ["url"] = serviceUrl,
+                            ["areaServed"] = localBusiness["areaServed"],
+                            ["provider"] = new Dictionary<string, object?>
+                            {
+                                ["@id"] = localBusiness["@id"]
+                            }
+                        };
+
+                        SchemaFactory.ApplyRating(serviceItem, "4.0", 6);
+
+                        return new Dictionary<string, object?>
+                        {
+                            ["@type"] = "ListItem",
+                            ["position"] = index + 1,
+                            ["item"] = serviceItem
+                        };
                     }).ToArray()
             };
 
             var schemaGraph = new Dictionary<string, object?>
             {
                 ["@context"] = "https://schema.org",
-                ["@graph"] = new object[] { breadcrumbSchema, servicesListSchema }
+                ["@graph"] = new object[] { breadcrumbSchema, servicesListSchema, localBusiness }
             };
 
             SchemaJson = JsonSerializer.Serialize(schemaGraph, new JsonSerializerOptions
