@@ -1,45 +1,72 @@
 @model GamexBusinessPage.Models.ContactFormViewModel
 
+@using System.Linq
+
 <form method="post" class="kontakt-form">
     <div class="row g-3">
-        <div class="col-md-6">
+        <div class="form-group col-md-6">
             <label for="contact-name" class="form-label">Imię i nazwisko</label>
             <input type="text" id="contact-name" class="form-control" name="name" required />
         </div>
 
-        <div class="col-md-6">
+        <div class="form-group col-md-6">
             <label for="contact-email" class="form-label">Adres e-mail</label>
             <input type="email" id="contact-email" class="form-control" name="email" required />
         </div>
 
-        <div class="col-md-6">
+        <div class="form-group col-md-6">
             <label for="contact-phone" class="form-label">Telefon</label>
             <input type="tel" id="contact-phone" class="form-control" name="phone" />
         </div>
 
-        <div class="col-md-6">
+        <div class="form-group col-md-6">
             <label for="contact-subject" class="form-label">Temat</label>
             <input type="text" id="contact-subject" class="form-control" name="subject" />
         </div>
 
-        <div class="col-12">
-            <label for="contact-machine" class="form-label">Maszyna@(Model.IsMachineLocked ? "" : " (opcjonalnie)")</label>
-            <select id="contact-machine" class="form-select" name="machine" @(Model.IsMachineLocked ? "disabled" : "")>
-                <option value="">Wybierz maszynę</option>
-                @foreach (var machine in Model.Machines)
-                {
-                    <option value="@machine.Slug" selected="@(machine.Slug == Model.SelectedMachineSlug)">
-                        @machine.DisplayName
-                    </option>
-                }
-            </select>
-            @if (Model.IsMachineLocked && !string.IsNullOrWhiteSpace(Model.SelectedMachineSlug))
+        <div class="form-group col-12">
+            @{ var selectedMachine = !string.IsNullOrWhiteSpace(Model.SelectedMachineSlug)
+                    ? Model.Machines.FirstOrDefault(m => string.Equals(m.Slug, Model.SelectedMachineSlug, StringComparison.OrdinalIgnoreCase))
+                    : null; }
+
+            @if (Model.IsMachineLocked && selectedMachine is not null)
             {
-                <input type="hidden" name="machine" value="@Model.SelectedMachineSlug" />
+                <label for="contact-machine" class="form-label">Maszyna</label>
+                <select id="contact-machine" class="form-select" name="machine" disabled>
+                    <option value="@selectedMachine.Slug" selected disabled>@selectedMachine.DisplayName</option>
+                </select>
+                <input type="hidden" name="machine" value="@selectedMachine.Slug" />
+            }
+            else
+            {
+                <label for="contact-machine" class="form-label">Maszyna (opcjonalnie)</label>
+                <div class="custom-select" id="machineSelect">
+                    <div class="select-trigger">
+                        Wybierz maszynę
+                    </div>
+
+                    <div class="select-options">
+                        @foreach (var group in Model.Machines.GroupBy(m => m.CategoryDisplayName))
+                        {
+                            <div class="select-group">@group.Key</div>
+
+                            @foreach (var machine in group.OrderBy(m => m.DisplayName))
+                            {
+                                <div class="select-option"
+                                     data-value="@machine.Slug"
+                                     data-image="@machine.Image">
+                                    @machine.DisplayName
+                                </div>
+                            }
+                        }
+                    </div>
+
+                    <input type="hidden" name="machine" id="selectedMachine" />
+                </div>
             }
         </div>
 
-        <div class="col-12">
+        <div class="form-group col-12">
             <label for="contact-message" class="form-label">Wiadomość</label>
             <textarea id="contact-message" rows="5" class="form-control" name="message" required></textarea>
         </div>
@@ -51,3 +78,91 @@
         </div>
     </div>
 </form>
+
+<img id="machine-hover-preview" />
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+        const select = document.getElementById("machineSelect");
+        if (!select) return;
+
+        const trigger = select.querySelector(".select-trigger");
+        const options = select.querySelector(".select-options");
+
+        const preview = document.getElementById("machine-hover-preview");
+
+        /* OPEN / CLOSE */
+        trigger.addEventListener("click", function (e) {
+
+            e.stopPropagation();
+
+            const isOpen = options.style.display === "block";
+
+            options.style.display = isOpen ? "none" : "block";
+
+            trigger.classList.toggle("active", !isOpen);
+        });
+
+        /* SELECT OPTION */
+        options.addEventListener("click", function (e) {
+
+            const option = e.target.closest(".select-option");
+            if (!option) return;
+
+            trigger.textContent = option.textContent;
+
+            options.style.display = "none";
+            trigger.classList.remove("active");
+
+            /* set hidden input */
+            let hidden = select.querySelector("input[name='machine']");
+            if (!hidden) {
+                hidden = document.createElement("input");
+                hidden.type = "hidden";
+                hidden.name = "machine";
+                select.appendChild(hidden);
+            }
+
+            hidden.value = option.dataset.value;
+        });
+
+        /* CLOSE WHEN CLICK OUTSIDE */
+        document.addEventListener("click", function () {
+
+            options.style.display = "none";
+            trigger.classList.remove("active");
+
+            if (preview) {
+                preview.style.display = "none";
+            }
+        });
+
+        /* IMAGE HOVER */
+        options.addEventListener("mouseover", function (e) {
+
+            const option = e.target.closest(".select-option");
+            if (!option || !preview) return;
+
+            const image = option.dataset.image;
+
+            if (!image) {
+                preview.style.display = "none";
+                return;
+            }
+
+            preview.src = image;
+            preview.style.display = "block";
+        });
+
+        /* IMAGE FOLLOW CURSOR */
+        document.addEventListener("mousemove", function (e) {
+
+            if (!preview || preview.style.display !== "block") return;
+
+            preview.style.left = (e.clientX + 20) + "px";
+            preview.style.top = (e.clientY + 20) + "px";
+        });
+
+    });
+</script>
