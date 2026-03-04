@@ -1,5 +1,5 @@
 {
-  "bulk_materials": [
+  "Materiały sypkie": [
     {
       "vehicle": "Samochody 4-osiowe",
       "description": "Sprawny transport kruszyw, piasku i ziemi na place budowy.",
@@ -13,7 +13,7 @@
       "weight_limit": "26 ton"
     }
   ],
-  "lowbed_transport_and_trailer": [
+  "Transport niskopodwoziowy i laweta": [
     {
       "vehicle": "Naczepa niskopodwoziowa",
       "description": "Bezpieczny przewóz maszyn budowlanych i gabarytów.",
@@ -27,7 +27,7 @@
       "weight_limit": "13 ton"
     }
   ],
-  "truck_crane_transport": [
+  "Transport HDS": [
     {
       "vehicle": "Samochody 2-osiowe",
       "description": "Transport z rozładunkiem dzięki HDS — idealne na place budowy.",

@@ -1,4 +1,3 @@
-using System.Globalization;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -6,12 +5,6 @@ namespace GamexBusinessPage.Models;
 
 public sealed class TransportCatalog
 {
-    private static readonly Dictionary<string, string> CategoryDisplayNames = new(StringComparer.OrdinalIgnoreCase)
-    {
-        ["bulk_materials"] = "Materiały sypkie",
-        ["lowbed_transport_and_trailer"] = "Transport niskopodwoziowy i laweta",
-        ["truck_crane_transport"] = "Transport HDS"
-    };
 
     public TransportCatalog(IReadOnlyList<TransportCategory> categories)
     {
@@ -36,9 +29,7 @@ public sealed class TransportCatalog
 
         foreach (var (categoryKey, items) in data)
         {
-            var displayName = CategoryDisplayNames.TryGetValue(categoryKey, out var name)
-                ? name
-                : CultureInfo.CurrentCulture.TextInfo.ToTitleCase(categoryKey.Replace('_', ' '));
+            var displayName = categoryKey;
             var transports = items ?? new List<TransportItem>();
 
             foreach (var transport in transports)

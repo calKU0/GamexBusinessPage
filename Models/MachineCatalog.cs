@@ -7,45 +7,6 @@ namespace GamexBusinessPage.Models;
 
 public sealed class MachineCatalog
 {
-    private static readonly Dictionary<string, string> CategoryDisplayNames = new(StringComparer.OrdinalIgnoreCase)
-    {
-        ["backhoe_loaders"] = "Koparko ładowarki",
-        ["mini_excavators"] = "Minikoparki",
-        ["midi_excavators"] = "Midikoparki",
-        ["excavators"] = "Koparki",
-        ["mini_loaders"] = "Mini ładowarki",
-        ["telescopic_loaders"] = "Ładowarki teleskopowe",
-        ["screeners"] = "Przesiewacze",
-        ["rollers"] = "Walce",
-        ["asphalt_pavers"] = "Rozkładarki asfaltu",
-        ["milling_machines"] = "Frezarki",
-        ["dumpers"] = "Wozidła",
-        ["pneumatic_compressors"] = "Zasilacze pneumatyczne",
-        ["compactors"] = "Zagęszczarki",
-        ["tractors"] = "Ciągniki"
-    };
-
-    private static readonly Dictionary<string, string> SpecificationDisplayNames = new(StringComparer.OrdinalIgnoreCase)
-    {
-        ["max_lift_capacity"] = "Maks. udźwig",
-        ["max_lifting_height"] = "Maks. wysokość podnoszenia",
-        ["max_reach"] = "Maks. zasięg",
-        ["hopper_capacity"] = "Pojemność zasobnika",
-        ["throughput"] = "Wydajność",
-        ["screen_size"] = "Wymiary sita",
-        ["paving_width"] = "Szerokość robocza",
-        ["leveling"] = "System poziomowania",
-        ["screed_heating"] = "Podgrzewanie stołu",
-        ["working_width"] = "Szerokość robocza",
-        ["max_working_depth"] = "Maks. głębokość pracy",
-        ["payload"] = "Ładowność",
-        ["working_pressure"] = "Ciśnienie robocze",
-        ["drive"] = "Napęd",
-        ["speed"] = "Prędkość",
-        ["gearbox"] = "Skrzynia biegów",
-        ["trailer_payload"] = "Ładowność przyczepy",
-        ["type"] = "Typ"
-    };
 
     public MachineCatalog(IReadOnlyList<MachineCategory> categories, IReadOnlyList<MachineItem> machines)
     {
@@ -78,9 +39,7 @@ public sealed class MachineCatalog
 
         foreach (var (categoryKey, categoryMachines) in data)
         {
-            var displayName = CategoryDisplayNames.TryGetValue(categoryKey, out var name)
-                ? name
-                : CultureInfo.CurrentCulture.TextInfo.ToTitleCase(categoryKey.Replace('_', ' '));
+            var displayName = categoryKey;
             var items = categoryMachines ?? new List<MachineItem>();
 
             foreach (var machine in items)
@@ -142,9 +101,7 @@ public sealed class MachineCatalog
             return string.Empty;
         }
 
-        return SpecificationDisplayNames.TryGetValue(key, out var name)
-            ? name
-            : CultureInfo.CurrentCulture.TextInfo.ToTitleCase(key.Replace('_', ' '));
+        return key;
     }
 }
 

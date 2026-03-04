@@ -1,5 +1,5 @@
 {
-  "earthworks": [
+  "Roboty ziemne": [
     {
       "name": "Niwelacja terenu",
       "description": "Precyzyjne wyrównanie gruntu pod inwestycje budowlane i drogowe.",
@@ -41,7 +41,7 @@
       "image": ""
     }
   ],
-  "roadworks": [
+  "Roboty drogowe": [
     {
       "name": "Kompleksowe inwestycje drogowe",
       "description": "Pełna realizacja inwestycji od przygotowania terenu po odbiór nawierzchni.",

@@ -1,5 +1,5 @@
 ﻿{
-  "backhoe_loaders": [
+  "Koparko ładowarki": [
     {
       "model": "4CX",
       "brand": "JCB",
@@ -42,7 +42,7 @@
       "rental_options": "Możliwość wynajmu z zamiatarką 2,75m i frezarką 40cm lub młotem do kucia"
     }
   ],
-  "mini_excavators": [
+  "Minikoparki": [
     {
       "model": "16-C1",
       "brand": "JCB",
@@ -74,7 +74,7 @@
       ]
     }
   ],
-  "midi_excavators": [
+  "Midikoparki": [
     {
       "model": "50-Z2",
       "brand": "JCB",
@@ -92,7 +92,7 @@
       ]
     }
   ],
-  "excavators": [
+  "Koparki": [
     {
       "model": "160 Wsr",
       "brand": "Atlas",
@@ -167,7 +167,7 @@
       ]
     }
   ],
-  "mini_loaders": [
+  "Mini ładowarki": [
     {
       "model": "S76",
       "brand": "Bobcat",
@@ -186,16 +186,16 @@
       ]
     }
   ],
-  "telescopic_loaders": [
+  "Ładowarki teleskopowe": [
     {
       "model": "MRT 2260",
       "brand": "Manitou",
       "image": null,
       "weight": "18t",
       "specifications": {
-        "max_lift_capacity": "6t",
-        "max_lifting_height": "21m",
-        "max_reach": "18m"
+        "Maks. udźwig": "6t",
+        "Maks. wysokość podnoszenia": "21m",
+        "Maks. zasięg": "18m"
       },
       "equipment": [
         "Widły",
@@ -207,7 +207,7 @@
       ]
     }
   ],
-  "screeners": [
+  "Przesiewacze": [
     {
       "model": "TS1340",
       "brand": "Tesab",
@@ -215,14 +215,14 @@
       "production_year": 2025,
       "weight": "23t",
       "specifications": {
-        "type": "Dwupokładowy",
-        "hopper_capacity": "6 m3",
-        "throughput": "do 420 t/godz.",
-        "screen_size": "3.6 m x 1.3 m"
+        "Typ": "Dwupokładowy",
+        "Pojemność zasobnika": "6 m3",
+        "Wydajność": "do 420 t/godz.",
+        "Wymiary sita": "3.6 m x 1.3 m"
       }
     }
   ],
-  "rollers": [
+  "Walce": [
     {
       "model": "13i",
       "brand": "Hamm",
@@ -273,7 +273,7 @@
       ]
     }
   ],
-  "asphalt_pavers": [
+  "Rozkładarki asfaltu": [
     {
       "model": "S800i",
       "brand": "Vogele",
@@ -281,9 +281,9 @@
       "production_year": 2024,
       "weight": "6,5t",
       "specifications": {
-        "paving_width": "1,2m-2,2m (3,5m z poszerzeniami)",
-        "leveling": "Vogele",
-        "screed_heating": "Elektryczne"
+        "Szerokość robocza": "1,2m-2,2m (3,5m z poszerzeniami)",
+        "System poziomowania": "Vogele",
+        "Podgrzewanie stołu": "Elektryczne"
       },
       "equipment": [ "Oświetlenie robocze", "Kogut" ]
     },
@@ -294,9 +294,9 @@
       "production_year": 2024,
       "weight": "22t",
       "specifications": {
-        "paving_width": "2,55m-5m (7m z poszerzeniami)",
-        "leveling": "Vogele",
-        "screed_heating": "Elektryczne"
+        "Szerokość robocza": "2,55m-5m (7m z poszerzeniami)",
+        "System poziomowania": "Vogele",
+        "Podgrzewanie stołu": "Elektryczne"
       },
       "equipment": [ "Urządzenie zraszania maszyny", "Oświetlenie robocze", "Kogut" ]
     },
@@ -307,14 +307,14 @@
       "production_year": 2011,
       "weight": "20,5t",
       "specifications": {
-        "paving_width": "2,55m-5m (6,5m z poszerzeniami)",
-        "leveling": "Moba",
-        "screed_heating": "Brak (tylko do kruszywa, betonu)"
+        "Szerokość robocza": "2,55m-5m (6,5m z poszerzeniami)",
+        "System poziomowania": "Moba",
+        "Podgrzewanie stołu": "Brak (tylko do kruszywa, betonu)"
       },
       "equipment": [ "Oświetlenie robocze", "Kogut" ]
     }
   ],
-  "milling_machines": [
+  "Frezarki": [
     {
       "model": "W150-Fi",
       "brand": "Wirtgen",
@@ -322,14 +322,14 @@
       "production_year": 2024,
       "weight": "24,5t",
       "specifications": {
-        "working_width": "1,5m",
-        "max_working_depth": "30cm"
+        "Szerokość robocza": "1,5m",
+        "Maks. głębokość pracy": "30cm"
       },
       "equipment": [ "Oświetlenie robocze led", "Kogut" ],
       "notes": "Wynajem tylko z operatorem"
     }
   ],
-  "dumpers": [
+  "Wozidła": [
     {
       "model": "Revotruck",
       "brand": "Mecalac",
@@ -337,7 +337,7 @@
       "production_year": 2025,
       "weight": "6,5t",
       "specifications": {
-        "payload": "9t"
+        "Ładowność": "9t"
       },
       "equipment": [
         "Obrotowa kabina",
@@ -348,7 +348,7 @@
       ]
     }
   ],
-  "pneumatic_compressors": [
+  "Zasilacze pneumatyczne": [
     {
       "brand": "Atlas",
       "model": "Copco",
@@ -356,12 +356,12 @@
       "production_year": 2025,
       "weight": "749kg",
       "specifications": {
-        "working_pressure": "7 bar"
+        "Ciśnienie robocze": "7 bar"
       },
       "equipment": [ "Regulowana wysokość zaczepu", "Młot do kucia" ]
     }
   ],
-  "compactors": [
+  "Zagęszczarki": [
     {
       "model": "Bomag BPR 60/65 D",
       "brand": "Bomag",
@@ -377,17 +377,17 @@
       "equipment": [ "Biegi przód-tył", "Odpalanie rozrusznikiem" ]
     }
   ],
-  "tractors": [
+  "Ciągniki": [
     {
       "type": "Traktor + przyczepa",
       "brand": "Massey Ferguson",
       "image": null,
       "production_year": 2006,
       "specifications": {
-        "drive": "4x4",
-        "speed": "40 km/h",
-        "gearbox": "Dynashift 4 + 4 półbiegi",
-        "trailer_payload": "20t"
+        "Napęd": "4x4",
+        "Prędkość": "40 km/h",
+        "Skrzynia biegów": "Dynashift 4 + 4 półbiegi",
+        "Ładowność przyczepy": "20t"
       },
       "equipment": [
         "3 linie hydrauliczne",
