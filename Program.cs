@@ -4,7 +4,11 @@ using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddRazorPages();
+builder.Services.AddRazorPages(options =>
+{
+    options.Conventions.AuthorizeFolder("/Admin", "AdminPolicy");
+    options.Conventions.AllowAnonymousToPage("/Admin/Login");
+});
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 builder.Services.AddMemoryCache();
 builder.Services.AddOutputCache(options =>
@@ -12,6 +16,19 @@ builder.Services.AddOutputCache(options =>
     options.AddBasePolicy(builder => builder.Expire(TimeSpan.FromMinutes(5)));
 });
 builder.Services.AddSingleton<CatalogCache>();
+builder.Services.AddSingleton<AdminCatalogService>();
+builder.Services.AddAuthentication(Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/Admin/Login";
+        options.AccessDeniedPath = "/Admin/Login";
+        options.Cookie.Name = "GamexAdmin";
+        options.ExpireTimeSpan = TimeSpan.FromHours(1);
+    });
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AdminPolicy", policy => policy.RequireRole("Admin"));
+});
 
 var app = builder.Build();
 
@@ -27,6 +44,7 @@ app.UseHttpsRedirection();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapStaticAssets();

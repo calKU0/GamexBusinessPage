@@ -1,0 +1,32 @@
+@page "/admin/login"
+@model GamexBusinessPage.Pages.Admin.LoginModel
+@{
+    Layout = "_AdminLayout";
+}
+
+<div class="container py-5 text-light admin-page">
+    <div class="row justify-content-center">
+        <div class="col-lg-5">
+            <div class="card bg-transparent border-0">
+                <div class="card-body p-4 shadow-sm bg-dark border border-secondary rounded-4">
+                    <h1 class="h3 fw-bold mb-3 text-light">Panel administracyjny</h1>
+                    <p class="text-secondary">Zaloguj się, aby zarządzać ofertą Gamex.</p>
+
+                    <form method="post" class="mt-4">
+                        <div asp-validation-summary="All" class="text-danger mb-3"></div>
+                        <div class="mb-3">
+                            <label asp-for="Password" class="form-label text-light">Hasło administratora</label>
+                            <input asp-for="Password" class="form-control bg-dark text-light border-secondary" type="password" autocomplete="current-password" />
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                        <button type="submit" class="btn-gamex btn-primary-gamex w-100">Zaloguj</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

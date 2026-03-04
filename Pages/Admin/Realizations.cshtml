@@ -1,0 +1,19 @@
+@page "/admin/realizations"
+@model GamexBusinessPage.Pages.Admin.RealizationsModel
+@{
+    Layout = "_AdminLayout";
+}
+
+<div class="container py-5 text-light admin-page">
+    <partial name="_AdminHeader" model="@(new GamexBusinessPage.Pages.Admin.AdminHeaderViewModel("Realizacje", "Sekcja w przygotowaniu.", new[]
+    {
+        new GamexBusinessPage.Pages.Admin.AdminHeaderAction("Wróć", "/Admin/Index", "btn-gamex btn-secondary-gamex")
+    }))" />
+
+    <div class="card bg-dark border-secondary text-light shadow-sm rounded-4">
+        <div class="card-body">
+            <p class="mb-2">Funkcje zarządzania realizacjami będą dodane w kolejnej iteracji.</p>
+            <button class="btn-gamex btn-secondary-gamex" disabled>Dodaj realizację (w przygotowaniu)</button>
+        </div>
+    </div>
+</div>

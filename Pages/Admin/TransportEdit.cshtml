@@ -1,0 +1,62 @@
+@page "/admin/transport/edit"
+@model GamexBusinessPage.Pages.Admin.TransportEditModel
+@{
+    Layout = "_AdminLayout";
+}
+
+<div class="container py-5 text-light admin-page">
+    <partial name="_AdminHeader" model="@(new GamexBusinessPage.Pages.Admin.AdminHeaderViewModel(Model.IsEdit ? "Edytuj transport" : "Dodaj transport", "Uzupełnij dane transportu.", new[]
+    {
+        new GamexBusinessPage.Pages.Admin.AdminHeaderAction("Wróć", "/Admin/Transport", "btn-gamex btn-secondary-gamex")
+    }))" />
+
+    <div class="card bg-dark border-secondary text-light shadow-sm rounded-4">
+        <div class="card-body">
+            <form method="post" class="row g-3">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <input type="hidden" name="OriginalTransportCategory" value="@Model.OriginalTransportCategory" />
+                <input type="hidden" name="OriginalTransportVehicle" value="@Model.OriginalTransportVehicle" />
+                <div class="col-md-6">
+                    <label asp-for="TransportInput.CategoryKey" class="form-label text-light">Kategoria</label>
+                    <input asp-for="TransportInput.CategoryKey" class="form-control bg-dark text-light border-secondary" list="transport-categories" />
+                    <datalist id="transport-categories">
+                        @foreach (var category in Model.TransportCategoryKeys)
+                        {
+                            <option value="@category"></option>
+                        }
+                    </datalist>
+                    <span asp-validation-for="TransportInput.CategoryKey" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="TransportInput.Vehicle" class="form-label text-light">Pojazd</label>
+                    <input asp-for="TransportInput.Vehicle" class="form-control bg-dark text-light border-secondary" />
+                    <span asp-validation-for="TransportInput.Vehicle" class="text-danger"></span>
+                </div>
+                <div class="col-12">
+                    <label asp-for="TransportInput.Description" class="form-label text-light">Opis</label>
+                    <textarea asp-for="TransportInput.Description" class="form-control bg-dark text-light border-secondary" rows="3"></textarea>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="TransportInput.WeightLimit" class="form-label text-light">Limit / ładowność</label>
+                    <input asp-for="TransportInput.WeightLimit" class="form-control bg-dark text-light border-secondary" />
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="TransportInput.Highlight" class="form-label text-light">Wyróżnienie</label>
+                    <input asp-for="TransportInput.Highlight" class="form-control bg-dark text-light border-secondary" />
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="TransportInput.Image" class="form-label text-light">Ścieżka do zdjęcia</label>
+                    <input asp-for="TransportInput.Image" class="form-control bg-dark text-light border-secondary" placeholder="/images/..." />
+                </div>
+                <div class="col-12 d-flex gap-2">
+                    <button type="submit" class="btn-gamex btn-primary-gamex">Zapisz</button>
+                    <a asp-page="/Admin/Transport" class="btn-gamex btn-secondary-gamex">Anuluj</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

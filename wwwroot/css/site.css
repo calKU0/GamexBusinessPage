@@ -50,6 +50,96 @@ body {
     margin-bottom: 60px;
 }
 
+/* ===============================
+   ADMIN PANEL
+================================ */
+
+.admin-page .card {
+    background: #141A33;
+    border: 1px solid #2A3160;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+}
+
+.admin-page .form-label {
+    display: block;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+    margin-bottom: 0.5rem;
+    color: #B6BCD6;
+}
+
+.admin-page .form-control,
+.admin-page .form-select {
+    background: #0B1020;
+    color: #E8EBF5;
+    border: 1px solid #2A3160;
+    padding: 0.65rem 0.85rem;
+}
+
+.admin-page .form-control::placeholder {
+    color: #8A90B2;
+}
+
+.admin-page .form-control:focus,
+.admin-page .form-select:focus {
+    border-color: #00A3E0;
+    box-shadow: 0 0 0 0.2rem rgba(0, 163, 224, 0.2);
+}
+
+.admin-page .table-responsive {
+    border: 1px solid #2A3160;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+    background: #0B1020;
+}
+
+.admin-page .table {
+    margin-bottom: 0;
+    background: #0B1020;
+}
+
+.admin-page .table thead th {
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    color: #8A90B2;
+    background: #141A33;
+    border-bottom: 1px solid #2A3160;
+}
+
+.admin-page .table tbody tr {
+    border-color: rgba(42, 49, 96, 0.6);
+}
+
+.admin-page .table-hover tbody tr:hover {
+    background-color: rgba(0, 163, 224, 0.12);
+}
+
+.admin-page .btn-gamex {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+}
+
+.admin-page .btn-outline-light {
+    color: #E8EBF5;
+    border-color: #2A3160;
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.admin-page .btn-outline-light:hover {
+    background: rgba(0, 163, 224, 0.15);
+    border-color: #00A3E0;
+    color: #E8EBF5;
+}
+
+.admin-page .btn-outline-danger {
+    border-color: rgba(220, 53, 69, 0.8);
+}
+
+.admin-page .btn-outline-danger:hover {
+    background: rgba(220, 53, 69, 0.15);
+}
+
 .form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
     color: var(--bs-secondary-color);
     text-align: end;

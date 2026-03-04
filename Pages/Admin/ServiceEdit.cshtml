@@ -1,0 +1,58 @@
+@page "/admin/services/edit"
+@model GamexBusinessPage.Pages.Admin.ServiceEditModel
+@{
+    Layout = "_AdminLayout";
+}
+
+<div class="container py-5 text-light admin-page">
+    <partial name="_AdminHeader" model="@(new GamexBusinessPage.Pages.Admin.AdminHeaderViewModel(Model.IsEdit ? "Edytuj usługę" : "Dodaj usługę", "Uzupełnij dane usługi.", new[]
+    {
+        new GamexBusinessPage.Pages.Admin.AdminHeaderAction("Wróć", "/Admin/Services", "btn-gamex btn-secondary-gamex")
+    }))" />
+
+    <div class="card bg-dark border-secondary text-light shadow-sm rounded-4">
+        <div class="card-body">
+            <form method="post" class="row g-3">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <input type="hidden" name="OriginalServiceCategory" value="@Model.OriginalServiceCategory" />
+                <input type="hidden" name="OriginalServiceName" value="@Model.OriginalServiceName" />
+                <div class="col-md-6">
+                    <label asp-for="ServiceInput.CategoryKey" class="form-label text-light">Kategoria</label>
+                    <input asp-for="ServiceInput.CategoryKey" class="form-control bg-dark text-light border-secondary" list="service-categories" />
+                    <datalist id="service-categories">
+                        @foreach (var category in Model.ServiceCategoryKeys)
+                        {
+                            <option value="@category"></option>
+                        }
+                    </datalist>
+                    <span asp-validation-for="ServiceInput.CategoryKey" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="ServiceInput.Name" class="form-label text-light">Nazwa</label>
+                    <input asp-for="ServiceInput.Name" class="form-control bg-dark text-light border-secondary" />
+                    <span asp-validation-for="ServiceInput.Name" class="text-danger"></span>
+                </div>
+                <div class="col-12">
+                    <label asp-for="ServiceInput.Description" class="form-label text-light">Opis</label>
+                    <textarea asp-for="ServiceInput.Description" class="form-control bg-dark text-light border-secondary" rows="3"></textarea>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="ServiceInput.Highlight" class="form-label text-light">Wyróżnienie</label>
+                    <input asp-for="ServiceInput.Highlight" class="form-control bg-dark text-light border-secondary" />
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="ServiceInput.Image" class="form-label text-light">Ścieżka do zdjęcia</label>
+                    <input asp-for="ServiceInput.Image" class="form-control bg-dark text-light border-secondary" placeholder="/images/..." />
+                </div>
+                <div class="col-12 d-flex gap-2">
+                    <button type="submit" class="btn-gamex btn-primary-gamex">Zapisz</button>
+                    <a asp-page="/Admin/Services" class="btn-gamex btn-secondary-gamex">Anuluj</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

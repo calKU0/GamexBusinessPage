@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg bg-dark border-bottom border-secondary">
+            <div class="container d-flex justify-content-end gap-2">
+                <a class="btn btn-outline-light" asp-page="/Index">Wróć do strony głównej</a>
+                <form method="post" asp-page="/Admin/Logout" class="m-0">
+                    <button type="submit" class="btn btn-outline-danger">Wyloguj</button>
+                </form>
+            </div>
+        </nav>
+    </header>
+
+    <main role="main">
+        @RenderBody()
+    </main>
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js" defer></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

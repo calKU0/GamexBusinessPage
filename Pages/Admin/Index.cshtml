@@ -1,0 +1,48 @@
+@page "/admin"
+@model GamexBusinessPage.Pages.Admin.IndexModel
+@{
+    Layout = "_AdminLayout";
+}
+
+<div class="container py-5 text-light admin-page">
+    <partial name="_AdminHeader" model="@(new GamexBusinessPage.Pages.Admin.AdminHeaderViewModel("Panel administracyjny", "Wybierz sekcję, aby zarządzać ofertą."))" />
+
+    <div class="row g-4">
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 bg-dark border-secondary text-light shadow-sm rounded-4">
+                <div class="card-body d-flex flex-column">
+                    <h2 class="h5">Maszyny</h2>
+                    <p class="text-secondary">Dodawaj i edytuj maszyny do wypożyczenia.</p>
+                    <a asp-page="/Admin/Machines" class="btn-gamex btn-primary-gamex mt-auto">Przejdź do maszyn</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 bg-dark border-secondary text-light shadow-sm rounded-4">
+                <div class="card-body d-flex flex-column">
+                    <h2 class="h5">Usługi</h2>
+                    <p class="text-secondary">Zarządzaj ofertą usług budowlanych.</p>
+                    <a asp-page="/Admin/Services" class="btn-gamex btn-primary-gamex mt-auto">Przejdź do usług</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 bg-dark border-secondary text-light shadow-sm rounded-4">
+                <div class="card-body d-flex flex-column">
+                    <h2 class="h5">Transport</h2>
+                    <p class="text-secondary">Aktualizuj dostępne opcje transportu.</p>
+                    <a asp-page="/Admin/Transport" class="btn-gamex btn-primary-gamex mt-auto">Przejdź do transportu</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 bg-dark border-secondary text-light shadow-sm rounded-4">
+                <div class="card-body d-flex flex-column">
+                    <h2 class="h5">Realizacje</h2>
+                    <p class="text-secondary">Sekcja w przygotowaniu.</p>
+                    <a asp-page="/Admin/Realizations" class="btn-gamex btn-secondary-gamex mt-auto">Zobacz status</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

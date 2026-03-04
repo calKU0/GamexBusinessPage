@@ -1,0 +1,163 @@
+@page "/admin/machines/edit"
+@model GamexBusinessPage.Pages.Admin.MachineEditModel
+@{
+    Layout = "_AdminLayout";
+}
+
+<div class="container py-5 text-light admin-page">
+    <partial name="_AdminHeader" model="@(new GamexBusinessPage.Pages.Admin.AdminHeaderViewModel(Model.IsEdit ? "Edytuj maszynę" : "Dodaj maszynę", "Uzupełnij dane maszyny.", new[]
+    {
+        new GamexBusinessPage.Pages.Admin.AdminHeaderAction("Wróć", "/Admin/Machines", "btn-gamex btn-secondary-gamex")
+    }))" />
+
+    <div class="card bg-dark border-secondary text-light shadow-sm rounded-4">
+        <div class="card-body">
+            <form method="post" class="row g-3">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <input type="hidden" name="OriginalMachineCategory" value="@Model.OriginalMachineCategory" />
+                <input type="hidden" name="OriginalMachineSlug" value="@Model.OriginalMachineSlug" />
+
+                <div class="col-md-6">
+                    <label asp-for="MachineInput.CategoryKey" class="form-label text-light">Kategoria</label>
+                    <input asp-for="MachineInput.CategoryKey" class="form-control bg-dark text-light border-secondary" list="machine-categories" />
+                    <datalist id="machine-categories">
+                        @foreach (var category in Model.MachineCategoryKeys)
+                        {
+                            <option value="@category"></option>
+                        }
+                    </datalist>
+                    <span asp-validation-for="MachineInput.CategoryKey" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="MachineInput.Brand" class="form-label text-light">Marka</label>
+                    <input asp-for="MachineInput.Brand" class="form-control bg-dark text-light border-secondary" />
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="MachineInput.Model" class="form-label text-light">Model</label>
+                    <input asp-for="MachineInput.Model" class="form-control bg-dark text-light border-secondary" />
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="MachineInput.Type" class="form-label text-light">Typ</label>
+                    <input asp-for="MachineInput.Type" class="form-control bg-dark text-light border-secondary" />
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="MachineInput.ProductionYear" class="form-label text-light">Rok produkcji</label>
+                    <input asp-for="MachineInput.ProductionYear" class="form-control bg-dark text-light border-secondary" type="number" min="1900" max="2100" />
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="MachineInput.Weight" class="form-label text-light">Waga</label>
+                    <input asp-for="MachineInput.Weight" class="form-control bg-dark text-light border-secondary" />
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="MachineInput.RentalOptions" class="form-label text-light">Opcje wynajmu</label>
+                    <input asp-for="MachineInput.RentalOptions" class="form-control bg-dark text-light border-secondary" />
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="MachineInput.Image" class="form-label text-light">Ścieżka do zdjęcia</label>
+                    <input asp-for="MachineInput.Image" class="form-control bg-dark text-light border-secondary" placeholder="/images/..." />
+                </div>
+                <div class="col-12">
+                    <label asp-for="MachineInput.Notes" class="form-label text-light">Uwagi</label>
+                    <textarea asp-for="MachineInput.Notes" class="form-control bg-dark text-light border-secondary" rows="2"></textarea>
+                </div>
+
+                <div class="col-12">
+                    <label class="form-label text-light">Wyposażenie</label>
+                    <div data-equipment-list>
+                        @for (var i = 0; i < Model.EquipmentItems.Count; i++)
+                        {
+                            <div class="input-group mb-2" data-equipment-row>
+                                <input class="form-control bg-dark text-light border-secondary" name="EquipmentItems[@i]" value="@Model.EquipmentItems[i]" />
+                                <button type="button" class="btn btn-outline-danger" data-remove-equipment>Usuń</button>
+                            </div>
+                        }
+                    </div>
+                    <button type="button" class="btn btn-outline-primary" data-add-equipment>Dodaj pozycję</button>
+                </div>
+
+                <div class="col-12">
+                    <label class="form-label text-light">Specyfikacja</label>
+                    <div data-spec-list>
+                        @for (var i = 0; i < Model.SpecificationItems.Count; i++)
+                        {
+                            <div class="row g-2 align-items-center mb-2" data-spec-row>
+                                <div class="col-md-5">
+                                    <input class="form-control bg-dark text-light border-secondary" name="SpecificationItems[@i].Key" value="@Model.SpecificationItems[i].Key" placeholder="Parametr" />
+                                </div>
+                                <div class="col-md-5">
+                                    <input class="form-control bg-dark text-light border-secondary" name="SpecificationItems[@i].Value" value="@Model.SpecificationItems[i].Value" placeholder="Wartość" />
+                                </div>
+                                <div class="col-md-2">
+                                    <button type="button" class="btn btn-outline-danger w-100" data-remove-spec>Usuń</button>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <button type="button" class="btn btn-outline-primary" data-add-spec>Dodaj parametr</button>
+                </div>
+
+                <div class="col-12 d-flex gap-2">
+                    <button type="submit" class="btn-gamex btn-primary-gamex">Zapisz</button>
+                    <a asp-page="/Admin/Machines" class="btn-gamex btn-secondary-gamex">Anuluj</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<template id="equipment-template">
+    <div class="input-group mb-2" data-equipment-row>
+        <input class="form-control bg-dark text-light border-secondary" name="EquipmentItems[__index__]" />
+        <button type="button" class="btn btn-outline-danger" data-remove-equipment>Usuń</button>
+    </div>
+</template>
+
+<template id="spec-template">
+    <div class="row g-2 align-items-center mb-2" data-spec-row>
+        <div class="col-md-5">
+            <input class="form-control bg-dark text-light border-secondary" name="SpecificationItems[__index__].Key" placeholder="Parametr" />
+        </div>
+        <div class="col-md-5">
+            <input class="form-control bg-dark text-light border-secondary" name="SpecificationItems[__index__].Value" placeholder="Wartość" />
+        </div>
+        <div class="col-md-2">
+            <button type="button" class="btn btn-outline-danger w-100" data-remove-spec>Usuń</button>
+        </div>
+    </div>
+</template>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        (function () {
+            const equipmentList = document.querySelector('[data-equipment-list]');
+            const specList = document.querySelector('[data-spec-list]');
+            const equipmentTemplate = document.getElementById('equipment-template').innerHTML;
+            const specTemplate = document.getElementById('spec-template').innerHTML;
+            let equipmentIndex = equipmentList ? equipmentList.children.length : 0;
+            let specIndex = specList ? specList.children.length : 0;
+
+            document.addEventListener('click', function (event) {
+                if (event.target.matches('[data-add-equipment]')) {
+                    event.preventDefault();
+                    equipmentList.insertAdjacentHTML('beforeend', equipmentTemplate.replace(/__index__/g, equipmentIndex++));
+                }
+
+                if (event.target.matches('[data-add-spec]')) {
+                    event.preventDefault();
+                    specList.insertAdjacentHTML('beforeend', specTemplate.replace(/__index__/g, specIndex++));
+                }
+
+                if (event.target.matches('[data-remove-equipment]')) {
+                    event.preventDefault();
+                    event.target.closest('[data-equipment-row]')?.remove();
+                }
+
+                if (event.target.matches('[data-remove-spec]')) {
+                    event.preventDefault();
+                    event.target.closest('[data-spec-row]')?.remove();
+                }
+            });
+        })();
+    </script>
+}
