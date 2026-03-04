@@ -7,7 +7,7 @@
             <header class="machine-rental-hero text-center">
                 <h1 class="display-5 fw-bold">Wypożyczalnia maszyn budowlanych</h1>
                 <p class="lead mx-auto">
-                    Poznaj nasz park maszynowy. Każda maszyna jest dostępna z obsługą operatorską i gotowa do pracy w Małopolsce, Śląskiem i Świętokrzyskim.
+                    Poznaj nasz park maszynowy. Każda maszyna jest dostępna z obsługą operatorską i gotowa do pracy w województwie Małopolskim, Śląskim oraz Świętokrzyskim.
                 </p>
             </header>
 
@@ -33,7 +33,7 @@
                                         <div class="machine-card-media">
                                             @if (!string.IsNullOrWhiteSpace(machine.Image))
                                             {
-                                                <img src="@Url.Content(machine.Image)" alt="@machine.DisplayName" loading="lazy" />
+                                                <img src="@Url.Content(machine.Image)" alt="@machine.DisplayName - @machine.CategoryDisplayName na wynajem w Gamex Olkusz" loading="lazy" />
                                             }
                                             else
                                             {

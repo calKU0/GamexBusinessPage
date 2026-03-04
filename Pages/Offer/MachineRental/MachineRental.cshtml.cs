@@ -31,9 +31,9 @@ namespace GamexBusinessPage.Pages.MachineRental
 
         public void OnGet(string? category)
         {
-            ViewData["Title"] = "Wypożyczalnia maszyn budowlanych Gamex Olkusz";
-            ViewData["Description"] = "Gamex w Olkuszu oferuje wynajem maszyn budowlanych – koparki, minikoparki, ładowarki i inne sprzęty. Sprawdź naszą ofertę w woj. Małopolskim.";
-            ViewData["Keywords"] = "Gamex, Olkusz, wynajem maszyn budowlanych, wypożyczalnia koparek, minikoparki, ładowarki, sprzęt budowlany, Małopolskie";
+            ViewData["Title"] = "Wypożyczalnia maszyn budowlanych Olkusz | Koparki, Ładowarki, Frezarki";
+            ViewData["Description"] = "Wynajem maszyn budowlanych w Gamex. Posiadamy minikoparki, koparki kołowe, ładowarki, przesiewacze i wiele innych. Konkurencyjne ceny i transport maszyny na budowę. Sprawdź listę!";
+            ViewData["Keywords"] = "Gamex, Olkusz, wynajem maszyn budowlanych, wypożyczalnia koparek, minikoparki, ładowarki, sprzęt budowlany, Małopolska, Śląsk, Świętokrzyskie";
 
             var catalog = _catalogCache.GetMachineCatalog();
             Categories = catalog.Categories;
@@ -109,7 +109,7 @@ namespace GamexBusinessPage.Pages.MachineRental
                         ["@type"] = "Product",
                         ["name"] = machine.DisplayName,
                         ["url"] = machineUrl,
-                        ["description"] = string.IsNullOrWhiteSpace(machine.RentalOptions) ? "Wynajem maszyny budowlanej z operatorem w Gamex Olkusz." : machine.RentalOptions,
+                        ["description"] = $"Wynajem: {machine.DisplayName}. Oferujemy profesjonalny sprzęt budowlany z transportem do klienta (Olkusz i okolice). {machine.RentalOptions}",
                         ["image"] = string.IsNullOrWhiteSpace(machine.Image) ? $"{baseUrl}/images/machines/default-machine.webp" : $"{baseUrl}{machine.Image}",
                         ["brand"] = string.IsNullOrWhiteSpace(machine.Brand)
                             ? null
@@ -139,46 +139,6 @@ namespace GamexBusinessPage.Pages.MachineRental
                                     ["unitCode"] = "DAY"
                                 }
                             },
-                            ["shippingDetails"] = new Dictionary<string, object?>
-                            {
-                                ["@type"] = "OfferShippingDetails",
-                                ["shippingRate"] = new Dictionary<string, object?>
-                                {
-                                    ["@type"] = "MonetaryAmount",
-                                    ["value"] = "0", // Lub stawka bazowa
-                                    ["currency"] = "PLN"
-                                },
-                                ["shippingDestination"] = new Dictionary<string, object?>
-                                {
-                                    ["@type"] = "DefinedRegion",
-                                    ["addressCountry"] = "PL"
-                                },
-                                ["deliveryTime"] = new Dictionary<string, object?>
-                                {
-                                    ["@type"] = "ShippingDeliveryTime",
-                                    ["handlingTime"] = new Dictionary<string, object?>
-                                    {
-                                        ["@type"] = "QuantitativeValue",
-                                        ["minValue"] = 0,
-                                        ["maxValue"] = 3,
-                                        ["unitCode"] = "DAY"
-                                    },
-                                    ["transitTime"] = new Dictionary<string, object?>
-                                    {
-                                        ["@type"] = "QuantitativeValue",
-                                        ["minValue"] = 0,
-                                        ["maxValue"] = 3,
-                                        ["unitCode"] = "DAY"
-                                    }
-                                }
-                            },
-                            ["hasMerchantReturnPolicy"] = new Dictionary<string, object?>
-                            {
-                                ["@type"] = "MerchantReturnPolicy",
-                                ["applicableCountry"] = "PL",
-                                ["returnPolicyCategory"] = "https://schema.org/MerchantReturnNotPermitted",
-                                ["merchantReturnLink"] = $"{baseUrl}/regulamin"
-                            },
                             ["availability"] = "https://schema.org/InStock",
                             ["itemCondition"] = "https://schema.org/UsedCondition",
                             ["businessFunction"] = "http://purl.org/goodrelations/v1#LeaseOut",
@@ -189,7 +149,7 @@ namespace GamexBusinessPage.Pages.MachineRental
                         }
                     };
 
-                    SchemaFactory.ApplyRating(productSchema, "4.0", 6);
+                    //SchemaFactory.ApplyRating(productSchema, "4.0", 6);
 
                     return new Dictionary<string, object?>
                     {

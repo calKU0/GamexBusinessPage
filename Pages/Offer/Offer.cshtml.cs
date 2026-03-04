@@ -14,9 +14,9 @@ namespace GamexBusinessPage.Pages
 
         public void OnGet()
         {
-            ViewData["Title"] = "Oferta Gamex Olkusz – Maszyny budowlane i remonty dróg";
-            ViewData["Description"] = "Poznaj pełną ofertę Gamex w Olkuszu – wynajem maszyn budowlanych i profesjonalne usługi remontu dróg w woj. Małopolskim.";
-            ViewData["Keywords"] = "Gamex, Olkusz, oferta, wynajem maszyn budowlanych, remonty dróg, usługi budowlane, Małopolskie";
+            ViewData["Title"] = "Usługi i maszyny budowlane – Oferta Gamex Olkusz";
+            ViewData["Description"] = "Szeroki zakres usług: od wynajmu koparek po kompleksowe roboty drogowe i transport HDS. Zobacz, jak Gamex wspiera inwestycje w Olkuszu, całej Małopolce oraz okolicach";
+            ViewData["Keywords"] = "Gamex, Olkusz, oferta, wynajem maszyn budowlanych, remonty dróg, usługi budowlane, Małopolska, Śląsk, Świętokrzyskie";
 
             var baseUrl = "https://gamex-olkusz.pl";
             var localBusiness = SchemaFactory.GetLocalBusinessSchema(baseUrl);
@@ -60,7 +60,7 @@ namespace GamexBusinessPage.Pages
                 new Dictionary<string, object?> {
                     ["@type"] = "Service",
                     ["name"] = "Transport ciężarowy i HDS",
-                    ["description"] = "Transport materiałów sypkich i maszyn na terenie Małopolski i Śląska.",
+                    ["description"] = "Transport materiałów sypkich i maszyn na terenie województwa Małopolskiego, Śląskiego oraz Świętokrzyskiego.",
                     ["provider"] = new Dictionary<string, object?> { ["@id"] = localBusiness["@id"] },
                     ["url"] = $"{baseUrl}/Offer/Transport/Transport"
                 }

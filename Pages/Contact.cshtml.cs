@@ -24,9 +24,9 @@ namespace GamexBusinessPage.Pages
 
         public void OnGet()
         {
-            ViewData["Title"] = "Kontakt Gamex Olkusz – Remonty dróg i wynajem maszyn budowlanych";
-            ViewData["Description"] = "Skontaktuj se z Gamex w Olkuszu – wynajem maszyn budowlanych i remonty dróg w woj. Małopolskim. Telefon, email, adres i formularz kontaktowy.";
-            ViewData["Keywords"] = "Gamex, Olkusz, kontakt, wynajem maszyn budowlanych, remonty dróg, usługi budowlane, Małopolskie";
+            ViewData["Title"] = "Kontakt - Gamex Olkusz | Zapytaj o wynajem i usługi";
+            ViewData["Description"] = "Skontaktuj się z Gamex w Olkuszu. Szybka wycena wynajmu maszyn i usług drogowych. Zadzwoń lub napisz do nas – działamy w 3 województwach!";
+            ViewData["Keywords"] = "Gamex, Olkusz, kontakt, wynajem maszyn budowlanych, remonty dróg, usługi budowlane, Małopolska, Śląsk, Świętokrzyskie";
 
             var baseUrl = "https://gamex-olkusz.pl";
 

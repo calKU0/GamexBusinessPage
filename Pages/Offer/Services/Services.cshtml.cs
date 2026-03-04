@@ -31,9 +31,9 @@ namespace GamexBusinessPage.Pages.Services
 
         public void OnGet(string? category)
         {
-            ViewData["Title"] = "Remonty dróg Gamex Olkusz – Profesjonalne usługi drogowe";
-            ViewData["Description"] = "Gamex z Olkusza wykonuje remonty dróg i nawierzchni w woj. Małopolskim. Profesjonalne maszyny i doświadczenie w usługach drogowych.";
-            ViewData["Keywords"] = "Gamex, Olkusz, remonty dróg, usługi drogowe, nawierzchnie asfaltowe, usługi budowlane, Małopolskie";
+            ViewData["Title"] = "Budowa i remonty dróg | Usługi drogowe Gamex Olkusz";
+            ViewData["Description"] = "Profesjonalne remonty dróg, układanie nawierzchni i roboty ziemne. Realizujemy projekty dla gmin i firm w Małopolsce, Śląsku i Świętokrzyskim.";
+            ViewData["Keywords"] = "Gamex, Olkusz, remonty dróg, usługi drogowe, nawierzchnie asfaltowe, usługi budowlane, Małopolska, Śląsk, Świętokrzyskie";
 
             var catalog = _catalogCache.GetServiceCatalog();
             Categories = catalog.Categories;
@@ -133,7 +133,7 @@ namespace GamexBusinessPage.Pages.Services
                             }
                         };
 
-                        SchemaFactory.ApplyRating(serviceItem, "4.0", 6);
+                        //SchemaFactory.ApplyRating(serviceItem, "4.0", 6);
 
                         return new Dictionary<string, object?>
                         {

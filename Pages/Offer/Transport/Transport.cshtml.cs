@@ -31,9 +31,9 @@ public class TransportModel : PageModel
 
     public void OnGet(string? category)
     {
-        ViewData["Title"] = "Transport materiałów i maszyn Gamex Olkusz";
-        ViewData["Description"] = "Transport materiałów sypkich, maszyn budowlanych i ładunków HDS w Olkuszu i Małopolsce. Sprawdź naszą ofertę transportową.";
-        ViewData["Keywords"] = "Gamex, Olkusz, transport materiałów, transport maszyn, HDS, laweta, niskopodwoziowy";
+        ViewData["Title"] = "Transport materiałów sypkich i maszyn HDS | Gamex Olkusz";
+        ViewData["Description"] = "Oferujemy transport kruszyw, piasku oraz przewóz maszyn budowlanych lawetą i HDS. Szybka realizacja na terenie woj. małopolskiego i śląskiego.";
+        ViewData["Keywords"] = "Gamex, Olkusz, transport materiałów, transport maszyn, HDS, laweta, niskopodwoziowy, wywrotka, Małopolska";
 
         var catalog = _catalogCache.GetTransportCatalog();
         Categories = catalog.Categories;
@@ -125,7 +125,7 @@ public class TransportModel : PageModel
                         ["serviceType"] = "Transport materiałów i maszyn"
                     };
 
-                    SchemaFactory.ApplyRating(transportServiceItem, "4.0", 6);
+                    // SchemaFactory.ApplyRating(transportServiceItem, "4.0", 6);
 
                     return new Dictionary<string, object?>
                     {

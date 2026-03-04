@@ -68,9 +68,10 @@ public class DetailsModel : PageModel
             .ToList();
         ContactForm = new ContactFormViewModel(machines, Machine.Slug, true);
 
-        ViewData["Title"] = $"{Machine.DisplayName} – wynajem maszyn Gamex";
-        ViewData["Description"] = $"Sprawdź szczegóły wynajmu maszyny {Machine.DisplayName} w Gamex Olkusz. Profesjonalny sprzęt i obsługa operatorska.";
-        ViewData["Keywords"] = $"{Machine.Brand}, {Machine.Model}, wynajem maszyn budowlanych, Gamex, Olkusz";
+        ViewData["Title"] = $"Wynajem {Machine.DisplayName} – {Machine.CategoryDisplayName} | Gamex Olkusz";
+        ViewData["Description"] = $"Szukasz {Machine.DisplayName}? Oferujemy wynajem krótko i długoterminowy z profesjonalną obsługą operatorską w Olkuszu i okolicach. Zadzwoń po wycenę!";
+        ViewData["Keywords"] = $"{Machine.Brand}, {Machine.Model}, wynajem {Machine.CategoryDisplayName}, maszyny budowlane Olkusz";
+        ViewData["OgImage"] = $"https://gamex-olkusz.pl/images/{Machine.Image}";
 
         var priceValidUntil = "2026-12-31";
         var baseUrl = "https://gamex-olkusz.pl";
@@ -144,46 +145,6 @@ public class DetailsModel : PageModel
                         ["unitCode"] = "DAY"
                     }
                 },
-                ["shippingDetails"] = new Dictionary<string, object?>
-                {
-                    ["@type"] = "OfferShippingDetails",
-                    ["shippingRate"] = new Dictionary<string, object?>
-                    {
-                        ["@type"] = "MonetaryAmount",
-                        ["value"] = "0", // Lub stawka bazowa
-                        ["currency"] = "PLN"
-                    },
-                    ["shippingDestination"] = new Dictionary<string, object?>
-                    {
-                        ["@type"] = "DefinedRegion",
-                        ["addressCountry"] = "PL"
-                    },
-                    ["deliveryTime"] = new Dictionary<string, object?>
-                    {
-                        ["@type"] = "ShippingDeliveryTime",
-                        ["handlingTime"] = new Dictionary<string, object?>
-                        {
-                            ["@type"] = "QuantitativeValue",
-                            ["minValue"] = 0,
-                            ["maxValue"] = 3,
-                            ["unitCode"] = "DAY"
-                        },
-                        ["transitTime"] = new Dictionary<string, object?>
-                        {
-                            ["@type"] = "QuantitativeValue",
-                            ["minValue"] = 0,
-                            ["maxValue"] = 3,
-                            ["unitCode"] = "DAY"
-                        }
-                    }
-                },
-                ["hasMerchantReturnPolicy"] = new Dictionary<string, object?>
-                {
-                    ["@type"] = "MerchantReturnPolicy",
-                    ["applicableCountry"] = "PL",
-                    ["returnPolicyCategory"] = "https://schema.org/MerchantReturnNotPermitted",
-                    ["merchantReturnLink"] = $"{baseUrl}/regulamin"
-                },
                 ["seller"] = new Dictionary<string, object?>
                 {
                     ["@id"] = localBusiness["@id"]
@@ -191,9 +152,7 @@ public class DetailsModel : PageModel
                 ["businessFunction"] = "http://purl.org/goodrelations/v1#LeaseOut"
             },
             ["name"] = Machine.DisplayName,
-            ["description"] = string.IsNullOrWhiteSpace(Machine.RentalOptions)
-                    ? "Wynajem maszyny budowlanej z operatorem w Gamex Olkusz."
-                : Machine.RentalOptions,
+            ["description"] = $"Wynajem: {Machine.DisplayName}. Oferujemy profesjonalny sprzęt budowlany z transportem do klienta (Olkusz i okolice). {Machine.RentalOptions}",
             ["image"] = string.IsNullOrWhiteSpace(Machine.Image) ? $"{baseUrl}/images/machines/default-machine.webp" : $"{baseUrl}{Machine.Image}",
             ["brand"] = string.IsNullOrWhiteSpace(Machine.Brand)
                 ? null
@@ -202,7 +161,7 @@ public class DetailsModel : PageModel
             ["category"] = Machine.CategoryDisplayName
         };
 
-        SchemaFactory.ApplyRating(machineSchema, "4.0", 6);
+        //SchemaFactory.ApplyRating(machineSchema, "4.0", 6);
 
         var schemaGraph = new Dictionary<string, object?>
         {
