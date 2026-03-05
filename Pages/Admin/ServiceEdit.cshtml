@@ -12,10 +12,13 @@
 
     <div class="card bg-dark border-secondary text-light shadow-sm rounded-4">
         <div class="card-body">
-            <form method="post" class="row g-3">
+            <form method="post" enctype="multipart/form-data" class="row g-3">
                 <div asp-validation-summary="All" class="text-danger"></div>
                 <input type="hidden" name="OriginalServiceCategory" value="@Model.OriginalServiceCategory" />
                 <input type="hidden" name="OriginalServiceName" value="@Model.OriginalServiceName" />
+                <input type="hidden" id="MainImagePath" name="MainImagePath" value="" />
+                <input type="hidden" id="MainImageType" name="MainImageType" value="" />
+
                 <div class="col-md-6">
                     <label asp-for="ServiceInput.CategoryKey" class="form-label text-light">Kategoria</label>
                     <input asp-for="ServiceInput.CategoryKey" class="form-control bg-dark text-light border-secondary" list="service-categories" />
@@ -40,9 +43,71 @@
                     <label asp-for="ServiceInput.Highlight" class="form-label text-light">Wyróżnienie</label>
                     <input asp-for="ServiceInput.Highlight" class="form-control bg-dark text-light border-secondary" />
                 </div>
-                <div class="col-md-6">
-                    <label asp-for="ServiceInput.Image" class="form-label text-light">Ścieżka do zdjęcia</label>
-                    <input asp-for="ServiceInput.Image" class="form-control bg-dark text-light border-secondary" placeholder="/images/..." />
+
+                <!-- Images Section - Simplified -->
+                <div class="col-12">
+                    <hr class="border-secondary my-4" />
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="text-light mb-0">
+                            <i class="fas fa-images me-2"></i>Zdjęcia
+                        </h5>
+                        <div>
+                            <label for="ImageFiles" class="btn btn-primary btn-sm">
+                                <i class="fas fa-plus me-1"></i>Dodaj zdjęcia
+                            </label>
+                            <input asp-for="ImageFiles" class="d-none" 
+                                   id="ImageFiles" type="file" accept="image/*" multiple />
+                        </div>
+                    </div>
+
+                    <div class="row g-3" id="all-images-container">
+                        @if (Model.ExistingImages.Count > 0)
+                        {
+                            @foreach (var image in Model.ExistingImages)
+                            {
+                                <div class="col-md-3 col-sm-4 col-6" data-image-container="@image.Path" data-image-type="existing">
+                                    <div class="card bg-secondary border-0 shadow-sm h-100">
+                                        <div class="position-relative">
+                                            <img src="@image.Path" class="card-img-top" 
+                                                 style="height: 160px; object-fit: cover;" alt="Zdjęcie usługi" />
+                                            @if (image.IsMain)
+                                            {
+                                                <span class="position-absolute top-0 start-0 badge bg-primary m-2">
+                                                    <i class="fas fa-star me-1"></i>Główne
+                                                </span>
+                                            }
+                                        </div>
+                                        <div class="card-body p-2">
+                                            <div class="d-flex gap-1 flex-wrap">
+                                                <button type="button" class="btn btn-sm btn-outline-primary set-main-btn flex-fill" 
+                                                        data-image-path="@image.Path" title="Ustaw jako główne zdjęcie"
+                                                        style="display: @(image.IsMain ? "none" : "inline-block")">
+                                                    <i class="fas fa-star me-1"></i>Ustaw jako główne
+                                                </button>
+                                                <button type="button" class="btn btn-sm btn-outline-danger delete-image-btn flex-fill" 
+                                                        data-image-path="@image.Path" title="Usuń zdjęcie">
+                                                    <i class="fas fa-trash me-1"></i>Usuń
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
+
+                    @if (Model.ExistingImages.Count == 0)
+                    {
+                        <div class="text-light text-center py-4" id="no-images-message">
+                            <i class="fas fa-images fa-2x mb-2"></i>
+                            <p class="text-light">Brak zdjęć. Użyj przycisku "Dodaj zdjęcia" aby dodać pierwsze zdjęcie.</p>
+                        </div>
+                    }
+
+                    <div class="form-text text-muted mt-3">
+                        <i class="fas fa-info-circle me-1"></i>
+                        Obsługiwane formaty: JPG, PNG, WebP, GIF. Zdjęcia zostaną automatycznie skonwertowane do WebP i skompresowane.
+                    </div>
                 </div>
                 <div class="col-12 d-flex gap-2">
                     <button type="submit" class="btn-gamex btn-primary-gamex">Zapisz</button>
@@ -55,4 +120,265 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script>
+        (function () {
+            let newImageIndex = 0;
+
+            // File input handling
+            const fileInput = document.getElementById('ImageFiles');
+            const allImagesContainer = document.getElementById('all-images-container');
+            const noImagesMessage = document.getElementById('no-images-message');
+
+            // Initialize main image tracking on page load
+            initializeMainImageTracking();
+
+            function initializeMainImageTracking() {
+                // Find the currently main existing image and set hidden fields
+                const mainExistingImage = document.querySelector('[data-image-type="existing"] .badge.bg-primary');
+                if (mainExistingImage) {
+                    const container = mainExistingImage.closest('[data-image-container]');
+                    const imagePath = container.getAttribute('data-image-container');
+                    document.getElementById('MainImagePath').value = imagePath;
+                    document.getElementById('MainImageType').value = 'existing';
+                }
+            }
+
+            // File input change
+            if (fileInput) {
+                fileInput.addEventListener('change', function(e) {
+                    if (e.target.files.length > 0) {
+                        handleFileSelection(e.target.files);
+                    }
+                });
+            }
+
+            function handleFileSelection(files) {
+                // Hide no images message if it exists
+                if (noImagesMessage) {
+                    noImagesMessage.style.display = 'none';
+                }
+
+                const hasExistingImages = document.querySelectorAll('[data-image-type="existing"]').length > 0;
+
+                Array.from(files).forEach((file, index) => {
+                    if (file.type.startsWith('image/')) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            const imagePath = `new-image-${newImageIndex++}`;
+                            const isFirstImage = index === 0 && !hasExistingImages && !hasAnyMainImage();
+
+                            const imageCard = createImagePreviewCard(e.target.result, imagePath, file.name, isFirstImage);
+                            allImagesContainer.appendChild(imageCard);
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+            }
+
+            function hasAnyMainImage() {
+                return document.querySelector('[data-image-container] .badge.bg-primary, [data-image-container] .badge.bg-success') !== null;
+            }
+
+            function createImagePreviewCard(src, imagePath, fileName, isMain = false) {
+                const col = document.createElement('div');
+                col.className = 'col-md-3 col-sm-4 col-6';
+                col.setAttribute('data-image-container', imagePath);
+                col.setAttribute('data-image-type', 'preview');
+
+                col.innerHTML = `
+                    <div class="card bg-secondary border-0 shadow-sm h-100" style="border: 2px dashed #28a745 !important;">
+                        <div class="position-relative">
+                            <img src="${src}" class="card-img-top" 
+                                 style="height: 160px; object-fit: cover;" alt="Podgląd: ${fileName}" />
+                            ${isMain ? '<span class="position-absolute top-0 start-0 badge bg-primary m-2"><i class="fas fa-star me-1"></i>Główne</span>' : ''}
+                            <span class="position-absolute top-0 end-0 badge bg-info m-2">Nowe</span>
+                        </div>
+                        <div class="card-body p-2">
+                            <div class="d-flex gap-1 flex-wrap">
+                                ${!isMain ? `<button type="button" class="btn btn-sm btn-outline-primary set-main-preview-btn flex-fill" 
+                                                    data-image-path="${imagePath}" title="Ustaw jako główne zdjęcie">
+                                                <i class="fas fa-star me-1"></i>Ustaw jako główne
+                                            </button>` : ''}
+                                <button type="button" class="btn btn-sm btn-outline-danger remove-preview-btn flex-fill" 
+                                        data-image-path="${imagePath}" title="Usuń z podglądu">
+                                    <i class="fas fa-trash me-1"></i>Usuń
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                return col;
+            }
+
+            document.addEventListener('click', function (event) {
+                // Set main image for preview images
+                if (event.target.matches('.set-main-preview-btn')) {
+                    event.preventDefault();
+                    const imagePath = event.target.getAttribute('data-image-path');
+                    setMainPreviewImage(imagePath);
+                }
+
+                // Remove preview image
+                if (event.target.matches('.remove-preview-btn')) {
+                    event.preventDefault();
+                    const imagePath = event.target.getAttribute('data-image-path');
+                    const container = event.target.closest('[data-image-container]');
+                    container.remove();
+
+                    // Show no images message if no images left
+                    const remainingImages = document.querySelectorAll('[data-image-container]');
+                    if (remainingImages.length === 0 && noImagesMessage) {
+                        noImagesMessage.style.display = 'block';
+                    }
+
+                    // Clear file input
+                    fileInput.value = '';
+                }
+
+                // Delete existing image functionality
+                if (event.target.matches('.delete-image-btn')) {
+                    event.preventDefault();
+                    const imagePath = event.target.getAttribute('data-image-path');
+                    const category = @Html.Raw(Json.Serialize(Model.Category ?? Model.OriginalServiceCategory));
+                    const name = @Html.Raw(Json.Serialize(Model.Name ?? Model.OriginalServiceName));
+
+                    console.log('Delete button clicked:', { imagePath, category, name }); // Debug log
+
+                    if (!category || !name) {
+                        showMessage('Błąd: Brak danych kategorii lub nazwy usługi', 'error');
+                        return;
+                    }
+
+                    if (confirm('Czy na pewno chcesz usunąć to zdjęcie?')) {
+                        deleteImage(imagePath, category, name, event.target);
+                    }
+                }
+
+                // Set main existing image functionality
+                if (event.target.matches('.set-main-btn')) {
+                    event.preventDefault();
+                    const imagePath = event.target.getAttribute('data-image-path');
+
+                    setMainExistingImage(imagePath);
+                }
+            });
+
+            function setMainExistingImage(imagePath) {
+                // Remove main status from all images (existing and preview)
+                document.querySelectorAll('[data-image-container] .badge.bg-primary').forEach(badge => badge.remove());
+                document.querySelectorAll('[data-image-container] .badge.bg-success').forEach(badge => badge.remove());
+
+                // Show all "Ustaw jako główne" buttons
+                document.querySelectorAll('.set-main-btn').forEach(btn => {
+                    btn.style.display = 'inline-block';
+                });
+                document.querySelectorAll('.set-main-preview-btn').forEach(btn => {
+                    btn.style.display = 'inline-block';
+                });
+
+                // Set selected existing image as main
+                const container = document.querySelector(`[data-image-container="${imagePath}"]`);
+                if (container) {
+                    const imageContainer = container.querySelector('.position-relative');
+
+                    imageContainer.insertAdjacentHTML('beforeend', '<span class="position-absolute top-0 start-0 badge bg-primary m-2"><i class="fas fa-star me-1"></i>Główne</span>');
+
+                    const setMainBtn = container.querySelector('.set-main-btn');
+                    if (setMainBtn) {
+                        setMainBtn.style.display = 'none';
+                    }
+
+                    // Update hidden fields for form submission
+                    document.getElementById('MainImagePath').value = imagePath;
+                    document.getElementById('MainImageType').value = 'existing';
+                }
+            }
+
+            function setMainPreviewImage(imagePath) {
+                // Remove main status from all images (existing and preview)
+                document.querySelectorAll('[data-image-container] .badge.bg-primary').forEach(badge => badge.remove());
+                document.querySelectorAll('[data-image-container] .badge.bg-success').forEach(badge => badge.remove());
+
+                // Show all "Ustaw jako główne" buttons
+                document.querySelectorAll('.set-main-btn').forEach(btn => {
+                    btn.style.display = 'inline-block';
+                });
+                document.querySelectorAll('.set-main-preview-btn').forEach(btn => {
+                    btn.style.display = 'inline-block';
+                });
+
+                // Set selected preview image as main
+                const container = document.querySelector(`[data-image-container="${imagePath}"]`);
+                if (container) {
+                    const imageContainer = container.querySelector('.position-relative');
+
+                    imageContainer.insertAdjacentHTML('beforeend', '<span class="position-absolute top-0 start-0 badge bg-primary m-2"><i class="fas fa-star me-1"></i>Główne</span>');
+
+                    const setMainBtn = container.querySelector('.set-main-preview-btn');
+                    if (setMainBtn) {
+                        setMainBtn.style.display = 'none';
+                    }
+
+                    // Update hidden fields for form submission
+                    document.getElementById('MainImagePath').value = imagePath;
+                    document.getElementById('MainImageType').value = 'preview';
+                }
+            }
+
+            async function deleteImage(imagePath, category, name, buttonElement) {
+                try {
+                    const formData = new FormData();
+                    formData.append('imagePath', imagePath);
+                    formData.append('category', category);
+                    formData.append('name', name);
+
+                    const response = await fetch('/admin/services/edit?handler=DeleteImage', {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
+                        }
+                    });
+
+                    const result = await response.json();
+
+                    if (result.success) {
+                        const container = buttonElement.closest('[data-image-container]');
+                        container.remove();
+
+                        // Show no images message if no images left
+                        const remainingImages = document.querySelectorAll('[data-image-container]');
+                        if (remainingImages.length === 0 && noImagesMessage) {
+                            noImagesMessage.style.display = 'block';
+                        }
+
+                        showMessage('Zdjęcie zostało usunięte', 'success');
+                    } else {
+                        showMessage(result.message || 'Błąd podczas usuwania zdjęcia', 'error');
+                    }
+                } catch (error) {
+                    showMessage('Błąd podczas usuwania zdjęcia', 'error');
+                    console.error('Error deleting image:', error);
+                }
+            }
+
+            function showMessage(message, type) {
+                const alertClass = type === 'success' ? 'alert-success' : 'alert-danger';
+                const alertDiv = document.createElement('div');
+                alertDiv.className = `alert ${alertClass} alert-dismissible fade show`;
+                alertDiv.innerHTML = `
+                    ${message}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                `;
+
+                const container = document.querySelector('.container');
+                container.insertBefore(alertDiv, container.firstChild);
+
+                setTimeout(() => {
+                    alertDiv.remove();
+                }, 3000);
+            }
+        })();
+    </script>
 }

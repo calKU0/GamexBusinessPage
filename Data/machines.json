@@ -1,5 +1,5 @@
-﻿{
-  "Koparko ładowarki": [
+{
+  "Koparko \u0142adowarki": [
     {
       "model": "4CX",
       "brand": "JCB",
@@ -8,13 +8,14 @@
       "equipment": [
         "Joystick",
         "Dualdrive",
-        "Szybkozłącze przód, tył",
-        "Łyżka skarpowa uchylna, łyżka 30cm, 60 cm",
-        "Łyżka przed 4w1",
-        "Oświetlenie led",
+        "Szybkoz\u0142\u0105cze prz\u00F3d, ty\u0142",
+        "\u0141y\u017Cka skarpowa uchylna, \u0142y\u017Cka 30cm, 60 cm",
+        "\u0141y\u017Cka przed 4w1",
+        "O\u015Bwietlenie led",
         "Fotel pneumatyczny",
         "Radio"
-      ]
+      ],
+      "specifications": {}
     },
     {
       "model": "3CX1",
@@ -23,23 +24,28 @@
       "production_year": 2018,
       "equipment": [
         "Joystick",
-        "Łyżka skarpowa, łyżka 30cm, 60 cm",
-        "Szybkozłącze tył",
-        "Łyżka przód 4w1"
-      ]
+        "\u0141y\u017Cka skarpowa, \u0142y\u017Cka 30cm, 60 cm",
+        "Szybkoz\u0142\u0105cze ty\u0142",
+        "\u0141y\u017Cka prz\u00F3d 4w1"
+      ],
+      "specifications": {}
     },
     {
       "model": "3CX",
       "brand": "JCB",
       "images": [],
       "production_year": 2016,
+      "weight": "",
       "equipment": [
-        "Dźwignie X",
-        "Łyżka skarpowa, łyżka 30cm, 60 cm",
-        "Szybkozłącze tył",
-        "Łyżka przód 4w1"
+        "D\u017Awignie X",
+        "\u0141y\u017Cka skarpowa, \u0142y\u017Cka 30cm, 60 cm",
+        "Szybkoz\u0142\u0105cze ty\u0142",
+        "\u0141y\u017Cka prz\u00F3d 4w1"
       ],
-      "rental_options": "Możliwość wynajmu z zamiatarką 2,75m i frezarką 40cm lub młotem do kucia"
+      "rental_options": "Mo\u017Cliwo\u015B\u0107 wynajmu z zamiatark\u0105 2,75m i frezark\u0105 40cm lub m\u0142otem do kucia",
+      "specifications": {},
+      "notes": "",
+      "type": ""
     }
   ],
   "Minikoparki": [
@@ -50,12 +56,13 @@
       "production_year": 2018,
       "weight": "1,7t",
       "equipment": [
-        "Łyżka skarpowa uchylna",
-        "Lemiesz rozkładany",
+        "\u0141y\u017Cka skarpowa uchylna",
+        "Lemiesz rozk\u0142adany",
         "Rozsuwane podwozie",
-        "Gąsienice gumowe",
+        "G\u0105sienice gumowe",
         "Kogut"
-      ]
+      ],
+      "specifications": {}
     },
     {
       "model": "19-C1",
@@ -64,14 +71,15 @@
       "production_year": 2025,
       "weight": "1,9t",
       "equipment": [
-        "Łyżka skarpowa uchylna",
-        "Szybkozłącze mechaniczne",
-        "Lemiesz rozkładany",
+        "\u0141y\u017Cka skarpowa uchylna",
+        "Szybkoz\u0142\u0105cze mechaniczne",
+        "Lemiesz rozk\u0142adany",
         "Rozsuwane podwozie",
-        "Gąsienice gumowe",
+        "G\u0105sienice gumowe",
         "Kogut",
         "Radio"
-      ]
+      ],
+      "specifications": {}
     }
   ],
   "Midikoparki": [
@@ -82,14 +90,15 @@
       "production_year": 2025,
       "weight": "5t",
       "equipment": [
-        "Łyżka skarpowa uchylna, łyżka 60cm, 30cm",
-        "Szybkozłącze mechaniczne",
+        "\u0141y\u017Cka skarpowa uchylna, \u0142y\u017Cka 60cm, 30cm",
+        "Szybkoz\u0142\u0105cze mechaniczne",
         "3 linie hydrauliczne",
         "Lemiesz",
-        "Gąsienice gumowe",
+        "G\u0105sienice gumowe",
         "Kogut",
         "Radio"
-      ]
+      ],
+      "specifications": {}
     }
   ],
   "Koparki": [
@@ -100,15 +109,16 @@
       "production_year": 2016,
       "weight": "17t",
       "equipment": [
-        "Łyżka skarpowa uchylna, łyżka kopiąca 90cm (zęby lub lemiesz)",
-        "Szybkozłącze atlas",
+        "\u0141y\u017Cka skarpowa uchylna, \u0142y\u017Cka kopi\u0105ca 90cm (z\u0119by lub lemiesz)",
+        "Szybkoz\u0142\u0105cze atlas",
         "Radio",
         "Klimatyzacja",
         "Fotel pneumatyczny",
         "Lemiesz",
         "Kogut",
-        "Oświetlenie led"
-      ]
+        "O\u015Bwietlenie led"
+      ],
+      "specifications": {}
     },
     {
       "model": "175 Wsr",
@@ -117,19 +127,20 @@
       "production_year": 2025,
       "weight": "18t",
       "equipment": [
-        "Długi wysięgnik 2x łamany",
-        "Głowica uchylno-obrotowa",
-        "Łyżki: skarpowa 2m, skandynawska, kopiąca 80cm, trapezowa",
-        "Osprzęt: widły, nóż do asfaltu, zrywak",
-        "2x szybkozłącze hydrauliczne",
+        "D\u0142ugi wysi\u0119gnik 2x \u0142amany",
+        "G\u0142owica uchylno-obrotowa",
+        "\u0141y\u017Cki: skarpowa 2m, skandynawska, kopi\u0105ca 80cm, trapezowa",
+        "Osprz\u0119t: wid\u0142y, n\u00F3\u017C do asfaltu, zrywak",
+        "2x szybkoz\u0142\u0105cze hydrauliczne",
         "Radio",
         "Klimatyzacja",
         "Fotel pneumatyczny",
         "Lemiesz",
         "Podpory",
         "Kogut",
-        "Oświetlenie led"
-      ]
+        "O\u015Bwietlenie led"
+      ],
+      "specifications": {}
     },
     {
       "model": "ECR 235",
@@ -138,17 +149,18 @@
       "production_year": 2015,
       "weight": "27t",
       "equipment": [
-        "Krótki tył",
+        "Kr\u00F3tki ty\u0142",
         "Banan",
-        "Głowica uchylno-obrotowa",
-        "Łyżka skandynawska, łyżka 90cm, widły",
+        "G\u0142owica uchylno-obrotowa",
+        "\u0141y\u017Cka skandynawska, \u0142y\u017Cka 90cm, wid\u0142y",
         "Lemiesz",
         "Fotel pneumatyczny",
-        "Oświetlenie led 360*",
+        "O\u015Bwietlenie led 360*",
         "Radio",
         "Klimatyzacja",
         "Kogut"
-      ]
+      ],
+      "specifications": {}
     },
     {
       "model": "EC300EL",
@@ -157,17 +169,18 @@
       "production_year": 2017,
       "weight": "35t",
       "equipment": [
-        "Szybkozłącze hydrauliczne",
-        "Łyżka kopiąca z lemieszem 1,4m",
+        "Szybkoz\u0142\u0105cze hydrauliczne",
+        "\u0141y\u017Cka kopi\u0105ca z lemieszem 1,4m",
         "Radio",
-        "Oświetlenie led 360",
+        "O\u015Bwietlenie led 360",
         "Klimatyzacja",
         "Fotel pneumatyczny",
         "Kogut"
-      ]
+      ],
+      "specifications": {}
     }
   ],
-  "Mini ładowarki": [
+  "Mini \u0142adowarki": [
     {
       "model": "S76",
       "brand": "Bobcat",
@@ -175,36 +188,37 @@
       "production_year": 2025,
       "weight": "3,7t",
       "equipment": [
-        "Szybkozłącze mechaniczne",
-        "Łyżka ładująca z zębami",
-        "Widły",
+        "Szybkoz\u0142\u0105cze mechaniczne",
+        "\u0141y\u017Cka \u0142aduj\u0105ca z z\u0119bami",
+        "Wid\u0142y",
         "Kamera cofania",
         "Zamiatarka",
         "Radio",
         "Klimatyzacja",
         "Kogut"
-      ]
+      ],
+      "specifications": {}
     }
   ],
-  "Ładowarki teleskopowe": [
+  "\u0141adowarki teleskopowe": [
     {
       "model": "MRT 2260",
       "brand": "Manitou",
       "images": [],
       "weight": "18t",
-      "specifications": {
-        "Maks. udźwig": "6t",
-        "Maks. wysokość podnoszenia": "21m",
-        "Maks. zasięg": "18m"
-      },
       "equipment": [
-        "Widły",
+        "Wid\u0142y",
         "Kosz",
-        "Wciągarka",
+        "Wci\u0105garka",
         "Klimatyzacja",
         "Fotel pneumatyczny",
         "Kogut"
-      ]
+      ],
+      "specifications": {
+        "Maks. ud\u017Awig": "6t",
+        "Maks. wysoko\u015B\u0107 podnoszenia": "21m",
+        "Maks. zasi\u0119g": "18m"
+      }
     }
   ],
   "Przesiewacze": [
@@ -214,10 +228,11 @@
       "images": [],
       "production_year": 2025,
       "weight": "23t",
+      "equipment": [],
       "specifications": {
-        "Typ": "Dwupokładowy",
-        "Pojemność zasobnika": "6 m3",
-        "Wydajność": "do 420 t/godz.",
+        "Typ": "Dwupok\u0142adowy",
+        "Pojemno\u015B\u0107 zasobnika": "6 m3",
+        "Wydajno\u015B\u0107": "do 420 t/godz.",
         "Wymiary sita": "3.6 m x 1.3 m"
       }
     }
@@ -230,29 +245,31 @@
       "production_year": 2013,
       "weight": "4t",
       "equipment": [
-        "Bębny stalowe",
-        "Zraszanie wodą",
-        "Zagniatacz krawędzi",
+        "B\u0119bny stalowe",
+        "Zraszanie wod\u0105",
+        "Zagniatacz kraw\u0119dzi",
         "Kogut",
-        "Oświetlenie"
-      ]
+        "O\u015Bwietlenie"
+      ],
+      "specifications": {}
     },
     {
-      "model": "DV+ 70i",
+      "model": "DV\u002B 70i",
       "brand": "Hamm",
       "images": [],
       "production_year": 2015,
       "weight": "7t",
       "equipment": [
-        "Bębny stalowe dzielone",
-        "Zraszanie wodą",
-        "Wibracja + oscylacja",
-        "Zagniatacz krawędzi",
+        "B\u0119bny stalowe dzielone",
+        "Zraszanie wod\u0105",
+        "Wibracja \u002B oscylacja",
+        "Zagniatacz kraw\u0119dzi",
         "Klimatyzacja",
-        "Oświetlenie led 360",
+        "O\u015Bwietlenie led 360",
         "Radio",
         "Kogut"
-      ]
+      ],
+      "specifications": {}
     },
     {
       "model": "BW 154 ACP-5 AM",
@@ -261,31 +278,35 @@
       "production_year": 2025,
       "weight": "8,5t",
       "equipment": [
-        "Bęben stalowy przód (wibracja/oscylacja)",
-        "Bęben gumowy tył",
-        "Zraszanie wodą",
-        "Zagniatacz krawędzi",
-        "Nóż do krawędzi",
-        "Oświetlenie led 360",
+        "B\u0119ben stalowy prz\u00F3d (wibracja/oscylacja)",
+        "B\u0119ben gumowy ty\u0142",
+        "Zraszanie wod\u0105",
+        "Zagniatacz kraw\u0119dzi",
+        "N\u00F3\u017C do kraw\u0119dzi",
+        "O\u015Bwietlenie led 360",
         "Kamery 360",
         "Klimatyzacja",
         "Kogut"
-      ]
+      ],
+      "specifications": {}
     }
   ],
-  "Rozkładarki asfaltu": [
+  "Rozk\u0142adarki asfaltu": [
     {
       "model": "S800i",
       "brand": "Vogele",
       "images": [],
       "production_year": 2024,
       "weight": "6,5t",
+      "equipment": [
+        "O\u015Bwietlenie robocze",
+        "Kogut"
+      ],
       "specifications": {
-        "Szerokość robocza": "1,2m-2,2m (3,5m z poszerzeniami)",
+        "Szeroko\u015B\u0107 robocza": "1,2m-2,2m (3,5m z poszerzeniami)",
         "System poziomowania": "Vogele",
-        "Podgrzewanie stołu": "Elektryczne"
-      },
-      "equipment": [ "Oświetlenie robocze", "Kogut" ]
+        "Podgrzewanie sto\u0142u": "Elektryczne"
+      }
     },
     {
       "model": "1800-3i",
@@ -293,12 +314,16 @@
       "images": [],
       "production_year": 2024,
       "weight": "22t",
+      "equipment": [
+        "Urz\u0105dzenie zraszania maszyny",
+        "O\u015Bwietlenie robocze",
+        "Kogut"
+      ],
       "specifications": {
-        "Szerokość robocza": "2,55m-5m (7m z poszerzeniami)",
+        "Szeroko\u015B\u0107 robocza": "2,55m-5m (7m z poszerzeniami)",
         "System poziomowania": "Vogele",
-        "Podgrzewanie stołu": "Elektryczne"
-      },
-      "equipment": [ "Urządzenie zraszania maszyny", "Oświetlenie robocze", "Kogut" ]
+        "Podgrzewanie sto\u0142u": "Elektryczne"
+      }
     },
     {
       "model": "ABG7280B",
@@ -306,12 +331,15 @@
       "images": [],
       "production_year": 2011,
       "weight": "20,5t",
+      "equipment": [
+        "O\u015Bwietlenie robocze",
+        "Kogut"
+      ],
       "specifications": {
-        "Szerokość robocza": "2,55m-5m (6,5m z poszerzeniami)",
+        "Szeroko\u015B\u0107 robocza": "2,55m-5m (6,5m z poszerzeniami)",
         "System poziomowania": "Moba",
-        "Podgrzewanie stołu": "Brak (tylko do kruszywa, betonu)"
-      },
-      "equipment": [ "Oświetlenie robocze", "Kogut" ]
+        "Podgrzewanie sto\u0142u": "Brak (tylko do kruszywa, betonu)"
+      }
     }
   ],
   "Frezarki": [
@@ -321,83 +349,102 @@
       "images": [],
       "production_year": 2024,
       "weight": "24,5t",
+      "equipment": [
+        "O\u015Bwietlenie robocze led",
+        "Kogut"
+      ],
       "specifications": {
-        "Szerokość robocza": "1,5m",
-        "Maks. głębokość pracy": "30cm"
+        "Szeroko\u015B\u0107 robocza": "1,5m",
+        "Maks. g\u0142\u0119boko\u015B\u0107 pracy": "30cm"
       },
-      "equipment": [ "Oświetlenie robocze led", "Kogut" ],
       "notes": "Wynajem tylko z operatorem"
     }
   ],
-  "Wozidła": [
+  "Wozid\u0142a": [
     {
       "model": "Revotruck",
       "brand": "Mecalac",
       "images": [],
       "production_year": 2025,
       "weight": "6,5t",
-      "specifications": {
-        "Ładowność": "9t"
-      },
       "equipment": [
         "Obrotowa kabina",
         "Obrotowy kiper",
-        "4 koła skrętne",
-        "Oświetlenie robocze",
+        "4 ko\u0142a skr\u0119tne",
+        "O\u015Bwietlenie robocze",
         "Kogut"
-      ]
+      ],
+      "specifications": {
+        "\u0141adowno\u015B\u0107": "9t"
+      }
     }
   ],
   "Zasilacze pneumatyczne": [
     {
-      "brand": "Atlas",
       "model": "Copco",
+      "brand": "Atlas",
       "images": [],
       "production_year": 2025,
       "weight": "749kg",
+      "equipment": [
+        "Regulowana wysoko\u015B\u0107 zaczepu",
+        "M\u0142ot do kucia"
+      ],
       "specifications": {
-        "Ciśnienie robocze": "7 bar"
-      },
-      "equipment": [ "Regulowana wysokość zaczepu", "Młot do kucia" ]
+        "Ci\u015Bnienie robocze": "7 bar"
+      }
     }
   ],
-  "Zagęszczarki": [
+  "Zag\u0119szczarki": [
     {
       "model": "Bomag BPR 60/65 D",
       "brand": "Bomag",
       "images": [],
       "production_year": 2025,
       "weight": "460kg",
-      "equipment": [ "Ekonomizer", "Biegi przód-tył", "Odpalanie rozrusznikiem" ]
+      "equipment": [
+        "Ekonomizer",
+        "Biegi prz\u00F3d-ty\u0142",
+        "Odpalanie rozrusznikiem"
+      ],
+      "specifications": {}
     },
     {
-      "brand": "Atlas",
       "model": "Copco1",
+      "brand": "Atlas",
       "images": [],
-      "equipment": [ "Biegi przód-tył", "Odpalanie rozrusznikiem" ]
+      "equipment": [
+        "Biegi prz\u00F3d-ty\u0142",
+        "Odpalanie rozrusznikiem"
+      ],
+      "specifications": {}
     }
   ],
-  "Ciągniki": [
+  "Ci\u0105gniki": [
     {
-      "type": "Traktor + przyczepa",
+      "model": "",
       "brand": "Massey Ferguson",
       "images": [],
       "production_year": 2006,
-      "specifications": {
-        "Napęd": "4x4",
-        "Prędkość": "40 km/h",
-        "Skrzynia biegów": "Dynashift 4 + 4 półbiegi",
-        "Ładowność przyczepy": "20t"
-      },
+      "weight": "",
       "equipment": [
         "3 linie hydrauliczne",
-        "Wyjście pneumatyczne",
+        "Wyj\u015Bcie pneumatyczne",
         "Przyczepa 2 osiowa",
         "Amortyzacja przedniego mostu",
         "Radio",
         "Fotel pneumatyczny",
         "Kogut"
-      ]
+      ],
+      "rental_options": "",
+      "specifications": {
+        "Nap\u0119d": "4x4",
+        "Pr\u0119dko\u015B\u0107": "40 km/h",
+        "Skrzynia bieg\u00F3w": "Dynashift 4 \u002B 4 p\u00F3\u0142biegi",
+        "\u0141adowno\u015B\u0107 przyczepy": "20t"
+      },
+      "notes": "",
+      "type": "Traktor \u002B przyczepa"
     }
   ]
 }

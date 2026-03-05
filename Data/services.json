@@ -2,75 +2,76 @@
   "Roboty ziemne": [
     {
       "name": "Niwelacja terenu",
-      "description": "Precyzyjne wyrównanie gruntu pod inwestycje budowlane i drogowe.",
+      "description": "Precyzyjne wyr\u00F3wnanie gruntu pod inwestycje budowlane i drogowe.",
       "images": []
     },
     {
       "name": "Korytowanie",
-      "description": "Usuwanie warstw gruntu pod przyszłe nawierzchnie i konstrukcje drogowe.",
+      "description": "Usuwanie warstw gruntu pod przysz\u0142e nawierzchnie i konstrukcje drogowe.",
       "images": []
     },
     {
       "name": "Wykopy pod fundamenty",
-      "description": "Wykopy pod domy, hale i obiekty przemysłowe z zachowaniem norm.",
+      "description": "Wykopy pod domy, hale i obiekty przemys\u0142owe z zachowaniem norm.",
       "images": []
     },
     {
       "name": "Zbieranie humusu",
-      "description": "Zdejmowanie warstwy urodzajnej ziemi przed rozpoczęciem prac ziemnych.",
+      "description": "Zdejmowanie warstwy urodzajnej ziemi przed rozpocz\u0119ciem prac ziemnych.",
       "images": []
     },
     {
       "name": "Rekultywacja",
-      "description": "Przywracanie terenom zielonym ich funkcjonalności po pracach budowlanych.",
+      "description": "Przywracanie terenom zielonym ich funkcjonalno\u015Bci po pracach budowlanych.",
       "images": []
     },
     {
-      "name": "Wykopy wąskoprzestrzenne",
-      "description": "Dokładne wykopy pod instalacje w trudnym terenie i przy ograniczonej przestrzeni.",
+      "name": "Wykopy w\u0105skoprzestrzenne",
+      "description": "Dok\u0142adne wykopy pod instalacje w trudnym terenie i przy ograniczonej przestrzeni.",
       "images": []
     },
     {
       "name": "Wykopy szerokoprzestrzenne",
-      "description": "Szerokie wykopy pod obiekty inżynieryjne, zbiorniki i duże fundamenty.",
+      "description": "Szerokie wykopy pod obiekty in\u017Cynieryjne, zbiorniki i du\u017Ce fundamenty.",
       "images": []
     },
     {
       "name": "Nasypy",
-      "description": "Tworzenie nasypów drogowych i budowlanych wraz z odpowiednim zagęszczeniem.",
+      "description": "Tworzenie nasyp\u00F3w drogowych i budowlanych wraz z odpowiednim zag\u0119szczeniem.",
       "images": []
     }
   ],
   "Roboty drogowe": [
     {
       "name": "Kompleksowe inwestycje drogowe",
-      "description": "Pełna realizacja inwestycji od przygotowania terenu po odbiór nawierzchni.",
+      "description": "Pe\u0142na realizacja inwestycji od przygotowania terenu po odbi\u00F3r nawierzchni.",
       "images": []
     },
     {
       "name": "Wykonywanie kanalizacji",
-      "description": "Budowa kanalizacji deszczowej i sanitarnej z nowoczesnymi rozwiązaniami.",
+      "description": "Budowa kanalizacji deszczowej i sanitarnej z nowoczesnymi rozwi\u0105zaniami.",
       "images": []
     },
     {
-      "name": "Układanie kostki i obrzeży",
-      "description": "Profesjonalne brukowanie placów, chodników i alejek z estetycznym wykończeniem.",
+      "name": "Uk\u0142adanie kostki i obrze\u017Cy",
+      "description": "Profesjonalne brukowanie plac\u00F3w, chodnik\u00F3w i alejek z estetycznym wyko\u0144czeniem.",
       "images": []
     },
     {
       "name": "Nawierzchnie bitumiczne",
-      "description": "Układanie nowych nawierzchni asfaltowych na drogach, parkingach i dojazdach.",
+      "description": "Uk\u0142adanie nowych nawierzchni asfaltowych na drogach, parkingach i dojazdach.",
+      "images": []
+    },
+    {
+      "name": "O\u015Bwietlenie uliczne",
+      "description": "Wykonanie o\u015Bwietlenia drogowego zapewniaj\u0105cego bezpiecze\u0144stwo.",
       "images": []
     },
     {
       "name": "Frezowanie nawierzchni",
-      "description": "Usuwanie zużytych warstw asfaltu i przygotowanie pod nowe nawierzchnie.",
-      "images": []
-    },
-    {
-      "name": "Oświetlenie uliczne",
-      "description": "Wykonanie oświetlenia drogowego zapewniającego bezpieczeństwo.",
-      "images": []
+      "description": "Usuwanie zu\u017Cytych warstw asfaltu i przygotowanie pod nowe nawierzchnie.",
+      "images": [],
+      "highlight": ""
     }
   ]
 }

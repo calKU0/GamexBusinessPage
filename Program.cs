@@ -17,6 +17,7 @@ builder.Services.AddOutputCache(options =>
 });
 builder.Services.AddSingleton<CatalogCache>();
 builder.Services.AddSingleton<AdminCatalogService>();
+builder.Services.AddScoped<ImageService>();
 builder.Services.AddAuthentication(Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
