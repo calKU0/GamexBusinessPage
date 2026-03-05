@@ -71,13 +71,13 @@ public class DetailsModel : PageModel
         ViewData["Title"] = $"Wynajem {Machine.DisplayName} – {Machine.CategoryDisplayName} | Gamex Olkusz";
         ViewData["Description"] = $"Szukasz {Machine.DisplayName}? Oferujemy wynajem krótko i długoterminowy z profesjonalną obsługą operatorską w Olkuszu i okolicach. Zadzwoń po wycenę!";
         ViewData["Keywords"] = $"{Machine.Brand}, {Machine.Model}, wynajem {Machine.CategoryDisplayName}, maszyny budowlane Olkusz";
-        ViewData["OgImage"] = $"https://gamex-olkusz.pl/images/{Machine.Image}";
+        ViewData["OgImage"] = $"https://gamex-olkusz.pl/images/{Machine.MainImagePath}";
 
         var priceValidUntil = "2026-12-31";
         var baseUrl = "https://gamex-olkusz.pl";
-        if (!string.IsNullOrWhiteSpace(Machine.Image))
+        if (!string.IsNullOrWhiteSpace(Machine.MainImagePath))
         {
-            ViewData["OgImage"] = $"{baseUrl}{Machine.Image}";
+            ViewData["OgImage"] = $"{baseUrl}{Machine.MainImagePath}";
         }
 
         var localBusiness = SchemaFactory.GetLocalBusinessSchema(baseUrl);
@@ -153,7 +153,7 @@ public class DetailsModel : PageModel
             },
             ["name"] = Machine.DisplayName,
             ["description"] = $"Wynajem: {Machine.DisplayName}. Oferujemy profesjonalny sprzęt budowlany z transportem do klienta (Olkusz i okolice). {Machine.RentalOptions}",
-            ["image"] = string.IsNullOrWhiteSpace(Machine.Image) ? $"{baseUrl}/images/machines/default-machine.webp" : $"{baseUrl}{Machine.Image}",
+            ["image"] = string.IsNullOrWhiteSpace(Machine.MainImagePath) ? $"{baseUrl}/images/machines/default-machine.webp" : $"{baseUrl}{Machine.MainImagePath}",
             ["brand"] = string.IsNullOrWhiteSpace(Machine.Brand)
                 ? null
             : new Dictionary<string, object?> { ["@type"] = "Brand", ["name"] = Machine.Brand },

@@ -3,74 +3,74 @@
     {
       "name": "Niwelacja terenu",
       "description": "Precyzyjne wyrównanie gruntu pod inwestycje budowlane i drogowe.",
-      "image": ""
+      "images": []
     },
     {
       "name": "Korytowanie",
       "description": "Usuwanie warstw gruntu pod przyszłe nawierzchnie i konstrukcje drogowe.",
-      "image": ""
+      "images": []
     },
     {
       "name": "Wykopy pod fundamenty",
       "description": "Wykopy pod domy, hale i obiekty przemysłowe z zachowaniem norm.",
-      "image": ""
+      "images": []
     },
     {
       "name": "Zbieranie humusu",
       "description": "Zdejmowanie warstwy urodzajnej ziemi przed rozpoczęciem prac ziemnych.",
-      "image": ""
+      "images": []
     },
     {
       "name": "Rekultywacja",
       "description": "Przywracanie terenom zielonym ich funkcjonalności po pracach budowlanych.",
-      "image": ""
+      "images": []
     },
     {
       "name": "Wykopy wąskoprzestrzenne",
       "description": "Dokładne wykopy pod instalacje w trudnym terenie i przy ograniczonej przestrzeni.",
-      "image": ""
+      "images": []
     },
     {
       "name": "Wykopy szerokoprzestrzenne",
       "description": "Szerokie wykopy pod obiekty inżynieryjne, zbiorniki i duże fundamenty.",
-      "image": ""
+      "images": []
     },
     {
       "name": "Nasypy",
       "description": "Tworzenie nasypów drogowych i budowlanych wraz z odpowiednim zagęszczeniem.",
-      "image": ""
+      "images": []
     }
   ],
   "Roboty drogowe": [
     {
       "name": "Kompleksowe inwestycje drogowe",
       "description": "Pełna realizacja inwestycji od przygotowania terenu po odbiór nawierzchni.",
-      "image": ""
+      "images": []
     },
     {
       "name": "Wykonywanie kanalizacji",
       "description": "Budowa kanalizacji deszczowej i sanitarnej z nowoczesnymi rozwiązaniami.",
-      "image": ""
+      "images": []
     },
     {
       "name": "Układanie kostki i obrzeży",
       "description": "Profesjonalne brukowanie placów, chodników i alejek z estetycznym wykończeniem.",
-      "image": ""
+      "images": []
     },
     {
       "name": "Nawierzchnie bitumiczne",
       "description": "Układanie nowych nawierzchni asfaltowych na drogach, parkingach i dojazdach.",
-      "image": ""
+      "images": []
     },
     {
       "name": "Frezowanie nawierzchni",
       "description": "Usuwanie zużytych warstw asfaltu i przygotowanie pod nowe nawierzchnie.",
-      "image": ""
+      "images": []
     },
     {
       "name": "Oświetlenie uliczne",
       "description": "Wykonanie oświetlenia drogowego zapewniającego bezpieczeństwo.",
-      "image": ""
+      "images": []
     }
   ]
 }

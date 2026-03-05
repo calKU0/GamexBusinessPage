@@ -133,7 +133,7 @@ public class TransportEditModel : PageModel
             Description = transport.Description,
             WeightLimit = transport.WeightLimit,
             Highlight = transport.Highlight,
-            Image = transport.Image
+            Image = transport.MainImagePath
         };
 
         OriginalTransportCategory = Category;
@@ -142,14 +142,25 @@ public class TransportEditModel : PageModel
 
     private TransportItem CreateTransportItem()
     {
+        var imagePath = NormalizeKey(TransportInput.Image);
         return new TransportItem
         {
             Vehicle = NormalizeKey(TransportInput.Vehicle),
             Description = NormalizeKey(TransportInput.Description),
-            Image = NormalizeKey(TransportInput.Image),
+            Images = BuildImages(imagePath),
             WeightLimit = NormalizeKey(TransportInput.WeightLimit),
             Highlight = NormalizeKey(TransportInput.Highlight)
         };
+    }
+
+    private static List<CatalogImage> BuildImages(string? imagePath)
+    {
+        if (string.IsNullOrWhiteSpace(imagePath))
+        {
+            return [];
+        }
+
+        return [new CatalogImage { IsMain = true, Path = imagePath }];
     }
 
     private static string NormalizeKey(string? value)

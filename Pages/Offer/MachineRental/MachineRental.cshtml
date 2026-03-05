@@ -31,9 +31,10 @@
                                 <div class="col-md-6 col-xl-4">
                                     <div class="machine-card">
                                         <div class="machine-card-media">
-                                            @if (!string.IsNullOrWhiteSpace(machine.Image))
+                                            @{ var imagePath = machine.MainImagePath; }
+                                            @if (!string.IsNullOrWhiteSpace(imagePath))
                                             {
-                                                <img src="@Url.Content(machine.Image)" alt="@machine.DisplayName - @machine.CategoryDisplayName na wynajem w Gamex Olkusz" loading="lazy" />
+                                                <img src="@Url.Content($"~/{imagePath.TrimStart('~', '/')}" )" alt="@machine.DisplayName - @machine.CategoryDisplayName na wynajem w Gamex Olkusz" loading="lazy" />
                                             }
                                             else
                                             {

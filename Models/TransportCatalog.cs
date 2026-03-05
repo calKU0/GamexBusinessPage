@@ -69,8 +69,8 @@ public sealed class TransportItem
     [JsonPropertyName("description")]
     public string? Description { get; set; }
 
-    [JsonPropertyName("image")]
-    public string? Image { get; set; }
+    [JsonPropertyName("images")]
+    public List<CatalogImage> Images { get; set; } = [];
 
     [JsonPropertyName("weight_limit")]
     public string? WeightLimit { get; set; }
@@ -83,4 +83,14 @@ public sealed class TransportItem
 
     [JsonIgnore]
     public string? CategoryDisplayName { get; set; }
+
+    [JsonIgnore]
+    public string? MainImagePath
+    {
+        get
+        {
+            return Images.FirstOrDefault(image => image.IsMain)?.Path
+                ?? Images.FirstOrDefault()?.Path;
+        }
+    }
 }

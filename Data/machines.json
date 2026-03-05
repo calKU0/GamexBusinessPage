@@ -3,7 +3,7 @@
     {
       "model": "4CX",
       "brand": "JCB",
-      "image": "",
+      "images": [],
       "production_year": 2025,
       "equipment": [
         "Joystick",
@@ -19,7 +19,7 @@
     {
       "model": "3CX1",
       "brand": "JCB",
-      "image": null,
+      "images": [],
       "production_year": 2018,
       "equipment": [
         "Joystick",
@@ -31,7 +31,7 @@
     {
       "model": "3CX",
       "brand": "JCB",
-      "image": null,
+      "images": [],
       "production_year": 2016,
       "equipment": [
         "Dźwignie X",
@@ -46,7 +46,7 @@
     {
       "model": "16-C1",
       "brand": "JCB",
-      "image": null,
+      "images": [],
       "production_year": 2018,
       "weight": "1,7t",
       "equipment": [
@@ -60,7 +60,7 @@
     {
       "model": "19-C1",
       "brand": "JCB",
-      "image": null,
+      "images": [],
       "production_year": 2025,
       "weight": "1,9t",
       "equipment": [
@@ -78,7 +78,7 @@
     {
       "model": "50-Z2",
       "brand": "JCB",
-      "image": null,
+      "images": [],
       "production_year": 2025,
       "weight": "5t",
       "equipment": [
@@ -96,7 +96,7 @@
     {
       "model": "160 Wsr",
       "brand": "Atlas",
-      "image": null,
+      "images": [],
       "production_year": 2016,
       "weight": "17t",
       "equipment": [
@@ -113,7 +113,7 @@
     {
       "model": "175 Wsr",
       "brand": "Atlas",
-      "image": null,
+      "images": [],
       "production_year": 2025,
       "weight": "18t",
       "equipment": [
@@ -134,7 +134,7 @@
     {
       "model": "ECR 235",
       "brand": "Volvo",
-      "image": null,
+      "images": [],
       "production_year": 2015,
       "weight": "27t",
       "equipment": [
@@ -153,7 +153,7 @@
     {
       "model": "EC300EL",
       "brand": "Volvo",
-      "image": null,
+      "images": [],
       "production_year": 2017,
       "weight": "35t",
       "equipment": [
@@ -171,7 +171,7 @@
     {
       "model": "S76",
       "brand": "Bobcat",
-      "image": null,
+      "images": [],
       "production_year": 2025,
       "weight": "3,7t",
       "equipment": [
@@ -190,7 +190,7 @@
     {
       "model": "MRT 2260",
       "brand": "Manitou",
-      "image": null,
+      "images": [],
       "weight": "18t",
       "specifications": {
         "Maks. udźwig": "6t",
@@ -211,7 +211,7 @@
     {
       "model": "TS1340",
       "brand": "Tesab",
-      "image": null,
+      "images": [],
       "production_year": 2025,
       "weight": "23t",
       "specifications": {
@@ -226,7 +226,7 @@
     {
       "model": "13i",
       "brand": "Hamm",
-      "image": null,
+      "images": [],
       "production_year": 2013,
       "weight": "4t",
       "equipment": [
@@ -240,7 +240,7 @@
     {
       "model": "DV+ 70i",
       "brand": "Hamm",
-      "image": null,
+      "images": [],
       "production_year": 2015,
       "weight": "7t",
       "equipment": [
@@ -257,7 +257,7 @@
     {
       "model": "BW 154 ACP-5 AM",
       "brand": "Bomag",
-      "image": null,
+      "images": [],
       "production_year": 2025,
       "weight": "8,5t",
       "equipment": [
@@ -277,7 +277,7 @@
     {
       "model": "S800i",
       "brand": "Vogele",
-      "image": null,
+      "images": [],
       "production_year": 2024,
       "weight": "6,5t",
       "specifications": {
@@ -290,7 +290,7 @@
     {
       "model": "1800-3i",
       "brand": "Vogele",
-      "image": null,
+      "images": [],
       "production_year": 2024,
       "weight": "22t",
       "specifications": {
@@ -303,7 +303,7 @@
     {
       "model": "ABG7280B",
       "brand": "Volvo",
-      "image": null,
+      "images": [],
       "production_year": 2011,
       "weight": "20,5t",
       "specifications": {
@@ -318,7 +318,7 @@
     {
       "model": "W150-Fi",
       "brand": "Wirtgen",
-      "image": null,
+      "images": [],
       "production_year": 2024,
       "weight": "24,5t",
       "specifications": {
@@ -333,7 +333,7 @@
     {
       "model": "Revotruck",
       "brand": "Mecalac",
-      "image": null,
+      "images": [],
       "production_year": 2025,
       "weight": "6,5t",
       "specifications": {
@@ -352,7 +352,7 @@
     {
       "brand": "Atlas",
       "model": "Copco",
-      "image": null,
+      "images": [],
       "production_year": 2025,
       "weight": "749kg",
       "specifications": {
@@ -365,7 +365,7 @@
     {
       "model": "Bomag BPR 60/65 D",
       "brand": "Bomag",
-      "image": null,
+      "images": [],
       "production_year": 2025,
       "weight": "460kg",
       "equipment": [ "Ekonomizer", "Biegi przód-tył", "Odpalanie rozrusznikiem" ]
@@ -373,7 +373,7 @@
     {
       "brand": "Atlas",
       "model": "Copco1",
-      "image": "",
+      "images": [],
       "equipment": [ "Biegi przód-tył", "Odpalanie rozrusznikiem" ]
     }
   ],
@@ -381,7 +381,7 @@
     {
       "type": "Traktor + przyczepa",
       "brand": "Massey Ferguson",
-      "image": null,
+      "images": [],
       "production_year": 2006,
       "specifications": {
         "Napęd": "4x4",

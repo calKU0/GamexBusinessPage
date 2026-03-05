@@ -132,7 +132,7 @@ public class ServiceEditModel : PageModel
             Name = service.Name ?? string.Empty,
             Description = service.Description,
             Highlight = service.Highlight,
-            Image = service.Image
+            Image = service.MainImagePath
         };
 
         OriginalServiceCategory = Category;
@@ -141,13 +141,24 @@ public class ServiceEditModel : PageModel
 
     private ServiceItem CreateServiceItem()
     {
+        var imagePath = NormalizeKey(ServiceInput.Image);
         return new ServiceItem
         {
             Name = NormalizeKey(ServiceInput.Name),
             Description = NormalizeKey(ServiceInput.Description),
-            Image = NormalizeKey(ServiceInput.Image),
+            Images = BuildImages(imagePath),
             Highlight = NormalizeKey(ServiceInput.Highlight)
         };
+    }
+
+    private static List<CatalogImage> BuildImages(string? imagePath)
+    {
+        if (string.IsNullOrWhiteSpace(imagePath))
+        {
+            return [];
+        }
+
+        return [new CatalogImage { IsMain = true, Path = imagePath }];
     }
 
     private static string NormalizeKey(string? value)

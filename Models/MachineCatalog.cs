@@ -129,8 +129,8 @@ public sealed class MachineItem
     [JsonPropertyName("brand")]
     public string? Brand { get; set; }
 
-    [JsonPropertyName("image")]
-    public string? Image { get; set; }
+    [JsonPropertyName("images")]
+    public List<CatalogImage> Images { get; set; } = [];
 
 
     [JsonPropertyName("production_year")]
@@ -190,6 +190,28 @@ public sealed class MachineItem
             }
 
             return displayName;
+        }
+    }
+
+    [JsonIgnore]
+    public string? MainImagePath
+    {
+        get
+        {
+            return Images.FirstOrDefault(image => image.IsMain)?.Path
+                ?? Images.FirstOrDefault()?.Path;
+        }
+    }
+
+    [JsonIgnore]
+    public IReadOnlyList<CatalogImage> OrderedImages
+    {
+        get
+        {
+            return Images
+                .Where(image => !string.IsNullOrWhiteSpace(image.Path))
+                .OrderByDescending(image => image.IsMain)
+                .ToList();
         }
     }
 

@@ -69,8 +69,8 @@ public sealed class ServiceItem
     [JsonPropertyName("description")]
     public string? Description { get; set; }
 
-    [JsonPropertyName("image")]
-    public string? Image { get; set; }
+    [JsonPropertyName("images")]
+    public List<CatalogImage> Images { get; set; } = [];
 
     [JsonPropertyName("highlight")]
     public string? Highlight { get; set; }
@@ -80,4 +80,14 @@ public sealed class ServiceItem
 
     [JsonIgnore]
     public string? CategoryDisplayName { get; set; }
+
+    [JsonIgnore]
+    public string? MainImagePath
+    {
+        get
+        {
+            return Images.FirstOrDefault(image => image.IsMain)?.Path
+                ?? Images.FirstOrDefault()?.Path;
+        }
+    }
 }

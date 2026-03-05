@@ -148,7 +148,7 @@ public class MachineEditModel : PageModel
             Brand = machine.Brand,
             Model = machine.Model,
             Type = machine.Type,
-            Image = machine.Image,
+            Image = machine.MainImagePath,
             ProductionYear = machine.ProductionYear,
             Weight = machine.Weight,
             RentalOptions = machine.RentalOptions,
@@ -181,12 +181,13 @@ public class MachineEditModel : PageModel
 
     private MachineItem CreateMachineItem()
     {
+        var imagePath = NormalizeKey(MachineInput.Image);
         return new MachineItem
         {
             Brand = NormalizeKey(MachineInput.Brand),
             Model = NormalizeKey(MachineInput.Model),
             Type = NormalizeKey(MachineInput.Type),
-            Image = NormalizeKey(MachineInput.Image),
+            Images = BuildImages(imagePath),
             ProductionYear = MachineInput.ProductionYear,
             Weight = NormalizeKey(MachineInput.Weight),
             RentalOptions = NormalizeKey(MachineInput.RentalOptions),
@@ -200,6 +201,16 @@ public class MachineEditModel : PageModel
                 .GroupBy(item => item.Key.Trim(), StringComparer.OrdinalIgnoreCase)
                 .ToDictionary(group => group.Key, group => group.Last().Value!.Trim(), StringComparer.OrdinalIgnoreCase)
         };
+    }
+
+    private static List<CatalogImage> BuildImages(string? imagePath)
+    {
+        if (string.IsNullOrWhiteSpace(imagePath))
+        {
+            return [];
+        }
+
+        return [new CatalogImage { IsMain = true, Path = imagePath }];
     }
 
     private static string NormalizeKey(string? value)
