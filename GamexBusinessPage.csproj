@@ -8,13 +8,13 @@
 
   <ItemGroup>
     <Folder Include="Data\" />
+    <Folder Include="wwwroot\images\machines\" />
     <Folder Include="wwwroot\images\transport\" />
     <Folder Include="wwwroot\images\services\" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include=".github\workflows\deploy-to-ftp.yml" />
-    <None Include=".github\workflows\test.yml" />
   </ItemGroup>
 
   <ItemGroup>
