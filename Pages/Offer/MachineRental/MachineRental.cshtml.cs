@@ -110,7 +110,7 @@ namespace GamexBusinessPage.Pages.MachineRental
                         ["name"] = machine.DisplayName,
                         ["url"] = machineUrl,
                         ["description"] = $"Wynajem: {machine.DisplayName}. Oferujemy profesjonalny sprzęt budowlany z transportem do klienta (Olkusz i okolice). {machine.RentalOptions}",
-                        ["image"] = string.IsNullOrWhiteSpace(machine.Image) ? $"{baseUrl}/images/machines/default-machine.webp" : $"{baseUrl}{machine.Image}",
+                        ["image"] = string.IsNullOrWhiteSpace(machine.MainImagePath) ? $"{baseUrl}/images/machines/default-machine.webp" : $"{baseUrl}{machine.MainImagePath}",
                         ["brand"] = string.IsNullOrWhiteSpace(machine.Brand)
                             ? null
                             : new Dictionary<string, object?>

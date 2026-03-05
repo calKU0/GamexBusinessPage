@@ -1,4 +1,3 @@
-using System.Globalization;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -6,11 +5,6 @@ namespace GamexBusinessPage.Models;
 
 public sealed class ServiceCatalog
 {
-    private static readonly Dictionary<string, string> CategoryDisplayNames = new(StringComparer.OrdinalIgnoreCase)
-    {
-        ["earthworks"] = "Roboty ziemne",
-        ["roadworks"] = "Roboty drogowe"
-    };
 
     public ServiceCatalog(IReadOnlyList<ServiceCategory> categories)
     {
@@ -35,9 +29,7 @@ public sealed class ServiceCatalog
 
         foreach (var (categoryKey, items) in data)
         {
-            var displayName = CategoryDisplayNames.TryGetValue(categoryKey, out var name)
-                ? name
-                : CultureInfo.CurrentCulture.TextInfo.ToTitleCase(categoryKey.Replace('_', ' '));
+            var displayName = categoryKey;
             var services = items ?? new List<ServiceItem>();
 
             foreach (var service in services)
@@ -77,8 +69,8 @@ public sealed class ServiceItem
     [JsonPropertyName("description")]
     public string? Description { get; set; }
 
-    [JsonPropertyName("image")]
-    public string? Image { get; set; }
+    [JsonPropertyName("images")]
+    public List<CatalogImage> Images { get; set; } = [];
 
     [JsonPropertyName("highlight")]
     public string? Highlight { get; set; }
@@ -88,4 +80,14 @@ public sealed class ServiceItem
 
     [JsonIgnore]
     public string? CategoryDisplayName { get; set; }
+
+    [JsonIgnore]
+    public string? MainImagePath
+    {
+        get
+        {
+            return Images.FirstOrDefault(image => image.IsMain)?.Path
+                ?? Images.FirstOrDefault()?.Path;
+        }
+    }
 }

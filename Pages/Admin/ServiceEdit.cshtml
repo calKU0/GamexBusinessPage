@@ -1,0 +1,136 @@
+@page "/admin/services/edit"
+@model GamexBusinessPage.Pages.Admin.ServiceEditModel
+@{
+    Layout = "_AdminLayout";
+}
+
+<div class="container py-5 text-light admin-page">
+    <partial name="_AdminHeader" model="@(new GamexBusinessPage.Pages.Admin.AdminHeaderViewModel(Model.IsEdit ? "Edytuj usługę" : "Dodaj usługę", "Uzupełnij dane usługi.", new[]
+    {
+        new GamexBusinessPage.Pages.Admin.AdminHeaderAction("Wróć", "/Admin/Services", "btn-gamex btn-secondary-gamex")
+    }))" />
+
+    <div class="card bg-dark border-secondary text-light shadow-sm rounded-4">
+        <div class="card-body">
+            <form method="post" enctype="multipart/form-data" class="row g-3">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <input type="hidden" name="OriginalServiceCategory" value="@Model.OriginalServiceCategory" />
+                <input type="hidden" name="OriginalServiceName" value="@Model.OriginalServiceName" />
+                <input type="hidden" id="MainImagePath" name="MainImagePath" value="" />
+                <input type="hidden" id="MainImageType" name="MainImageType" value="" />
+
+                <div class="col-md-6">
+                    <label asp-for="ServiceInput.CategoryKey" class="form-label text-light">Kategoria</label>
+                    <input asp-for="ServiceInput.CategoryKey" class="form-control bg-dark text-light border-secondary" list="service-categories" />
+                    <datalist id="service-categories">
+                        @foreach (var category in Model.ServiceCategoryKeys)
+                        {
+                            <option value="@category"></option>
+                        }
+                    </datalist>
+                    <span asp-validation-for="ServiceInput.CategoryKey" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="ServiceInput.Name" class="form-label text-light">Nazwa</label>
+                    <input asp-for="ServiceInput.Name" class="form-control bg-dark text-light border-secondary" />
+                    <span asp-validation-for="ServiceInput.Name" class="text-danger"></span>
+                </div>
+                <div class="col-12">
+                    <label asp-for="ServiceInput.Description" class="form-label text-light">Opis</label>
+                    <textarea asp-for="ServiceInput.Description" class="form-control bg-dark text-light border-secondary" rows="3"></textarea>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="ServiceInput.Highlight" class="form-label text-light">Wyróżnienie</label>
+                    <input asp-for="ServiceInput.Highlight" class="form-control bg-dark text-light border-secondary" />
+                </div>
+
+                <!-- Images Section - Simplified -->
+                <div class="col-12">
+                    <hr class="border-secondary my-4" />
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="text-light mb-0">
+                            <i class="fas fa-images me-2"></i>Zdjęcia
+                        </h5>
+                        <div>
+                            <label for="ImageFiles" class="btn btn-primary btn-sm">
+                                <i class="fas fa-plus me-1"></i>Dodaj zdjęcia
+                            </label>
+                            <input asp-for="ImageFiles" class="d-none" 
+                                   id="ImageFiles" type="file" accept="image/*" multiple />
+                        </div>
+                    </div>
+
+                    <div class="row g-3" id="all-images-container">
+                        @if (Model.ExistingImages.Count > 0)
+                        {
+                            @foreach (var image in Model.ExistingImages)
+                            {
+                                <div class="col-md-3 col-sm-4 col-6" data-image-container="@image.Path" data-image-type="existing">
+                                    <div class="card bg-secondary border-0 shadow-sm h-100">
+                                        <div class="position-relative">
+                                            <img src="@image.Path" class="card-img-top" 
+                                                 style="height: 160px; object-fit: cover;" alt="Zdjęcie usługi" />
+                                            @if (image.IsMain)
+                                            {
+                                                <span class="position-absolute top-0 start-0 badge bg-primary m-2">
+                                                    <i class="fas fa-star me-1"></i>Główne
+                                                </span>
+                                            }
+                                        </div>
+                                        <div class="card-body p-2">
+                                            <div class="d-flex gap-1 flex-wrap">
+                                                <button type="button" class="btn btn-sm btn-outline-primary set-main-btn flex-fill" 
+                                                        data-image-path="@image.Path" title="Ustaw jako główne zdjęcie"
+                                                        style="display: @(image.IsMain ? "none" : "inline-block")">
+                                                    <i class="fas fa-star me-1"></i>Ustaw jako główne
+                                                </button>
+                                                <button type="button" class="btn btn-sm btn-outline-danger delete-image-btn flex-fill" 
+                                                        data-image-path="@image.Path" title="Usuń zdjęcie">
+                                                    <i class="fas fa-trash me-1"></i>Usuń
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
+
+                    @if (Model.ExistingImages.Count == 0)
+                    {
+                        <div class="text-light text-center py-4" id="no-images-message">
+                            <i class="fas fa-images fa-2x mb-2"></i>
+                            <p class="text-light">Brak zdjęć. Użyj przycisku "Dodaj zdjęcia" aby dodać pierwsze zdjęcie.</p>
+                        </div>
+                    }
+
+                    <div class="form-text text-muted mt-3">
+                        <i class="fas fa-info-circle me-1"></i>
+                        Obsługiwane formaty: JPG, PNG, WebP, GIF. Zdjęcia zostaną automatycznie skonwertowane do WebP i skompresowane.
+                    </div>
+                </div>
+                <div class="col-12 d-flex gap-2">
+                    <button type="submit" class="btn-gamex btn-primary-gamex">Zapisz</button>
+                    <a asp-page="/Admin/Services" class="btn-gamex btn-secondary-gamex">Anuluj</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/admin-image-manager.js"></script>
+    <script>
+        (function () {
+            // Initialize Image Manager
+            const imageManager = new AdminImageManager({
+                deleteHandler: '/admin/services/edit?handler=DeleteImage',
+                deleteParams: () => ({
+                    category: @Html.Raw(Json.Serialize(Model.Category ?? Model.OriginalServiceCategory)),
+                    name: @Html.Raw(Json.Serialize(Model.Name ?? Model.OriginalServiceName))
+                })
+            });
+        })();
+    </script>
+}

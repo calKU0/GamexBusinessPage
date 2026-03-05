@@ -3,6 +3,7 @@
 @model GamexBusinessPage.Pages.MachineRental.DetailsModel
 @{
     var machine = Model.Machine!;
+    var images = machine.OrderedImages;
 }
 
 <div class="machine-details-page">
@@ -25,16 +26,54 @@
 
                 <div class="row g-4">
                     <div class="col-lg-6">
+                        <!-- Main Image Container -->
                         <div class="machine-details-media">
-                            @if (!string.IsNullOrWhiteSpace(machine.Image))
+                            @if (images.Count > 0)
                             {
-                                <img src="@Url.Content(machine.Image)" alt="@machine.DisplayName - @machine.CategoryDisplayName na wynajem w Gamex Olkusz" />
+                                <div class="swiper machine-gallery-main" id="machine-gallery-main">
+                                    <div class="swiper-wrapper">
+                                        @for (var i = 0; i < images.Count; i++)
+                                        {
+                                            var image = images[i];
+                                            <div class="swiper-slide">
+                                                <img src="@Url.Content(image.Path!)" 
+                                                     alt="@machine.DisplayName - @machine.CategoryDisplayName na wynajem w Gamex Olkusz - zdjęcie @(i + 1)" 
+                                                     loading="@(i == 0 ? "eager" : "lazy")" />
+                                            </div>
+                                        }
+                                    </div>
+                                    @if (images.Count > 1)
+                                    {
+                                        <div class="swiper-button-next"></div>
+                                        <div class="swiper-button-prev"></div>
+                                    }
+                                </div>
                             }
                             else
                             {
                                 <div class="machine-placeholder">Brak zdjęcia</div>
                             }
                         </div>
+
+                        <!-- Thumbnail Strip -->
+                        @if (images.Count > 1)
+                        {
+                            <div class="machine-thumbnail-strip">
+                                <div class="swiper machine-gallery-thumbs" id="machine-gallery-thumbs">
+                                    <div class="swiper-wrapper">
+                                        @for (var i = 0; i < images.Count; i++)
+                                        {
+                                            var image = images[i];
+                                            <div class="swiper-slide">
+                                                <img src="@Url.Content(image.Path!)" 
+                                                     alt="Miniatura: @machine.DisplayName - zdjęcie @(i + 1)" 
+                                                     loading="lazy" />
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        }
                     </div>
 
                     <div class="col-lg-6">
@@ -132,4 +171,86 @@
             @Html.Raw(Model.SchemaJson)
         </script>
     }
+}
+
+@section Styles {
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+}
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Initializing Swiper gallery...');
+
+            // Wait for DOM to be fully rendered
+            setTimeout(function() {
+                let galleryThumbs = null;
+
+                // Initialize thumbnail swiper only if thumbnails exist
+                const thumbsElement = document.querySelector('.machine-thumbnail-strip .machine-gallery-thumbs');
+                if (thumbsElement) {
+                    console.log('Initializing thumbnails...');
+                    galleryThumbs = new Swiper('.machine-thumbnail-strip .machine-gallery-thumbs', {
+                        spaceBetween: 10,
+                        slidesPerView: 'auto',
+                        freeMode: true,
+                        watchSlidesProgress: true,
+                        allowTouchMove: true,
+                        nested: false,
+                        resistance: false
+                    });
+                    console.log('Thumbnails initialized');
+                }
+
+                // Initialize main gallery
+                const mainElement = document.getElementById('machine-gallery-main');
+                if (mainElement) {
+                    console.log('Initializing main gallery...');
+                    const swiperConfig = {
+                        spaceBetween: 0,
+                        slidesPerView: 1,
+                        effect: 'slide',
+                        speed: 800,
+                        loop: @(images.Count > 1 ? "true" : "false"),
+                        keyboard: {
+                            enabled: true,
+                            onlyInViewport: true,
+                        },
+                        a11y: {
+                            prevSlideMessage: 'Poprzednie zdjęcie',
+                            nextSlideMessage: 'Następne zdjęcie',
+                        },
+                        nested: false
+                    };
+
+                    @if (images.Count > 1) {
+                    <text>
+                    // Add autoplay for multiple images
+                    swiperConfig.autoplay = {
+                        delay: 5000,
+                        disableOnInteraction: false
+                    };
+
+                    // Add navigation
+                    swiperConfig.navigation = {
+                        nextEl: '.machine-gallery-main .swiper-button-next',
+                        prevEl: '.machine-gallery-main .swiper-button-prev',
+                    };
+
+                    // Add thumbs connection if thumbnails exist
+                    if (galleryThumbs) {
+                        swiperConfig.thumbs = {
+                            swiper: galleryThumbs,
+                        };
+                    }
+                    </text>
+                    }
+
+                    const galleryMain = new Swiper('#machine-gallery-main', swiperConfig);
+                    console.log('Main gallery initialized successfully');
+                }
+            }, 150);
+        });
+    </script>
 }

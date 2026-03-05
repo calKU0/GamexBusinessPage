@@ -1,4 +1,3 @@
-using System.Globalization;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -6,12 +5,6 @@ namespace GamexBusinessPage.Models;
 
 public sealed class TransportCatalog
 {
-    private static readonly Dictionary<string, string> CategoryDisplayNames = new(StringComparer.OrdinalIgnoreCase)
-    {
-        ["bulk_materials"] = "Materiały sypkie",
-        ["lowbed_transport_and_trailer"] = "Transport niskopodwoziowy i laweta",
-        ["truck_crane_transport"] = "Transport HDS"
-    };
 
     public TransportCatalog(IReadOnlyList<TransportCategory> categories)
     {
@@ -36,9 +29,7 @@ public sealed class TransportCatalog
 
         foreach (var (categoryKey, items) in data)
         {
-            var displayName = CategoryDisplayNames.TryGetValue(categoryKey, out var name)
-                ? name
-                : CultureInfo.CurrentCulture.TextInfo.ToTitleCase(categoryKey.Replace('_', ' '));
+            var displayName = categoryKey;
             var transports = items ?? new List<TransportItem>();
 
             foreach (var transport in transports)
@@ -78,8 +69,8 @@ public sealed class TransportItem
     [JsonPropertyName("description")]
     public string? Description { get; set; }
 
-    [JsonPropertyName("image")]
-    public string? Image { get; set; }
+    [JsonPropertyName("images")]
+    public List<CatalogImage> Images { get; set; } = [];
 
     [JsonPropertyName("weight_limit")]
     public string? WeightLimit { get; set; }
@@ -92,4 +83,14 @@ public sealed class TransportItem
 
     [JsonIgnore]
     public string? CategoryDisplayName { get; set; }
+
+    [JsonIgnore]
+    public string? MainImagePath
+    {
+        get
+        {
+            return Images.FirstOrDefault(image => image.IsMain)?.Path
+                ?? Images.FirstOrDefault()?.Path;
+        }
+    }
 }

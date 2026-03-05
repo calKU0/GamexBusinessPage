@@ -35,6 +35,21 @@ public sealed class CatalogCache
         return GetOrCreate(TransportCatalogCacheKey, () => TransportCatalog.Load(_environment.ContentRootPath));
     }
 
+    public void ClearMachineCatalog()
+    {
+        _cache.Remove(MachineCatalogCacheKey);
+    }
+
+    public void ClearServiceCatalog()
+    {
+        _cache.Remove(ServiceCatalogCacheKey);
+    }
+
+    public void ClearTransportCatalog()
+    {
+        _cache.Remove(TransportCatalogCacheKey);
+    }
+
     private T GetOrCreate<T>(string cacheKey, Func<T> factory)
     {
         return _cache.GetOrCreate(cacheKey, entry =>

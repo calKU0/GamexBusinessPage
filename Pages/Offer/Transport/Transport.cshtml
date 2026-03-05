@@ -32,9 +32,9 @@
                                         <div class="col-md-6 col-xl-4">
                                             <a class="transport-card service-card-link" asp-page="/Contact">
                                                 <div class="transport-card-media">
-                                                    @if (!string.IsNullOrWhiteSpace(transport.Image))
+                                                    @if (!string.IsNullOrWhiteSpace(transport.MainImagePath))
                                                     {
-                                                        <img src="@Url.Content(transport.Image)" alt="@transport.Vehicle - @transport.CategoryDisplayName w Gamex Olkusz" loading="lazy" />
+                                                        <img src="@Url.Content(transport.MainImagePath)" alt="@transport.Vehicle - @transport.CategoryDisplayName w Gamex Olkusz" loading="lazy" />
                                                     }
                                                     else
                                                     {

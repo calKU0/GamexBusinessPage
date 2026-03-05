@@ -33,9 +33,9 @@
                                         <div class="col-md-6 col-xl-4">
                                             <a class="service-card service-card-link" asp-page="/Contact" asp-fragment="kontakt-formularz">
                                                 <div class="service-card-media">
-                                                    @if (!string.IsNullOrWhiteSpace(service.Image))
+                                                    @if (!string.IsNullOrWhiteSpace(service.MainImagePath))
                                                     {
-                                                        <img src="@Url.Content(service.Image)" alt="@service.Name - @service.CategoryDisplayName w Gamex Olkusz" loading="lazy" />
+                                                        <img src="@Url.Content(service.MainImagePath)" alt="@service.Name - @service.CategoryDisplayName w Gamex Olkusz" loading="lazy" />
                                                     }
                                                     else
                                                     {

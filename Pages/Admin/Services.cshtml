@@ -1,0 +1,78 @@
+@page "/admin/services"
+@model GamexBusinessPage.Pages.Admin.ServicesModel
+@{
+    Layout = "_AdminLayout";
+}
+
+<div class="container py-5 text-light admin-page">
+    <partial name="_AdminHeader" model="@(new GamexBusinessPage.Pages.Admin.AdminHeaderViewModel("Usługi", "Zarządzaj ofertą usług.", new[]
+    {
+        new GamexBusinessPage.Pages.Admin.AdminHeaderAction("Dodaj usługę", "/Admin/ServiceEdit", "btn-gamex btn-primary-gamex"),
+        new GamexBusinessPage.Pages.Admin.AdminHeaderAction("Wróć", "/Admin/Index", "btn-gamex btn-secondary-gamex")
+    }))" />
+
+    <partial name="_AdminStatus" model="Model.StatusMessage" />
+
+    <section class="mb-4">
+        <form method="get" class="row g-3 align-items-end">
+            <div class="col-md-5">
+                <label class="form-label text-light">Szukaj</label>
+                <input name="ServiceSearch" value="@Model.ServiceSearch" class="form-control bg-dark text-light border-secondary" placeholder="Nazwa lub opis" />
+            </div>
+            <div class="col-md-4">
+                <label class="form-label text-light">Kategoria</label>
+                <select name="ServiceCategoryFilter" class="form-select bg-dark text-light border-secondary">
+                    <option value="">Wszystkie</option>
+                    @foreach (var category in Model.ServiceCategoryKeys)
+                    {
+                        <option value="@category" selected="@(category == Model.ServiceCategoryFilter)">@category</option>
+                    }
+                </select>
+            </div>
+            <div class="col-md-3">
+                <button type="submit" class="btn-gamex btn-secondary-gamex w-100">Filtruj</button>
+            </div>
+        </form>
+    </section>
+
+    <div class="table-responsive mb-4">
+        <table class="table table-dark table-striped table-hover align-middle mb-0">
+            <thead>
+                <tr>
+                    <th>Kategoria</th>
+                    <th>Usługa</th>
+                    <th>Opis</th>
+                    <th class="text-end">Akcje</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Services.Count == 0)
+                {
+                    <tr>
+                        <td colspan="4" class="text-center text-secondary">Brak wyników.</td>
+                    </tr>
+                }
+                else
+                {
+                    @foreach (var service in Model.Services)
+                    {
+                        <tr>
+                            <td>@service.CategoryKey</td>
+                            <td>@service.Name</td>
+                            <td>@service.Description</td>
+                            <td class="text-end">
+                                <a class="btn btn-sm btn-outline-light" asp-page="/Admin/ServiceEdit" asp-route-Category="@service.CategoryKey" asp-route-Name="@service.Name">Edytuj</a>
+                                <form method="post" asp-page-handler="DeleteService" class="d-inline">
+                                    <input type="hidden" name="OriginalServiceCategory" value="@service.CategoryKey" />
+                                    <input type="hidden" name="OriginalServiceName" value="@service.Name" />
+                                    <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Usunąć usługę?');">Usuń</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+
+</div>
