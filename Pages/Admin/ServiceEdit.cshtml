@@ -129,6 +129,9 @@
             const allImagesContainer = document.getElementById('all-images-container');
             const noImagesMessage = document.getElementById('no-images-message');
 
+            // Track files in an array with their preview IDs
+            let selectedFiles = [];
+
             // Initialize main image tracking on page load
             initializeMainImageTracking();
 
@@ -160,19 +163,33 @@
 
                 const hasExistingImages = document.querySelectorAll('[data-image-type="existing"]').length > 0;
 
-                Array.from(files).forEach((file, index) => {
+                // Add new files to our tracking array
+                Array.from(files).forEach((file) => {
                     if (file.type.startsWith('image/')) {
+                        const previewId = `new-image-${newImageIndex++}`;
+                        selectedFiles.push({ file: file, previewId: previewId });
+
+                        // Create preview
                         const reader = new FileReader();
                         reader.onload = function(e) {
-                            const imagePath = `new-image-${newImageIndex++}`;
-                            const isFirstImage = index === 0 && !hasExistingImages && !hasAnyMainImage();
-
-                            const imageCard = createImagePreviewCard(e.target.result, imagePath, file.name, isFirstImage);
+                            const isFirstImage = selectedFiles.length === 1 && !hasExistingImages && !hasAnyMainImage();
+                            const imageCard = createImagePreviewCard(e.target.result, previewId, file.name, isFirstImage);
                             allImagesContainer.appendChild(imageCard);
                         };
                         reader.readAsDataURL(file);
                     }
                 });
+
+                // Update the file input with all selected files
+                updateFileInput();
+            }
+
+            function updateFileInput() {
+                const dataTransfer = new DataTransfer();
+                selectedFiles.forEach(item => {
+                    dataTransfer.items.add(item.file);
+                });
+                fileInput.files = dataTransfer.files;
             }
 
             function hasAnyMainImage() {
@@ -213,33 +230,42 @@
 
             document.addEventListener('click', function (event) {
                 // Set main image for preview images
-                if (event.target.matches('.set-main-preview-btn')) {
+                const setMainPreviewButton = event.target.closest('.set-main-preview-btn');
+                if (setMainPreviewButton) {
                     event.preventDefault();
-                    const imagePath = event.target.getAttribute('data-image-path');
+                    const imagePath = setMainPreviewButton.getAttribute('data-image-path');
                     setMainPreviewImage(imagePath);
                 }
 
                 // Remove preview image
-                if (event.target.matches('.remove-preview-btn')) {
+                const removePreviewButton = event.target.closest('.remove-preview-btn');
+                if (removePreviewButton) {
                     event.preventDefault();
-                    const imagePath = event.target.getAttribute('data-image-path');
-                    const container = event.target.closest('[data-image-container]');
+                    const previewId = removePreviewButton.getAttribute('data-image-path');
+                    const container = removePreviewButton.closest('[data-image-container]');
+
+                    // Remove from selectedFiles array
+                    selectedFiles = selectedFiles.filter(item => item.previewId !== previewId);
+
+                    // Update file input
+                    updateFileInput();
+
                     container.remove();
+
+                    setMainImageAfterRemoval(container);
 
                     // Show no images message if no images left
                     const remainingImages = document.querySelectorAll('[data-image-container]');
                     if (remainingImages.length === 0 && noImagesMessage) {
                         noImagesMessage.style.display = 'block';
                     }
-
-                    // Clear file input
-                    fileInput.value = '';
                 }
 
                 // Delete existing image functionality
-                if (event.target.matches('.delete-image-btn')) {
+                const deleteButton = event.target.closest('.delete-image-btn');
+                if (deleteButton) {
                     event.preventDefault();
-                    const imagePath = event.target.getAttribute('data-image-path');
+                    const imagePath = deleteButton.getAttribute('data-image-path');
                     const category = @Html.Raw(Json.Serialize(Model.Category ?? Model.OriginalServiceCategory));
                     const name = @Html.Raw(Json.Serialize(Model.Name ?? Model.OriginalServiceName));
 
@@ -263,6 +289,47 @@
                     setMainExistingImage(imagePath);
                 }
             });
+
+            function setMainImageAfterRemoval(removedContainer) {
+                const hasMainImage = document.querySelector('[data-image-container] .badge.bg-primary') !== null;
+                if (hasMainImage) {
+                    return;
+                }
+
+                const nextContainer = getNextMainContainer(removedContainer);
+                if (!nextContainer) {
+                    document.getElementById('MainImagePath').value = '';
+                    document.getElementById('MainImageType').value = '';
+                    return;
+                }
+
+                const nextImagePath = nextContainer.getAttribute('data-image-container');
+                const nextImageType = nextContainer.getAttribute('data-image-type');
+
+                if (nextImageType === 'preview') {
+                    setMainPreviewImage(nextImagePath);
+                } else {
+                    setMainExistingImage(nextImagePath);
+                }
+            }
+
+            function getNextMainContainer(removedContainer) {
+                if (!removedContainer) {
+                    return document.querySelector('[data-image-container]');
+                }
+
+                const nextSibling = removedContainer.nextElementSibling;
+                if (nextSibling?.matches('[data-image-container]')) {
+                    return nextSibling;
+                }
+
+                const previousSibling = removedContainer.previousElementSibling;
+                if (previousSibling?.matches('[data-image-container]')) {
+                    return previousSibling;
+                }
+
+                return document.querySelector('[data-image-container]');
+            }
 
             function setMainExistingImage(imagePath) {
                 // Remove main status from all images (existing and preview)
@@ -345,7 +412,13 @@
 
                     if (result.success) {
                         const container = buttonElement.closest('[data-image-container]');
+                        const wasMainImage = container.querySelector('.badge.bg-primary') !== null;
+
                         container.remove();
+
+                        if (wasMainImage) {
+                            setMainImageAfterRemoval(null);
+                        }
 
                         // Show no images message if no images left
                         const remainingImages = document.querySelectorAll('[data-image-container]');
