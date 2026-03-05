@@ -1247,12 +1247,7 @@ body {
 
 /* keep hover on card only (match services/transport) */
 
-.machine-placeholder {
-    color: #8A90B2;
-    font-size: 0.85rem;
-    text-transform: uppercase;
-    letter-spacing: 0.6px;
-}
+/* Machine placeholder - defined with .machine-details-media */
 
 .machine-card-body {
     padding: 1.5rem;
@@ -1381,10 +1376,24 @@ body {
     justify-content: center;
 }
 
+.machine-details-media:has(.machine-placeholder) {
+    min-height: 400px;
+    aspect-ratio: 16 / 10;
+}
+
 .machine-details-media img {
     width: 100%;
     height: auto;
     object-fit: contain;
+}
+
+.machine-placeholder {
+    color: #8A90B2;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    text-align: center;
+    padding: 2rem;
 }
 
 .machine-detail-card {
@@ -1464,6 +1473,11 @@ body {
     .machine-rental-page,
     .machine-details-page {
         padding-top: 5rem;
+    }
+
+    /* Only apply smaller min-height for placeholder on mobile */
+    .machine-details-media:has(.machine-placeholder) {
+        min-height: 250px;
     }
 }
 
