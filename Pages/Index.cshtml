@@ -1,9 +1,9 @@
 ﻿@page
 @model IndexModel
 
-
+<!-- HERO SECTION -->
 <section class="home-hero">
-    <img src="~/images/budowa-drogi.webp"
+    <img src="~/images/road-renovation-1.webp"
          class="home-hero-bg"
          alt="Budowa drogi asfaltowej w Olkuszu - firma Gamex"
          fetchpriority="high" />
@@ -26,10 +26,13 @@
 
                     <div class="home-hero-actions">
                         <a asp-page="/Contact" class="btn-gamex btn-primary-gamex btn-lg">
-                            Skontaktuj się z nami
+                            <i class="fas fa-envelope me-2"></i>Skontaktuj się z nami
+                        </a>
+                        <a asp-page="/Offer/MachineRental/MachineRental" class="btn-gamex btn-secondary-gamex btn-lg">
+                            <i class="fas fa-tools me-2"></i>Zobacz maszyny
                         </a>
                         <a asp-page="/Realizations" class="btn-gamex btn-secondary-gamex btn-lg">
-                            Zobacz realizacje
+                            <i class="fas fa-images me-2"></i>Zobacz realizacje
                         </a>
                     </div>
                 </div>
@@ -38,47 +41,37 @@
     </div>
 </section>
 
-<section id="o-nas" class="home-section container">
-    <div class="row align-items-center g-5">
-        <div class="col-lg-6">
-            <h2>Doświadczenie w budownictwie drogowym od 1994 roku</h2>
-            <p>
-                Od 1994 roku realizujemy profesjonalne projekty drogowe i budowlane,
-                łącząc solidne rzemiosło z nowoczesnymi technologiami. Jako lider w regionie Olkusza,
-                każda inwestycja to dla nas odpowiedzialność i gwarancja najwyższej jakości.
-            </p>
-        </div>
-        <div class="col-lg-6">
-            <div class="home-image-wrapper">
-                <img src="~/images/koparki.webp"
-                     class="img-fluid rounded-4"
-                     alt="Park maszynowy Gamex Olkusz - nowoczesne koparki i ładowarki"
-                     loading="lazy"
-                     width="600" height="400">
-            </div>
-        </div>
-    </div>
-</section>
-
-<section class="home-values">
+<!-- WARTOŚCI -->
+<section class="home-section-values">
     <div class="container">
-        <h2 class="text-center mb-5 text-white">Dlaczego warto wybrać Gamex?</h2>
+        <div class="text-center mb-5">
+            <h2 class="section-title text-white">Dlaczego warto wybrać Gamex?</h2>
+        </div>
 
         <div class="row g-4">
             <div class="col-md-4">
                 <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
                     <h3>Precyzja</h3>
                     <p>Każdy detal ma znaczenie – od planowania po finalną warstwę asfaltu.</p>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-truck-monster"></i>
+                    </div>
                     <h3>Nowoczesny sprzęt</h3>
                     <p>Własny park maszynowy pozwala nam na pełną niezależność i terminowość.</p>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
                     <h3>Zaufanie</h3>
                     <p>Budujemy trwałe relacje z gminami oraz inwestorami prywatnymi w całym regionie.</p>
                 </div>
@@ -87,41 +80,118 @@
     </div>
 </section>
 
-<section class="home-section container">
-    <div class="row align-items-center g-5 flex-lg-row-reverse">
-        <div class="col-lg-6">
-            <h2>Kompleksowe usługi drogowe i brukarskie</h2>
-            <p>
-                Realizujemy budowy i remonty dróg, chodników, kanalizacji oraz
-                infrastruktury technicznej. Oferujemy nowoczesne rozwiązania drogowe
-                dla sektora publicznego i prywatnego na terenie województwa Małopolskiego, Śląskiego oraz Świętokrzyskiego.
-            </p>
-        </div>
-        <div class="col-lg-6">
-            <div class="home-image-wrapper">
-                <img src="~/images/ukladanie-asfaltu.webp"
-                     class="img-fluid rounded-4"
-                     alt="Prace drogowe Gamex - układanie nawierzchni asfaltowej"
-                     loading="lazy"
-                     width="600" height="400">
+<!-- O NAS SECTION -->
+<section id="o-nas" class="home-section-standard">
+    <div class="container">
+        <div class="row align-items-center g-5 flex-lg-row-reverse">
+            <div class="col-lg-6">
+                <div class="section-icon">
+                    <i class="fas fa-history"></i>
+                </div>
+                <h2 class="section-title">Doświadczenie w budownictwie drogowym od 1994 roku</h2>
+                <p class="section-text">
+                    Od 1994 roku realizujemy profesjonalne projekty drogowe i budowlane,
+                    łącząc solidne rzemiosło z nowoczesnymi technologiami. Jako lider w regionie Olkusza,
+                    każda inwestycja to dla nas odpowiedzialność i gwarancja najwyższej jakości.
+                </p>
+            </div>
+            <div class="col-lg-6">
+                <div class="section-image-wrapper">
+                    <img src="~/images/road-renovation-2.webp"
+                         class="img-fluid rounded-4"
+                         alt="Park maszynowy Gamex Olkusz - nowoczesne koparki i ładowarki"
+                         loading="lazy"
+                         width="600" height="400">
+                </div>
             </div>
         </div>
     </div>
 </section>
 
-<section class="home-cta">
+<!-- WYNAJEM MASZYN -->
+<section class="home-section-standard">
+    <div class="container">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-6">
+                <div class="section-icon section-icon-orange">
+                    <i class="fas fa-hard-hat"></i>
+                </div>
+                <h2 class="section-title">Wynajem maszyn budowlanych z operatorem</h2>
+                <p class="section-text">
+                    Oferujemy krótkoterminowy wynajem profesjonalnych maszyn budowlanych z doświadczonym operatorem.
+                    Koparki, ładowarki, walce, układarki - wszystko czego potrzebujesz do realizacji Twojego projektu.
+                </p>
+                <ul class="feature-list feature-list-orange">
+                    <li><i class="fas fa-check-circle"></i> Nowoczesny park maszynowy</li>
+                    <li><i class="fas fa-check-circle"></i> Doświadczeni operatorzy</li>
+                    <li><i class="fas fa-check-circle"></i> Rozliczenie godzinowe</li>
+                    <li><i class="fas fa-check-circle"></i> Szybka dostępność</li>
+                </ul>
+                <a asp-page="/Offer/MachineRental/MachineRental" class="btn-gamex btn-primary-gamex btn-lg mt-4">
+                    <i class="fas fa-tools me-2"></i>Sprawdź dostępne maszyny
+                </a>
+            </div>
+            <div class="col-lg-6">
+                <div class="section-image-wrapper">
+                    <img src="~/images/machines.webp" 
+                         alt="Wynajem maszyn budowlanych Gamex" 
+                         class="img-fluid rounded-4"
+                         loading="lazy"
+                         width="600" height="400" />
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- USŁUGI DROGOWE -->
+<section class="home-section-standard">
+    <div class="container">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-6">
+                <div class="section-image-wrapper">
+                    <img src="~/images/road-renovation-3.webp"
+                         class="img-fluid rounded-4"
+                         alt="Prace drogowe Gamex - układanie nawierzchni asfaltowej"
+                         loading="lazy"
+                         width="600" height="400">
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="section-icon">
+                    <i class="fas fa-road"></i>
+                </div>
+                <h2 class="section-title">Kompleksowe usługi drogowe i brukarskie</h2>
+                <p class="section-text">
+                    Realizujemy budowy i remonty dróg, chodników, kanalizacji oraz
+                    infrastruktury technicznej. Oferujemy nowoczesne rozwiązania drogowe
+                    dla sektora publicznego i prywatnego na terenie województwa Małopolskiego, Śląskiego oraz Świętokrzyskiego.
+                </p>
+                <a asp-page="/Offer/Services/Services" class="btn-gamex btn-secondary-gamex mt-3">
+                    <i class="fas fa-list me-2"></i>Zobacz pełną ofertę usług
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- WYCENA -->
+<section class="home-section-cta">
     <div class="container text-center">
-        <h2>Masz projekt drogowy do zrealizowania?</h2>
-        <p>Skontaktuj się z nami w celu uzyskania darmowej wyceny i konsultacji.</p>
+        <h2 class="section-title text-white">Masz projekt drogowy do zrealizowania?</h2>
+        <p class="section-text text-white-50 mb-4">Skontaktuj się z nami w celu uzyskania darmowej wyceny i konsultacji.</p>
         <a asp-page="/Contact" class="btn btn-lg btn-gamex btn-primary-gamex">
-            Bezpłatna wycena
+            <i class="fas fa-file-invoice me-2"></i>Bezpłatna wycena
         </a>
     </div>
 </section>
 
-<section class="home-partners">
+<!-- PARTNERZY -->
+<section class="home-section-partners">
     <div class="container">
-        <p class="partners-title h5 text-center mb-4">Pracujemy na sprzęcie renomowanych producentów</p>
+        <div class="text-center mb-4">
+            <h2 class="partners-title">Pracujemy na sprzęcie renomowanych producentów</h2>
+        </div>
 
         <div class="partners-logos">
             <img src="~/images/producenci/Bobcat.webp" alt="Logo Bobcat" loading="lazy" width="120" height="40" />

@@ -7,16 +7,16 @@
 }
 
 <div class="machine-details-page">
-    <div class="container-fluid">
-        <nav aria-label="breadcrumb" class="machine-breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a asp-page="/Index">Strona główna</a></li>
-                <li class="breadcrumb-item"><a asp-page="/Offer/Offer">Oferta</a></li>
-                <li class="breadcrumb-item"><a asp-page="/Offer/MachineRental/MachineRental">Wypożyczenie maszyn</a></li>
-                <li class="breadcrumb-item active" aria-current="page">@machine.DisplayName</li>
-            </ol>
-        </nav>
+    <nav aria-label="breadcrumb" class="machine-breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-page="/Index">Strona główna</a></li>
+            <li class="breadcrumb-item"><a asp-page="/Offer/Offer">Oferta</a></li>
+            <li class="breadcrumb-item"><a asp-page="/Offer/MachineRental/MachineRental">Wypożyczenie maszyn</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@machine.DisplayName</li>
+        </ol>
+    </nav>
 
+    <div class="container-fluid">
         <div class="row g-4">
             <section class="col-lg-12">
                 <header class="machine-details-header">
