@@ -1,10 +1,28 @@
 {
   "Koparko \u0142adowarki": [
     {
+      "model": "3CX \u002B zamiatarka/frezarka",
+      "brand": "JCB",
+      "images": [],
+      "production_year": 2016,
+      "weight": "8t",
+      "equipment": [
+        "D\u017Awignie X",
+        "\u0141y\u017Cka skarpowa, \u0142y\u017Cka 30cm, 60 cm",
+        "Szybkoz\u0142\u0105cze ty\u0142",
+        "\u0141y\u017Cka prz\u00F3d 4w1"
+      ],
+      "rental_options": "Mo\u017Cliwo\u015B\u0107 wynajmu z zamiatark\u0105 2,75m i frezark\u0105 40cm lub m\u0142otem do kucia",
+      "specifications": {},
+      "notes": "",
+      "type": ""
+    },
+    {
       "model": "4CX",
       "brand": "JCB",
       "images": [],
       "production_year": 2025,
+      "weight": "9t",
       "equipment": [
         "Joystick",
         "Dualdrive",
@@ -15,34 +33,24 @@
         "Fotel pneumatyczny",
         "Radio"
       ],
-      "specifications": {}
+      "rental_options": "",
+      "specifications": {},
+      "notes": "",
+      "type": ""
     },
     {
       "model": "3CX1",
       "brand": "JCB",
       "images": [],
       "production_year": 2018,
+      "weight": "",
       "equipment": [
         "Joystick",
         "\u0141y\u017Cka skarpowa, \u0142y\u017Cka 30cm, 60 cm",
         "Szybkoz\u0142\u0105cze ty\u0142",
         "\u0141y\u017Cka prz\u00F3d 4w1"
       ],
-      "specifications": {}
-    },
-    {
-      "model": "3CX",
-      "brand": "JCB",
-      "images": [],
-      "production_year": 2016,
-      "weight": "",
-      "equipment": [
-        "D\u017Awignie X",
-        "\u0141y\u017Cka skarpowa, \u0142y\u017Cka 30cm, 60 cm",
-        "Szybkoz\u0142\u0105cze ty\u0142",
-        "\u0141y\u017Cka prz\u00F3d 4w1"
-      ],
-      "rental_options": "Mo\u017Cliwo\u015B\u0107 wynajmu z zamiatark\u0105 2,75m i frezark\u0105 40cm lub m\u0142otem do kucia",
+      "rental_options": "",
       "specifications": {},
       "notes": "",
       "type": ""
@@ -121,28 +129,6 @@
       "specifications": {}
     },
     {
-      "model": "175 Wsr",
-      "brand": "Atlas",
-      "images": [],
-      "production_year": 2025,
-      "weight": "18t",
-      "equipment": [
-        "D\u0142ugi wysi\u0119gnik 2x \u0142amany",
-        "G\u0142owica uchylno-obrotowa",
-        "\u0141y\u017Cki: skarpowa 2m, skandynawska, kopi\u0105ca 80cm, trapezowa",
-        "Osprz\u0119t: wid\u0142y, n\u00F3\u017C do asfaltu, zrywak",
-        "2x szybkoz\u0142\u0105cze hydrauliczne",
-        "Radio",
-        "Klimatyzacja",
-        "Fotel pneumatyczny",
-        "Lemiesz",
-        "Podpory",
-        "Kogut",
-        "O\u015Bwietlenie led"
-      ],
-      "specifications": {}
-    },
-    {
       "model": "ECR 235",
       "brand": "Volvo",
       "images": [],
@@ -178,6 +164,31 @@
         "Kogut"
       ],
       "specifications": {}
+    },
+    {
+      "model": "175 Wsr",
+      "brand": "Atlas",
+      "images": [],
+      "production_year": 2025,
+      "weight": "18t",
+      "equipment": [
+        "D\u0142ugi wysi\u0119gnik 2x \u0142amany",
+        "G\u0142owica uchylno-obrotowa",
+        "\u0141y\u017Cki: skarpowa 2m, skandynawska, kopi\u0105ca 80cm, trapezowa",
+        "Osprz\u0119t: wid\u0142y, n\u00F3\u017C do asfaltu, zrywak",
+        "2x szybkoz\u0142\u0105cze hydrauliczne",
+        "Radio",
+        "Klimatyzacja",
+        "Fotel pneumatyczny",
+        "Lemiesz",
+        "Podpory",
+        "Kogut",
+        "O\u015Bwietlenie led"
+      ],
+      "rental_options": "",
+      "specifications": {},
+      "notes": "",
+      "type": ""
     }
   ],
   "Mini \u0142adowarki": [
@@ -205,6 +216,7 @@
       "model": "MRT 2260",
       "brand": "Manitou",
       "images": [],
+      "production_year": 2025,
       "weight": "18t",
       "equipment": [
         "Wid\u0142y",
@@ -214,11 +226,14 @@
         "Fotel pneumatyczny",
         "Kogut"
       ],
+      "rental_options": "",
       "specifications": {
         "Maks. ud\u017Awig": "6t",
         "Maks. wysoko\u015B\u0107 podnoszenia": "21m",
         "Maks. zasi\u0119g": "18m"
-      }
+      },
+      "notes": "",
+      "type": ""
     }
   ],
   "Przesiewacze": [
@@ -422,7 +437,7 @@
   ],
   "Ci\u0105gniki": [
     {
-      "model": "",
+      "model": "6499",
       "brand": "Massey Ferguson",
       "images": [],
       "production_year": 2006,
@@ -434,7 +449,8 @@
         "Amortyzacja przedniego mostu",
         "Radio",
         "Fotel pneumatyczny",
-        "Kogut"
+        "Kogut",
+        "Obci\u0105\u017Cnik z przodu"
       ],
       "rental_options": "",
       "specifications": {
