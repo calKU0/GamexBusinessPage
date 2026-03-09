@@ -443,21 +443,21 @@
       "production_year": 2006,
       "weight": "",
       "equipment": [
-        "3 linie hydrauliczne",
-        "Wyj\u015Bcie pneumatyczne",
-        "Przyczepa 2 osiowa",
-        "Amortyzacja przedniego mostu",
-        "Radio",
-        "Fotel pneumatyczny",
         "Kogut",
+        "3 linie hydrauliczne",
+        "Przyczepa 2 osiowa",
+        "Fotel pneumatyczny",
+        "Amortyzacja przedniego mostu",
+        "Wyj\u015Bcie pneumatyczne",
+        "Radio",
         "Obci\u0105\u017Cnik z przodu"
       ],
       "rental_options": "",
       "specifications": {
         "Nap\u0119d": "4x4",
-        "Pr\u0119dko\u015B\u0107": "40 km/h",
+        "\u0141adowno\u015B\u0107 przyczepy": "20t",
         "Skrzynia bieg\u00F3w": "Dynashift 4 \u002B 4 p\u00F3\u0142biegi",
-        "\u0141adowno\u015B\u0107 przyczepy": "20t"
+        "Pr\u0119dko\u015B\u0107": "40 km/h"
       },
       "notes": "",
       "type": "Traktor \u002B przyczepa"

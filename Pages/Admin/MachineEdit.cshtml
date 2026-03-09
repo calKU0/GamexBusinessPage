@@ -65,6 +65,9 @@
                         @for (var i = 0; i < Model.EquipmentItems.Count; i++)
                         {
                             <div class="input-group mb-2" data-equipment-row>
+                                <span class="input-group-text bg-dark text-light border-secondary" style="cursor: move;" data-drag-handle>
+                                    <i class="fas fa-grip-vertical"></i>
+                                </span>
                                 <input class="form-control bg-dark text-light border-secondary" name="EquipmentItems[@i]" value="@Model.EquipmentItems[i]" />
                                 <button type="button" class="btn btn-outline-danger" data-remove-equipment>Usuń</button>
                             </div>
@@ -79,10 +82,15 @@
                         @for (var i = 0; i < Model.SpecificationItems.Count; i++)
                         {
                             <div class="row g-2 align-items-center mb-2" data-spec-row>
+                                <div class="col-auto">
+                                    <span class="btn btn-dark border-secondary" style="cursor: move;" data-drag-handle>
+                                        <i class="fas fa-grip-vertical"></i>
+                                    </span>
+                                </div>
                                 <div class="col-md-5">
                                     <input class="form-control bg-dark text-light border-secondary" name="SpecificationItems[@i].Key" value="@Model.SpecificationItems[i].Key" placeholder="Parametr" />
                                 </div>
-                                <div class="col-md-5">
+                                <div class="col-md-4">
                                     <input class="form-control bg-dark text-light border-secondary" name="SpecificationItems[@i].Value" value="@Model.SpecificationItems[i].Value" placeholder="Wartość" />
                                 </div>
                                 <div class="col-md-2">
@@ -171,6 +179,9 @@
 
 <template id="equipment-template">
     <div class="input-group mb-2" data-equipment-row>
+        <span class="input-group-text bg-dark text-light border-secondary" style="cursor: move;" data-drag-handle>
+            <i class="fas fa-grip-vertical"></i>
+        </span>
         <input class="form-control bg-dark text-light border-secondary" name="EquipmentItems[__index__]" />
         <button type="button" class="btn btn-outline-danger" data-remove-equipment>Usuń</button>
     </div>
@@ -178,10 +189,15 @@
 
 <template id="spec-template">
     <div class="row g-2 align-items-center mb-2" data-spec-row>
+        <div class="col-auto">
+            <span class="btn btn-dark border-secondary" style="cursor: move;" data-drag-handle>
+                <i class="fas fa-grip-vertical"></i>
+            </span>
+        </div>
         <div class="col-md-5">
             <input class="form-control bg-dark text-light border-secondary" name="SpecificationItems[__index__].Key" placeholder="Parametr" />
         </div>
-        <div class="col-md-5">
+        <div class="col-md-4">
             <input class="form-control bg-dark text-light border-secondary" name="SpecificationItems[__index__].Value" placeholder="Wartość" />
         </div>
         <div class="col-md-2">
@@ -192,6 +208,7 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
     <script src="~/js/admin-image-manager.js"></script>
     <script>
         (function () {
@@ -212,26 +229,75 @@
                 })
             });
 
+            // Initialize drag-and-drop for equipment
+            if (equipmentList) {
+                new Sortable(equipmentList, {
+                    animation: 150,
+                    handle: '[data-drag-handle]',
+                    ghostClass: 'sortable-ghost',
+                    dragClass: 'sortable-drag',
+                    onEnd: function () {
+                        reindexList(equipmentList, 'EquipmentItems');
+                    }
+                });
+            }
+
+            // Initialize drag-and-drop for specification
+            if (specList) {
+                new Sortable(specList, {
+                    animation: 150,
+                    handle: '[data-drag-handle]',
+                    ghostClass: 'sortable-ghost',
+                    dragClass: 'sortable-drag',
+                    onEnd: function () {
+                        reindexList(specList, 'SpecificationItems');
+                    }
+                });
+            }
+
+            // Reindex list items after drag
+            function reindexList(container, namePrefix) {
+                const items = container.querySelectorAll(namePrefix === 'EquipmentItems' ? '[data-equipment-row]' : '[data-spec-row]');
+                items.forEach((item, index) => {
+                    const inputs = item.querySelectorAll('input');
+                    inputs.forEach(input => {
+                        if (namePrefix === 'EquipmentItems') {
+                            input.name = `${namePrefix}[${index}]`;
+                        } else {
+                            if (input.placeholder === 'Parametr') {
+                                input.name = `${namePrefix}[${index}].Key`;
+                            } else {
+                                input.name = `${namePrefix}[${index}].Value`;
+                            }
+                        }
+                    });
+                });
+            }
+
             // Equipment and Specification event handlers
             document.addEventListener('click', function (event) {
                 if (event.target.matches('[data-add-equipment]')) {
                     event.preventDefault();
                     equipmentList.insertAdjacentHTML('beforeend', equipmentTemplate.replace(/__index__/g, equipmentIndex++));
+                    reindexList(equipmentList, 'EquipmentItems');
                 }
 
                 if (event.target.matches('[data-add-spec]')) {
                     event.preventDefault();
                     specList.insertAdjacentHTML('beforeend', specTemplate.replace(/__index__/g, specIndex++));
+                    reindexList(specList, 'SpecificationItems');
                 }
 
                 if (event.target.matches('[data-remove-equipment]')) {
                     event.preventDefault();
                     event.target.closest('[data-equipment-row]')?.remove();
+                    reindexList(equipmentList, 'EquipmentItems');
                 }
 
                 if (event.target.matches('[data-remove-spec]')) {
                     event.preventDefault();
                     event.target.closest('[data-spec-row]')?.remove();
+                    reindexList(specList, 'SpecificationItems');
                 }
             });
         })();
