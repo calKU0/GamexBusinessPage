@@ -31,9 +31,10 @@ namespace GamexBusinessPage.Pages.Services
 
         public void OnGet(string? category)
         {
-            ViewData["Title"] = "Budowa i remonty dróg | Usługi drogowe Gamex Olkusz";
+            ViewData["Title"] = "Budowa i remonty dróg w Małopolsce | Usługi drogowe Gamex Olkusz";
             ViewData["Description"] = "Profesjonalne remonty dróg, układanie nawierzchni i roboty ziemne. Realizujemy projekty dla gmin i firm w Małopolsce, Śląsku i Świętokrzyskim.";
             ViewData["Keywords"] = "Gamex, Olkusz, remonty dróg, usługi drogowe, nawierzchnie asfaltowe, usługi budowlane, Małopolska, Śląsk, Świętokrzyskie";
+            ViewData["CanonicalUrl"] = "https://gamex-olkusz.pl/oferta/uslugi";
 
             var catalog = _catalogCache.GetServiceCatalog();
             Categories = catalog.Categories;
@@ -43,7 +44,7 @@ namespace GamexBusinessPage.Pages.Services
             {
                 new(
                     "Wszystkie usługi",
-                    Url.Page("/Offer/Services/Services") ?? "#",
+                    Url.Page("/oferta/uslugi") ?? "#",
                     string.IsNullOrWhiteSpace(SelectedCategoryKey))
             };
 
@@ -51,7 +52,7 @@ namespace GamexBusinessPage.Pages.Services
             {
                 categoryLinks.Add(new CategoryLinkItem(
                     serviceCategory.DisplayName,
-                    Url.Page("/Offer/Services/Services", new { category = serviceCategory.Key }) ?? "#",
+                    Url.Page("/oferta/uslugi", new { category = serviceCategory.Key }) ?? "#",
                     string.Equals(SelectedCategoryKey, serviceCategory.Key, StringComparison.OrdinalIgnoreCase)));
             }
 

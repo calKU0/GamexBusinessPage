@@ -56,30 +56,38 @@ app.MapRazorPages()
 
 app.UseOutputCache();
 
-app.MapGet("/sitemap.xml", async (CatalogCache catalogCache, HttpContext context) =>
+app.MapGet("/sitemap.xml", async (CatalogCache catalogCache, IWebHostEnvironment environment, HttpContext context) =>
 {
     var baseUrl = "https://gamex-olkusz.pl";
     var sb = new StringBuilder();
     sb.AppendLine("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
     sb.AppendLine("<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">");
 
-    // Static pages
+    static string ResolveLastModified(string contentRootPath, string relativePath)
+    {
+        var fullPath = Path.Combine(contentRootPath, relativePath.Replace('/', Path.DirectorySeparatorChar));
+        return File.Exists(fullPath)
+            ? File.GetLastWriteTimeUtc(fullPath).ToString("yyyy-MM-dd")
+            : DateTime.UtcNow.ToString("yyyy-MM-dd");
+    }
+
     var staticPages = new[]
     {
-        "",
-        "/kontakt",
-        "/dotacja",
-        "/realizacje",
-        "/oferta",
-        "/oferta/wypozyczenie-maszyn",
-        "/oferta/uslugi",
-        "/oferta/transport"
+        new { Path = "", LastModFile = "Pages/Index.cshtml" },
+        new { Path = "/kontakt", LastModFile = "Pages/Contact.cshtml" },
+        new { Path = "/dotacja", LastModFile = "Pages/Dotation.cshtml" },
+        new { Path = "/oferta", LastModFile = "Pages/Offer/Offer.cshtml" },
+        new { Path = "/oferta/wypozyczenie-maszyn", LastModFile = "Pages/Offer/MachineRental/MachineRental.cshtml" },
+        new { Path = "/oferta/uslugi", LastModFile = "Pages/Offer/Services/Services.cshtml" },
+        new { Path = "/oferta/transport", LastModFile = "Pages/Offer/Transport/Transport.cshtml" }
     };
 
     foreach (var page in staticPages)
     {
+        var lastMod = ResolveLastModified(environment.ContentRootPath, page.LastModFile);
         sb.AppendLine("  <url>");
-        sb.AppendLine($"    <loc>{baseUrl}{page}</loc>");
+        sb.AppendLine($"    <loc>{baseUrl}{page.Path}</loc>");
+        sb.AppendLine($"    <lastmod>{lastMod}</lastmod>");
         sb.AppendLine("    <changefreq>weekly</changefreq>");
         sb.AppendLine("    <priority>0.8</priority>");
         sb.AppendLine("  </url>");
@@ -87,10 +95,12 @@ app.MapGet("/sitemap.xml", async (CatalogCache catalogCache, HttpContext context
 
     // Dynamic pages (Machines)
     var catalog = catalogCache.GetMachineCatalog();
+    var machinesLastMod = ResolveLastModified(environment.ContentRootPath, "Data/machines.json");
     foreach (var machine in catalog.Machines)
     {
         sb.AppendLine("  <url>");
         sb.AppendLine($"    <loc>{baseUrl}/oferta/wypozyczenie-maszyn/{machine.Slug}</loc>");
+        sb.AppendLine($"    <lastmod>{machinesLastMod}</lastmod>");
         sb.AppendLine("    <changefreq>monthly</changefreq>");
         sb.AppendLine("    <priority>0.6</priority>");
         sb.AppendLine("  </url>");

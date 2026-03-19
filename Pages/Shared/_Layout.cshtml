@@ -3,10 +3,13 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="robots" content="index, follow">
+    <meta name="robots" content="@(ViewData["Robots"] ?? "index, follow")">
     <meta name="keywords" content="@ViewData["Keywords"]">
     <meta name="description" content="@ViewData["Description"]">
     <title>@ViewData["Title"]</title>
+
+    <link rel="icon" type="image/x-icon" href="~/images/icon.ico" />
+    <link rel="shortcut icon" type="image/x-icon" href="~/images/icon.ico" />
 
     <link rel="canonical" href="@(ViewData["CanonicalUrl"] ?? $"https://gamex-olkusz.pl{Context.Request.Path}")" />
     <meta property="og:type" content="website" />
@@ -17,7 +20,7 @@
     <meta property="og:site_name" content="Gamex Olkusz" />
     <meta property="og:locale" content="pl_PL" />
 
-    <link rel="preload" href="~/images/budowa-drogi.webp" as="image" fetchpriority="high">
+    <link rel="preload" href="~/images/road-renovation-1.webp" as="image" fetchpriority="high">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css">
@@ -86,6 +89,35 @@
     <main role="main">
         @RenderBody()
     </main>
+
+    <div class="a11y-widget" id="a11yWidget">
+        <button type="button"
+                class="a11y-widget-toggle"
+                id="a11yWidgetToggle"
+                aria-label="Udogodnienia dostępności"
+                aria-controls="a11yWidgetPanel"
+                aria-expanded="false">
+            <i class="fa-solid fa-universal-access" aria-hidden="true"></i>
+        </button>
+
+        <div class="a11y-widget-panel" id="a11yWidgetPanel" role="dialog" aria-label="Udogodnienia dostępności">
+            <div class="a11y-widget-header">
+                <span>Dostępność</span>
+            </div>
+
+            <div class="a11y-widget-group" aria-label="Sterowanie rozmiarem tekstu">
+                <button type="button" class="btn btn-sm btn-outline-light a11y-action" data-a11y-action="decrease-font" aria-label="Zmniejsz tekst">A-</button>
+                <span class="a11y-font-size-value" id="a11yFontSizeValue">100%</span>
+                <button type="button" class="btn btn-sm btn-outline-light a11y-action" data-a11y-action="increase-font" aria-label="Powiększ tekst">A+</button>
+            </div>
+
+            <div class="a11y-widget-actions">
+                <button type="button" class="btn btn-sm btn-outline-light w-100 a11y-action" data-a11y-action="toggle-contrast">Wysoki kontrast</button>
+                <button type="button" class="btn btn-sm btn-outline-light w-100 a11y-action" data-a11y-action="toggle-light">Jasne tło</button>
+                <button type="button" class="btn btn-sm btn-outline-light w-100 a11y-action" data-a11y-action="reset">Reset ustawień</button>
+            </div>
+        </div>
+    </div>
 
     <footer class="gamex-footer">
         <div class="container">
@@ -156,6 +188,7 @@
 
     @* <script src="~/lib/jquery/dist/jquery.min.js"></script> *@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js" defer></script>
+    <script src="~/js/accessibility-widget.js" asp-append-version="true" defer></script>
     @* <script src="~/js/site.js" asp-append-version="true"></script> *@
 
     @await RenderSectionAsync("Scripts", required: false)

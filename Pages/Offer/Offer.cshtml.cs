@@ -14,7 +14,7 @@ namespace GamexBusinessPage.Pages
 
         public void OnGet()
         {
-            ViewData["Title"] = "Usługi i maszyny budowlane – Oferta Gamex Olkusz";
+            ViewData["Title"] = "Usługi i maszyny budowlane w Małopolsce | Oferta Gamex Olkusz";
             ViewData["Description"] = "Szeroki zakres usług: od wynajmu koparek po kompleksowe roboty drogowe i transport HDS. Zobacz, jak Gamex wspiera inwestycje w Olkuszu, całej Małopolce oraz okolicach";
             ViewData["Keywords"] = "Gamex, Olkusz, oferta, wynajem maszyn budowlanych, remonty dróg, usługi budowlane, Małopolska, Śląsk, Świętokrzyskie";
 
@@ -48,21 +48,21 @@ namespace GamexBusinessPage.Pages
                     ["name"] = "Wypożyczenie maszyn budowlanych",
                     ["description"] = "Wynajem profesjonalnego sprzętu budowlanego z obsługą operatorską.",
                     ["provider"] = new Dictionary<string, object?> { ["@id"] = localBusiness["@id"] },
-                    ["url"] = $"{baseUrl}/Offer/MachineRental/MachineRental"
+                    ["url"] = $"{baseUrl}/oferta/wypozyczenie-maszyn"
                 },
                 new Dictionary<string, object?> {
                     ["@type"] = "Service",
                     ["name"] = "Usługi drogowe i budowlane",
                     ["description"] = "Kompleksowa budowa i modernizacja dróg oraz infrastruktury towarzyszącej.",
                     ["provider"] = new Dictionary<string, object?> { ["@id"] = localBusiness["@id"] },
-                    ["url"] = $"{baseUrl}/Offer/Services/Services"
+                    ["url"] = $"{baseUrl}/oferta/uslugi"
                 },
                 new Dictionary<string, object?> {
                     ["@type"] = "Service",
                     ["name"] = "Transport ciężarowy i HDS",
                     ["description"] = "Transport materiałów sypkich i maszyn na terenie województwa Małopolskiego, Śląskiego oraz Świętokrzyskiego.",
                     ["provider"] = new Dictionary<string, object?> { ["@id"] = localBusiness["@id"] },
-                    ["url"] = $"{baseUrl}/Offer/Transport/Transport"
+                    ["url"] = $"{baseUrl}/oferta/transport"
                 }
             };
 

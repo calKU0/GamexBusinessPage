@@ -31,9 +31,10 @@ public class TransportModel : PageModel
 
     public void OnGet(string? category)
     {
-        ViewData["Title"] = "Transport materiałów sypkich i maszyn HDS | Gamex Olkusz";
-        ViewData["Description"] = "Oferujemy transport kruszyw, piasku oraz przewóz maszyn budowlanych lawetą i HDS. Szybka realizacja na terenie woj. małopolskiego i śląskiego.";
+        ViewData["Title"] = "Transport materiałów sypkich i maszyn HDS w Małopolsce | Gamex Olkusz";
+        ViewData["Description"] = "Oferujemy transport kruszyw, piasku oraz przewóz maszyn budowlanych lawetą i HDS. Szybka realizacja na terenie województwa małopolskiego, śląskiego i świętokrzyskiego.";
         ViewData["Keywords"] = "Gamex, Olkusz, transport materiałów, transport maszyn, HDS, laweta, niskopodwoziowy, wywrotka, Małopolska";
+        ViewData["CanonicalUrl"] = "https://gamex-olkusz.pl/oferta/transport";
 
         var catalog = _catalogCache.GetTransportCatalog();
         Categories = catalog.Categories;
@@ -43,7 +44,7 @@ public class TransportModel : PageModel
         {
             new(
                 "Wszystkie opcje",
-                Url.Page("/Offer/Transport/Transport") ?? "#",
+                Url.Page("/oferta/transport") ?? "#",
                 string.IsNullOrWhiteSpace(SelectedCategoryKey))
         };
 
@@ -51,7 +52,7 @@ public class TransportModel : PageModel
         {
             categoryLinks.Add(new CategoryLinkItem(
                 transportCategory.DisplayName,
-                Url.Page("/Offer/Transport/Transport", new { category = transportCategory.Key }) ?? "#",
+                Url.Page("/oferta/transport", new { category = transportCategory.Key }) ?? "#",
                 string.Equals(SelectedCategoryKey, transportCategory.Key, StringComparison.OrdinalIgnoreCase)));
         }
 

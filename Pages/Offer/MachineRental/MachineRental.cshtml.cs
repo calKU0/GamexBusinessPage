@@ -31,9 +31,10 @@ namespace GamexBusinessPage.Pages.MachineRental
 
         public void OnGet(string? category)
         {
-            ViewData["Title"] = "Wypożyczalnia maszyn budowlanych Olkusz | Koparki, Ładowarki, Frezarki";
-            ViewData["Description"] = "Wynajem maszyn budowlanych w Gamex. Posiadamy minikoparki, koparki kołowe, ładowarki, przesiewacze i wiele innych. Konkurencyjne ceny i transport maszyny na budowę. Sprawdź listę!";
+            ViewData["Title"] = "Wypożyczalnia maszyn budowlanych w Małopolce | Koparki, Ładowarki, Frezarki";
+            ViewData["Description"] = "Wynajem maszyn budowlanych w Małopolsce. Posiadamy minikoparki, koparki kołowe, ładowarki, przesiewacze i wiele innych. Konkurencyjne ceny i transport maszyny na budowę. Sprawdź listę!";
             ViewData["Keywords"] = "Gamex, Olkusz, wynajem maszyn budowlanych, wypożyczalnia koparek, minikoparki, ładowarki, sprzęt budowlany, Małopolska, Śląsk, Świętokrzyskie";
+            ViewData["CanonicalUrl"] = "https://gamex-olkusz.pl/oferta/wypozyczenie-maszyn";
 
             var catalog = _catalogCache.GetMachineCatalog();
             Categories = catalog.Categories;

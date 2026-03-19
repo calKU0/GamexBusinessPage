@@ -12,6 +12,7 @@ namespace GamexBusinessPage.Pages
             ViewData["Title"] = "Realizacje Gamex Olkusz – Remonty dróg i wynajem maszyn budowlanych";
             ViewData["Description"] = "Zobacz realizacje Gamex z Olkusza – wykonane remonty dróg i projekty z wykorzystaniem wynajmowanego sprzętu budowlanego w woj. Małopolskim.";
             ViewData["Keywords"] = "Gamex, Olkusz, realizacje, remonty dróg, wynajem maszyn budowlanych, minikoparki, koparki, ładowarki, Małopolskie";
+            ViewData["Robots"] = "noindex, follow";
         }
     }
 }
