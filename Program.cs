@@ -1,4 +1,5 @@
 using GamexBusinessPage.Services;
+using GamexBusinessPage.Models;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,6 +19,12 @@ builder.Services.AddOutputCache(options =>
 builder.Services.AddSingleton<CatalogCache>();
 builder.Services.AddSingleton<AdminCatalogService>();
 builder.Services.AddScoped<ImageService>();
+builder.Services.Configure<SmtpSettings>(builder.Configuration.GetSection("Smtp"));
+builder.Services.Configure<ContactFormSettings>(builder.Configuration.GetSection("ContactForm"));
+builder.Services.Configure<ContactFormProtectionSettings>(builder.Configuration.GetSection("ContactFormProtection"));
+builder.Services.AddDataProtection();
+builder.Services.AddScoped<IContactFormProtectionService, ContactFormProtectionService>();
+builder.Services.AddScoped<IContactEmailService, ContactEmailService>();
 builder.Services.AddAuthentication(Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
