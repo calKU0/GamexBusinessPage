@@ -2,26 +2,39 @@
 
 @using System.Linq
 
-<form method="post" class="kontakt-form">
+@if (!string.IsNullOrWhiteSpace(Model.StatusMessage))
+{
+    <div class="alert @(Model.IsSuccess == true ? "alert-success" : "alert-danger")" role="alert">
+        @Model.StatusMessage
+    </div>
+}
+
+<form method="post" asp-page="/Contact" class="kontakt-form" novalidate autocomplete="on">
     <div class="row g-3">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
         <div class="form-group col-md-6">
             <label for="contact-name" class="form-label">Imię i nazwisko</label>
-            <input type="text" id="contact-name" class="form-control" name="name" required />
+            <input asp-for="Input.Name" type="text" id="contact-name" class="form-control" autocomplete="on"/>
+            <span asp-validation-for="Input.Name" class="text-danger"></span>
         </div>
 
         <div class="form-group col-md-6">
             <label for="contact-email" class="form-label">Adres e-mail</label>
-            <input type="email" id="contact-email" class="form-control" name="email" required />
+            <input asp-for="Input.Email" type="email" id="contact-email" class="form-control" autocomplete="on" />
+            <span asp-validation-for="Input.Email" class="text-danger"></span>
         </div>
 
         <div class="form-group col-md-6">
             <label for="contact-phone" class="form-label">Telefon</label>
-            <input type="tel" id="contact-phone" class="form-control" name="phone" />
+            <input asp-for="Input.Phone" type="tel" id="contact-phone" class="form-control" autocomplete="on" />
+            <span asp-validation-for="Input.Phone" class="text-danger"></span>
         </div>
 
         <div class="form-group col-md-6">
             <label for="contact-subject" class="form-label">Temat</label>
-            <input type="text" id="contact-subject" class="form-control" name="subject" />
+            <input asp-for="Input.Subject" type="text" id="contact-subject" class="form-control" autocomplete="on" />
+            <span asp-validation-for="Input.Subject" class="text-danger"></span>
         </div>
 
         <div class="form-group col-12">
@@ -32,17 +45,17 @@
             @if (Model.IsMachineLocked && selectedMachine is not null)
             {
                 <label for="contact-machine" class="form-label">Maszyna</label>
-                <select id="contact-machine" class="form-select" name="machine" disabled>
+                <select id="contact-machine" class="form-select" disabled>
                     <option value="@selectedMachine.Slug" selected disabled>@selectedMachine.DisplayName</option>
                 </select>
-                <input type="hidden" name="machine" value="@selectedMachine.Slug" />
+                <input asp-for="Input.Machine" type="hidden" value="@selectedMachine.Slug" />
             }
             else
             {
                 <label for="contact-machine" class="form-label">Maszyna (opcjonalnie)</label>
                 <div class="custom-select" id="machineSelect">
                     <div class="select-trigger">
-                        Wybierz maszynę
+                        @(selectedMachine?.DisplayName ?? "Wybierz maszynę")
                     </div>
 
                     <div class="select-options">
@@ -61,15 +74,25 @@
                         }
                     </div>
 
-                    <input type="hidden" name="machine" id="selectedMachine" />
+                    <input asp-for="Input.Machine" type="hidden" id="selectedMachine" />
                 </div>
             }
+
+            <span asp-validation-for="Input.Machine" class="text-danger"></span>
         </div>
 
         <div class="form-group col-12">
             <label for="contact-message" class="form-label">Wiadomość</label>
-            <textarea id="contact-message" rows="5" class="form-control" name="message" required></textarea>
+            <textarea asp-for="Input.Message" id="contact-message" rows="5" class="form-control" autocomplete="on"></textarea>
+            <span asp-validation-for="Input.Message" class="text-danger"></span>
         </div>
+
+        <div class="d-none" aria-hidden="true">
+            <label asp-for="Input.Website">Website</label>
+            <input asp-for="Input.Website" autocomplete="off" tabindex="-1" />
+        </div>
+
+        <input asp-for="Input.FormToken" type="hidden" />
 
         <div class="col-12 text-end">
             <button type="submit" class="btn kontakt-submit">
@@ -116,12 +139,9 @@
             trigger.classList.remove("active");
 
             /* set hidden input */
-            let hidden = select.querySelector("input[name='machine']");
+            const hidden = document.getElementById("selectedMachine");
             if (!hidden) {
-                hidden = document.createElement("input");
-                hidden.type = "hidden";
-                hidden.name = "machine";
-                select.appendChild(hidden);
+                return;
             }
 
             hidden.value = option.dataset.value;

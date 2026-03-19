@@ -1192,16 +1192,35 @@ html {
         .kontakt-form .form-select:hover,
         .kontakt-form textarea:hover,
         .kontakt-form .select-trigger:hover {
-            border-color: #FFD700; /* unified hover color */
+            border-color: #FFD700; 
         }
-        /* FOCUS ANIMATION */
+
         .kontakt-form .form-control:focus,
         .kontakt-form .form-select:focus,
         .kontakt-form textarea:focus,
         .kontakt-form .select-trigger.active {
-            border-color: #FFD700; /* unified focus color */
+            border-color: #FFD700; 
             box-shadow: 0 0 0 1px rgba(255,215,0,0.5);
         }
+
+    .kontakt-form .form-control:-webkit-autofill,
+    .kontakt-form .form-control:-webkit-autofill:hover,
+    .kontakt-form .form-control:-webkit-autofill:focus,
+    .kontakt-form textarea:-webkit-autofill,
+    .kontakt-form textarea:-webkit-autofill:hover,
+    .kontakt-form textarea:-webkit-autofill:focus {
+        -webkit-text-fill-color: #E8EBF5;
+        -webkit-box-shadow: 0 0 0 1000px #0B1020 inset;
+        box-shadow: 0 0 0 1000px #0B1020 inset;
+        transition: background-color 9999s ease-in-out 0s;
+        caret-color: #E8EBF5;
+    }
+
+    .kontakt-form .form-control:autofill,
+    .kontakt-form textarea:autofill {
+        color: #E8EBF5;
+        background-color: #0B1020;
+    }
     /* SUBMIT BUTTON */
     .kontakt-submit {
         background: linear-gradient(135deg, #F58A1F, #FF9F43);

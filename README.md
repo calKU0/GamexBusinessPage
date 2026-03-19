@@ -1,51 +1,73 @@
-# Gamex Olkusz - Corporate Website
+# Gamex Olkusz - Business Website
 
-A professional, high-performance web platform designed for **Gamex**, a Polish industry leader in road construction and heavy machinery rental. This project focuses on modern UX, local SEO optimization, and robust technical architecture using .NET technology.
+> 💼 **Commercial Project**
 
-## 🚀 Key Features
+Corporate website for **Gamex Olkusz**, built with **ASP.NET Core Razor Pages (.NET 10)**.  
+The project combines a public offer website with an authenticated admin area for catalog maintenance.
 
-- **SEO-First Architecture**: Advanced JSON-LD Schema.org markup for `LocalBusiness`, `Project`, and `Service` types to dominate local search results.
-- **Performance Optimized**: High Core Web Vitals scores through manual LCP optimization (`fetchpriority`, preloading) and WebP image formats.
-- **Dynamic Portfolio**: Dedicated section showcasing completed road construction projects with categorized galleries.
-- **Responsive Design**: Fully mobile-optimized interface built with a custom Bootstrap-based design system.
-- **Business-Oriented UI**: Specialized service catalogs for roadworks and machinery rental.
+## Overview
 
-## 🛠️ Tech Stack
+The application presents:
 
-- **Backend**: ASP.NET Core 10.0 (Razor Pages)
-- **Frontend**: HTML5, CSS3 (Custom animations), JavaScript (ES6+)
-- **Styling**: Bootstrap 5 + Custom SCSS/CSS
-- **SEO/Metadata**: Structured Data (JSON-LD), Dynamic Meta Tags
-- **Deployment Ready**: Optimized for Azure App Service or Windows-based IIS hosting
+- machine rental offer,
+- road and construction services,
+- transport offer,
+- realizations and company information,
+- a protected contact form with anti-spam safeguards,
+- SEO-oriented metadata and structured data.
 
-## 📊 SEO & Performance Highlights
+## Main Capabilities
 
-- **Structured Data**: Integrated hierarchy: `CollectionPage` → `OfferCatalog` → `Product/Service`.
-- **Image Optimization**: System-wide use of `.webp` and `loading="lazy"` for non-critical assets.
-- **Asset Preloading**: Strategic use of `<link rel="preload">` for hero images to minimize LCP.
+### Public website
 
-## 💻 Getting Started
+- SEO-friendly, lowercase routes (e.g. `/oferta/wypozyczenie-maszyn/{slug}`, `/kontakt`).
+- Dynamic offer pages based on JSON catalogs in `Data/`.
+- Machine details pages with per-machine schema data and contact preselection.
+- Dedicated pages for `Oferta`, `Transport`, `Usługi`, `Realizacje`, and `Dotacja`.
+- Generated `sitemap.xml` endpoint including static and dynamic machine URLs.
 
-### Prerequisites
+### Contact flow
 
-- [.NET 10.0 SDK](https://dotnet.microsoft.com/download/dotnet/10.0)
-- Visual Studio 2022 or VS Code
+- Contact form endpoint in `Pages/Contact.cshtml.cs`.
+- Server-side message sending through SMTP (`ContactEmailService`).
+- Form hardening via `ContactFormProtectionService`:
+  - honeypot field,
+  - protected form token with expiration,
+  - per-IP rate limiting,
+  - per-email submission cooldown.
 
-### Installation
+### Admin panel
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/YourUsername/gamex-olkusz.git
-   ```
-2. Navigate to the project directory:
-   ```bash
-   cd gamex-olkusz
-   ```
-3. Restore dependencies and run:
-   ```bash
-   dotnet watch run
-   ```
+- Cookie-based admin authentication (`/Admin/Login`).
+- Authorization policy protecting the whole `/Admin` area.
+- Catalog management for:
+  - machines,
+  - services,
+  - transport.
+- Image processing pipeline (`ImageService`) with:
+  - upload validation,
+  - resize,
+  - WebP conversion,
+  - main image selection,
+  - physical file deletion.
 
-## 📜 License
+## Technical Notes
 
-This project is developed as a commercial website for Gamex Olkusz. All rights to the branding and images are reserved.
+- **Framework:** `ASP.NET Core Razor Pages` on `net10.0`.
+- **Caching:** memory cache (`CatalogCache`) + output cache policies.
+- **Data source:** JSON files in `Data/` (`machines.json`, `services.json`, `transport.json`).
+- **Imaging:** `SixLabors.ImageSharp` and `SixLabors.ImageSharp.Web`.
+- **Routing:** lowercase URL convention enabled globally.
+
+## Project Structure
+
+- `Pages/` - Razor Pages (public pages + admin pages).
+- `Services/` - business services (catalog access, mail, form protection, images, schema helpers).
+- `Models/` - catalog and form models.
+- `Data/` - editable offer catalogs in JSON format.
+- `wwwroot/` - static assets (CSS, JS, images).
+
+## License
+
+This project is developed as a commercial website for Gamex Olkusz. Branding assets and business content remain proprietary.
+See the [LICENSE](LICENSE) file for more information.
