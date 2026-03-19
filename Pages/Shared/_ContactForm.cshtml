@@ -1,6 +1,12 @@
 @model GamexBusinessPage.Models.ContactFormViewModel
+@inject GamexBusinessPage.Services.IContactFormProtectionService ContactFormProtectionService
 
 @using System.Linq
+
+@{
+    Model.Input.FormToken = ContactFormProtectionService.GenerateFormToken();
+    var returnUrl = $"{Context.Request.Path}{Context.Request.QueryString}";
+}
 
 @if (!string.IsNullOrWhiteSpace(Model.StatusMessage))
 {
@@ -9,7 +15,7 @@
     </div>
 }
 
-<form method="post" asp-page="/Contact" class="kontakt-form" novalidate autocomplete="on">
+<form method="post" asp-page="/Contact" asp-route-returnUrl="@returnUrl" class="kontakt-form" novalidate autocomplete="on">
     <div class="row g-3">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 

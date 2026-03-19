@@ -47,7 +47,7 @@ namespace GamexBusinessPage.Pages
             PrepareContactForm(Input, machine, lockMachine, ContactFormStatusMessage, ContactFormStatusSuccess);
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(string? returnUrl = null)
         {
             ConfigurePageMetadata();
 
@@ -56,7 +56,7 @@ namespace GamexBusinessPage.Pages
                 _logger.LogWarning("Contact form honeypot field was filled. Request ignored.");
                 ContactFormStatusMessage = "Dziękujemy za wiadomość. Skontaktujemy się z Tobą najszybciej jak to możliwe.";
                 ContactFormStatusSuccess = true;
-                return RedirectToPage();
+                return RedirectToReturnUrlOrContact(returnUrl);
             }
 
             if (!_contactFormProtectionService.IsSubmissionAllowed(HttpContext, Input, out var protectionErrorMessage))
@@ -88,7 +88,7 @@ namespace GamexBusinessPage.Pages
                 await _contactEmailService.SendContactEmailAsync(Input);
                 ContactFormStatusMessage = "Wiadomość została wysłana. Dziękujemy za kontakt!";
                 ContactFormStatusSuccess = true;
-                return RedirectToPage();
+                return RedirectToReturnUrlOrContact(returnUrl);
             }
             catch (InvalidOperationException ex)
             {
@@ -104,6 +104,16 @@ namespace GamexBusinessPage.Pages
             Input.FormToken = _contactFormProtectionService.GenerateFormToken();
             PrepareContactForm(Input, Input.Machine, false, null, null);
             return Page();
+        }
+
+        private IActionResult RedirectToReturnUrlOrContact(string? returnUrl)
+        {
+            if (!string.IsNullOrWhiteSpace(returnUrl) && Url.IsLocalUrl(returnUrl))
+            {
+                return LocalRedirect(returnUrl);
+            }
+
+            return RedirectToPage();
         }
 
         private void ConfigurePageMetadata()

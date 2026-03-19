@@ -46,7 +46,10 @@ public sealed class ContactEmailService : IContactEmailService
             From = new MailAddress(_smtpSettings.FromAddress, inputModel.Name),
             Subject = $"[Formularz kontaktowy] {subject}",
             Body = plainTextBody,
-            IsBodyHtml = false
+            IsBodyHtml = false,
+            SubjectEncoding = Encoding.UTF8,
+            HeadersEncoding = Encoding.UTF8,
+            BodyEncoding = Encoding.UTF8
         };
 
         message.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(plainTextBody, Encoding.UTF8, "text/plain"));

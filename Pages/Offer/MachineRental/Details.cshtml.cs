@@ -29,6 +29,12 @@ public class DetailsModel : PageModel
 
     public ContactFormViewModel ContactForm { get; private set; } = new(Array.Empty<MachineItem>(), null, true);
 
+    [TempData]
+    public string? ContactFormStatusMessage { get; set; }
+
+    [TempData]
+    public bool? ContactFormStatusSuccess { get; set; }
+
     public string? SchemaJson { get; private set; }
 
     public IActionResult OnGet(string slug)
@@ -67,7 +73,7 @@ public class DetailsModel : PageModel
             .ThenBy(machine => machine.DisplayName)
             .ToList();
 
-        ContactForm = new ContactFormViewModel(machines, Machine.Slug, true);
+        ContactForm = new ContactFormViewModel(machines, Machine.Slug, true, null, ContactFormStatusMessage, ContactFormStatusSuccess);
 
         ViewData["Title"] = $"Wynajem {Machine.DisplayName} – {Machine.CategoryDisplayName} w Małopolsce | Gamex Olkusz";
         ViewData["Description"] = $"Szukasz {Machine.DisplayName}? Oferujemy wynajem krótko i długoterminowy z profesjonalną obsługą operatorską w Małopolce, Śląsku i Świętokrzyskim. Zadzwoń po wycenę!";
