@@ -1,0 +1,164 @@
+/* ==========================================================================
+   02 · BASE
+   Reset, typography, focus, scrollbar, skip link.
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    font-size: calc(var(--a11y-base-font-size) * var(--a11y-font-scale));
+    position: relative;
+    min-height: 100%;
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+}
+
+html,
+body {
+    background-color: var(--asphalt-900);
+    color: var(--concrete-300);
+}
+
+body {
+    font-family: var(--font-body);
+    font-weight: 400;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    /* "clip", not "hidden": hidden forces overflow-y: auto, which makes <body>
+       a scroll container and breaks position: sticky on the header. "clip"
+       trims the same way without creating a scroll context. */
+    overflow-x: clip;
+}
+
+h1, h2, h3, h4, h5, h6,
+.display-1, .display-2, .display-3,
+.display-4, .display-5, .display-6 {
+    font-family: var(--font-display);
+    color: var(--concrete-100);
+    font-weight: 700;
+    line-height: 1.06;
+    letter-spacing: -0.005em;
+    text-wrap: balance;
+}
+
+p {
+    text-wrap: pretty;
+}
+
+a {
+    color: var(--steel-400);
+    text-decoration: none;
+    transition: color var(--dur) var(--ease);
+}
+
+    a:hover {
+        color: var(--hivis-500);
+    }
+
+strong, b {
+    color: var(--concrete-100);
+    font-weight: 600;
+}
+
+img {
+    max-width: 100%;
+}
+
+address {
+    font-style: normal;
+}
+
+::selection {
+    background: var(--hivis-600);
+    color: #fff;
+}
+
+/* --- Visible keyboard focus (WCAG 2.4.7) --- */
+:focus-visible {
+    outline: 3px solid var(--hivis-400);
+    outline-offset: 3px;
+    border-radius: var(--r-xs);
+}
+
+.btn:focus,
+.btn:active:focus,
+.btn-link.nav-link:focus,
+.form-control:focus,
+.form-check-input:focus {
+    box-shadow: 0 0 0 0.2rem rgba(239, 127, 26, 0.35);
+}
+
+/* --- Scrollbar --- */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--asphalt-600) var(--asphalt-900);
+}
+
+::-webkit-scrollbar {
+    width: 11px;
+    height: 11px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--asphalt-900);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--asphalt-600);
+    border-radius: var(--r-pill);
+    border: 2px solid var(--asphalt-900);
+}
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: var(--hivis-600);
+    }
+
+/* --- Skip link (WCAG 2.4.1) ---
+   First element on the page, invisible until reached with the Tab key. Lets
+   keyboard and screen reader users bypass the header and the whole navigation.
+
+   Hidden by transform rather than "top: -200%": percentages resolve against the
+   containing block, so on a long page that value ran to thousands of pixels and
+   the link could fail to come back on focus. */
+.skip-link {
+    position: fixed;
+    top: 0;
+    left: 1rem;
+    z-index: 2000;
+    padding: 0.75rem 1.25rem;
+    background: var(--hivis-600);
+    color: #fff;
+    font-weight: 700;
+    border-radius: 0 0 var(--r-sm) var(--r-sm);
+    transform: translateY(-130%);
+    transition: transform 0.18s var(--ease);
+}
+
+    .skip-link:focus,
+    .skip-link:focus-visible {
+        transform: translateY(0);
+        color: #fff;
+        outline: 3px solid var(--concrete-050);
+        outline-offset: 2px;
+    }
+
+@media (min-width: 768px) {
+    :root {
+        --a11y-base-font-size: 16px;
+    }
+}
+
+/* Skip-link target: the sticky header must not cover the start of the content,
+   and focusing <main> should not draw an outline. */
+#tresc {
+    scroll-margin-top: 6rem;
+}
+
+    #tresc:focus {
+        outline: none;
+    }

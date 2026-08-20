@@ -27,6 +27,10 @@ bld/
 # Uncomment if you have tasks that create the project's static files in wwwroot
 #wwwroot/
 
+# Generated on every build by concatenating Styles/ (see BundleGamexStyles
+# in GamexBusinessPage.csproj). Edit Styles/*.css, not this file.
+wwwroot/css/site.css
+
 # MSTest test Results
 [Tt]est[Rr]esult*/
 [Bb]uild[Ll]og.*
@@ -236,4 +240,4 @@ _Pvt_Extensions
 # Project
 appsettings.json
 appsettings.Development.json
-cdn_api20241_core.dll
+.claude

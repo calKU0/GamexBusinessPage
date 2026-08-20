@@ -1,0 +1,182 @@
+/* ==========================================================================
+   11 · FOOTER
+   ========================================================================== */
+
+.gamex-footer {
+    position: relative;
+    overflow: hidden;
+    /* Bottom spacing reserves room for the pinned accessibility button, which
+       otherwise lands on the last footer row and covers the author link. */
+    padding-block: clamp(3rem, 6vw, 4.5rem) 4.75rem;
+    background: var(--asphalt-950);
+    border-top: 1px solid var(--line-soft);
+    color: var(--concrete-500);
+}
+
+    /* Hi-vis tape closing the page */
+    .gamex-footer::before {
+        content: "";
+        position: absolute;
+        inset: 0 0 auto 0;
+        height: 4px;
+        background-image: repeating-linear-gradient( 135deg, var(--hivis-600) 0 12px, transparent 12px 24px );
+        opacity: 0.7;
+    }
+
+    .gamex-footer::after {
+        content: "";
+        position: absolute;
+        right: -140px;
+        top: -140px;
+        width: 420px;
+        height: 420px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(0, 160, 227, 0.07), transparent 68%);
+        pointer-events: none;
+    }
+
+    .gamex-footer .container {
+        position: relative;
+        z-index: 1;
+    }
+
+.footer-logo {
+    height: 46px;
+    width: auto;
+    padding: 8px 12px;
+    background: #fff;
+    border-radius: var(--r-sm);
+}
+
+.footer-description {
+    max-width: 42ch;
+    color: var(--concrete-500);
+    font-size: 0.95rem;
+    line-height: 1.75;
+}
+
+.footer-title {
+    position: relative;
+    margin-bottom: 1.35rem;
+    padding-bottom: 0.6rem;
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--concrete-050);
+}
+
+    .footer-title::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 34px;
+        height: 2px;
+        background: var(--hivis-grad);
+    }
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+    .footer-links li {
+        margin-bottom: 0.65rem;
+    }
+
+    .footer-links a {
+        display: inline-block;
+        color: var(--concrete-500);
+        font-size: 0.95rem;
+        transition: color var(--dur) var(--ease), transform var(--dur) var(--ease);
+    }
+
+        .footer-links a:hover {
+            color: var(--hivis-400);
+            transform: translateX(4px);
+        }
+
+.footer-contact {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+    .footer-contact li {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.75rem;
+        margin-bottom: 0.9rem;
+    }
+
+.contact-icon {
+    flex: 0 0 auto;
+    width: 1.2rem;
+    margin-top: 0.22em;
+    text-align: center;
+    color: var(--hivis-500);
+}
+
+.footer-contact a,
+.footer-contact address {
+    color: var(--concrete-300);
+}
+
+    .footer-contact a:hover {
+        color: var(--hivis-400);
+    }
+
+/* Service area - local SEO signals */
+.footer-area {
+    margin-top: clamp(2rem, 4vw, 3rem);
+    padding-top: 1.75rem;
+    border-top: 1px solid var(--line-soft);
+}
+
+    .footer-area h3 {
+        margin-bottom: 0.85rem;
+        font-family: var(--font-display);
+        font-size: 0.9rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--concrete-700);
+    }
+
+.footer-area-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 0.5rem;
+}
+
+    .footer-area-list li {
+        font-size: 0.85rem;
+        color: var(--concrete-700);
+    }
+
+        .footer-area-list li::after {
+            content: "\00B7";
+            margin-left: 0.5rem;
+            color: var(--asphalt-600);
+        }
+
+        .footer-area-list li:last-child::after {
+            content: "";
+        }
+
+.footer-bottom {
+    margin-top: clamp(2rem, 4vw, 3rem);
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--line-soft);
+    font-size: 0.85rem;
+    color: var(--concrete-700);
+}
+
+.footer-author strong {
+    color: var(--steel-400);
+}

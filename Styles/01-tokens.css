@@ -1,0 +1,88 @@
+/* ==========================================================================
+   01 · TOKENS
+   The only place holding literal colours, spacing and timing values.
+   Everything else refers to these variables.
+   Palette derived from the logo: orange #EF7F1A, cyan #00A0E3, indigo #393285.
+   ========================================================================== */
+
+:root {
+    /* --- accessibility (driven by accessibility-widget.js) --- */
+    --a11y-font-scale: 1;
+    --a11y-base-font-size: 15px;
+
+    /* --- asphalt: backgrounds and surfaces --- */
+    --asphalt-950: #07080D;
+    --asphalt-900: #0B0D14;
+    --asphalt-850: #10131D;
+    --asphalt-800: #151928;
+    --asphalt-700: #1C2135;
+    --asphalt-600: #262C45;
+
+    /* --- concrete: text --- */
+    --concrete-050: #FFFFFF;
+    --concrete-100: #EEF1F8;
+    --concrete-300: #C2C9DC;
+    --concrete-500: #8A93AE;
+    --concrete-700: #7B84A6; /* darkest text that still passes AA on every surface */
+
+    /* --- hi-vis: primary accent --- */
+    --hivis-400: #FFC24A;
+    --hivis-500: #F79B23;
+    --hivis-600: #EF7F1A;
+    --hivis-700: #C96409;
+    --hivis-grad: linear-gradient(135deg, #FFC24A 0%, #EF7F1A 100%);
+    --hivis-soft: rgba(239, 127, 26, 0.14);
+    --hivis-glow: 0 12px 34px rgba(239, 127, 26, 0.34);
+
+    /* --- steel: secondary accent --- */
+    --steel-400: #4FC3F7;
+    --steel-500: #00A0E3;
+    --steel-600: #0079AD;
+    --steel-soft: rgba(0, 160, 227, 0.14);
+    --steel-grad: linear-gradient(135deg, #4FC3F7, #0079AD);
+
+    /* --- indigo: depth accent --- */
+    --indigo-500: #393285;
+
+    /* --- borders and glass --- */
+    --line-soft: rgba(255, 255, 255, 0.07);
+    --line: rgba(255, 255, 255, 0.11);
+    --line-strong: rgba(255, 255, 255, 0.18);
+    --glass: rgba(255, 255, 255, 0.04);
+    --glass-strong: rgba(255, 255, 255, 0.07);
+
+    /* --- shadows --- */
+    --shadow-sm: 0 4px 14px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 16px 34px rgba(0, 0, 0, 0.38);
+    --shadow-lg: 0 30px 70px rgba(0, 0, 0, 0.5);
+
+    /* --- radii (deliberately small) --- */
+    --r-xs: 4px;
+    --r-sm: 8px;
+    --r-md: 14px;
+    --r-lg: 20px;
+    --r-pill: 999px;
+
+    /* --- rhythm --- */
+    --section-y: clamp(4rem, 8vw, 7rem);
+    --section-y-tight: clamp(2.5rem, 5vw, 4rem);
+    --nav-h: 76px;
+    --card-pad: 1.6rem 1.5rem;
+
+    /* --- typography --- */
+    --font-display: "Barlow Condensed", "Arial Narrow", Impact, sans-serif;
+    --font-body: "Barlow", "Segoe UI", system-ui, -apple-system, sans-serif;
+
+    /* --- icons used in pseudo-elements ---
+       Two icons are needed in ::before/::after, as SVG masks in data URIs.
+       The rest of the set is inlined into the page as a sprite
+       (_IconSprite.cshtml). */
+    --ico-list-ul: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M64 144a48 48 0 1 0 0-96 48 48 0 1 0 0 96zM192 64c-17.7 0-32 14.3-32 32s14.3 32 32 32H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H192zm0 160c-17.7 0-32 14.3-32 32s14.3 32 32 32H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H192zm0 160c-17.7 0-32 14.3-32 32s14.3 32 32 32H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H192zM64 464a48 48 0 1 0 0-96 48 48 0 1 0 0 96zm48-208a48 48 0 1 0 -96 0 48 48 0 1 0 96 0z"/></svg>');
+    --ico-chevron-right: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"/></svg>');
+
+    /* --- motion --- */
+    --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    --dur-fast: 0.2s;
+    --dur: 0.35s;
+    --dur-slow: 0.6s;
+}

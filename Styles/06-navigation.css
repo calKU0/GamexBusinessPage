@@ -1,0 +1,494 @@
+/* ==========================================================================
+   06 · NAVIGATION
+   Contact bar, main navigation, dropdown menu.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   6.0 · Header
+   The whole <header> is sticky, not the navbar alone. A sticky element only
+   holds within its parent's bounds, so a navbar enclosed in a short header
+   scrolled away together with it.
+   -------------------------------------------------------------------------- */
+
+.gamex-header {
+    position: sticky;
+    top: 0;
+    z-index: 1050;
+}
+
+/* --------------------------------------------------------------------------
+   6.1 · Contact bar (NAP signals for local SEO)
+   -------------------------------------------------------------------------- */
+
+.gamex-topbar {
+    position: relative;
+    z-index: 1051;
+    background: var(--asphalt-950);
+    border-bottom: 1px solid var(--line-soft);
+    font-size: 0.85rem;
+    color: var(--concrete-500);
+    overflow: hidden;
+    transition: max-height var(--dur) var(--ease), opacity var(--dur) var(--ease), border-color var(--dur) var(--ease);
+    max-height: 6rem;
+}
+
+/* On scroll the contact bar collapses to give the content more room. The border
+   goes to zero width rather than transparent - otherwise a one-pixel gap stays
+   under the navigation and the page content shows through it. */
+.gamex-header.is-scrolled .gamex-topbar {
+    max-height: 0;
+    opacity: 0;
+    border-bottom-width: 0;
+}
+
+    .gamex-topbar .container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        min-height: 38px;
+        padding-block: 0.35rem;
+    }
+
+.topbar-meta {
+    display: flex;
+    align-items: center;
+    gap: 1.4rem;
+    flex-wrap: wrap;
+}
+
+    .topbar-meta span,
+    .topbar-meta a {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        color: var(--concrete-500);
+        white-space: nowrap;
+    }
+
+    .topbar-meta a:hover {
+        color: var(--hivis-400);
+    }
+
+    .topbar-meta i {
+        color: var(--hivis-600);
+        font-size: 0.85em;
+    }
+
+.topbar-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    color: var(--concrete-300);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+}
+
+    .topbar-badge b {
+        color: var(--hivis-500);
+    }
+
+/* --------------------------------------------------------------------------
+   6.2 · Main navigation
+   -------------------------------------------------------------------------- */
+
+.gamex-navbar {
+    position: relative;
+    width: 100%;
+    padding: 0.5rem 0;
+    background: rgba(11, 13, 20, 0.82);
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    border-bottom: 1px solid var(--line-soft);
+    transition: background-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+
+    /* The hi-vis tape is a permanent part of the bar, visible from the first
+       paint. On scroll it only gets slightly denser. */
+    .gamex-navbar::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -3px;
+        height: 3px;
+        background-image: repeating-linear-gradient( 135deg, var(--hivis-600) 0 10px, rgba(7, 8, 13, 0.85) 10px 20px );
+        opacity: 0.85;
+        transition: opacity var(--dur) var(--ease), height var(--dur) var(--ease);
+        pointer-events: none;
+    }
+
+    /* On scroll the bar gets shorter - it gives vertical space back to the
+       content and signals that the user has left the top of the page. */
+    .gamex-header.is-scrolled .gamex-navbar {
+        padding: 0.15rem 0;
+        background: rgba(7, 8, 13, 0.97);
+        box-shadow: var(--shadow-md);
+    }
+
+        .gamex-header.is-scrolled .gamex-navbar::after {
+            opacity: 1;
+            height: 4px;
+        }
+
+.navbar-logo {
+    height: 52px;
+    width: auto;
+    padding: 9px 13px;
+    background: #fff;
+    border-radius: var(--r-sm);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+    transition: height var(--dur) var(--ease), padding var(--dur) var(--ease), transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+
+.gamex-header.is-scrolled .gamex-navbar .navbar-logo {
+    height: 40px;
+    padding: 6px 10px;
+}
+
+.navbar-brand:hover .navbar-logo {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 26px rgba(239, 127, 26, 0.32);
+}
+
+/* Nav items must not wrap or shrink - otherwise between 1000 and 1200 px
+   labels such as "Darmowa wycena" break across two lines and stretch the bar. */
+@media (min-width: 1200px) {
+    .gamex-navbar .navbar-nav > .nav-item {
+        flex: 0 0 auto;
+    }
+
+    .gamex-navbar .nav-link {
+        white-space: nowrap;
+    }
+}
+
+/* --- Links --- */
+.gamex-navbar .nav-link {
+    position: relative;
+    padding: 0.55rem 0.2rem;
+    font-family: var(--font-display);
+    font-size: 1.08rem;
+    font-weight: 600;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--concrete-100);
+    transition: color var(--dur) var(--ease);
+}
+
+    .gamex-navbar .nav-link::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0.15rem;
+        width: 0;
+        height: 3px;
+        background: var(--hivis-grad);
+        transition: width var(--dur) var(--ease);
+    }
+
+    .gamex-navbar .nav-link:hover::before,
+    .gamex-navbar .nav-link:focus::before,
+    .gamex-navbar .nav-link.is-active::before,
+    .gamex-navbar .nav-item.dropdown:hover .dropdown-hover-wrapper .nav-link::before {
+        width: 100%;
+    }
+
+    .gamex-navbar .nav-link:hover,
+    .gamex-navbar .nav-link.is-active {
+        color: var(--hivis-400);
+    }
+
+.gamex-header.is-scrolled .gamex-navbar .nav-link {
+    font-size: 1rem;
+    padding-block: 0.45rem;
+}
+
+.gamex-header.is-scrolled .gamex-navbar .nav-phone {
+    padding-block: 0.28rem;
+    font-size: 1rem;
+}
+
+.gamex-header.is-scrolled .gamex-navbar .nav-cta {
+    padding: 0.38rem 1.1rem !important;
+    font-size: 1rem;
+}
+
+/* --- Phone: the primary conversion --- */
+.gamex-navbar .nav-phone {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0.9rem;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--r-sm);
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--concrete-050);
+    transition: all var(--dur) var(--ease);
+}
+
+    .gamex-navbar .nav-phone i {
+        color: var(--hivis-500);
+    }
+
+    .gamex-navbar .nav-phone:hover {
+        border-color: var(--hivis-600);
+        background: var(--hivis-soft);
+        color: var(--concrete-050);
+    }
+
+/* --- CTA button --- */
+.gamex-navbar .nav-cta {
+    padding: 0.5rem 1.3rem !important;
+    border-radius: var(--r-sm);
+    background: var(--hivis-grad);
+    color: var(--asphalt-950) !important;
+    font-weight: 700;
+    box-shadow: 0 8px 20px rgba(239, 127, 26, 0.3);
+}
+
+    .gamex-navbar .nav-cta::before {
+        display: none;
+    }
+
+    .gamex-navbar .nav-cta:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 14px 28px rgba(239, 127, 26, 0.45);
+        color: var(--asphalt-950) !important;
+    }
+
+/* --- Mobile toggle --- */
+.navbar-toggler {
+    border: 1px solid var(--line-strong);
+    border-radius: var(--r-sm);
+    padding: 0.45rem 0.65rem;
+}
+
+    .navbar-toggler:focus {
+        box-shadow: 0 0 0 0.2rem rgba(239, 127, 26, 0.35);
+    }
+
+.navbar-toggler-icon {
+    filter: invert(1) brightness(1.6);
+}
+
+/* --------------------------------------------------------------------------
+   6.3 · EU grant logo
+   -------------------------------------------------------------------------- */
+
+/* The original EU emblem, with no white backing plate and no filters. The file
+   is the white-lettering version on a transparent background (white is 24% of
+   the pixels, 17:1 contrast on this bar), so it reads on the dark bar as is.
+   No recolouring - EU project branding rules forbid it. */
+.nav-dotacje {
+    margin-left: 0.6rem;
+}
+
+.dotacje-link {
+    display: flex;
+    align-items: center;
+    padding: 0.25rem;
+    border-radius: var(--r-sm);
+    transition: transform var(--dur) var(--ease);
+}
+
+.dotacje-logo {
+    display: block;
+    height: 34px;
+    width: auto;
+    transition: height var(--dur) var(--ease);
+}
+
+.dotacje-link:hover {
+    transform: translateY(-2px);
+}
+
+.gamex-header.is-scrolled .gamex-navbar .dotacje-logo {
+    height: 28px;
+}
+
+/* --------------------------------------------------------------------------
+   6.4 · "Oferta" dropdown
+   -------------------------------------------------------------------------- */
+
+.gamex-dropdown {
+    min-width: 264px;
+    max-width: min(560px, calc(100vw - 2rem));
+    padding: 0.45rem;
+    margin-top: 0.6rem;
+    background: var(--asphalt-800);
+    border: 1px solid var(--line);
+    border-radius: var(--r-md);
+    box-shadow: var(--shadow-lg);
+}
+
+    .gamex-dropdown .dropdown-item {
+        display: flex;
+        align-items: center;
+        gap: 0.7rem;
+        padding: 0.6rem 0.9rem;
+        border-radius: var(--r-sm);
+        color: var(--concrete-100);
+        font-weight: 500;
+        white-space: normal;
+        transition: background-color var(--dur) var(--ease), color var(--dur) var(--ease), transform var(--dur) var(--ease);
+    }
+
+        .gamex-dropdown .dropdown-item i {
+            width: 1.2rem;
+            text-align: center;
+            flex: 0 0 auto;
+            color: var(--hivis-500);
+        }
+
+        .gamex-dropdown .dropdown-item:hover,
+        .gamex-dropdown .dropdown-item:focus {
+            background: var(--hivis-soft);
+            color: var(--concrete-050);
+            transform: translateX(3px);
+        }
+
+.gamex-navbar .dropdown-toggle::after {
+    display: none;
+}
+
+.gamex-navbar .dropdown-hover-wrapper::after {
+    height: 0.6rem;
+}
+
+/* --------------------------------------------------------------------------
+   6.5 · Two-column offer menu
+   The second column holds the most searched equipment categories, adding
+   internal links without growing the main bar.
+   -------------------------------------------------------------------------- */
+
+.gamex-dropdown--wide {
+    display: grid;
+    /* "max-content" lets the columns spread to the width of the longest label -
+       with fixed proportions the grid collapsed to the menu's min-width and
+       service names broke after every two words. */
+    grid-template-columns: max-content max-content;
+    width: max-content;
+    max-width: min(640px, calc(100vw - 2rem));
+    gap: 0.25rem 1rem;
+    padding: 0.85rem;
+}
+
+.dropdown-col {
+    min-width: 0;
+}
+
+    .dropdown-col + .dropdown-col {
+        border-left: 1px solid var(--line-soft);
+        padding-left: 0.85rem;
+    }
+
+.dropdown-col-title {
+    display: block;
+    margin: 0 0 0.4rem 0.9rem;
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--concrete-700);
+}
+
+.gamex-dropdown--wide ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Equipment categories: tighter rhythm, no icons */
+.dropdown-col--categories .dropdown-item {
+    padding-block: 0.42rem;
+    font-size: 0.94rem;
+    color: var(--concrete-300);
+}
+
+.dropdown-all {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin: 0.5rem 0 0 0.9rem;
+    color: var(--hivis-500);
+    font-size: 0.86rem;
+    font-weight: 600;
+}
+
+    .dropdown-all:hover {
+        color: var(--hivis-400);
+    }
+
+@media (max-width: 1199.98px) {
+    .gamex-dropdown--wide {
+        grid-template-columns: minmax(0, 1fr);
+        padding: 0.25rem 0;
+        max-width: 100%;
+    }
+
+    .dropdown-col + .dropdown-col {
+        border-left: 0;
+        border-top: 1px solid var(--line-soft);
+        padding-left: 0;
+        padding-top: 0.6rem;
+        margin-top: 0.4rem;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   6.6 · Submenu disclosure button (vertical layout)
+   On large screens the menu opens on hover, so the button is not needed.
+   Below the expand breakpoint it is the only way into the submenu without
+   taking the link's own destination away.
+   -------------------------------------------------------------------------- */
+
+.nav-parent {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+}
+
+.submenu-toggle {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    /* 44 x 44 px is the WCAG 2.5.8 minimum touch target. At a 15 px root font
+       size 2.75rem yields only 41 px, hence the absolute value. */
+    width: 44px;
+    height: 44px;
+    flex: 0 0 auto;
+    padding: 0;
+    background: transparent;
+    border: 1px solid var(--line);
+    border-radius: var(--r-sm);
+    color: var(--concrete-300);
+    cursor: pointer;
+    transition: color var(--dur) var(--ease), border-color var(--dur) var(--ease), background-color var(--dur) var(--ease);
+}
+
+    .submenu-toggle .ico {
+        font-size: 0.9rem;
+        transition: transform var(--dur) var(--ease);
+    }
+
+    .submenu-toggle:hover,
+    .submenu-toggle:focus-visible {
+        color: var(--hivis-400);
+        border-color: var(--hivis-600);
+        background: var(--hivis-soft);
+    }
+
+    .submenu-toggle[aria-expanded="true"] {
+        color: var(--hivis-400);
+        border-color: var(--hivis-600);
+    }
+
+        .submenu-toggle[aria-expanded="true"] .ico {
+            transform: rotate(180deg);
+        }

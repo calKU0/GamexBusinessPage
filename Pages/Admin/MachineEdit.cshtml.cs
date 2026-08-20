@@ -294,6 +294,7 @@ public class MachineEditModel : PageModel
             Type = machine.Type,
             ProductionYear = machine.ProductionYear,
             Weight = machine.Weight,
+            Description = machine.Description,
             RentalOptions = machine.RentalOptions,
             Notes = machine.Notes
         };
@@ -411,6 +412,7 @@ public class MachineEditModel : PageModel
             Images = allImages,
             ProductionYear = MachineInput.ProductionYear,
             Weight = NormalizeKey(MachineInput.Weight),
+            Description = NormalizeKey(MachineInput.Description),
             RentalOptions = NormalizeKey(MachineInput.RentalOptions),
             Notes = NormalizeKey(MachineInput.Notes),
             Equipment = EquipmentItems
@@ -454,6 +456,8 @@ public class MachineEditModel : PageModel
         public int? ProductionYear { get; set; }
 
         public string? Weight { get; set; }
+
+        public string? Description { get; set; }
 
         public string? RentalOptions { get; set; }
 

@@ -31,7 +31,7 @@ public class TransportModel : PageModel
 
     public void OnGet(string? category)
     {
-        ViewData["Title"] = "Transport materiałów sypkich i maszyn HDS w Małopolsce | Gamex Olkusz";
+        ViewData["Title"] = "Transport kruszyw i maszyn budowlanych – HDS, laweta | GAMEX Olkusz";
         ViewData["Description"] = "Oferujemy transport kruszyw, piasku oraz przewóz maszyn budowlanych lawetą i HDS. Szybka realizacja na terenie województwa małopolskiego, śląskiego i świętokrzyskiego.";
         ViewData["Keywords"] = "Gamex, Olkusz, transport materiałów, transport maszyn, HDS, laweta, niskopodwoziowy, wywrotka, Małopolska";
         ViewData["CanonicalUrl"] = "https://gamex-olkusz.pl/oferta/transport";

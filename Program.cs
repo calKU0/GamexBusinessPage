@@ -12,10 +12,16 @@ builder.Services.AddRazorPages(options =>
 });
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 builder.Services.AddMemoryCache();
-builder.Services.AddOutputCache(options =>
-{
-    options.AddBasePolicy(builder => builder.Expire(TimeSpan.FromMinutes(5)));
-});
+// No base policy. It covered every request, static files and the contact form
+// included, which caused two real problems:
+//   * CSS and JS already carry their own cache headers from MapStaticAssets, and
+//     the extra buffering could serve an empty or stale response for five minutes
+//     after a new version was deployed,
+//   * a cached contact page would hand every visitor the same antiforgery token,
+//     making a share of the form submissions fail.
+// Pages that genuinely can be cached declare it with the [OutputCache] attribute
+// on their models.
+builder.Services.AddOutputCache();
 builder.Services.AddSingleton<CatalogCache>();
 builder.Services.AddSingleton<AdminCatalogService>();
 builder.Services.AddScoped<ImageService>();
@@ -78,39 +84,48 @@ app.MapGet("/sitemap.xml", async (CatalogCache catalogCache, IWebHostEnvironment
             : DateTime.UtcNow.ToString("yyyy-MM-dd");
     }
 
+    static void AppendUrl(StringBuilder builder, string loc, string lastMod, string changeFreq, string priority)
+    {
+        builder.AppendLine("  <url>");
+        builder.AppendLine($"    <loc>{System.Security.SecurityElement.Escape(loc)}</loc>");
+        builder.AppendLine($"    <lastmod>{lastMod}</lastmod>");
+        builder.AppendLine($"    <changefreq>{changeFreq}</changefreq>");
+        builder.AppendLine($"    <priority>{priority}</priority>");
+        builder.AppendLine("  </url>");
+    }
+
     var staticPages = new[]
     {
-        new { Path = "", LastModFile = "Pages/Index.cshtml" },
-        new { Path = "/kontakt", LastModFile = "Pages/Contact.cshtml" },
-        new { Path = "/dotacja", LastModFile = "Pages/Dotation.cshtml" },
-        new { Path = "/oferta", LastModFile = "Pages/Offer/Offer.cshtml" },
-        new { Path = "/oferta/wypozyczenie-maszyn", LastModFile = "Pages/Offer/MachineRental/MachineRental.cshtml" },
-        new { Path = "/oferta/uslugi", LastModFile = "Pages/Offer/Services/Services.cshtml" },
-        new { Path = "/oferta/transport", LastModFile = "Pages/Offer/Transport/Transport.cshtml" }
+        new { Path = "/", LastModFile = "Pages/Index.cshtml", Freq = "weekly", Priority = "1.0" },
+        new { Path = "/oferta/wypozyczenie-maszyn", LastModFile = "Pages/Offer/MachineRental/MachineRental.cshtml", Freq = "weekly", Priority = "0.9" },
+        new { Path = "/oferta/uslugi", LastModFile = "Pages/Offer/Services/Services.cshtml", Freq = "weekly", Priority = "0.9" },
+        new { Path = "/oferta/transport", LastModFile = "Pages/Offer/Transport/Transport.cshtml", Freq = "monthly", Priority = "0.8" },
+        new { Path = "/oferta", LastModFile = "Pages/Offer/Offer.cshtml", Freq = "monthly", Priority = "0.8" },
+        new { Path = "/kontakt", LastModFile = "Pages/Contact.cshtml", Freq = "monthly", Priority = "0.7" },
+        new { Path = "/dotacja", LastModFile = "Pages/Dotation.cshtml", Freq = "yearly", Priority = "0.3" }
     };
 
     foreach (var page in staticPages)
     {
         var lastMod = ResolveLastModified(environment.ContentRootPath, page.LastModFile);
-        sb.AppendLine("  <url>");
-        sb.AppendLine($"    <loc>{baseUrl}{page.Path}</loc>");
-        sb.AppendLine($"    <lastmod>{lastMod}</lastmod>");
-        sb.AppendLine("    <changefreq>weekly</changefreq>");
-        sb.AppendLine("    <priority>0.8</priority>");
-        sb.AppendLine("  </url>");
+        AppendUrl(sb, $"{baseUrl}{page.Path}", lastMod, page.Freq, page.Priority);
     }
 
-    // Dynamic pages (Machines)
     var catalog = catalogCache.GetMachineCatalog();
     var machinesLastMod = ResolveLastModified(environment.ContentRootPath, "Data/machines.json");
+
+    foreach (var category in catalog.Categories)
+    {
+        AppendUrl(sb,
+            $"{baseUrl}/oferta/wypozyczenie-maszyn?category={Uri.EscapeDataString(category.Key)}",
+            machinesLastMod, "monthly", "0.7");
+    }
+
     foreach (var machine in catalog.Machines)
     {
-        sb.AppendLine("  <url>");
-        sb.AppendLine($"    <loc>{baseUrl}/oferta/wypozyczenie-maszyn/{machine.Slug}</loc>");
-        sb.AppendLine($"    <lastmod>{machinesLastMod}</lastmod>");
-        sb.AppendLine("    <changefreq>monthly</changefreq>");
-        sb.AppendLine("    <priority>0.6</priority>");
-        sb.AppendLine("  </url>");
+        AppendUrl(sb,
+            $"{baseUrl}/oferta/wypozyczenie-maszyn/{machine.Slug}",
+            machinesLastMod, "monthly", "0.6");
     }
 
     sb.AppendLine("</urlset>");

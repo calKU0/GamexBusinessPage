@@ -1,204 +1,501 @@
-﻿@page
+@page
 @model IndexModel
+@{
+    var categoryTicker = Model.MachineCategories.Take(10).ToList();
+}
 
-<!-- HERO SECTION -->
-<section class="home-hero">
+@* ============================ HERO ============================ *@
+<section class="home-hero" aria-labelledby="hero-title">
     <img src="~/images/road-renovation-1.webp"
          class="home-hero-bg"
-         alt="Budowa drogi asfaltowej w Olkuszu - firma Gamex"
-         fetchpriority="high" />
+         alt="Budowa drogi asfaltowej realizowana przez GAMEX w Olkuszu"
+         width="1920" height="600"
+         fetchpriority="high" decoding="async" />
 
     <div class="home-hero-overlay"></div>
 
     <div class="container">
-        <div class="row">
-            <div class="col-lg-8">
-                <div class="home-hero-content">
-                    <h1 class="display-1">
-                        Budowa dróg i wynajem maszyn.
-                        <span>Profesjonalne usługi drogowe – Gamex.</span>
-                    </h1>
+        <div class="home-hero-content">
+            <p class="home-hero-kicker anim-fade-down"><b>1994</b> <span>30 lat na budowach</span></p>
 
-                    <p class="lead">
-                        GAMEX to ponad 30 lat doświadczenia w budowie i modernizacji 
-                        infrastruktury drogowej na terenie województwa Małopolskiego, Śląskiego oraz Świętokrzyskiego. Stawiamy na jakość, która przetrwa pokolenia.
-                    </p>
+            <h1 id="hero-title" class="anim-hero-title">
+                <span class="anim-line">Wypożyczalnia</span>
+                <span class="anim-line">maszyn budowlanych</span>
+                <span class="anim-line accent">Budowa dróg i chodników</span>
+            </h1>
 
-                    <div class="home-hero-actions">
-                        <a asp-page="/Contact" class="btn-gamex btn-primary-gamex btn-lg">
-                            <i class="fas fa-envelope me-2"></i>Skontaktuj się z nami
-                        </a>
-                        <a asp-page="/Offer/MachineRental/MachineRental" class="btn-gamex btn-secondary-gamex btn-lg">
-                            <i class="fas fa-tools me-2"></i>Zobacz maszyny
-                        </a>
-                        <a asp-page="/Realizations" class="btn-gamex btn-secondary-gamex btn-lg">
-                            <i class="fas fa-images me-2"></i>Zobacz realizacje
-                        </a>
-                    </div>
-                </div>
+            <p class="lead anim-fade-up anim-d1">
+                Wynajmujemy <strong>maszyny budowlane z operatorem</strong> i budujemy
+                <strong>drogi, chodniki, parkingi oraz place</strong>. Firma z Olkusza, własny park maszynowy,
+                własny transport. Jeździmy po Małopolsce, Śląsku i Świętokrzyskiem.
+            </p>
+
+            <div class="home-hero-actions anim-fade-up anim-d2">
+                <a asp-page="/Offer/MachineRental/MachineRental" class="btn-gamex btn-primary-gamex btn-lg">
+                    <svg class="ico" aria-hidden="true" focusable="false"><use href="#i-truck-monster"></use></svg>Zobacz maszyny
+                </a>
+                <a asp-page="/Contact" asp-fragment="kontakt-formularz" class="btn-gamex btn-secondary-gamex btn-lg">
+                    <svg class="ico" aria-hidden="true" focusable="false"><use href="#i-file-invoice"></use></svg>Bezpłatna wycena
+                </a>
+                <a href="tel:+48601450146" class="btn-gamex btn-ghost-gamex btn-lg">
+                    <svg class="ico" aria-hidden="true" focusable="false"><use href="#i-phone-volume"></use></svg>601 450 146
+                </a>
             </div>
+
+            <ul class="home-hero-trust anim-fade-up anim-d3">
+                <li><b data-count-to="30" data-count-suffix="+">30+</b><span>lat doświadczenia</span></li>
+                <li><b data-count-to="@Model.MachineCount">@Model.MachineCount</b><span>maszyn w wynajmie</span></li>
+                <li><b data-count-to="3">3</b><span>województwa</span></li>
+                <li><b>24h</b><span>podstawienie sprzętu</span></li>
+            </ul>
         </div>
     </div>
+
+    <span class="home-hero-scroll" aria-hidden="true"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-chevron-down"></use></svg></span>
 </section>
 
-<!-- WARTOŚCI -->
-<section class="home-section-values">
+@* ============================ CATEGORY TICKER ============================ *@
+<div class="home-ticker" role="complementary" aria-label="Kategorie sprzętu dostępnego w wynajmie">
+    <div class="home-ticker-track">
+        @for (var pass = 0; pass < 2; pass++)
+        {
+            @* The second copy exists purely so the scrolling loop has no seam.
+               It is hidden from screen readers and taken out of the tab order. *@
+            var duplicate = pass == 1;
+            <div class="home-ticker-group" aria-hidden="@(duplicate ? "true" : "false")">
+                @foreach (var category in categoryTicker)
+                {
+                    <a asp-page="/Offer/MachineRental/MachineRental"
+                       asp-route-category="@category.Key"
+                       tabindex="@(duplicate ? "-1" : null)">@category.DisplayName</a>
+                }
+                <a asp-page="/Offer/Transport/Transport" tabindex="@(duplicate ? "-1" : null)">Transport HDS</a>
+                <a asp-page="/Offer/Services/Services" tabindex="@(duplicate ? "-1" : null)">Roboty drogowe</a>
+                <a asp-page="/Offer/Services/Services" tabindex="@(duplicate ? "-1" : null)">Kostka brukowa</a>
+            </div>
+        }
+    </div>
+</div>
+
+@* ============================ OFFER PILLARS ============================ *@
+<section class="section grid-bg" aria-labelledby="oferta-title">
     <div class="container">
-        <div class="text-center mb-5">
-            <h2 class="section-title text-white">Dlaczego warto wybrać Gamex?</h2>
+        <div class="section-head section-head--center reveal">
+            <p class="eyebrow">Co robimy</p>
+            <h2 class="section-title" id="oferta-title">Trzy rzeczy, które <em>robimy dobrze</em></h2>
+            <p class="section-text">
+                Sprzęt, ludzie i transport w jednych rękach. Dlatego przy naszych zleceniach nie ma
+                tygodnia przestoju, bo podwykonawca nie podstawił koparki.
+            </p>
         </div>
 
-        <div class="row g-4">
-            <div class="col-md-4">
-                <div class="value-card">
-                    <div class="value-icon">
-                        <i class="fas fa-bullseye"></i>
-                    </div>
-                    <h3>Precyzja</h3>
-                    <p>Każdy detal ma znaczenie – od planowania po finalną warstwę asfaltu.</p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="value-card">
-                    <div class="value-icon">
-                        <i class="fas fa-truck-monster"></i>
-                    </div>
-                    <h3>Nowoczesny sprzęt</h3>
-                    <p>Własny park maszynowy pozwala nam na pełną niezależność i terminowość.</p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="value-card">
-                    <div class="value-icon">
-                        <i class="fas fa-handshake"></i>
-                    </div>
-                    <h3>Zaufanie</h3>
-                    <p>Budujemy trwałe relacje z gminami oraz inwestorami prywatnymi w całym regionie.</p>
-                </div>
-            </div>
+        <div class="pillar-grid reveal reveal-stagger">
+            <article class="pillar-card">
+                <span class="pillar-index" aria-hidden="true">01</span>
+                <span class="pillar-icon"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-truck-monster"></use></svg></span>
+                <h3>Wynajem maszyn budowlanych</h3>
+                <p>
+                    Koparki, koparko-ładowarki, minikoparki, walce, rozkładarki asfaltu, frezarki
+                    i zagęszczarki. Zawsze z operatorem, rozliczane od godziny.
+                </p>
+                <ul class="pillar-tags">
+                    <li>z operatorem</li>
+                    <li>stawka godzinowa</li>
+                    <li>dowóz na budowę</li>
+                </ul>
+                <a asp-page="/Offer/MachineRental/MachineRental" class="btn-gamex btn-primary-gamex">
+                    Sprawdź park maszynowy
+                </a>
+            </article>
+
+            <article class="pillar-card pillar-card--steel">
+                <span class="pillar-index" aria-hidden="true">02</span>
+                <span class="pillar-icon"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-road"></use></svg></span>
+                <h3>Budowa dróg i chodników</h3>
+                <p>
+                    Od korytowania i podbudowy po warstwę ścieralną. Kostka brukowa, krawężniki,
+                    parkingi, place manewrowe. Dla gmin, firm i osób prywatnych.
+                </p>
+                <ul class="pillar-tags">
+                    <li>drogi i place</li>
+                    <li>brukarstwo</li>
+                    <li>roboty ziemne</li>
+                </ul>
+                <a asp-page="/Offer/Services/Services" class="btn-gamex btn-secondary-gamex">
+                    Zobacz zakres usług
+                </a>
+            </article>
+
+            <article class="pillar-card pillar-card--steel">
+                <span class="pillar-index" aria-hidden="true">03</span>
+                <span class="pillar-icon"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-truck-ramp-box"></use></svg></span>
+                <h3>Transport i HDS</h3>
+                <p>
+                    Kruszywa, piasek, ziemia, gruz. Przewóz maszyn na naczepie niskopodwoziowej
+                    i rozładunek dźwigiem tam, gdzie nie wjedzie zwykły samochód.
+                </p>
+                <ul class="pillar-tags">
+                    <li>wywrotki</li>
+                    <li>niskopodwoziowy</li>
+                    <li>HDS</li>
+                </ul>
+                <a asp-page="/Offer/Transport/Transport" class="btn-gamex btn-secondary-gamex">
+                    Poznaj możliwości floty
+                </a>
+            </article>
         </div>
     </div>
 </section>
 
-<!-- O NAS SECTION -->
-<section id="o-nas" class="home-section-standard">
+@* ============================ EQUIPMENT CATEGORIES ============================ *@
+<section class="section section--surface" aria-labelledby="kategorie-title">
+    <div class="container">
+        <div class="section-head reveal">
+            <p class="eyebrow">Park maszynowy</p>
+            <h2 class="section-title" id="kategorie-title">Jaką <em>maszynę</em> chcesz wynająć?</h2>
+            <p class="section-text">
+                @(Model.MachineCount) maszyn marek JCB, Caterpillar, Komatsu, Bobcat i Manitou.
+                Wejdź w kategorię, a zobaczysz konkretne modele z rocznikiem, masą i wyposażeniem.
+            </p>
+        </div>
+
+        <div class="cat-grid reveal reveal-stagger">
+            @foreach (var category in Model.MachineCategories)
+            {
+                <a class="cat-tile"
+                   asp-page="/Offer/MachineRental/MachineRental"
+                   asp-route-category="@category.Key"
+                   title="Wynajem: @category.DisplayName">
+                    <span>@category.DisplayName</span>
+                    <span class="cat-count">@category.Machines.Count</span>
+                </a>
+            }
+        </div>
+
+        <div class="mt-4 reveal">
+            <a asp-page="/Offer/MachineRental/MachineRental" class="btn-gamex btn-primary-gamex">
+                <svg class="ico" aria-hidden="true" focusable="false"><use href="#i-list-check"></use></svg>Cała wypożyczalnia maszyn
+            </a>
+        </div>
+    </div>
+</section>
+
+@* ============================ ABOUT ============================ *@
+<section id="o-nas" class="home-section-standard" aria-labelledby="o-nas-title">
     <div class="container">
         <div class="row align-items-center g-5 flex-lg-row-reverse">
-            <div class="col-lg-6">
-                <div class="section-icon">
-                    <i class="fas fa-history"></i>
-                </div>
-                <h2 class="section-title">Doświadczenie w budownictwie drogowym od 1994 roku</h2>
+            <div class="col-lg-6 reveal">
+                <p class="eyebrow">O firmie</p>
+                <h2 class="section-title" id="o-nas-title">Drogi budujemy <em>od 1994 roku</em></h2>
                 <p class="section-text">
-                    Od 1994 roku realizujemy profesjonalne projekty drogowe i budowlane,
-                    łącząc solidne rzemiosło z nowoczesnymi technologiami. Jako lider w regionie Olkusza,
-                    każda inwestycja to dla nas odpowiedzialność i gwarancja najwyższej jakości.
+                    P.P.U.H. „GAMEX” Grzegorz Żurek to rodzinna firma z Olkusza. Zaczynaliśmy od robót
+                    drogowych i przez trzydzieści lat dokupywaliśmy sprzęt, żeby nie zależeć od nikogo:
+                    dziś mamy własne koparki, walce, rozkładarki i naczepy do ich wożenia.
                 </p>
-            </div>
-            <div class="col-lg-6">
-                <div class="section-image-wrapper">
-                    <img src="~/images/road-renovation-2.webp"
-                         class="img-fluid rounded-4"
-                         alt="Park maszynowy Gamex Olkusz - nowoczesne koparki i ładowarki"
-                         loading="lazy"
-                         width="600" height="400">
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- WYNAJEM MASZYN -->
-<section class="home-section-standard">
-    <div class="container">
-        <div class="row align-items-center g-5">
-            <div class="col-lg-6">
-                <div class="section-icon section-icon-orange">
-                    <i class="fas fa-hard-hat"></i>
-                </div>
-                <h2 class="section-title">Wynajem maszyn budowlanych z operatorem</h2>
                 <p class="section-text">
-                    Oferujemy krótkoterminowy wynajem profesjonalnych maszyn budowlanych z doświadczonym operatorem.
-                    Koparki, ładowarki, walce, układarki - wszystko czego potrzebujesz do realizacji Twojego projektu.
+                    Ten sam sprzęt <strong>wynajmujemy z operatorem</strong> firmom, które potrzebują
+                    maszyny na dwa dni albo na dwa miesiące i nie chcą jej kupować, serwisować
+                    i przeglądać przez resztę roku.
                 </p>
                 <ul class="feature-list feature-list-orange">
-                    <li><i class="fas fa-check-circle"></i> Nowoczesny park maszynowy</li>
-                    <li><i class="fas fa-check-circle"></i> Doświadczeni operatorzy</li>
-                    <li><i class="fas fa-check-circle"></i> Rozliczenie godzinowe</li>
-                    <li><i class="fas fa-check-circle"></i> Szybka dostępność</li>
+                    <li><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-circle-check"></use></svg>Własny park maszynowy</li>
+                    <li><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-circle-check"></use></svg>Operatorzy z uprawnieniami</li>
+                    <li><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-circle-check"></use></svg>Kontrakty gminne</li>
+                    <li><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-circle-check"></use></svg>Własny transport maszyn</li>
                 </ul>
-                <a asp-page="/Offer/MachineRental/MachineRental" class="btn-gamex btn-primary-gamex btn-lg mt-4">
-                    <i class="fas fa-tools me-2"></i>Sprawdź dostępne maszyny
+                <a asp-page="/Offer/Offer" class="btn-gamex btn-secondary-gamex">
+                    <svg class="ico" aria-hidden="true" focusable="false"><use href="#i-arrow-right"></use></svg>Poznaj pełną ofertę
                 </a>
             </div>
-            <div class="col-lg-6">
+            <div class="col-lg-6 reveal">
                 <div class="section-image-wrapper">
-                    <img src="~/images/machines.webp" 
-                         alt="Wynajem maszyn budowlanych Gamex" 
-                         class="img-fluid rounded-4"
-                         loading="lazy"
-                         width="600" height="400" />
+                    <img src="~/images/road-renovation-2.webp"
+                         class="img-fluid"
+                         alt="Ekipa GAMEX podczas modernizacji nawierzchni drogowej w okolicach Olkusza"
+                         loading="lazy" decoding="async"
+                         width="612" height="409">
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- USŁUGI DROGOWE -->
-<section class="home-section-standard">
+@* ============================ MACHINE RENTAL ============================ *@
+<section class="home-section-standard" aria-labelledby="wynajem-title">
     <div class="container">
         <div class="row align-items-center g-5">
-            <div class="col-lg-6">
+            <div class="col-lg-6 reveal">
+                <div class="section-icon section-icon-orange">
+                    <svg class="ico" aria-hidden="true" focusable="false"><use href="#i-helmet-safety"></use></svg>
+                </div>
+                <h2 class="section-title" id="wynajem-title">Wynajem maszyn <em>z operatorem</em></h2>
+                <p class="section-text">
+                    Płacisz za przepracowane godziny i nic poza tym. Przeglądy, ubezpieczenie, paliwo
+                    i awarie zostają po naszej stronie, a maszyna przyjeżdża z człowiekiem, który na niej
+                    pracuje na co dzień, a nie od święta.
+                </p>
+                <ul class="feature-list feature-list-orange">
+                    <li><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-circle-check"></use></svg>Koparki i koparko-ładowarki</li>
+                    <li><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-circle-check"></use></svg>Minikoparki i midikoparki</li>
+                    <li><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-circle-check"></use></svg>Walce i zagęszczarki</li>
+                    <li><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-circle-check"></use></svg>Rozkładarki asfaltu i frezarki</li>
+                    <li><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-circle-check"></use></svg>Ładowarki teleskopowe</li>
+                    <li><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-circle-check"></use></svg>Przesiewacze i wozidła</li>
+                </ul>
+                <a asp-page="/Offer/MachineRental/MachineRental" class="btn-gamex btn-primary-gamex btn-lg mt-2">
+                    <svg class="ico" aria-hidden="true" focusable="false"><use href="#i-truck-monster"></use></svg>Sprawdź dostępne maszyny
+                </a>
+            </div>
+            <div class="col-lg-6 reveal">
                 <div class="section-image-wrapper">
-                    <img src="~/images/road-renovation-3.webp"
-                         class="img-fluid rounded-4"
-                         alt="Prace drogowe Gamex - układanie nawierzchni asfaltowej"
-                         loading="lazy"
-                         width="600" height="400">
+                    <img src="~/images/machines.webp"
+                         alt="Park maszynowy GAMEX Olkusz – koparki i ładowarki dostępne w wynajmie"
+                         class="img-fluid"
+                         loading="lazy" decoding="async"
+                         width="768" height="576" />
                 </div>
             </div>
-            <div class="col-lg-6">
-                <div class="section-icon">
-                    <i class="fas fa-road"></i>
+        </div>
+    </div>
+</section>
+
+@* ============================ ROAD SERVICES ============================ *@
+<section class="home-section-standard" aria-labelledby="uslugi-title">
+    <div class="container">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-6 reveal">
+                <div class="section-image-wrapper">
+                    <img src="~/images/road-renovation-3.webp"
+                         class="img-fluid"
+                         alt="Układanie nawierzchni asfaltowej przez firmę drogową GAMEX z Olkusza"
+                         loading="lazy" decoding="async"
+                         width="900" height="599">
                 </div>
-                <h2 class="section-title">Kompleksowe usługi drogowe i brukarskie</h2>
+            </div>
+            <div class="col-lg-6 reveal">
+                <div class="section-icon section-icon--steel">
+                    <svg class="ico" aria-hidden="true" focusable="false"><use href="#i-road"></use></svg>
+                </div>
+                <h2 class="section-title" id="uslugi-title">Drogi, chodniki <span class="u-steel">i place</span></h2>
                 <p class="section-text">
-                    Realizujemy budowy i remonty dróg, chodników, kanalizacji oraz
-                    infrastruktury technicznej. Oferujemy nowoczesne rozwiązania drogowe
-                    dla sektora publicznego i prywatnego na terenie województwa Małopolskiego, Śląskiego oraz Świętokrzyskiego.
+                    Bierzemy zadanie w całości: wykop, podbudowa, nawierzchnia, krawężniki, odwodnienie.
+                    Jedna umowa, jedna odpowiedzialność za jakość i termin. Pracujemy dla gmin, spółdzielni,
+                    deweloperów i klientów indywidualnych.
                 </p>
-                <a asp-page="/Offer/Services/Services" class="btn-gamex btn-secondary-gamex mt-3">
-                    <i class="fas fa-list me-2"></i>Zobacz pełną ofertę usług
+                <ul class="feature-list">
+                    <li><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-circle-check"></use></svg>Nawierzchnie asfaltowe</li>
+                    <li><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-circle-check"></use></svg>Kostka brukowa i chodniki</li>
+                    <li><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-circle-check"></use></svg>Roboty ziemne i niwelacje</li>
+                    <li><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-circle-check"></use></svg>Parkingi i place</li>
+                    <li><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-circle-check"></use></svg>Frezowanie nawierzchni</li>
+                    <li><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-circle-check"></use></svg>Odwodnienia liniowe</li>
+                </ul>
+                <a asp-page="/Offer/Services/Services" class="btn-gamex btn-secondary-gamex btn-lg mt-2">
+                    <svg class="ico" aria-hidden="true" focusable="false"><use href="#i-list"></use></svg>Zobacz pełną ofertę usług
                 </a>
             </div>
         </div>
     </div>
 </section>
 
-<!-- WYCENA -->
-<section class="home-section-cta">
-    <div class="container text-center">
-        <h2 class="section-title text-white">Masz projekt drogowy do zrealizowania?</h2>
-        <p class="section-text text-white-50 mb-4">Skontaktuj się z nami w celu uzyskania darmowej wyceny i konsultacji.</p>
-        <a asp-page="/Contact" class="btn btn-lg btn-gamex btn-primary-gamex">
-            <i class="fas fa-file-invoice me-2"></i>Bezpłatna wycena
-        </a>
+@* ============================ PROCESS ============================ *@
+<section class="section section--surface" aria-labelledby="proces-title">
+    <div class="container">
+        <div class="section-head section-head--center reveal">
+            <p class="eyebrow eyebrow--steel">Jak zaczynamy</p>
+            <h2 class="section-title" id="proces-title">Od telefonu do <em>maszyny na budowie</em></h2>
+            <p class="section-text">Cztery kroki. Przy większości zleceń mieścimy się w dwie doby.</p>
+        </div>
+
+        <div class="process-grid reveal reveal-stagger">
+            <article class="process-step">
+                <h3>Zgłoszenie</h3>
+                <p>Dzwonisz albo wypełniasz formularz. Mówisz, co trzeba zrobić, gdzie i na kiedy.</p>
+            </article>
+            <article class="process-step">
+                <h3>Dobór sprzętu</h3>
+                <p>Podpowiadamy, co się sprawdzi przy Twoim froncie robót. Czasem wystarczy mniejsza maszyna, niż myślisz.</p>
+            </article>
+            <article class="process-step">
+                <h3>Wycena</h3>
+                <p>Dostajesz stawkę godzinową albo ryczałt za całość. Dojazd wliczony, bez dopisków w fakturze.</p>
+            </article>
+            <article class="process-step">
+                <h3>Wjazd na budowę</h3>
+                <p>Przywozimy sprzęt własną naczepą i zaczynamy w umówionym dniu.</p>
+            </article>
+        </div>
     </div>
 </section>
 
-<!-- PARTNERZY -->
-<section class="home-section-partners">
+@* ============================ VALUES ============================ *@
+<section class="home-section-values" aria-labelledby="wartosci-title">
     <div class="container">
-        <div class="text-center mb-4">
-            <h2 class="partners-title">Pracujemy na sprzęcie renomowanych producentów</h2>
+        <div class="section-head section-head--center reveal">
+            <p class="eyebrow">Dlaczego GAMEX</p>
+            <h2 class="section-title" id="wartosci-title">Dlaczego klienci <em>wracają</em></h2>
         </div>
 
-        <div class="partners-logos">
-            <img src="~/images/producenci/Bobcat.webp" alt="Logo Bobcat" loading="lazy" width="120" height="40" />
-            <img src="~/images/producenci/Caterpillar.webp" alt="Logo Caterpillar" loading="lazy" width="120" height="40" />
-            <img src="~/images/producenci/JCB.webp" alt="Logo JCB" loading="lazy" width="120" height="40" />
-            <img src="~/images/producenci/Komatsu.webp" alt="Logo Komatsu" loading="lazy" width="120" height="40" />
-            <img src="~/images/producenci/Manitou.webp" alt="Logo Manitou" loading="lazy" width="120" height="40" />
+        <div class="row g-4 reveal reveal-stagger">
+            <div class="col-md-4">
+                <article class="value-card">
+                    <div class="value-icon"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-bullseye"></use></svg></div>
+                    <h3>Robimy raz</h3>
+                    <p>Od wytyczenia po warstwę ścieralną pilnujemy rzędnych i zagęszczenia. Odbiory przechodzimy za pierwszym podejściem.</p>
+                </article>
+            </div>
+            <div class="col-md-4">
+                <article class="value-card">
+                    <div class="value-icon"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-gears"></use></svg></div>
+                    <h3>Sprzęt jest nasz</h3>
+                    <p>Nie podnajmujemy maszyn od nikogo. Termin zależy od nas, więc nie musimy tłumaczyć się cudzym opóźnieniem.</p>
+                </article>
+            </div>
+            <div class="col-md-4">
+                <article class="value-card">
+                    <div class="value-icon"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-handshake"></use></svg></div>
+                    <h3>Wracają do nas</h3>
+                    <p>Część gmin i firm budowlanych współpracuje z nami od kilkunastu lat. Referencje wysyłamy na życzenie.</p>
+                </article>
+            </div>
+        </div>
+    </div>
+</section>
+
+@* ============================ SERVICE AREA ============================ *@
+<section class="section" aria-labelledby="obszar-title">
+    <div class="container">
+        <div class="section-head reveal">
+            <p class="eyebrow">Gdzie pracujemy</p>
+            <h2 class="section-title" id="obszar-title">Maszyny i roboty drogowe <em>w trzech województwach</em></h2>
+            <p class="section-text">
+                Bazę mamy w Olkuszu, czyli w połowie drogi między Krakowem a Katowicami. W praktyce
+                oznacza to, że na większość budów w regionie dojeżdżamy w godzinę.
+            </p>
+        </div>
+
+        <div class="area-grid reveal reveal-stagger">
+            <article class="area-card">
+                <h3>Małopolskie</h3>
+                <p>Nasz teren macierzysty</p>
+                <ul class="area-cities">
+                    <li>Olkusz</li>
+                    <li>Bukowno</li>
+                    <li>Wolbrom</li>
+                    <li>Klucze</li>
+                    <li>Trzebinia</li>
+                    <li>Chrzanów</li>
+                    <li>Krzeszowice</li>
+                    <li>Miechów</li>
+                    <li>Kraków</li>
+                </ul>
+            </article>
+
+            <article class="area-card">
+                <h3>Śląskie</h3>
+                <p>Aglomeracja i powiat zawierciański</p>
+                <ul class="area-cities">
+                    <li>Sławków</li>
+                    <li>Jaworzno</li>
+                    <li>Dąbrowa Górnicza</li>
+                    <li>Sosnowiec</li>
+                    <li>Będzin</li>
+                    <li>Zawiercie</li>
+                    <li>Myszków</li>
+                    <li>Katowice</li>
+                </ul>
+            </article>
+
+            <article class="area-card">
+                <h3>Świętokrzyskie</h3>
+                <p>Kontrakty drogowe i gminne</p>
+                <ul class="area-cities">
+                    <li>Kielce</li>
+                    <li>Jędrzejów</li>
+                    <li>Sędziszów</li>
+                    <li>Włoszczowa</li>
+                    <li>Busko-Zdrój</li>
+                    <li>Pińczów</li>
+                </ul>
+            </article>
+        </div>
+
+        <p class="area-note reveal">
+            Nie ma Twojej miejscowości na liście? Przy większych zleceniach jeździmy dalej —
+            <a asp-page="/Contact">napisz</a>, sprawdzimy, czy się dogadamy.
+        </p>
+    </div>
+</section>
+
+@* ============================ FAQ ============================ *@
+<section id="faq" class="section section--surface" aria-labelledby="faq-title">
+    <div class="container">
+        <div class="section-head section-head--center reveal">
+            <p class="eyebrow eyebrow--steel">Najczęstsze pytania</p>
+            <h2 class="section-title" id="faq-title">Zanim <em>zadzwonisz</em></h2>
+            <p class="section-text">
+                Sześć pytań, które słyszymy w słuchawce najczęściej.
+            </p>
+        </div>
+
+        <div class="faq-list reveal reveal-stagger">
+            @foreach (var entry in Model.Faq)
+            {
+                <details class="faq-item">
+                    <summary>@entry.Question</summary>
+                    <div class="faq-answer">
+                        <p>@entry.Answer</p>
+                    </div>
+                </details>
+            }
+        </div>
+    </div>
+</section>
+
+@* ============================ CTA ============================ *@
+<section class="home-section-cta" aria-labelledby="cta-title">
+    <div class="container">
+        <div class="cta-panel reveal">
+            <div class="cta-panel-body">
+                <p class="eyebrow">Wycena w 24 godziny</p>
+                <h2 class="cta-title" id="cta-title">Potrzebujesz maszyny albo <em>ekipy drogowej?</em></h2>
+                <p class="cta-text">
+                    Napisz, co jest do zrobienia. Odpowiemy, ile to potrwa i ile będzie kosztować —
+                    zwykle jeszcze tego samego dnia roboczego.
+                </p>
+
+                <div class="cta-actions">
+                    <a asp-page="/Contact" asp-fragment="kontakt-formularz" class="btn-gamex btn-primary-gamex btn-lg">
+                        <svg class="ico" aria-hidden="true" focusable="false"><use href="#i-file-invoice"></use></svg>Bezpłatna wycena
+                    </a>
+                    <a href="~/pdf/gamex-oferta.pdf" class="btn-gamex btn-secondary-gamex btn-lg" download="Oferta-GAMEX.pdf">
+                        <svg class="ico" aria-hidden="true" focusable="false"><use href="#i-file-pdf"></use></svg>Pobierz ofertę PDF
+                    </a>
+                </div>
+            </div>
+
+            <div class="cta-panel-aside">
+                <span class="cta-aside-label">Zadzwoń od razu</span>
+                <a href="tel:+48601450146" class="cta-phone">
+                    <svg class="ico" aria-hidden="true" focusable="false"><use href="#i-phone-volume"></use></svg>601 450 146
+                </a>
+                <span class="cta-aside-hours">pon.–sob. 6:00–16:00</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+@* ============================ PARTNERS ============================ *@
+<section class="home-section-partners" aria-labelledby="partnerzy-title">
+    <div class="container">
+        <h2 class="partners-title" id="partnerzy-title">Pracujemy na sprzęcie renomowanych producentów</h2>
+
+        <div class="partners-logos reveal reveal-stagger">
+            <img src="~/images/producenci/Bobcat.webp" alt="Bobcat – maszyny w parku GAMEX" loading="lazy" decoding="async" width="120" height="40" />
+            <img src="~/images/producenci/Caterpillar.webp" alt="Caterpillar – maszyny w parku GAMEX" loading="lazy" decoding="async" width="120" height="40" />
+            <img src="~/images/producenci/JCB.webp" alt="JCB – maszyny w parku GAMEX" loading="lazy" decoding="async" width="120" height="40" />
+            <img src="~/images/producenci/Komatsu.webp" alt="Komatsu – maszyny w parku GAMEX" loading="lazy" decoding="async" width="120" height="40" />
+            <img src="~/images/producenci/Manitou.webp" alt="Manitou – maszyny w parku GAMEX" loading="lazy" decoding="async" width="120" height="40" />
         </div>
     </div>
 </section>

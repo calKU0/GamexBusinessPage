@@ -118,8 +118,9 @@ namespace GamexBusinessPage.Pages
 
         private void ConfigurePageMetadata()
         {
-            ViewData["Title"] = "Kontakt - Gamex Olkusz | Zapytaj o wynajem i usługi";
-            ViewData["Description"] = "Skontaktuj się z Gamex w Olkuszu. Szybka wycena wynajmu maszyn i usług drogowych. Zadzwoń lub napisz do nas – działamy w 3 województwach!";
+            ViewData["Title"] = "Kontakt – wynajem maszyn i roboty drogowe | GAMEX Olkusz";
+            ViewData["CanonicalUrl"] = "https://gamex-olkusz.pl/kontakt";
+            ViewData["Description"] = "Kontakt do GAMEX Olkusz, tel. 601 450 146. Bezpłatna wycena wynajmu maszyn budowlanych i robót drogowych. Woj. małopolskie, śląskie i świętokrzyskie.";
             ViewData["Keywords"] = "Gamex, Olkusz, kontakt, wynajem maszyn budowlanych, remonty dróg, usługi budowlane, Małopolska, Śląsk, Świętokrzyskie";
 
             var baseUrl = "https://gamex-olkusz.pl";

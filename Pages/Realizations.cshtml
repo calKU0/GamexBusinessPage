@@ -1,126 +1,40 @@
-﻿@page "/realizacje"
+@page "/realizacje"
 @model GamexBusinessPage.Pages.RealizacjeModel
 
-<div class="realizations-page">
-<div class="offer-subpage">
-    <div class="container-fluid py-5">
-        <div class="text-center">
-            <h1 class="display-6 fw-bold">Strona w przebudowie</h1>
-            <p class="lead">Ta strona jest w przebudowie. Zapraszamy wkrótce.</p>
+@await Html.PartialAsync("_Breadcrumb", new List<(string, string?)>
+{
+    ("Strona główna", Url.Page("/Index")),
+    ("Realizacje", null)
+})
+
+<div class="realizations-page offer-subpage">
+    <section class="page-hero page-hero--center">
+        <div class="container">
+            <p class="eyebrow">Realizacje</p>
+            <h1>Galeria <span>w przygotowaniu</span></h1>
+            <p class="lead">
+                Zdjęć z budowy nazbierało się przez lata sporo, ale trzeba je jeszcze uporządkować.
+                Galeria pojawi się tutaj wkrótce. Zanim to nastąpi, chętnie opowiemy o konkretnych
+                realizacjach przez telefon albo wyślemy referencje.
+            </p>
+
+            <div class="cta-actions">
+                <a asp-page="/Contact" class="btn-gamex btn-primary-gamex btn-lg">
+                    <svg class="ico" aria-hidden="true" focusable="false"><use href="#i-envelope"></use></svg>Poproś o referencje
+                </a>
+                <a asp-page="/Offer/Offer" class="btn-gamex btn-secondary-gamex btn-lg">
+                    <svg class="ico" aria-hidden="true" focusable="false"><use href="#i-list-check"></use></svg>Zobacz ofertę
+                </a>
+            </div>
         </div>
-    </div>
+    </section>
 </div>
-</div>
 
-
-@* @section Schema {
-    <script type="application/ld+json">
-        {
-          "@@context": "https://schema.org",
-          "@@graph": [
-            {
-              "@@type": "BreadcrumbList",
-              "itemListElement": [
-                {
-                  "@@type": "ListItem",
-                  "position": 1,
-                  "name": "Strona główna",
-                  "item": "https://gamex-olkusz.pl"
-                },
-                {
-                  "@@type": "ListItem",
-                  "position": 2,
-                  "name": "Realizacje",
-                  "item": "https://gamex-olkusz.pl/realizacje"
-                }
-              ]
-            },
-            {
-              "@@type": "CollectionPage",
-              "name": "Realizacje i projekty budowlane Gamex",
-              "description": "Galeria zrealizowanych inwestycji drogowych, prac brukarskich oraz wyburzeń na terenie Olkusza i okolic.",
-              "url": "https://gamex-olkusz.pl/realizacje",
-              "mainEntity": {
-                "@@type": "ItemList",
-                "itemListElement": [
-                  {
-                    "@@type": "ListItem",
-                    "position": 1,
-                    "url": "https://gamex-olkusz.pl/realizacje/remont-drogi-olkusz"
-                  },
-                  {
-                    "@@type": "ListItem",
-                    "position": 2,
-                    "url": "https://gamex-olkusz.pl/realizacje/parking-osiek"
-                  },
-                  {
-                    "@@type": "ListItem",
-                    "position": 3,
-                    "url": "https://gamex-olkusz.pl/realizacje/wyburzenie-hali"
-                  }
-                ]
-              }
-            }
-          ]
-        }
-    </script>
-} *@
-
-@* @section Schema {
-    <script type="application/ld+json">
-        {
-          "@@context": "https://schema.org",
-          "@@graph": [
-            {
-              "@@type": "BreadcrumbList",
-              "itemListElement": [
-                {
-                  "@@type": "ListItem",
-                  "position": 1,
-                  "name": "Strona główna",
-                  "item": "https://gamex-olkusz.pl"
-                },
-                {
-                  "@@type": "ListItem",
-                  "position": 2,
-                  "name": "Realizacje",
-                  "item": "https://gamex-olkusz.pl/realizacje"
-                },
-                {
-                  "@@type": "ListItem",
-                  "position": 3,
-                  "name": "Remont parkingu - Olkusz Centrum",
-                  "item": "https://gamex-olkusz.pl/realizacje/remont-parkingu-olkusz"
-                }
-              ]
-            },
-            {
-              "@@type": "Project",
-              "name": "Generalny remont nawierzchni parkingu",
-              "description": "Kompleksowa wymiana nawierzchni, korytowanie, podbudowa z kruszywa oraz ułożenie nowej kostki brukowej o powierzchni 500m2.",
-              "image": [
-                "https://gamex-olkusz.pl/images/realizacje/parking-1.jpg",
-                "https://gamex-olkusz.pl/images/realizacje/parking-2.jpg"
-              ],
-              "startDate": "2024-05-01",
-              "endDate": "2024-05-20",
-              "location": {
-                "@@type": "Place",
-                "name": "Centrum Handlowe Olkusz",
-                "address": {
-                  "@@type": "PostalAddress",
-                  "addressLocality": "Olkusz",
-                  "addressRegion": "Małopolskie"
-                }
-              },
-              "organizer": {
-                "@@type": "LocalBusiness",
-                "name": "Gamex",
-                "url": "https://gamex-olkusz.pl"
-              },
-              "status": "https://schema.org/Completed"
-            }
-          ]
-        }
-    </script>
-} *@
+@section Schema {
+    @if (!string.IsNullOrWhiteSpace(Model.SchemaJson))
+    {
+        <script type="application/ld+json">
+            @Html.Raw(Model.SchemaJson)
+        </script>
+    }
+}

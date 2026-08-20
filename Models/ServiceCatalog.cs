@@ -75,6 +75,12 @@ public sealed class ServiceItem
     [JsonPropertyName("highlight")]
     public string? Highlight { get; set; }
 
+    /// <summary>Anchor id on the services page. Built with the same slugifier as
+    /// the machine URLs, so it copes with Polish characters and never produces
+    /// ids containing spaces.</summary>
+    [JsonIgnore]
+    public string AnchorId => "usluga-" + MachineCatalog.BuildSlug(Name ?? string.Empty);
+
     [JsonIgnore]
     public string? CategoryKey { get; set; }
 

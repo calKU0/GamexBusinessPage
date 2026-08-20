@@ -1,83 +1,205 @@
-﻿<!DOCTYPE html>
+@inject GamexBusinessPage.Services.CatalogCache CatalogCache
+@{
+    // The largest equipment categories form the second column of the "Oferta" menu.
+    // These are the most searched phrases, and a link from every subpage strengthens them.
+    var navCategories = CatalogCache.GetMachineCatalog().Categories
+        .OrderByDescending(category => category.Machines.Count)
+        .ThenBy(category => category.DisplayName, StringComparer.CurrentCulture)
+        .Take(6)
+        .ToList();
+
+    var currentPage = ViewContext.RouteData.Values["page"]?.ToString() ?? string.Empty;
+    bool IsPage(string page) => string.Equals(currentPage, page, StringComparison.OrdinalIgnoreCase);
+    bool InOffer() => currentPage.StartsWith("/Offer", StringComparison.OrdinalIgnoreCase);
+
+    var canonical = ViewData["CanonicalUrl"] as string
+        ?? $"https://gamex-olkusz.pl{Context.Request.Path}";
+    var ogImage = ViewData["OgImage"] as string
+        ?? "https://gamex-olkusz.pl/images/road-renovation-1.webp";
+    var preloadHero = ViewData["PreloadHero"] is true;
+}
+<!DOCTYPE html>
 <html lang="pl">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="robots" content="@(ViewData["Robots"] ?? "index, follow")">
-    <meta name="keywords" content="@ViewData["Keywords"]">
-    <meta name="description" content="@ViewData["Description"]">
+    <script>document.documentElement.classList.add("js");</script>
+
     <title>@ViewData["Title"]</title>
+    <meta name="description" content="@ViewData["Description"]">
+    <meta name="keywords" content="@ViewData["Keywords"]">
+    <meta name="robots" content="@(ViewData["Robots"] ?? "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1")">
+    <meta name="author" content="P.P.U.H. GAMEX Grzegorz Żurek">
+    <meta name="theme-color" content="#0B0D14">
+    <meta name="format-detection" content="telephone=yes">
+
+    <link rel="canonical" href="@canonical" />
+
+    <meta name="geo.region" content="PL-MA" />
+    <meta name="geo.placename" content="Olkusz, Małopolska" />
+    <meta name="geo.position" content="50.259966;19.603288" />
+    <meta name="ICBM" content="50.259966, 19.603288" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="@(ViewData["OgType"] ?? "website")" />
+    <meta property="og:title" content="@ViewData["Title"]" />
+    <meta property="og:description" content="@ViewData["Description"]" />
+    <meta property="og:url" content="@canonical" />
+    <meta property="og:image" content="@ogImage" />
+    <meta property="og:image:alt" content="GAMEX Olkusz – wynajem maszyn budowlanych i budowa dróg" />
+    <meta property="og:site_name" content="GAMEX Olkusz" />
+    <meta property="og:locale" content="pl_PL" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="@ViewData["Title"]" />
+    <meta name="twitter:description" content="@ViewData["Description"]" />
+    <meta name="twitter:image" content="@ogImage" />
 
     <link rel="icon" type="image/x-icon" href="~/images/icon.ico" />
     <link rel="shortcut icon" type="image/x-icon" href="~/images/icon.ico" />
+    <link rel="apple-touch-icon" href="~/images/logo.png" />
 
-    <link rel="canonical" href="@(ViewData["CanonicalUrl"] ?? $"https://gamex-olkusz.pl{Context.Request.Path}")" />
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="@ViewData["Title"]" />
-    <meta property="og:description" content="@ViewData["Description"]" />
-    <meta property="og:url" content="@(ViewData["CanonicalUrl"] ?? $"https://gamex-olkusz.pl{Context.Request.Path}")" />
-    <meta property="og:image" content="@(ViewData["OgImage"] ?? "https://gamex-olkusz.pl/images/logo.png")" />
-    <meta property="og:site_name" content="Gamex Olkusz" />
-    <meta property="og:locale" content="pl_PL" />
+    @if (preloadHero)
+    {
+        <link rel="preload" href="~/images/road-renovation-1.webp" as="image" fetchpriority="high">
+    }
 
-    <link rel="preload" href="~/images/road-renovation-1.webp" as="image" fetchpriority="high">
+    @* The heading face is preloaded - it paints the largest text on screen. *@
+    @* Paths without "~/" on purpose: the tag helper would fingerprint them, while
+       @font-face in the stylesheet points at unfingerprinted URLs - the browser
+       would then download every face twice instead of using the preload. *@
+    <link rel="preload" href="/fonts/barlow-condensed-700-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/barlow-400-latin.woff2" as="font" type="font/woff2" crossorigin>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    @* <link rel="stylesheet" href="~/GamexBusinessPage.styles.css" asp-append-version="true" /> *@
     @await RenderSectionAsync("Styles", required: false)
     @await RenderSectionAsync("Schema", required: false)
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-lg gamex-navbar fixed-top">
+    @await Html.PartialAsync("_IconSprite")
+
+    <a class="skip-link" href="#tresc">Przejdź do treści</a>
+
+    <header class="gamex-header" id="gamexHeader">
+        <div class="gamex-topbar">
             <div class="container">
-                <!-- Logo -->
-                <a class="navbar-brand d-flex align-items-center" asp-area="" asp-page="/Index">
-                    <img src="~/images/logo.svg" alt="Gamex Olkusz - budowa dróg i wynajem maszyn" class="navbar-logo" />
+                <div class="topbar-meta">
+                    <span><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-location-dot"></use></svg>Osiek 233, 32-300 Osiek</span>
+                    <a href="tel:+48601450146" aria-label="Zadzwoń: +48 601 450 146"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-phone"></use></svg>+48 601 450 146</a>
+                    <span class="topbar-hide-xs"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-clock"></use></svg>Pn–Sob 6:00–16:00</span>
+                </div>
+                <div class="topbar-badge">
+                    <svg class="ico" aria-hidden="true" focusable="false"><use href="#i-helmet-safety"></use></svg>
+                    <span>Małopolska &middot; Śląsk &middot; Świętokrzyskie &mdash; <b>od 1994 roku</b></span>
+                </div>
+            </div>
+        </div>
+
+        <nav class="navbar navbar-expand-xl gamex-navbar" id="gamexMainNav" aria-label="Nawigacja główna">
+            <div class="container">
+                <a class="navbar-brand d-flex align-items-center" asp-area="" asp-page="/Index" aria-label="GAMEX Olkusz – strona główna">
+                    <img src="~/images/logo.svg" alt="GAMEX Olkusz – wynajem maszyn budowlanych i budowa dróg" class="navbar-logo" width="160" height="52" />
                 </a>
 
-                <!-- Mobile toggle -->
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                         data-bs-target="#gamexNavbar"
                         aria-controls="gamexNavbar" aria-expanded="false"
-                        aria-label="Toggle navigation">
+                        aria-label="Rozwiń menu">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
-                <!-- Links -->
                 <div class="collapse navbar-collapse" id="gamexNavbar">
-                    <ul class="navbar-nav ms-auto align-items-center gap-lg-3">
-
+                    <ul class="navbar-nav ms-auto align-items-xl-center gap-xl-3">
                         <li class="nav-item">
-                            <a class="nav-link" asp-page="/Index" asp-fragment="o-nas">O nas</a>
+                            <a class="nav-link" data-spy-target="o-nas" asp-page="/Index" asp-fragment="o-nas">O nas</a>
                         </li>
 
                         <li class="nav-item dropdown">
                             <div class="dropdown-hover-wrapper">
-                                <a class="nav-link dropdown-toggle" asp-page="/Offer/Offer">Oferta</a>
+                                @* The link goes to the offer page, a separate button expands the submenu.
+                                   Splitting the two is required in the vertical layout: otherwise either
+                                   /oferta is unreachable, or the list cannot be expanded. *@
+                                <div class="nav-parent">
+                                    <a class="nav-link dropdown-toggle @(InOffer() ? "is-active" : "")" asp-page="/Offer/Offer">Oferta</a>
+                                    <button type="button" class="submenu-toggle" aria-expanded="false"
+                                            aria-controls="podmenu-oferta" aria-label="Rozwiń podmenu Oferta">
+                                        <svg class="ico" aria-hidden="true" focusable="false"><use href="#i-chevron-down"></use></svg>
+                                    </button>
+                                </div>
 
-                                <ul class="dropdown-menu dropdown-menu-dark gamex-dropdown">
-                                    <li><a class="dropdown-item" asp-page="/Offer/MachineRental/MachineRental">Wypożyczenie maszyn</a></li>
-                                    <li><a class="dropdown-item" asp-page="/Offer/Services/Services">Usługi</a></li>
-                                    <li><a class="dropdown-item" asp-page="/Offer/Transport/Transport">Transport</a></li>
-                                </ul>
+                                <div class="dropdown-menu gamex-dropdown gamex-dropdown--wide" id="podmenu-oferta">
+                                    <div class="dropdown-col">
+                                        <span class="dropdown-col-title">Usługi</span>
+                                        <ul>
+                                            <li>
+                                                <a class="dropdown-item" asp-page="/Offer/MachineRental/MachineRental">
+                                                    <svg class="ico" aria-hidden="true" focusable="false"><use href="#i-truck-monster"></use></svg>Wynajem maszyn budowlanych
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" asp-page="/Offer/Services/Services">
+                                                    <svg class="ico" aria-hidden="true" focusable="false"><use href="#i-road"></use></svg>Budowa dróg i chodników
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" asp-page="/Offer/Transport/Transport">
+                                                    <svg class="ico" aria-hidden="true" focusable="false"><use href="#i-truck-ramp-box"></use></svg>Transport i HDS
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" asp-page="/Offer/Offer">
+                                                    <svg class="ico" aria-hidden="true" focusable="false"><use href="#i-list-check"></use></svg>Pełna oferta
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="dropdown-col dropdown-col--categories">
+                                        <span class="dropdown-col-title">Popularne maszyny</span>
+                                        <ul>
+                                            @foreach (var category in navCategories)
+                                            {
+                                                <li>
+                                                    <a class="dropdown-item"
+                                                       asp-page="/Offer/MachineRental/MachineRental"
+                                                       asp-route-category="@category.Key">@category.DisplayName</a>
+                                                </li>
+                                            }
+                                        </ul>
+                                        <a class="dropdown-all" asp-page="/Offer/MachineRental/MachineRental">
+                                            Wszystkie maszyny <svg class="ico" aria-hidden="true" focusable="false"><use href="#i-arrow-right"></use></svg>
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" asp-page="/Realizations">Realizacje</a>
+                            <a class="nav-link @(IsPage("/Realizations") ? "is-active" : "")" asp-page="/Realizations">Realizacje</a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link nav-cta" asp-page="/Contact">Kontakt</a>
+                            <a class="nav-link" data-spy-target="faq" asp-page="/Index" asp-fragment="faq">FAQ</a>
                         </li>
 
-                        <!-- Dotacje EU Image -->
+                        <li class="nav-item">
+                            <a class="nav-link @(IsPage("/Contact") ? "is-active" : "")" asp-page="/Contact">Kontakt</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-phone" href="tel:+48601450146">
+                                <svg class="ico" aria-hidden="true" focusable="false"><use href="#i-phone-volume"></use></svg>601 450 146
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link nav-cta" asp-page="/Contact" asp-fragment="kontakt-formularz">Darmowa wycena</a>
+                        </li>
+
                         <li class="nav-item nav-dotacje">
-                            <a asp-page="/Dotation" class="dotacje-link" aria-label="Dotacje Unii Europejskiej">
-                                <img src="~/images/ue_logo.webp" alt="Dotacje Unii Europejskiej" class="dotacje-logo" />
+                            <a asp-page="/Dotation" class="dotacje-link" aria-label="Projekt dofinansowany z Funduszy Europejskich">
+                                <img src="~/images/ue_logo.webp" alt="Fundusze Europejskie – projekt dofinansowany z UE" class="dotacje-logo" width="53" height="34" />
                             </a>
                         </li>
 
@@ -86,7 +208,10 @@
             </div>
         </nav>
     </header>
-    <main role="main">
+
+    @* tabindex="-1" sprawia, ze po skoku ze skip-linku ognisko klawiatury faktycznie
+       przenosi sie na tresc, a nie tylko przewija strone. *@
+    <main id="tresc" tabindex="-1">
         @RenderBody()
     </main>
 
@@ -97,7 +222,7 @@
                 aria-label="Udogodnienia dostępności"
                 aria-controls="a11yWidgetPanel"
                 aria-expanded="false">
-            <i class="fa-solid fa-universal-access" aria-hidden="true"></i>
+            <svg class="ico" aria-hidden="true" focusable="false"><use href="#i-universal-access"></use></svg>
         </button>
 
         <div class="a11y-widget-panel" id="a11yWidgetPanel" role="dialog" aria-label="Udogodnienia dostępności">
@@ -124,9 +249,11 @@
             <div class="row g-4">
                 <div class="col-lg-4 col-md-6">
                     <div class="footer-info">
-                        <img src="~/images/logo.svg" alt="Gamex Olkusz - budowa dróg i wynajem maszyn" class="footer-logo mb-3" />
+                        <img src="~/images/logo.svg" alt="GAMEX Olkusz – logo firmy" class="footer-logo mb-3" width="140" height="46" loading="lazy" />
                         <p class="footer-description">
-                            Od 1994 roku budujemy infrastrukturę, która łączy. Profesjonalizm, nowoczesny park maszynowy i trzydziestoletnie doświadczenie w branży drogowej.
+                            P.P.U.H. „GAMEX” Grzegorz Żurek z Olkusza. Od 1994 roku budujemy drogi,
+                            chodniki i place, a nasz sprzęt wynajmujemy z operatorem – w Małopolsce,
+                            na Śląsku i w Świętokrzyskiem.
                         </p>
                     </div>
                 </div>
@@ -135,19 +262,22 @@
                     <h3 class="footer-title">Nawigacja</h3>
                     <ul class="footer-links">
                         <li><a asp-page="/Index">Strona główna</a></li>
-                        <li><a asp-page="/Index" asp-fragment="o-nas">O nas</a></li>
+                        <li><a asp-page="/Index" asp-fragment="o-nas">O firmie</a></li>
+                        <li><a asp-page="/Index" asp-fragment="faq">Pytania i odpowiedzi</a></li>
                         <li><a asp-page="/Realizations">Realizacje</a></li>
-                        <li><a asp-page="/Dotation">Dotacje EU</a></li>
+                        <li><a asp-page="/Dotation">Dotacje UE</a></li>
                         <li><a asp-page="/Contact">Kontakt</a></li>
                     </ul>
                 </div>
 
                 <div class="col-lg-3 col-md-6">
-                    <h3 class="footer-title">Nasza Oferta</h3>
+                    <h3 class="footer-title">Nasza oferta</h3>
                     <ul class="footer-links">
-                        <li><a asp-page="/Offer/MachineRental/MachineRental">Wynajem maszyn</a></li>
-                        <li><a asp-page="/Offer/Services/Services">Usługi</a></li>
-                        <li><a asp-page="/Offer/Transport/Transport">Transport</a></li>
+                        <li><a asp-page="/Offer/MachineRental/MachineRental">Wynajem maszyn budowlanych</a></li>
+                        <li><a asp-page="/Offer/MachineRental/MachineRental" asp-route-category="Koparki">Wynajem koparek</a></li>
+                        <li><a asp-page="/Offer/MachineRental/MachineRental" asp-route-category="Minikoparki">Wynajem minikoparek</a></li>
+                        <li><a asp-page="/Offer/Services/Services">Budowa i remonty dróg</a></li>
+                        <li><a asp-page="/Offer/Transport/Transport">Transport materiałów i maszyn</a></li>
                         <li><a asp-page="/Offer/Offer">Pełna oferta</a></li>
                     </ul>
                 </div>
@@ -156,39 +286,66 @@
                     <h3 class="footer-title">Biuro</h3>
                     <ul class="footer-contact">
                         <li>
-                            <address class="mb-0">
-                                <span class="contact-icon">📍</span>
-                                <span>Osiek 233, 32-300 Osiek</span>
-                            </address>
+                            <svg class="ico contact-icon" aria-hidden="true" focusable="false"><use href="#i-location-dot"></use></svg>
+                            <address class="mb-0">Osiek 233<br />32-300 Osiek</address>
                         </li>
                         <li>
-                            <span class="contact-icon">📞</span>
-                            <a href="tel:601450146">+48 601 450 146</a>
+                            <svg class="ico contact-icon" aria-hidden="true" focusable="false"><use href="#i-phone"></use></svg>
+                            <a href="tel:+48601450146">+48 601 450 146</a>
                         </li>
                         <li>
-                            <span class="contact-icon">✉️</span>
+                            <svg class="ico contact-icon" aria-hidden="true" focusable="false"><use href="#i-envelope"></use></svg>
                             <a href="mailto:gamexolkusz@poczta.fm">gamexolkusz@poczta.fm</a>
+                        </li>
+                        <li>
+                            <svg class="ico contact-icon" aria-hidden="true" focusable="false"><use href="#i-clock"></use></svg>
+                            <span>Pon.–sob. 6:00–16:00</span>
                         </li>
                     </ul>
                 </div>
             </div>
 
+            <div class="footer-area">
+                <h3>Obszar działania</h3>
+                <ul class="footer-area-list">
+                    <li>Olkusz</li>
+                    <li>Bukowno</li>
+                    <li>Wolbrom</li>
+                    <li>Klucze</li>
+                    <li>Trzebinia</li>
+                    <li>Chrzanów</li>
+                    <li>Sławków</li>
+                    <li>Jaworzno</li>
+                    <li>Dąbrowa Górnicza</li>
+                    <li>Sosnowiec</li>
+                    <li>Zawiercie</li>
+                    <li>Myszków</li>
+                    <li>Katowice</li>
+                    <li>Kraków</li>
+                    <li>Miechów</li>
+                    <li>Jędrzejów</li>
+                    <li>Kielce</li>
+                    <li>woj. małopolskie</li>
+                    <li>woj. śląskie</li>
+                    <li>woj. świętokrzyskie</li>
+                </ul>
+            </div>
+
             <div class="footer-bottom">
-                <div class="row align-items-center">
+                <div class="row align-items-center g-2">
                     <div class="col-md-6 text-center text-md-start">
-                        <p class="mb-0">&copy; 2026 Gamex Olkusz. Wszelkie prawa zastrzeżone.</p>
+                        <p class="mb-0">&copy; @DateTime.Now.Year P.P.U.H. „GAMEX” Grzegorz Żurek &middot; NIP 6370112668 &middot; REGON 271726184</p>
                     </div>
                     <div class="col-md-6 text-center text-md-end">
-                        <p class="mb-0 pb-0 footer-author">Projekt i realizacja: <a href="https://portfolio.kkurowski.com" target="_blank" class="text-decoration-none"><strong>Krzysztof Kurowski</strong></a></p>
+                        <p class="mb-0 footer-author">Projekt i realizacja: <a href="https://portfolio.kkurowski.com" target="_blank" rel="noopener"><strong>Krzysztof Kurowski</strong></a></p>
                     </div>
                 </div>
             </div>
         </div>
     </footer>
 
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js" defer></script>
     <script src="~/js/accessibility-widget.js" asp-append-version="true" defer></script>
-    @* <script src="~/js/site.js" asp-append-version="true"></script> *@
+    <script src="~/js/site.js" asp-append-version="true" defer></script>
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>

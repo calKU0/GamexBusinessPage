@@ -29,20 +29,39 @@ namespace GamexBusinessPage.Pages.MachineRental
 
         public string? SchemaJson { get; private set; }
 
+        public string? SelectedCategoryName { get; private set; }
+
         public void OnGet(string? category)
         {
-            ViewData["Title"] = "Wypożyczalnia maszyn budowlanych w Małopolce | Koparki, Ładowarki, Frezarki";
-            ViewData["Description"] = "Wynajem maszyn budowlanych w Małopolsce. Posiadamy minikoparki, koparki kołowe, ładowarki, przesiewacze i wiele innych. Konkurencyjne ceny i transport maszyny na budowę. Sprawdź listę!";
-            ViewData["Keywords"] = "Gamex, Olkusz, wynajem maszyn budowlanych, wypożyczalnia koparek, minikoparki, ładowarki, sprzęt budowlany, Małopolska, Śląsk, Świętokrzyskie";
-            ViewData["CanonicalUrl"] = "https://gamex-olkusz.pl/oferta/wypozyczenie-maszyn";
-
             var catalog = _catalogCache.GetMachineCatalog();
             Categories = catalog.Categories;
             SelectedCategoryKey = category;
 
-            Machines = string.IsNullOrWhiteSpace(category)
+            var selectedCategory = string.IsNullOrWhiteSpace(category)
+                ? null
+                : Categories.FirstOrDefault(item => string.Equals(item.Key, category, StringComparison.OrdinalIgnoreCase));
+            SelectedCategoryName = selectedCategory?.DisplayName;
+
+            Machines = selectedCategory is null
                 ? catalog.Machines
-                : catalog.Machines.Where(machine => string.Equals(machine.CategoryKey, category, StringComparison.OrdinalIgnoreCase)).ToList();
+                : selectedCategory.Machines;
+
+            const string listUrl = "https://gamex-olkusz.pl/oferta/wypozyczenie-maszyn";
+
+            if (SelectedCategoryName is not null)
+            {
+                ViewData["Title"] = $"Wynajem: {SelectedCategoryName} | Wypożyczalnia maszyn GAMEX Olkusz";
+                ViewData["Description"] = $"{SelectedCategoryName} do wynajęcia z operatorem – GAMEX Olkusz. Dostępne maszyny: {Machines.Count}. Transport na budowę własnym sprzętem. Woj. małopolskie, śląskie i świętokrzyskie.";
+                ViewData["Keywords"] = $"wynajem {SelectedCategoryName.ToLowerInvariant()}, wypożyczalnia maszyn budowlanych, GAMEX Olkusz, Małopolska, Śląsk, Świętokrzyskie";
+                ViewData["CanonicalUrl"] = $"{listUrl}?category={Uri.EscapeDataString(selectedCategory!.Key)}";
+            }
+            else
+            {
+                ViewData["Title"] = "Wypożyczalnia maszyn budowlanych – koparki, ładowarki, walce | GAMEX Olkusz";
+                ViewData["Description"] = "Wynajem maszyn budowlanych z operatorem: koparki, minikoparki, walce, rozkładarki asfaltu i frezarki. Transport na budowę. Małopolska, Śląsk, Świętokrzyskie.";
+                ViewData["Keywords"] = "wypożyczalnia maszyn budowlanych, wynajem koparki, wynajem minikoparki, wynajem walca, wynajem ładowarki, sprzęt budowlany, GAMEX Olkusz, Małopolska, Śląsk, Świętokrzyskie";
+                ViewData["CanonicalUrl"] = listUrl;
+            }
 
             var categoryLinks = new List<CategoryLinkItem>
             {
@@ -62,7 +81,6 @@ namespace GamexBusinessPage.Pages.MachineRental
 
             CategoryLinks = categoryLinks;
 
-            var priceValidUntil = "2026-12-31";
             var baseUrl = "https://gamex-olkusz.pl";
             var breadcrumbSchema = new Dictionary<string, object?>
             {
@@ -110,7 +128,7 @@ namespace GamexBusinessPage.Pages.MachineRental
                         ["@type"] = "Product",
                         ["name"] = machine.DisplayName,
                         ["url"] = machineUrl,
-                        ["description"] = $"Wynajem: {machine.DisplayName}. Oferujemy profesjonalny sprzęt budowlany z transportem do klienta (Olkusz i okolice). {machine.RentalOptions}",
+                        ["description"] = $"{machine.DisplayName} do wynajęcia z operatorem. Rozliczenie godzinowe, dowóz na budowę własnym transportem. {machine.RentalOptions}".Trim(),
                         ["image"] = string.IsNullOrWhiteSpace(machine.MainImagePath) ? $"{baseUrl}/images/machines/default-machine.webp" : $"{baseUrl}{machine.MainImagePath}",
                         ["brand"] = string.IsNullOrWhiteSpace(machine.Brand)
                             ? null
@@ -125,19 +143,17 @@ namespace GamexBusinessPage.Pages.MachineRental
                             ["@type"] = "Offer",
                             ["url"] = machineUrl,
                             ["priceCurrency"] = "PLN",
-                            ["priceValidUntil"] = priceValidUntil,
-                            ["price"] = "100",
+                            ["price"] = "0",
                             ["priceSpecification"] = new Dictionary<string, object?>
                             {
                                 ["@type"] = "UnitPriceSpecification",
                                 ["priceCurrency"] = "PLN",
-                                ["lowPrice"] = "100",
-                                ["description"] = "Cena za dobę, uzależniona od długości najmu",
+                                ["description"] = "Stawka godzinowa lub dobowa ustalana indywidualnie – wycena bezpłatna",
                                 ["referenceQuantity"] = new Dictionary<string, object?>
                                 {
                                     ["@type"] = "QuantitativeValue",
                                     ["value"] = "1",
-                                    ["unitCode"] = "DAY"
+                                    ["unitCode"] = "HUR"
                                 }
                             },
                             ["availability"] = "https://schema.org/InStock",

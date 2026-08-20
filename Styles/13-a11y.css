@@ -1,0 +1,296 @@
+/* ==========================================================================
+   13 · ACCESSIBILITY
+   Accessibility widget plus the high-contrast and light-background modes.
+   The body classes are set by accessibility-widget.js.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   13.1 · Widget
+   -------------------------------------------------------------------------- */
+
+.a11y-widget {
+    position: fixed;
+    right: 1rem;
+    bottom: 1.25rem;
+    z-index: 1080;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.6rem;
+    /* A collapsed panel still takes up layout space (visibility: hidden), so the
+       container is about 260x280 px and used to cover the bottom-right corner of
+       the page, footer link included. Clicks therefore pass through the container
+       and are re-enabled on the button and the panel only. */
+    pointer-events: none;
+}
+
+    .a11y-widget-toggle {
+        pointer-events: auto;
+    }
+
+.a11y-widget-toggle {
+    order: 2;
+    width: 3rem;
+    height: 3rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(21, 25, 40, 0.92);
+    border: 1px solid var(--line-strong);
+    border-radius: 50%;
+    color: var(--concrete-100);
+    font-size: 1.15rem;
+    box-shadow: var(--shadow-md);
+    backdrop-filter: blur(8px);
+    transition: transform var(--dur-fast) var(--ease), background-color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease);
+}
+
+    .a11y-widget-toggle:hover,
+    .a11y-widget-toggle:focus-visible {
+        transform: translateY(-2px);
+        border-color: var(--hivis-600);
+        color: var(--hivis-400);
+    }
+
+.a11y-widget-panel {
+    order: 1;
+    width: min(260px, calc(100vw - 2rem));
+    padding: 0.9rem;
+    background: rgba(16, 19, 29, 0.97);
+    border: 1px solid var(--line);
+    border-radius: var(--r-md);
+    box-shadow: var(--shadow-lg);
+    backdrop-filter: blur(10px);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(8px) scale(0.98);
+    transform-origin: bottom right;
+    pointer-events: none;
+    transition: opacity 0.18s var(--ease), transform 0.18s var(--ease), visibility 0.18s var(--ease);
+}
+
+.a11y-widget.is-open .a11y-widget-panel {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0) scale(1);
+}
+
+.a11y-widget-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--line-soft);
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--concrete-100);
+}
+
+.a11y-widget-group {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.7rem;
+}
+
+.a11y-font-size-value {
+    text-align: center;
+    color: var(--concrete-500);
+    font-size: 0.88rem;
+}
+
+.a11y-widget-actions {
+    display: grid;
+    gap: 0.45rem;
+}
+
+.a11y-widget .btn-outline-light {
+    border-color: var(--line-strong);
+    color: var(--concrete-300);
+}
+
+    .a11y-widget .btn-outline-light:hover {
+        background: var(--glass-strong);
+        border-color: var(--hivis-600);
+        color: var(--hivis-400);
+    }
+
+.a11y-widget .a11y-action.active {
+    border-color: var(--hivis-600);
+    color: var(--hivis-400);
+    background: var(--hivis-soft);
+}
+
+/* --------------------------------------------------------------------------
+   13.2 · High-contrast mode
+   -------------------------------------------------------------------------- */
+
+body.a11y-high-contrast {
+    background-color: #000 !important;
+    color: #fff !important;
+}
+
+    body.a11y-high-contrast main,
+    body.a11y-high-contrast main section,
+    body.a11y-high-contrast main article,
+    body.a11y-high-contrast main [class*="-page"],
+    body.a11y-high-contrast main [class*="-card"],
+    body.a11y-high-contrast main [class*="-panel"],
+    body.a11y-high-contrast main [class*="-tile"],
+    body.a11y-high-contrast main [class*="-step"],
+    body.a11y-high-contrast .home-hero-overlay,
+    body.a11y-high-contrast .page-hero,
+    body.a11y-high-contrast .gamex-navbar,
+    body.a11y-high-contrast .gamex-topbar,
+    body.a11y-high-contrast .gamex-footer {
+        background: #000 !important;
+        color: #fff !important;
+        border-color: #fff !important;
+    }
+
+    body.a11y-high-contrast .home-hero-bg {
+        opacity: 0.25;
+    }
+
+    body.a11y-high-contrast main h1,
+    body.a11y-high-contrast main h2,
+    body.a11y-high-contrast main h3,
+    body.a11y-high-contrast main h4,
+    body.a11y-high-contrast main h5,
+    body.a11y-high-contrast main p,
+    body.a11y-high-contrast main span,
+    body.a11y-high-contrast main li,
+    body.a11y-high-contrast main dt,
+    body.a11y-high-contrast main dd,
+    body.a11y-high-contrast main label,
+    body.a11y-high-contrast main summary,
+    body.a11y-high-contrast main small,
+    body.a11y-high-contrast .section-title,
+    body.a11y-high-contrast .section-text,
+    body.a11y-high-contrast .lead {
+        color: #fff !important;
+    }
+
+    body.a11y-high-contrast main a {
+        color: #FFE24A !important;
+    }
+
+    body.a11y-high-contrast .btn-secondary-gamex,
+    body.a11y-high-contrast .machine-card-cta {
+        background: #000 !important;
+        border-color: #fff !important;
+        color: #fff !important;
+    }
+
+    body.a11y-high-contrast .home-ticker {
+        background: #000 !important;
+        border-block-color: #fff !important;
+    }
+
+        body.a11y-high-contrast .home-ticker a,
+        body.a11y-high-contrast .home-ticker span {
+            color: #FFE24A !important;
+        }
+
+/* --------------------------------------------------------------------------
+   13.3 · Light-background mode
+   -------------------------------------------------------------------------- */
+
+body.a11y-light-theme {
+    background-color: #F5F7FB !important;
+    color: #12161F !important;
+}
+
+    body.a11y-light-theme main,
+    body.a11y-light-theme main section,
+    body.a11y-light-theme main article,
+    body.a11y-light-theme main [class*="-page"],
+    body.a11y-light-theme main [class*="-card"],
+    body.a11y-light-theme main [class*="-panel"],
+    body.a11y-light-theme main [class*="-tile"],
+    body.a11y-light-theme main [class*="-step"],
+    body.a11y-light-theme .home-hero-overlay,
+    body.a11y-light-theme .page-hero,
+    body.a11y-light-theme .gamex-navbar,
+    body.a11y-light-theme .gamex-topbar,
+    body.a11y-light-theme .gamex-footer {
+        background: #FFFFFF !important;
+        color: #12161F !important;
+        border-color: #D9DFEC !important;
+    }
+
+    body.a11y-light-theme .home-hero-bg {
+        opacity: 0.18;
+    }
+
+    body.a11y-light-theme main h1,
+    body.a11y-light-theme main h2,
+    body.a11y-light-theme main h3,
+    body.a11y-light-theme main h4,
+    body.a11y-light-theme main h5,
+    body.a11y-light-theme main p,
+    body.a11y-light-theme main span,
+    body.a11y-light-theme main li,
+    body.a11y-light-theme main dt,
+    body.a11y-light-theme main dd,
+    body.a11y-light-theme main label,
+    body.a11y-light-theme main summary,
+    body.a11y-light-theme main small,
+    body.a11y-light-theme .section-title,
+    body.a11y-light-theme .section-text,
+    body.a11y-light-theme .lead,
+    body.a11y-light-theme .machine-category-link,
+    body.a11y-light-theme .machine-category-link:visited,
+    body.a11y-light-theme .machine-category-title,
+    body.a11y-light-theme .gamex-navbar .nav-link,
+    body.a11y-light-theme .gamex-navbar .nav-phone,
+    body.a11y-light-theme .footer-links a,
+    body.a11y-light-theme .footer-contact a,
+    body.a11y-light-theme .footer-description,
+    body.a11y-light-theme .topbar-meta span,
+    body.a11y-light-theme .topbar-meta a {
+        color: #1A2030 !important;
+    }
+
+    body.a11y-light-theme main a {
+        color: #0079AD !important;
+    }
+
+    body.a11y-light-theme main .form-control,
+    body.a11y-light-theme main .form-select,
+    body.a11y-light-theme main textarea,
+    body.a11y-light-theme .select-trigger {
+        background: #FFFFFF !important;
+        border-color: #CBD3E4 !important;
+        color: #12161F !important;
+    }
+
+    body.a11y-light-theme .btn-secondary-gamex,
+    body.a11y-light-theme .machine-card-cta {
+        background: #FFFFFF !important;
+        border-color: #CBD3E4 !important;
+        color: #1A2030 !important;
+    }
+
+    body.a11y-light-theme .a11y-widget-toggle,
+    body.a11y-light-theme .a11y-widget-panel {
+        background: rgba(255, 255, 255, 0.97);
+        border-color: #CBD3E4;
+        color: #12161F;
+    }
+
+    body.a11y-light-theme .a11y-widget-header,
+    body.a11y-light-theme .a11y-font-size-value {
+        color: #1A2030;
+    }
+
+    body.a11y-light-theme .a11y-widget .btn-outline-light {
+        background: #FFFFFF !important;
+        border-color: #CBD3E4 !important;
+        color: #1A2030 !important;
+    }
