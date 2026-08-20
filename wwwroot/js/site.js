@@ -52,9 +52,11 @@
         // The header animates between its tall and compact heights, so the read
         // taken the moment the class flips catches it mid-transition. Settle it
         // once the animation has finished.
-        header.addEventListener("transitionend", function (event) {
-            if (event.target === header) measureHeader();
-        });
+        //
+        // The transitions run on descendants - the contact bar's grid row and
+        // the logo's height - never on the header itself, so this listens for
+        // the events bubbling up rather than for a transition on the header.
+        header.addEventListener("transitionend", measureHeader);
     }
 
     /* ----------------------------------------------------------------------
