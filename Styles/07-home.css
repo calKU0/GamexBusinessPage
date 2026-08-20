@@ -563,6 +563,15 @@
     font-size: 0.95rem;
 }
 
+    /* Links sitting inside running text carry no shape of their own, so colour
+       would be the only thing marking them - which readers with low vision or
+       colour blindness cannot rely on. Buttons and nav items are exempt because
+       their surroundings already identify them as controls. */
+    .area-note a {
+        text-decoration: underline;
+        text-underline-offset: 0.2em;
+    }
+
 /* --------------------------------------------------------------------------
    7.8 · FAQ
    -------------------------------------------------------------------------- */

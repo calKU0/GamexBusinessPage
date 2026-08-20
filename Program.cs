@@ -56,7 +56,31 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseStaticFiles();
+// Runs ahead of MapStaticAssets, so it also covers files that are not in the
+// build-time manifest: the images the admin panel uploads at runtime.
+app.UseStaticFiles(new StaticFileOptions
+{
+    OnPrepareResponse = context =>
+    {
+        var path = context.Context.Request.Path.Value ?? string.Empty;
+
+        // Font file names encode their weight and subset, and a replacement gets
+        // a new name, so the contents at a given URL never change. Without this
+        // header they are served with no cache lifetime at all and every repeat
+        // visit re-downloads roughly 200 KB.
+        if (path.StartsWith("/fonts/", StringComparison.OrdinalIgnoreCase))
+        {
+            context.Context.Response.Headers.CacheControl = "public, max-age=31536000, immutable";
+        }
+        // Uploaded images can be replaced under the same name, so they get a
+        // short lifetime and must be revalidated rather than assumed fresh.
+        else if (path.StartsWith("/images/", StringComparison.OrdinalIgnoreCase)
+              || path.StartsWith("/pdf/", StringComparison.OrdinalIgnoreCase))
+        {
+            context.Context.Response.Headers.CacheControl = "public, max-age=86400, must-revalidate";
+        }
+    }
+});
 
 app.UseRouting();
 

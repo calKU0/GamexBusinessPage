@@ -1,0 +1,24 @@
+# Normalise line endings so a build produces byte-identical output regardless of
+# the machine it runs on. Without this, files checked out with CRLF on Windows
+# and LF on the Linux CI runner differ in size, which desynchronises the static
+# asset manifest from the files actually deployed.
+* text=auto eol=lf
+
+# Binary assets must never be line-ending converted.
+*.png    binary
+*.jpg    binary
+*.jpeg   binary
+*.gif    binary
+*.ico    binary
+*.webp   binary
+*.woff   binary
+*.woff2  binary
+*.ttf    binary
+*.eot    binary
+*.otf    binary
+*.pdf    binary
+*.zip    binary
+*.dll    binary
+*.exe    binary
+*.br     binary
+*.gz     binary

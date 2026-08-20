@@ -21,23 +21,40 @@
        larger than the header's height difference, so the loop cannot close.
        ---------------------------------------------------------------------- */
     var header = document.getElementById("gamexHeader");
+    var headerHeight = 0;
+
+    var measureHeader = function () {
+        headerHeight = header ? header.offsetHeight : 0;
+    };
+
+    var setHeaderState = function () { };
+
     if (header) {
         var SCROLL_ENTER = 200;
         var SCROLL_LEAVE = 90;
         var headerCompact = false;
 
-        var setHeaderState = function () {
+        setHeaderState = function () {
             var y = window.scrollY;
             if (!headerCompact && y > SCROLL_ENTER) {
                 headerCompact = true;
                 header.classList.add("is-scrolled");
+                measureHeader();
             } else if (headerCompact && y < SCROLL_LEAVE) {
                 headerCompact = false;
                 header.classList.remove("is-scrolled");
+                measureHeader();
             }
         };
+        measureHeader();
         setHeaderState();
-        window.addEventListener("scroll", setHeaderState, { passive: true });
+
+        // The header animates between its tall and compact heights, so the read
+        // taken the moment the class flips catches it mid-transition. Settle it
+        // once the animation has finished.
+        header.addEventListener("transitionend", function (event) {
+            if (event.target === header) measureHeader();
+        });
     }
 
     /* ----------------------------------------------------------------------
@@ -54,18 +71,34 @@
         if (section) spyTargets.push({ id: id, link: link, section: section });
     });
 
+    var updateSpy = function () { };
+
     if (spyTargets.length) {
-        var updateSpy = function () {
+        // Section positions are measured once instead of on every scroll event.
+        // Reading layout inside a scroll handler, right after the header has
+        // just changed class, forces the browser to re-run layout synchronously
+        // before it can answer - which showed up as ~150 ms of forced reflow.
+        var measureSpy = function () {
+            spyTargets.forEach(function (target) {
+                var rect = target.section.getBoundingClientRect();
+                target.top = rect.top + window.scrollY;
+                target.height = rect.height;
+            });
+        };
+
+        updateSpy = function () {
             // The visible area starts at the bottom edge of the sticky header,
             // because whatever sits under it is covered.
-            var top = header ? header.getBoundingClientRect().bottom : 0;
+            var scrollY = window.scrollY;
+            var top = headerHeight;
             var bottom = window.innerHeight;
             var minCover = (bottom - top) * 0.3;
 
             var best = null;
             spyTargets.forEach(function (target) {
-                var rect = target.section.getBoundingClientRect();
-                var cover = Math.min(rect.bottom, bottom) - Math.max(rect.top, top);
+                var sectionTop = target.top - scrollY;
+                var sectionBottom = sectionTop + target.height;
+                var cover = Math.min(sectionBottom, bottom) - Math.max(sectionTop, top);
                 if (cover > minCover) {
                     minCover = cover;
                     best = target.id;
@@ -77,10 +110,31 @@
             });
         };
 
-        updateSpy();
-        window.addEventListener("scroll", updateSpy, { passive: true });
-        window.addEventListener("resize", updateSpy, { passive: true });
+        var remeasure = function () {
+            measureHeader();
+            measureSpy();
+            updateSpy();
+        };
+
+        remeasure();
+        // Late-arriving fonts and images shift sections, so measure again once
+        // the page has fully settled.
+        window.addEventListener("load", remeasure);
+        window.addEventListener("resize", remeasure, { passive: true });
     }
+
+    // A single scroll listener, batched into one animation frame: the class
+    // change and the geometry read no longer interleave on every event.
+    var scrollPending = false;
+    window.addEventListener("scroll", function () {
+        if (scrollPending) return;
+        scrollPending = true;
+        window.requestAnimationFrame(function () {
+            setHeaderState();
+            updateSpy();
+            scrollPending = false;
+        });
+    }, { passive: true });
 
     /* ----------------------------------------------------------------------
        2. Section reveal on scroll
