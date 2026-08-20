@@ -28,6 +28,14 @@
             }
             state.highContrast = Boolean(parsed.highContrast);
             state.lightTheme = Boolean(parsed.lightTheme);
+
+            // Settings saved before the two became exclusive can hold both. The
+            // light theme is what such a visitor has been seeing, because its
+            // rules come later in the stylesheet, so keep that and drop the
+            // other rather than changing the page under them.
+            if (state.highContrast && state.lightTheme) {
+                state.highContrast = false;
+            }
         } catch {
         }
     }
@@ -91,11 +99,22 @@
             case "decrease-font":
                 state.fontScale = Math.max(minScale, +(state.fontScale - step).toFixed(2));
                 break;
+            // The two are whole-page themes and cannot both apply: with both
+            // classes set the light rules win purely by coming later in the
+            // stylesheet. That made switching from light to high contrast look
+            // like nothing happened, while the reverse appeared to work and
+            // silently left high contrast on. Turning one on clears the other.
             case "toggle-contrast":
                 state.highContrast = !state.highContrast;
+                if (state.highContrast) {
+                    state.lightTheme = false;
+                }
                 break;
             case "toggle-light":
                 state.lightTheme = !state.lightTheme;
+                if (state.lightTheme) {
+                    state.highContrast = false;
+                }
                 break;
             case "reset":
                 state.fontScale = 1;
