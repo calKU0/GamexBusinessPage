@@ -38,4 +38,11 @@ jobs:
         local-dir: ./publish/
         exclude: |
           **/Data/**
+        # The sync state records what the server already has, so only changed
+        # files are uploaded. Bump the name to force a full re-upload after a
+        # change that leaves the server holding files the manifest no longer
+        # describes - a mismatch truncates static asset responses.
+        state-name: .ftp-deploy-sync-state-v2.json
+        # Must stay false. Data/ is excluded from upload and lives only on the
+        # server, where the admin panel writes it; a clean slate would erase it.
         dangerous-clean-slate: false

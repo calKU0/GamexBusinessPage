@@ -51,7 +51,8 @@
     Styles/ is outside wwwroot, so its contents are never served.
   -->
   <ItemGroup>
-    <None Include="Styles\**\*.css" />
+    <!-- The SDK's implicit None glob already covers Styles/, so only the watch
+         list needs adding: dotnet watch does not track these files otherwise. -->
     <Watch Include="Styles\**\*.css" />
   </ItemGroup>
 

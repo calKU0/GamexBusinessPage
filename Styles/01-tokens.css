@@ -44,6 +44,18 @@
     /* --- indigo: depth accent --- */
     --indigo-500: #393285;
 
+    /* --- status text --- */
+    --success-text: #7BE0A8;
+    --danger-text: #FF9AA3;
+
+    /* --- translucent surfaces ---
+       Kept as tokens rather than literals so the accessibility themes can
+       repoint them; a hardcoded dark panel stays dark on a light background. */
+    --nav-surface: rgba(11, 13, 20, 0.82);
+    --nav-surface-scrolled: rgba(7, 8, 13, 0.97);
+    --overlay-soft: rgba(7, 8, 13, 0.6);
+    --overlay-strong: rgba(7, 8, 13, 0.72);
+
     /* --- borders and glass --- */
     --line-soft: rgba(255, 255, 255, 0.07);
     --line: rgba(255, 255, 255, 0.11);
