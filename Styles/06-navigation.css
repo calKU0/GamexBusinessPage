@@ -20,35 +20,64 @@
    6.1 · Contact bar (NAP signals for local SEO)
    -------------------------------------------------------------------------- */
 
+/* The bar collapses by animating its grid row from 1fr to 0fr rather than by
+   animating max-height. A max-height large enough to fit the content is much
+   taller than the content actually is, so the first half of the animation
+   travels through values that change nothing on screen and the bar appears to
+   hesitate before dropping - which read as the header collapsing in two stages.
+   A 1fr row is exactly content height, so every frame of the transition moves. */
 .gamex-topbar {
     position: relative;
     z-index: 1051;
+    display: grid;
+    grid-template-rows: 1fr;
     background: var(--asphalt-950);
     border-bottom: 1px solid var(--line-soft);
     font-size: 0.85rem;
     color: var(--concrete-500);
     overflow: hidden;
-    transition: max-height var(--dur) var(--ease), opacity var(--dur) var(--ease), border-color var(--dur) var(--ease);
-    max-height: 6rem;
+    transition: grid-template-rows var(--dur) var(--ease), border-color var(--dur) var(--ease);
 }
 
-/* On scroll the contact bar collapses to give the content more room. The border
-   goes to zero width rather than transparent - otherwise a one-pixel gap stays
-   under the navigation and the page content shows through it. */
+/* The border goes to zero width rather than transparent - otherwise a one-pixel
+   gap stays under the navigation and the page content shows through it. */
 .gamex-header.is-scrolled .gamex-topbar {
-    max-height: 0;
-    opacity: 0;
+    grid-template-rows: 0fr;
     border-bottom-width: 0;
 }
+
+    /* Only the contents fade. Fading the bar itself made its opaque background
+       transparent while it still occupied height, so for a moment the page
+       content scrolling underneath showed through the header. */
+    .gamex-topbar > * {
+        /* Grid items default to min-height: auto, which stops the row shrinking
+           below its content and would hold the bar open at 0fr. */
+        min-height: 0;
+        transition: opacity var(--dur-fast) var(--ease);
+    }
+
+    .gamex-header.is-scrolled .gamex-topbar > * {
+        opacity: 0;
+    }
 
     .gamex-topbar .container {
         display: flex;
         align-items: center;
         justify-content: space-between;
         gap: 1rem;
-        min-height: 38px;
-        padding-block: 0.35rem;
+        /* Vertical padding sits on the children, not here. Padding on the grid
+           item cannot shrink, so it would hold the row open at 0fr and leave a
+           strip of bar behind after the collapse. */
+        padding-block: 0;
+        overflow: hidden;
     }
+
+        /* Gives the bar its height, from inside the row so it collapses with it.
+           Padding also scales with the accessibility font setting, which the
+           fixed pixel min-height it replaces did not. */
+        .gamex-topbar .container > * {
+            padding-block: 0.5rem;
+        }
 
 .topbar-meta {
     display: flex;

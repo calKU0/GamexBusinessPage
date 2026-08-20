@@ -179,11 +179,6 @@
     gap: clamp(2.5rem, 5vw, 3.75rem);
 }
 
-.services-category,
-.transport-category {
-    scroll-margin-top: 120px;
-}
-
 .services-category-header,
 .transport-category-header {
     margin-bottom: 1.75rem;

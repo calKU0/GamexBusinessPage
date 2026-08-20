@@ -161,11 +161,16 @@
     }
 
     /* Collapse the contact bar on scroll on large screens only - in the vertical
-       layout the menu is hidden behind the toggle anyway. */
+       layout the menu is hidden behind the toggle anyway. Mirrors the grid row
+       and border the base rule collapses. */
     .gamex-header.is-scrolled .gamex-topbar {
-        max-height: 6rem;
-        opacity: 1;
+        grid-template-rows: 1fr;
+        border-bottom-width: 1px;
     }
+
+        .gamex-header.is-scrolled .gamex-topbar > * {
+            opacity: 1;
+        }
 }
 
 @media (max-width: 991.98px) {
