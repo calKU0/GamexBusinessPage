@@ -480,7 +480,7 @@
         height: 44px;
         margin-top: -22px;
         z-index: 10;
-        background: rgba(7, 8, 13, 0.72);
+        background: var(--overlay-strong);
         border: 1px solid var(--line-strong);
         border-radius: var(--r-sm);
         color: var(--concrete-050);

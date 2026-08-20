@@ -125,7 +125,7 @@
     position: relative;
     width: 100%;
     padding: 0.5rem 0;
-    background: rgba(11, 13, 20, 0.82);
+    background: var(--nav-surface);
     backdrop-filter: blur(14px) saturate(140%);
     -webkit-backdrop-filter: blur(14px) saturate(140%);
     border-bottom: 1px solid var(--line-soft);
@@ -151,7 +151,7 @@
        content and signals that the user has left the top of the page. */
     .gamex-header.is-scrolled .gamex-navbar {
         padding: 0.15rem 0;
-        background: rgba(7, 8, 13, 0.97);
+        background: var(--nav-surface-scrolled);
         box-shadow: var(--shadow-md);
     }
 

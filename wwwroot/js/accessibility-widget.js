@@ -48,8 +48,14 @@
 
     const applyState = () => {
         document.documentElement.style.setProperty("--a11y-font-scale", state.fontScale.toFixed(2));
-        document.body.classList.toggle("a11y-high-contrast", state.highContrast);
-        document.body.classList.toggle("a11y-light-theme", state.lightTheme);
+
+        // Set on <html> as well as <body>. The themes work by redefining the
+        // design tokens, and the root element paints the background behind the
+        // page, so it has to inherit the same values or it stays dark.
+        [document.documentElement, document.body].forEach((element) => {
+            element.classList.toggle("a11y-high-contrast", state.highContrast);
+            element.classList.toggle("a11y-light-theme", state.lightTheme);
+        });
 
         fontSizeValue.textContent = `${Math.round(state.fontScale * 100)}%`;
         updateButtonState("toggle-contrast", state.highContrast);

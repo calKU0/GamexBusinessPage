@@ -128,169 +128,222 @@
 
 /* --------------------------------------------------------------------------
    13.2 · High-contrast mode
+
+   Both themes work by repointing the design tokens rather than by listing the
+   elements to recolour. The previous approach enumerated selectors, so anything
+   not on the list kept its dark-theme colour and disappeared once the background
+   flipped. Every rule in the sheet already reads these tokens, so redefining
+   them reaches the whole site, including markup added later.
+
+   The classes are set on <html> as well as <body>, so the root background and
+   anything painted behind the page follows too.
    -------------------------------------------------------------------------- */
 
+:root.a11y-high-contrast,
 body.a11y-high-contrast {
-    background-color: #000 !important;
-    color: #fff !important;
+    /* Surfaces flatten to one black, so no panel can sit at lower contrast. */
+    --asphalt-950: #000000;
+    --asphalt-900: #000000;
+    --asphalt-850: #000000;
+    --asphalt-800: #000000;
+    --asphalt-700: #000000;
+    --asphalt-600: #000000;
+    --nav-surface: #000000;
+    --nav-surface-scrolled: #000000;
+    --overlay-soft: #000000;
+    --overlay-strong: #000000;
+
+    /* Text is white throughout: 21:1. The muted greys were the tones that made
+       "high contrast" mean nothing in parts of the page. */
+    --concrete-050: #FFFFFF;
+    --concrete-100: #FFFFFF;
+    --concrete-300: #FFFFFF;
+    --concrete-500: #FFFFFF;
+    --concrete-700: #FFFFFF;
+
+    /* Accents stay distinguishable from body text and still clear AAA:
+       yellow about 15:1 on black, cyan about 12:1. */
+    --hivis-400: #FFE24A;
+    --hivis-500: #FFE24A;
+    --hivis-600: #FFE24A;
+    --hivis-700: #FFD000;
+    --hivis-grad: linear-gradient(135deg, #FFE24A 0%, #FFD000 100%);
+    --hivis-soft: rgba(255, 226, 74, 0.20);
+    --hivis-glow: none;
+    --steel-400: #7FDBFF;
+    --steel-500: #7FDBFF;
+    --steel-600: #7FDBFF;
+    --steel-soft: rgba(127, 219, 255, 0.20);
+    --steel-grad: linear-gradient(135deg, #7FDBFF, #7FDBFF);
+    --indigo-500: #000000;
+    --success-text: #7BE0A8;
+    --danger-text: #FF9AA3;
+
+    /* Borders carry the structure that tints and shadows normally convey. */
+    --line-soft: rgba(255, 255, 255, 0.55);
+    --line: rgba(255, 255, 255, 0.75);
+    --line-strong: #FFFFFF;
+    --glass: rgba(255, 255, 255, 0.06);
+    --glass-strong: rgba(255, 255, 255, 0.12);
+    --shadow-sm: none;
+    --shadow-md: none;
+    --shadow-lg: none;
 }
 
-    body.a11y-high-contrast main,
-    body.a11y-high-contrast main section,
-    body.a11y-high-contrast main article,
-    body.a11y-high-contrast main [class*="-page"],
-    body.a11y-high-contrast main [class*="-card"],
-    body.a11y-high-contrast main [class*="-panel"],
-    body.a11y-high-contrast main [class*="-tile"],
-    body.a11y-high-contrast main [class*="-step"],
-    body.a11y-high-contrast .home-hero-overlay,
-    body.a11y-high-contrast .page-hero,
-    body.a11y-high-contrast .gamex-navbar,
-    body.a11y-high-contrast .gamex-topbar,
-    body.a11y-high-contrast .gamex-footer {
-        background: #000 !important;
-        color: #fff !important;
-        border-color: #fff !important;
-    }
-
+    /* The hero photograph cannot be made to meet contrast, so it is held back
+       far enough that the text sits on near-black. */
     body.a11y-high-contrast .home-hero-bg {
-        opacity: 0.25;
+        opacity: 0.12;
     }
 
-    body.a11y-high-contrast main h1,
-    body.a11y-high-contrast main h2,
-    body.a11y-high-contrast main h3,
-    body.a11y-high-contrast main h4,
-    body.a11y-high-contrast main h5,
-    body.a11y-high-contrast main p,
-    body.a11y-high-contrast main span,
-    body.a11y-high-contrast main li,
-    body.a11y-high-contrast main dt,
-    body.a11y-high-contrast main dd,
-    body.a11y-high-contrast main label,
-    body.a11y-high-contrast main summary,
-    body.a11y-high-contrast main small,
-    body.a11y-high-contrast .section-title,
-    body.a11y-high-contrast .section-text,
-    body.a11y-high-contrast .lead {
-        color: #fff !important;
+    /* Fixed gradients would otherwise reintroduce mid-tones. */
+    body.a11y-high-contrast .home-hero-overlay {
+        background: #000000 !important;
     }
 
-    body.a11y-high-contrast main a {
-        color: #FFE24A !important;
+    /* Colour alone no longer separates a card from the page, so every surface
+       and control gets a visible edge. */
+    body.a11y-high-contrast .panel,
+    body.a11y-high-contrast [class*="-card"],
+    body.a11y-high-contrast [class*="-panel"],
+    body.a11y-high-contrast [class*="-tile"],
+    body.a11y-high-contrast .form-control,
+    body.a11y-high-contrast .form-select,
+    body.a11y-high-contrast .select-trigger,
+    body.a11y-high-contrast .a11y-widget-toggle,
+    body.a11y-high-contrast .a11y-widget-panel {
+        border: 1px solid #FFFFFF !important;
     }
 
-    body.a11y-high-contrast .btn-secondary-gamex,
-    body.a11y-high-contrast .machine-card-cta {
-        background: #000 !important;
-        border-color: #fff !important;
-        color: #fff !important;
+    body.a11y-high-contrast .a11y-widget-toggle,
+    body.a11y-high-contrast .a11y-widget-panel {
+        background: #000000 !important;
+        color: #FFFFFF !important;
     }
 
-    body.a11y-high-contrast .home-ticker {
-        background: #000 !important;
-        border-block-color: #fff !important;
+    /* Tinted alert backgrounds drop out; the text carries the meaning and keeps
+       a hue distinct from body copy. */
+    body.a11y-high-contrast .kontakt-alert-success {
+        background: #000000 !important;
+        border-color: #7BE0A8 !important;
+        color: #7BE0A8 !important;
     }
 
-        body.a11y-high-contrast .home-ticker a,
-        body.a11y-high-contrast .home-ticker span {
-            color: #FFE24A !important;
-        }
+    body.a11y-high-contrast .kontakt-alert-error {
+        background: #000000 !important;
+        border-color: #FF9AA3 !important;
+        color: #FF9AA3 !important;
+    }
 
 /* --------------------------------------------------------------------------
    13.3 · Light-background mode
    -------------------------------------------------------------------------- */
 
+:root.a11y-light-theme,
 body.a11y-light-theme {
-    background-color: #F5F7FB !important;
-    color: #12161F !important;
+    /* The surface scale inverts: the deepest tone becomes the page tint and
+       raised panels become white, so elevation still reads the same way. */
+    --asphalt-950: #E7ECF6;
+    --asphalt-900: #F4F6FB;
+    --asphalt-850: #FFFFFF;
+    --asphalt-800: #FFFFFF;
+    --asphalt-700: #F7F9FD;
+    --asphalt-600: #EDF1F9;
+    --nav-surface: rgba(255, 255, 255, 0.92);
+    --nav-surface-scrolled: rgba(255, 255, 255, 0.98);
+    --overlay-soft: rgba(16, 21, 32, 0.06);
+    --overlay-strong: rgba(255, 255, 255, 0.92);
+
+    /* Text darkens to match. The muted greys are the ones that used to vanish
+       against a light background; all of these clear 7:1 on the page tint. */
+    --concrete-050: #05070C;
+    --concrete-100: #101520;
+    --concrete-300: #232A3A;
+    --concrete-500: #414B61;
+    --concrete-700: #4C566E;
+
+    /* The brand orange is only about 2.4:1 on white, so the text-bearing steps
+       darken. The gradient darkens with them, because it backs white button
+       text. */
+    --hivis-400: #9A4C00;
+    --hivis-500: #A85400;
+    --hivis-600: #B35C00;
+    --hivis-700: #7F3E00;
+    --hivis-grad: linear-gradient(135deg, #C46600 0%, #A85400 100%);
+    --hivis-soft: rgba(179, 92, 0, 0.12);
+    --hivis-glow: 0 12px 34px rgba(179, 92, 0, 0.20);
+    --steel-400: #00618C;
+    --steel-500: #006A99;
+    --steel-600: #005C85;
+    --steel-soft: rgba(0, 106, 153, 0.12);
+    --steel-grad: linear-gradient(135deg, #007BB0, #005C85);
+    --indigo-500: #2E2870;
+    /* The dark theme's pastel green and pink fall under 2:1 on white. */
+    --success-text: #0C4A28;
+    --danger-text: #7A151D;
+
+    --line-soft: rgba(16, 21, 32, 0.10);
+    --line: rgba(16, 21, 32, 0.16);
+    --line-strong: rgba(16, 21, 32, 0.28);
+    --glass: rgba(16, 21, 32, 0.03);
+    --glass-strong: rgba(16, 21, 32, 0.06);
+    --shadow-sm: 0 4px 14px rgba(16, 21, 32, 0.08);
+    --shadow-md: 0 16px 34px rgba(16, 21, 32, 0.10);
+    --shadow-lg: 0 30px 70px rgba(16, 21, 32, 0.14);
 }
 
-    body.a11y-light-theme main,
-    body.a11y-light-theme main section,
-    body.a11y-light-theme main article,
-    body.a11y-light-theme main [class*="-page"],
-    body.a11y-light-theme main [class*="-card"],
-    body.a11y-light-theme main [class*="-panel"],
-    body.a11y-light-theme main [class*="-tile"],
-    body.a11y-light-theme main [class*="-step"],
-    body.a11y-light-theme .home-hero-overlay,
-    body.a11y-light-theme .page-hero,
-    body.a11y-light-theme .gamex-navbar,
-    body.a11y-light-theme .gamex-topbar,
-    body.a11y-light-theme .gamex-footer {
-        background: #FFFFFF !important;
-        color: #12161F !important;
-        border-color: #D9DFEC !important;
-    }
-
     body.a11y-light-theme .home-hero-bg {
-        opacity: 0.18;
+        opacity: 0.16;
     }
 
-    body.a11y-light-theme main h1,
-    body.a11y-light-theme main h2,
-    body.a11y-light-theme main h3,
-    body.a11y-light-theme main h4,
-    body.a11y-light-theme main h5,
-    body.a11y-light-theme main p,
-    body.a11y-light-theme main span,
-    body.a11y-light-theme main li,
-    body.a11y-light-theme main dt,
-    body.a11y-light-theme main dd,
-    body.a11y-light-theme main label,
-    body.a11y-light-theme main summary,
-    body.a11y-light-theme main small,
-    body.a11y-light-theme .section-title,
-    body.a11y-light-theme .section-text,
-    body.a11y-light-theme .lead,
-    body.a11y-light-theme .machine-category-link,
-    body.a11y-light-theme .machine-category-link:visited,
-    body.a11y-light-theme .machine-category-title,
-    body.a11y-light-theme .gamex-navbar .nav-link,
-    body.a11y-light-theme .gamex-navbar .nav-phone,
-    body.a11y-light-theme .footer-links a,
-    body.a11y-light-theme .footer-contact a,
-    body.a11y-light-theme .footer-description,
-    body.a11y-light-theme .topbar-meta span,
-    body.a11y-light-theme .topbar-meta a {
-        color: #1A2030 !important;
+    /* The hero overlay is a fixed dark gradient. On a light page it has to
+       invert, or the heading sits on near-black inside a light layout. */
+    body.a11y-light-theme .home-hero-overlay {
+        background: linear-gradient(100deg, rgba(244, 246, 251, 0.97) 0%, rgba(244, 246, 251, 0.90) 38%, rgba(244, 246, 251, 0.74) 68%, rgba(244, 246, 251, 0.84) 100%) !important;
     }
 
-    body.a11y-light-theme main a {
-        color: #0079AD !important;
+    /* Two tokens do double duty: darkest surface, and the ink on a hi-vis fill.
+       Inverting the surface alone would have put pale text on orange. */
+    body.a11y-light-theme .btn-primary-gamex,
+    body.a11y-light-theme .kontakt-submit,
+    body.a11y-light-theme .skip-link,
+    body.a11y-light-theme .skip-link:focus,
+    body.a11y-light-theme .home-hero-kicker b,
+    body.a11y-light-theme .home-ticker,
+    body.a11y-light-theme .home-ticker a,
+    body.a11y-light-theme .home-ticker span {
+        color: #FFFFFF !important;
     }
 
-    body.a11y-light-theme main .form-control,
-    body.a11y-light-theme main .form-select,
-    body.a11y-light-theme main textarea,
-    body.a11y-light-theme .select-trigger {
-        background: #FFFFFF !important;
-        border-color: #CBD3E4 !important;
-        color: #12161F !important;
-    }
-
-    body.a11y-light-theme .btn-secondary-gamex,
-    body.a11y-light-theme .machine-card-cta {
-        background: #FFFFFF !important;
-        border-color: #CBD3E4 !important;
-        color: #1A2030 !important;
-    }
-
+    /* The widget paints its own dark surfaces rather than reading the tokens. */
     body.a11y-light-theme .a11y-widget-toggle,
     body.a11y-light-theme .a11y-widget-panel {
-        background: rgba(255, 255, 255, 0.97);
-        border-color: #CBD3E4;
-        color: #12161F;
-    }
-
-    body.a11y-light-theme .a11y-widget-header,
-    body.a11y-light-theme .a11y-font-size-value {
-        color: #1A2030;
+        background: rgba(255, 255, 255, 0.97) !important;
+        border-color: var(--line-strong) !important;
+        color: var(--concrete-100) !important;
     }
 
     body.a11y-light-theme .a11y-widget .btn-outline-light {
         background: #FFFFFF !important;
-        border-color: #CBD3E4 !important;
-        color: #1A2030 !important;
+        border-color: var(--line-strong) !important;
+        color: var(--concrete-100) !important;
+    }
+
+    body.a11y-light-theme .kontakt-alert-success {
+        background: rgba(15, 90, 48, 0.10) !important;
+        border-color: #0F5A30 !important;
+        color: #0C4A28 !important;
+    }
+
+    body.a11y-light-theme .kontakt-alert-error {
+        background: rgba(142, 25, 34, 0.10) !important;
+        border-color: #8E1922 !important;
+        color: #7A151D !important;
+    }
+
+    /* The logo plate is white for the dark theme; on a light bar it needs an
+       edge or it dissolves into the navigation. */
+    body.a11y-light-theme .navbar-logo,
+    body.a11y-light-theme .footer-logo {
+        border: 1px solid var(--line);
     }

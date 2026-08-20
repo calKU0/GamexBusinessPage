@@ -206,9 +206,9 @@
 
 .img-fluid { max-width: 100%; height: auto; }
 
-.text-danger { color: #FF9AA3 !important; }
-.text-success { color: #7BE0A8 !important; }
-.text-light { color: #EEF1F8 !important; }
+.text-danger { color: var(--danger-text) !important; }
+.text-success { color: var(--success-text) !important; }
+.text-light { color: var(--concrete-100) !important; }
 .text-decoration-none { text-decoration: none !important; }
 
 .visually-hidden {
@@ -508,7 +508,7 @@
 }
 
 .btn-outline-light {
-    border-color: #EEF1F8;
-    color: #EEF1F8;
+    border-color: var(--concrete-100);
+    color: var(--concrete-100);
 }
 
