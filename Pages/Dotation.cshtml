@@ -1,9 +1,15 @@
-﻿@page "/dotacja"
+@page "/dotacja"
 @model GamexBusinessPage.Pages.DotacjaModel
 
-<div class="container py-5">
-    <section class="dotacje-hero container-fluid">
-        <div class="container text-center">
+@await Html.PartialAsync("_Breadcrumb", new List<(string, string?)>
+{
+    ("Strona główna", Url.Page("/Index")),
+    ("Dotacje UE", null)
+})
+
+<div class="dotacje-page">
+    <section class="dotacje-hero">
+        <div class="container">
             <img src="~/images/ue_project.webp"
                  alt="Fundusze Europejskie"
                  class="dotacje-hero-logo" />
@@ -18,8 +24,9 @@
         </div>
     </section>
 
-    <section class="dotacje-content container">
-        <div class="dotacje-card">
+    <section class="dotacje-content">
+        <div class="container">
+            <div class="dotacje-card">
 
             <p>
                 Firma <strong>Grzegorz Żurek Przedsiębiorstwo Produkcyjno-Usługowo-Handlowe „Gamex”</strong>
@@ -93,6 +100,16 @@
             <p class="dotacje-hashtags">
                 #FunduszeUE &nbsp; #FunduszeEuropejskie
             </p>
+            </div>
         </div>
     </section>
 </div>
+
+@section Schema {
+    @if (!string.IsNullOrWhiteSpace(Model.SchemaJson))
+    {
+        <script type="application/ld+json">
+            @Html.Raw(Model.SchemaJson)
+        </script>
+    }
+}

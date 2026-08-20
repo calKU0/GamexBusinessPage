@@ -1,0 +1,581 @@
+/* ==========================================================================
+   08 · CATALOG
+   Machine, service and transport cards, category panel, machine detail card.
+   All three card types share the same structure, so one rule covers them.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   8.1 · Catalog card
+   -------------------------------------------------------------------------- */
+
+.machine-card,
+.service-card,
+.transport-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+}
+
+    /* Hi-vis bar sliding in on hover */
+    .machine-card::before,
+    .service-card::before,
+    .transport-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 3;
+        height: 3px;
+        background: var(--hivis-grad);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.45s var(--ease);
+    }
+
+    .machine-card:hover::before,
+    .service-card:hover::before,
+    .transport-card:hover::before {
+        transform: scaleX(1);
+    }
+
+/* --- Photo frame --- */
+.machine-card-media,
+.service-card-media,
+.transport-card-media {
+    position: relative;
+    flex: 0 0 auto;
+    aspect-ratio: 4 / 3;
+    height: clamp(200px, 18vw, 290px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: var(--asphalt-950);
+    border-bottom: 1px solid var(--line-soft);
+}
+
+    .machine-card-media img,
+    .service-card-media img,
+    .transport-card-media img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform var(--dur-slow) var(--ease);
+    }
+
+.machine-card:hover .machine-card-media img,
+.service-card:hover .service-card-media img,
+.transport-card:hover .transport-card-media img {
+    transform: scale(1.07);
+}
+
+/* --- Card body --- */
+.machine-card-body,
+.service-card-body,
+.transport-card-body {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    gap: 0.65rem;
+    padding: var(--card-pad);
+}
+
+.machine-card-header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.machine-card-category {
+    margin-bottom: 0;
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--steel-400);
+}
+
+.machine-card-title,
+.service-card-body h3,
+.transport-card-body h3 {
+    margin-bottom: 0;
+    font-size: clamp(1.35rem, 1.5vw, 1.6rem);
+    line-height: 1.12;
+    text-transform: uppercase;
+}
+
+.service-card-body p,
+.transport-card-body p {
+    margin-bottom: 0;
+    color: var(--concrete-300);
+    font-size: 0.97rem;
+    line-height: 1.65;
+}
+
+.machine-card-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: auto;
+    padding-top: 0.4rem;
+}
+
+.service-card-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+    .service-card-link:hover {
+        color: inherit;
+    }
+
+.service-highlight,
+.transport-highlight {
+    align-self: flex-start;
+    margin-top: auto;
+}
+
+.transport-limit {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--concrete-100);
+}
+
+/* --- Empty states --- */
+.machine-placeholder {
+    padding: 2rem;
+    text-align: center;
+    color: var(--concrete-700);
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+}
+
+.machine-empty-state {
+    padding: 2.5rem;
+    text-align: center;
+    border: 1px dashed var(--line-strong);
+    border-radius: var(--r-md);
+    background: var(--glass);
+    color: var(--concrete-300);
+}
+
+/* --------------------------------------------------------------------------
+   8.2 · Category headings in listings
+   -------------------------------------------------------------------------- */
+
+.services-grid,
+.transport-grid {
+    display: grid;
+    gap: clamp(2.5rem, 5vw, 3.75rem);
+}
+
+.services-category,
+.transport-category {
+    scroll-margin-top: 120px;
+}
+
+.services-category-header,
+.transport-category-header {
+    margin-bottom: 1.75rem;
+    padding-bottom: 0.85rem;
+    border-bottom: 1px solid var(--line-soft);
+}
+
+    .services-category-header h2,
+    .transport-category-header h2 {
+        margin-bottom: 0.35rem;
+        font-size: clamp(1.5rem, 2.6vw, 2rem);
+        text-transform: uppercase;
+    }
+
+    .services-category-header p,
+    .transport-category-header p {
+        margin-bottom: 0;
+        color: var(--concrete-500);
+        font-size: 0.97rem;
+    }
+
+/* --------------------------------------------------------------------------
+   8.3 · Category panel (sidebar)
+   -------------------------------------------------------------------------- */
+
+.machine-category-panel {
+    position: sticky;
+    top: calc(var(--nav-h) + 1rem);
+    padding: 0;
+    overflow: hidden;
+}
+
+    /* Hi-vis tape as the panel heading */
+    .machine-category-panel::before {
+        content: "";
+        display: block;
+        height: 4px;
+        background-image: repeating-linear-gradient( 135deg, var(--hivis-600) 0 10px, var(--asphalt-950) 10px 20px );
+    }
+
+.machine-category-title {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin: 0;
+    padding: 1.1rem 1.25rem 0.9rem;
+    border-bottom: 1px solid var(--line-soft);
+    font-family: var(--font-display);
+    font-size: 0.92rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--concrete-500);
+}
+
+        /* Icon as an SVG mask - the colour comes from background-color, so no
+       icon font is needed for it. */
+    .machine-category-title::before {
+        content: "";
+        width: 0.95rem;
+        height: 0.95rem;
+        flex: 0 0 auto;
+        background-color: var(--hivis-600);
+        -webkit-mask: var(--ico-list-ul) center / contain no-repeat;
+        mask: var(--ico-list-ul) center / contain no-repeat;
+    }
+
+.machine-category-list {
+    list-style: none;
+    padding: 0.5rem;
+    margin: 0;
+    display: grid;
+    gap: 0.15rem;
+}
+
+.machine-category-link {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.62rem 0.85rem;
+    overflow: hidden;
+    border-radius: var(--r-sm);
+    color: var(--concrete-300);
+    font-size: 0.96rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.22s var(--ease), background-color 0.22s var(--ease), padding-left 0.22s var(--ease);
+}
+
+    /* Active-item indicator sliding in from the left */
+    .machine-category-link::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 12%;
+        bottom: 12%;
+        width: 3px;
+        border-radius: 0 2px 2px 0;
+        background: var(--hivis-grad);
+        transform: scaleY(0);
+        transition: transform 0.28s var(--ease);
+    }
+
+    .machine-category-link:visited {
+        color: var(--concrete-300);
+    }
+
+    .machine-category-link:hover {
+        color: var(--concrete-050);
+        background: var(--glass);
+        padding-left: 1.05rem;
+    }
+
+        .machine-category-link:hover::before {
+            transform: scaleY(1);
+        }
+
+    .machine-category-link.is-active {
+        background: var(--hivis-grad);
+        color: var(--asphalt-950);
+        font-weight: 600;
+        box-shadow: 0 6px 18px rgba(239, 127, 26, 0.28);
+    }
+
+        .machine-category-link.is-active::before {
+            display: none;
+        }
+
+                .machine-category-link.is-active::after {
+            content: "";
+            width: 0.6rem;
+            height: 0.6rem;
+            margin-left: auto;
+            flex: 0 0 auto;
+            background-color: currentColor;
+            -webkit-mask: var(--ico-chevron-right) center / contain no-repeat;
+            mask: var(--ico-chevron-right) center / contain no-repeat;
+        }
+
+.category-logic-check,
+.show-less-text {
+    display: none;
+}
+
+.machine-category-more-btn {
+    margin: 0 0.5rem 0.75rem;
+}
+
+/* --------------------------------------------------------------------------
+   8.4 · Machine card - details
+   -------------------------------------------------------------------------- */
+
+.machine-details-header {
+    margin-bottom: 2rem;
+}
+
+    .machine-details-header h1 {
+        margin-bottom: 0;
+        font-size: clamp(1.9rem, 4vw, 3.1rem);
+        text-transform: uppercase;
+        color: var(--concrete-050);
+    }
+
+    .machine-details-header .machine-card-category {
+        margin-bottom: 0.4rem;
+    }
+
+.machine-detail-card,
+.machine-parameters-card,
+.machine-equipment-card {
+    padding: 1.6rem;
+    color: var(--concrete-300);
+}
+
+.machine-parameters-card,
+.machine-equipment-card {
+    margin-top: 1.25rem;
+}
+
+.machine-detail-card h2,
+.machine-parameters-card h2,
+.machine-equipment-card h2 {
+    margin-bottom: 1.1rem;
+    padding-bottom: 0.7rem;
+    border-bottom: 1px solid var(--line-soft);
+    font-size: 1.15rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--hivis-500);
+}
+
+/* Definition lists: parameters and basic data */
+.machine-basic-info {
+    --bs-gutter-x: 0.75rem;
+    --bs-gutter-y: 0.55rem;
+}
+
+.machine-parameters-list {
+    display: grid;
+    grid-template-columns: minmax(160px, 1fr) 1.6fr;
+    gap: 0.55rem 1.25rem;
+    margin: 0;
+}
+
+.machine-basic-info dt,
+.machine-parameters-list dt {
+    color: var(--concrete-500);
+    font-weight: 500;
+    font-size: 0.92rem;
+    word-break: break-word;
+}
+
+.machine-basic-info dd,
+.machine-parameters-list dd {
+    margin: 0;
+    color: var(--concrete-100);
+    font-weight: 600;
+    word-break: break-word;
+    overflow-wrap: break-word;
+}
+
+.machine-section {
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--line-soft);
+}
+
+    .machine-section h2 {
+        margin-bottom: 0.75rem;
+        text-transform: uppercase;
+    }
+
+.machine-contact-section {
+    margin-top: 3rem;
+}
+
+.machine-contact-card {
+    padding: clamp(1.5rem, 3vw, 2.25rem);
+    box-shadow: var(--shadow-md);
+}
+
+    .machine-contact-card h2 {
+        margin-bottom: 1.25rem;
+        text-transform: uppercase;
+    }
+
+/* --------------------------------------------------------------------------
+   8.5 · Machine photo gallery (Swiper)
+   -------------------------------------------------------------------------- */
+
+.machine-details-media {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    background: var(--asphalt-950);
+    border: 1px solid var(--line);
+    border-radius: var(--r-md);
+}
+
+    .machine-details-media:has(.machine-placeholder) {
+        min-height: 340px;
+        aspect-ratio: 16 / 10;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+.machine-gallery-main {
+    position: relative;
+    width: 100%;
+    height: clamp(260px, 42vw, 440px);
+    overflow: hidden;
+    background: var(--asphalt-850);
+    border-radius: var(--r-md);
+}
+
+    .machine-gallery-main .swiper-wrapper,
+    .machine-gallery-main .swiper-slide {
+        width: 100%;
+        height: 100%;
+    }
+
+    .machine-gallery-main .swiper-slide {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+        .machine-gallery-main .swiper-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+    .machine-gallery-main .swiper-button-next,
+    .machine-gallery-main .swiper-button-prev {
+        width: 44px;
+        height: 44px;
+        margin-top: -22px;
+        z-index: 10;
+        background: rgba(7, 8, 13, 0.72);
+        border: 1px solid var(--line-strong);
+        border-radius: var(--r-sm);
+        color: var(--concrete-050);
+        backdrop-filter: blur(6px);
+        transition: all var(--dur) var(--ease);
+    }
+
+        .machine-gallery-main .swiper-button-next:hover,
+        .machine-gallery-main .swiper-button-prev:hover {
+            background: var(--hivis-600);
+            border-color: transparent;
+            color: var(--asphalt-950);
+        }
+
+        .machine-gallery-main .swiper-button-next::after,
+        .machine-gallery-main .swiper-button-prev::after {
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+.machine-thumbnail-strip {
+    position: relative;
+    width: 100%;
+    margin-top: 0.85rem;
+}
+
+    .machine-thumbnail-strip .machine-gallery-thumbs {
+        width: 100%;
+        height: 72px;
+        overflow: hidden;
+    }
+
+    .machine-thumbnail-strip .swiper-wrapper {
+        height: 64px;
+        display: flex;
+        align-items: center;
+    }
+
+    .machine-thumbnail-strip .swiper-slide {
+        width: auto;
+        height: 64px;
+        flex-shrink: 0;
+        margin-right: 10px;
+        opacity: 0.45;
+        cursor: pointer;
+        border-radius: var(--r-xs);
+        overflow: hidden;
+        transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
+    }
+
+        .machine-thumbnail-strip .swiper-slide:last-child {
+            margin-right: 0;
+        }
+
+    .machine-thumbnail-strip .swiper-slide-thumb-active {
+        opacity: 1;
+    }
+
+    .machine-thumbnail-strip .swiper-slide img {
+        width: auto;
+        height: 64px;
+        min-width: 84px;
+        max-width: 124px;
+        display: block;
+        object-fit: cover;
+        border-radius: var(--r-xs);
+        border: 2px solid transparent;
+        transition: border-color var(--dur) var(--ease);
+    }
+
+    .machine-thumbnail-strip .swiper-slide-thumb-active img {
+        border-color: var(--hivis-600);
+    }
+
+    .machine-thumbnail-strip .swiper-slide:hover img {
+        border-color: rgba(239, 127, 26, 0.5);
+    }
+
+    .machine-thumbnail-strip .swiper-button-next,
+    .machine-thumbnail-strip .swiper-button-prev {
+        display: none !important;
+    }
+
+/* Machine description under the card heading. Unique content on every subpage -
+   without it the card is close to a bare parameter table for a crawler. */
+.machine-lead {
+    max-width: 68ch;
+    margin-top: 1rem;
+    margin-bottom: 0;
+    color: var(--concrete-300);
+    font-size: 1.05rem;
+    line-height: 1.75;
+}

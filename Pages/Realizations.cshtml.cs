@@ -1,18 +1,26 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using GamexBusinessPage.Services;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.OutputCaching;
+using System.Text.Encodings.Web;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace GamexBusinessPage.Pages
 {
-    [OutputCache(Duration = 3600)]
     public class RealizacjeModel : PageModel
     {
+        public string? SchemaJson { get; private set; }
+
         public void OnGet()
         {
-            ViewData["Title"] = "Realizacje Gamex Olkusz – Remonty dróg i wynajem maszyn budowlanych";
-            ViewData["Description"] = "Zobacz realizacje Gamex z Olkusza – wykonane remonty dróg i projekty z wykorzystaniem wynajmowanego sprzętu budowlanego w woj. Małopolskim.";
+            ViewData["Title"] = "Realizacje – remonty dróg i wynajem maszyn | GAMEX Olkusz";
+            ViewData["CanonicalUrl"] = "https://gamex-olkusz.pl/realizacje";
+            ViewData["Description"] = "Zobacz realizacje GAMEX z Olkusza – wykonane remonty dróg i projekty z wykorzystaniem wynajmowanego sprzętu budowlanego w woj. Małopolskim.";
             ViewData["Keywords"] = "Gamex, Olkusz, realizacje, remonty dróg, wynajem maszyn budowlanych, minikoparki, koparki, ładowarki, Małopolskie";
             ViewData["Robots"] = "noindex, follow";
+
+            SchemaJson = SchemaBuilder.BuildBreadcrumbGraph(
+                ("Strona główna", "https://gamex-olkusz.pl/"),
+                ("Realizacje", "https://gamex-olkusz.pl/realizacje"));
         }
     }
 }

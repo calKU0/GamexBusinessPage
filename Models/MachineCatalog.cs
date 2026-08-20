@@ -142,6 +142,11 @@ public sealed class MachineItem
     [JsonPropertyName("equipment")]
     public List<string> Equipment { get; set; } = [];
 
+    /// <summary>Opis zastosowan maszyny. Unikalna tresc na karcie - kluczowa dla SEO,
+    /// bo sama tabela parametrow to dla wyszukiwarki strona o ubogiej tresci.</summary>
+    [JsonPropertyName("description")]
+    public string? Description { get; set; }
+
     [JsonPropertyName("rental_options")]
     public string? RentalOptions { get; set; }
 

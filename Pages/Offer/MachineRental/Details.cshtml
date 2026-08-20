@@ -6,22 +6,25 @@
     var images = machine.OrderedImages;
 }
 
-<div class="machine-details-page">
-    <nav aria-label="breadcrumb" class="machine-breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a asp-page="/Index">Strona główna</a></li>
-            <li class="breadcrumb-item"><a asp-page="/Offer/Offer">Oferta</a></li>
-            <li class="breadcrumb-item"><a asp-page="/Offer/MachineRental/MachineRental">Wypożyczenie maszyn</a></li>
-            <li class="breadcrumb-item active" aria-current="page">@machine.DisplayName</li>
-        </ol>
-    </nav>
+@await Html.PartialAsync("_Breadcrumb", new List<(string, string?)>
+{
+    ("Strona główna", Url.Page("/Index")),
+    ("Oferta", Url.Page("/Offer/Offer")),
+    ("Wypożyczalnia maszyn", Url.Page("/Offer/MachineRental/MachineRental")),
+    (machine.DisplayName, null)
+})
 
-    <div class="container-fluid">
+<div class="machine-details-page">
+    <div class="container">
         <div class="row g-4">
             <section class="col-lg-12">
                 <header class="machine-details-header">
                     <p class="machine-card-category">@machine.CategoryDisplayName</p>
                     <h1 class="display-6 fw-bold">@machine.DisplayName</h1>
+                    @if (!string.IsNullOrWhiteSpace(machine.Description))
+                    {
+                        <p class="machine-lead">@machine.Description</p>
+                    }
                 </header>
 
                 <div class="row g-4">
@@ -174,14 +177,21 @@
 }
 
 @section Styles {
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    @* Swiper is pulled in only when there is something to scroll. A machine with
+       no photos, or with a single one, needs no carousel, and the CDN stylesheet
+       would block rendering of every machine page. *@
+    @if (images.Count > 1)
+    {
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    }
 }
 
 @section Scripts {
+    @if (images.Count > 1)
+    {
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('Initializing Swiper gallery...');
 
             // Wait for DOM to be fully rendered
             setTimeout(function() {
@@ -190,7 +200,6 @@
                 // Initialize thumbnail swiper only if thumbnails exist
                 const thumbsElement = document.querySelector('.machine-thumbnail-strip .machine-gallery-thumbs');
                 if (thumbsElement) {
-                    console.log('Initializing thumbnails...');
                     galleryThumbs = new Swiper('.machine-thumbnail-strip .machine-gallery-thumbs', {
                         spaceBetween: 10,
                         slidesPerView: 'auto',
@@ -200,13 +209,11 @@
                         nested: false,
                         resistance: false
                     });
-                    console.log('Thumbnails initialized');
                 }
 
                 // Initialize main gallery
                 const mainElement = document.getElementById('machine-gallery-main');
                 if (mainElement) {
-                    console.log('Initializing main gallery...');
                     const swiperConfig = {
                         spaceBetween: 0,
                         slidesPerView: 1,
@@ -248,9 +255,9 @@
                     }
 
                     const galleryMain = new Swiper('#machine-gallery-main', swiperConfig);
-                    console.log('Main gallery initialized successfully');
                 }
             }, 150);
         });
     </script>
+    }
 }

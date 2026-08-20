@@ -1,45 +1,67 @@
-﻿@page "/oferta/uslugi"
+@page "/oferta/uslugi"
 @model GamexBusinessPage.Pages.Services.RoadRenovationModel
 
+@await Html.PartialAsync("_Breadcrumb", new List<(string, string?)>
+{
+    ("Strona główna", Url.Page("/Index")),
+    ("Oferta", Url.Page("/Offer/Offer")),
+    ("Usługi drogowe i ziemne", null)
+})
 
 <div class="offer-subpage">
-    <div class="services-page" id="services-top">
-        <div class="container-fluid">
-            <header class="services-hero text-center">
-                <h1 class="display-5 fw-bold">Usługi drogowe i ziemne</h1>
-                <p class="lead mx-auto">
-                    Kompleksowa obsługa inwestycji drogowych i ziemnych. Sprawdź zakres naszych usług i wybierz rozwiązania dopasowane do Twojej inwestycji.
-                </p>
-            </header>
+    <section class="page-hero" id="services-top">
+        <div class="container">
+            <p class="eyebrow">Roboty drogowe i ziemne</p>
+            <h1>Budowa i remonty <span>dróg, chodników i placów</span></h1>
+            <p class="lead">
+                Bierzemy zadanie od korytowania po warstwę ścieralną: podbudowa, masa bitumiczna,
+                kostka brukowa, krawężniki, odwodnienie. Pracujemy dla gmin, spółdzielni, deweloperów
+                i osób prywatnych – w Małopolsce, na Śląsku i w Świętokrzyskiem.
+            </p>
 
+            <div class="d-flex flex-wrap gap-3 mt-4">
+                <a asp-page="/Contact" asp-fragment="kontakt-formularz" class="btn-gamex btn-primary-gamex">
+                    <svg class="ico" aria-hidden="true" focusable="false"><use href="#i-file-invoice"></use></svg>Bezpłatna wycena
+                </a>
+                <a asp-page="/Offer/MachineRental/MachineRental" class="btn-gamex btn-secondary-gamex">
+                    <svg class="ico" aria-hidden="true" focusable="false"><use href="#i-truck-monster"></use></svg>Sam wynajmę maszynę
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <div class="services-page">
+        <div class="container">
             <div class="row g-4">
-                <aside class="col-lg-2">
+                <aside class="col-lg-3">
                     @await Html.PartialAsync("_MachineCategoryList", new GamexBusinessPage.Models.CategoryLinkViewModel(Model.CategoryLinks))
                 </aside>
 
-                <section class="col-lg-9">
+                <section class="col-lg-9" aria-label="Zakres usług">
                     <div class="services-grid">
                         @foreach (var category in Model.FilteredCategories)
                         {
-                            <section class="services-category" id="@category.Key">
+                            <section class="services-category" id="@GamexBusinessPage.Models.MachineCatalog.BuildSlug(category.Key)">
                                 <div class="services-category-header">
                                     <h2>@category.DisplayName</h2>
-                                    <p>Profesjonalne wsparcie od planowania po realizację.</p>
+                                    <p>Prowadzimy temat od projektu roboczego po odbiór.</p>
                                 </div>
 
                                 <div class="row g-4">
                                     @foreach (var service in category.Services)
                                     {
                                         <div class="col-md-6 col-xl-4">
-                                            <a class="service-card service-card-link" asp-page="/Contact" asp-fragment="kontakt-formularz">
+                                            <a class="service-card service-card-link" id="@service.AnchorId" asp-page="/Contact" asp-fragment="kontakt-formularz">
                                                 <div class="service-card-media">
                                                     @if (!string.IsNullOrWhiteSpace(service.MainImagePath))
                                                     {
-                                                        <img src="@Url.Content(service.MainImagePath)" alt="@service.Name - @service.CategoryDisplayName w Gamex Olkusz" loading="lazy" />
+                                                        <img src="@Url.Content(service.MainImagePath)"
+                                                             alt="@service.Name – @service.CategoryDisplayName wykonywane przez GAMEX Olkusz"
+                                                             loading="lazy" decoding="async" />
                                                     }
                                                     else
                                                     {
-                                                        <div class="machine-placeholder">Brak zdjęcia</div>
+                                                        <div class="machine-placeholder">Zdjęcie wkrótce</div>
                                                     }
                                                 </div>
                                                 <div class="service-card-body">
@@ -57,6 +79,21 @@
                                 </div>
                             </section>
                         }
+                    </div>
+
+                    <div class="machine-detail-card mt-5">
+                        <h2>Cała inwestycja u jednego wykonawcy</h2>
+                        <p class="section-text">
+                            Sprzęt i transport mamy własne, więc nie zlecamy nic na zewnątrz. Dla Ciebie oznacza to
+                            jeden numer telefonu, jedną odpowiedzialność za jakość i termin, który nie przesuwa się
+                            dlatego, że ktoś inny nie podstawił maszyny.
+                        </p>
+                        <p class="section-text mb-0">
+                            Robimy roboty ziemne i niwelacje, podbudowy z kruszywa, nawierzchnie asfaltowe, frezowanie,
+                            kostkę brukową, chodniki, zjazdy, parkingi i place manewrowe. Jeśli potrzebujesz samego sprzętu,
+                            zajrzyj do <a asp-page="/Offer/MachineRental/MachineRental">wypożyczalni maszyn budowlanych</a>
+                            albo do <a asp-page="/Offer/Transport/Transport">oferty transportu</a>.
+                        </p>
                     </div>
                 </section>
             </div>

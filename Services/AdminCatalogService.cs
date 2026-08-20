@@ -1,6 +1,7 @@
+using GamexBusinessPage.Models;
+using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using GamexBusinessPage.Models;
 
 namespace GamexBusinessPage.Services;
 
@@ -12,7 +13,8 @@ public sealed class AdminCatalogService
     {
         PropertyNameCaseInsensitive = true,
         WriteIndented = true,
-        DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+        DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+        Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
     };
 
     public AdminCatalogService(IWebHostEnvironment environment, CatalogCache catalogCache)

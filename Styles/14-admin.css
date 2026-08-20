@@ -1,0 +1,115 @@
+/* ==========================================================================
+   14 · ADMIN PANEL
+   Internal views (/admin) - excluded from search engines.
+   ========================================================================== */
+
+.admin-page .card {
+    background: var(--asphalt-800);
+    border: 1px solid var(--line);
+    border-radius: var(--r-md);
+    box-shadow: var(--shadow-md);
+}
+
+.admin-page .form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    color: var(--concrete-500);
+}
+
+.admin-page .form-control,
+.admin-page .form-select {
+    padding: 0.65rem 0.85rem;
+    background: var(--asphalt-950);
+    border: 1px solid var(--line);
+    border-radius: var(--r-sm);
+    color: var(--concrete-100);
+}
+
+    .admin-page .form-control::placeholder {
+        color: var(--concrete-700);
+    }
+
+    .admin-page .form-control:focus,
+    .admin-page .form-select:focus {
+        border-color: var(--hivis-600);
+        box-shadow: 0 0 0 3px rgba(239, 127, 26, 0.18);
+    }
+
+.admin-page .table-responsive {
+    overflow: hidden;
+    background: var(--asphalt-950);
+    border: 1px solid var(--line);
+    border-radius: var(--r-md);
+    box-shadow: var(--shadow-md);
+}
+
+.admin-page .table {
+    margin-bottom: 0;
+    background: var(--asphalt-950);
+    color: var(--concrete-300);
+}
+
+    .admin-page .table thead th {
+        background: var(--asphalt-800);
+        border-bottom: 1px solid var(--line);
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--concrete-500);
+    }
+
+    .admin-page .table tbody tr {
+        border-color: var(--line-soft);
+    }
+
+    .admin-page .table-hover tbody tr:hover {
+        background-color: var(--hivis-soft);
+    }
+
+.admin-page .btn-outline-light {
+    background: var(--glass);
+    border-color: var(--line-strong);
+    color: var(--concrete-100);
+}
+
+    .admin-page .btn-outline-light:hover {
+        background: var(--hivis-soft);
+        border-color: var(--hivis-600);
+        color: var(--hivis-400);
+    }
+
+.admin-page .btn-outline-danger {
+    border-color: rgba(220, 53, 69, 0.7);
+}
+
+    .admin-page .btn-outline-danger:hover {
+        background: rgba(220, 53, 69, 0.15);
+    }
+
+/* Photo drag and drop */
+.sortable-ghost {
+    opacity: 0.4;
+    background: var(--hivis-soft) !important;
+    border: 2px dashed var(--hivis-600) !important;
+}
+
+.sortable-drag {
+    opacity: 0.85;
+    cursor: grabbing !important;
+}
+
+[data-drag-handle] {
+    transition: all var(--dur-fast) var(--ease);
+}
+
+    [data-drag-handle]:hover {
+        background-color: var(--hivis-soft) !important;
+        color: var(--hivis-400) !important;
+        cursor: grab;
+    }
+
+    [data-drag-handle]:active {
+        cursor: grabbing;
+    }

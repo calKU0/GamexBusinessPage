@@ -1,0 +1,799 @@
+/* ==========================================================================
+   07 · HOME PAGE
+   Sections that appear on the landing page only.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   7.1 · Hero
+   -------------------------------------------------------------------------- */
+
+.home-hero {
+    position: relative;
+    min-height: clamp(540px, 80vh, 780px);
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    background: var(--asphalt-950);
+    padding-block: clamp(3rem, 7vh, 5.5rem) clamp(2.5rem, 6vh, 4.5rem);
+}
+
+.home-hero-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 62%;
+    z-index: 1;
+    animation: gxHeroPan 24s infinite alternate ease-in-out;
+    /* The parallax runs on the "translate" property so it does not clash with
+       the "gxHeroPan" animation, which occupies "transform". */
+    translate: 0 var(--parallax, 0px);
+    will-change: transform, translate;
+}
+
+/* Double overlay: directional plus vignette, for text contrast (WCAG) */
+.home-hero-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    background: linear-gradient(100deg, rgba(7, 8, 13, 0.97) 0%, rgba(7, 8, 13, 0.86) 38%, rgba(7, 8, 13, 0.42) 68%, rgba(7, 8, 13, 0.55) 100%), radial-gradient(ellipse at 20% 50%, rgba(57, 50, 133, 0.35), transparent 60%);
+}
+
+    .home-hero-overlay::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+        background-size: 72px 72px;
+        -webkit-mask-image: linear-gradient(90deg, #000, transparent 70%);
+        mask-image: linear-gradient(90deg, #000, transparent 70%);
+    }
+
+.home-hero .container {
+    position: relative;
+    z-index: 3;
+}
+
+.home-hero-content {
+    max-width: 47rem;
+}
+
+.home-hero h1 {
+    font-size: clamp(2.4rem, 5.4vw, 4.4rem);
+    font-weight: 700;
+    text-transform: uppercase;
+    line-height: 0.98;
+    letter-spacing: -0.01em;
+    color: var(--concrete-050);
+    margin-bottom: 1.35rem;
+    text-shadow: 0 4px 30px rgba(0, 0, 0, 0.6);
+}
+
+    .home-hero h1 span {
+        display: block;
+    }
+
+.home-hero .lead,
+.home-hero p {
+    max-width: 44rem;
+    color: var(--concrete-300);
+    font-size: clamp(1rem, 1.35vw, 1.15rem);
+    line-height: 1.7;
+    margin-bottom: 1.75rem;
+}
+
+.home-hero-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.4rem 1rem 0.4rem 0.5rem;
+    margin-bottom: 1.5rem;
+    background: rgba(7, 8, 13, 0.6);
+    border: 1px solid var(--line);
+    border-radius: var(--r-pill);
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--concrete-100);
+    backdrop-filter: blur(8px);
+}
+
+    .home-hero-kicker b {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.15rem 0.7rem;
+        border-radius: var(--r-pill);
+        background: var(--hivis-grad);
+        color: var(--asphalt-950);
+        font-weight: 700;
+    }
+
+.home-hero-actions {
+    display: flex;
+    gap: 0.85rem;
+    flex-wrap: wrap;
+    margin-bottom: 2.25rem;
+}
+
+/* Trust bar with counters */
+.home-hero-trust {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.75rem clamp(0.75rem, 2vw, 1.75rem);
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--line);
+    list-style: none;
+    margin: 0;
+}
+
+    .home-hero-trust li {
+        display: flex;
+        flex-direction: column;
+        gap: 0.1rem;
+        padding-left: 0.9rem;
+        border-left: 2px solid var(--hivis-600);
+    }
+
+    .home-hero-trust b {
+        font-family: var(--font-display);
+        font-size: clamp(1.55rem, 2.6vw, 2.1rem);
+        font-weight: 700;
+        line-height: 1;
+        color: var(--hivis-400);
+        font-variant-numeric: tabular-nums;
+    }
+
+    .home-hero-trust span {
+        font-size: 0.82rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--concrete-500);
+    }
+
+.home-hero-scroll {
+    position: absolute;
+    left: 50%;
+    bottom: 1.5rem;
+    z-index: 3;
+    color: var(--concrete-500);
+    font-size: 1.3rem;
+    animation: gxScrollNudge 2s infinite;
+}
+
+/* --------------------------------------------------------------------------
+   7.2 · Scrolling equipment category tape
+   -------------------------------------------------------------------------- */
+
+.home-ticker {
+    position: relative;
+    overflow: hidden;
+    padding-block: 0.7rem;
+    background: var(--hivis-600);
+    color: var(--asphalt-950);
+    border-block: 1px solid rgba(0, 0, 0, 0.25);
+}
+
+.home-ticker-track {
+    display: flex;
+    width: max-content;
+    animation: gxTicker 26s linear infinite;
+}
+
+.home-ticker:hover .home-ticker-track {
+    animation-play-state: paused;
+}
+
+.home-ticker-group {
+    display: flex;
+    align-items: center;
+    flex: 0 0 auto;
+}
+
+.home-ticker a,
+.home-ticker span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.9rem;
+    padding-inline: 0.9rem;
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--asphalt-950);
+    white-space: nowrap;
+}
+
+    .home-ticker a::after,
+    .home-ticker span::after {
+        content: "\2726";
+        font-size: 0.7em;
+        opacity: 0.55;
+    }
+
+    .home-ticker a:hover {
+        color: #fff;
+        text-decoration: underline;
+        text-underline-offset: 4px;
+    }
+
+/* --------------------------------------------------------------------------
+   7.3 · Offer pillars
+   -------------------------------------------------------------------------- */
+
+.pillar-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(clamp(240px, 30%, 320px), 1fr));
+    gap: 1.5rem;
+}
+
+.pillar-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 2.25rem 2rem 2rem;
+    overflow: hidden;
+    isolation: isolate;
+}
+
+    /* Accent bar spreading across the top of the card */
+    .pillar-card::before,
+    .oferta-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: var(--hivis-grad);
+        transform: scaleX(0.22);
+        transform-origin: left;
+        transition: transform 0.5s var(--ease);
+    }
+
+    .pillar-card:hover::before,
+    .oferta-card:hover::before {
+        transform: scaleX(1);
+    }
+
+.pillar-card--steel::before {
+    background: var(--steel-grad);
+}
+
+.pillar-card--steel:hover {
+    border-color: rgba(0, 160, 227, 0.4);
+}
+
+.pillar-card--steel .pillar-icon {
+    background: var(--steel-soft);
+    border-color: rgba(0, 160, 227, 0.3);
+    color: var(--steel-400);
+}
+
+.pillar-card:hover .pillar-icon {
+    transform: translateY(-4px) rotate(-4deg);
+}
+
+.pillar-index {
+    position: absolute;
+    top: 1rem;
+    right: 1.25rem;
+    z-index: -1;
+    font-family: var(--font-display);
+    font-size: 4.5rem;
+    font-weight: 700;
+    line-height: 1;
+    color: transparent;
+    -webkit-text-stroke: 1px var(--line-strong);
+    user-select: none;
+}
+
+.pillar-card h3 {
+    font-size: 1.55rem;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+}
+
+.pillar-card p {
+    color: var(--concrete-300);
+    margin-bottom: 1.25rem;
+}
+
+.pillar-tags {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1.6rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}
+
+    .pillar-tags li {
+        padding: 0.22rem 0.65rem;
+        border: 1px solid var(--line);
+        border-radius: var(--r-pill);
+        font-size: 0.78rem;
+        color: var(--concrete-500);
+    }
+
+.pillar-card .btn-gamex {
+    margin-top: auto;
+    align-self: flex-start;
+}
+
+/* --------------------------------------------------------------------------
+   7.4 · Equipment category grid (internal linking)
+   -------------------------------------------------------------------------- */
+
+.cat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(196px, 1fr));
+    gap: 0.85rem;
+}
+
+.cat-tile {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 1rem 1.15rem;
+    overflow: hidden;
+    background: var(--asphalt-800);
+    border: 1px solid var(--line-soft);
+    border-radius: var(--r-sm);
+    color: var(--concrete-100);
+    font-family: var(--font-display);
+    font-size: 1.08rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    transition: color var(--dur) var(--ease), border-color var(--dur) var(--ease), transform var(--dur) var(--ease);
+}
+
+    /* Fill sliding in from the left */
+    .cat-tile::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        background: var(--hivis-grad);
+        transform: translate3d(-101%, 0, 0);
+        transition: transform 0.45s var(--ease);
+    }
+
+    .cat-tile > * {
+        position: relative;
+        z-index: 1;
+    }
+
+    .cat-tile:hover {
+        color: var(--asphalt-950);
+        border-color: transparent;
+        transform: translateY(-3px);
+    }
+
+        .cat-tile:hover::before {
+            transform: none;
+        }
+
+.cat-count {
+    flex: 0 0 auto;
+    padding: 0.1rem 0.55rem;
+    border-radius: var(--r-pill);
+    background: var(--glass);
+    color: var(--concrete-700);
+    font-family: var(--font-body);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0;
+    text-transform: none;
+    transition: color var(--dur) var(--ease), background-color var(--dur) var(--ease);
+}
+
+.cat-tile:hover .cat-count {
+    color: var(--asphalt-950);
+    background: rgba(7, 8, 13, 0.16);
+}
+
+/* --------------------------------------------------------------------------
+   7.5 · Values
+   -------------------------------------------------------------------------- */
+
+.value-card {
+    position: relative;
+    height: 100%;
+    padding: 2.25rem 1.75rem;
+    overflow: hidden;
+    text-align: left;
+}
+
+    .value-card::after {
+        content: "";
+        position: absolute;
+        right: -40px;
+        bottom: -40px;
+        width: 130px;
+        height: 130px;
+        border-radius: 50%;
+        background: radial-gradient(circle, var(--hivis-soft), transparent 70%);
+        opacity: 0;
+        transition: opacity var(--dur) var(--ease);
+    }
+
+    .value-card:hover::after {
+        opacity: 1;
+    }
+
+    .value-card:hover .value-icon {
+        transform: translateY(-4px) rotate(-4deg);
+    }
+
+    .value-card h3 {
+        font-size: 1.4rem;
+        text-transform: uppercase;
+        margin-bottom: 0.7rem;
+    }
+
+    .value-card p {
+        color: var(--concrete-300);
+        margin: 0;
+    }
+
+/* --------------------------------------------------------------------------
+   7.6 · Process
+   -------------------------------------------------------------------------- */
+
+.process-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 1.25rem;
+    counter-reset: step;
+}
+
+.process-step {
+    position: relative;
+    padding: 2rem 1.5rem 1.75rem;
+    border-color: var(--line-soft);
+    counter-increment: step;
+}
+
+    .process-step::before {
+        content: "0" counter(step);
+        display: block;
+        margin-bottom: 0.85rem;
+        font-family: var(--font-display);
+        font-size: 2.6rem;
+        font-weight: 700;
+        line-height: 1;
+        color: transparent;
+        -webkit-text-stroke: 1.5px var(--hivis-600);
+    }
+
+    .process-step:hover {
+        border-color: rgba(239, 127, 26, 0.35);
+        transform: translateY(-4px);
+    }
+
+    .process-step h3 {
+        font-size: 1.25rem;
+        text-transform: uppercase;
+        margin-bottom: 0.5rem;
+    }
+
+    .process-step p {
+        color: var(--concrete-300);
+        font-size: 0.97rem;
+        margin: 0;
+    }
+
+/* --------------------------------------------------------------------------
+   7.7 · Service area (local SEO)
+   -------------------------------------------------------------------------- */
+
+.area-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(268px, 1fr));
+    gap: 1.25rem;
+}
+
+.area-card {
+    height: 100%;
+    padding: 1.75rem 1.6rem;
+    border-left: 4px solid var(--hivis-600);
+    border-radius: var(--r-sm);
+}
+
+    .area-card:nth-child(2) {
+        border-left-color: var(--steel-500);
+    }
+
+    .area-card:nth-child(3) {
+        border-left-color: var(--indigo-500);
+    }
+
+    .area-card:hover {
+        transform: translateY(-4px);
+        border-color: var(--line-strong);
+    }
+
+    .area-card h3 {
+        font-size: 1.3rem;
+        text-transform: uppercase;
+        margin-bottom: 0.4rem;
+    }
+
+    .area-card > p {
+        color: var(--concrete-500);
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+    }
+
+.area-cities {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}
+
+    .area-cities li {
+        padding: 0.25rem 0.7rem;
+        background: var(--glass);
+        border: 1px solid var(--line-soft);
+        border-radius: var(--r-pill);
+        font-size: 0.85rem;
+        color: var(--concrete-300);
+        transition: background-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease);
+    }
+
+        .area-cities li:hover {
+            background: var(--hivis-soft);
+            color: var(--hivis-400);
+            transform: translateY(-2px);
+        }
+
+.area-note {
+    margin-top: 1.75rem;
+    color: var(--concrete-500);
+    font-size: 0.95rem;
+}
+
+/* --------------------------------------------------------------------------
+   7.8 · FAQ
+   -------------------------------------------------------------------------- */
+
+.faq-list {
+    display: grid;
+    gap: 0.75rem;
+    max-width: 900px;
+    margin-inline: auto;
+}
+
+.faq-item {
+    overflow: hidden;
+    border-radius: var(--r-sm);
+    transition: border-color var(--dur) var(--ease);
+}
+
+    .faq-item[open] {
+        border-color: rgba(239, 127, 26, 0.4);
+    }
+
+    .faq-item summary {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 1.15rem 1.4rem;
+        cursor: pointer;
+        list-style: none;
+        font-family: var(--font-display);
+        font-size: 1.22rem;
+        font-weight: 600;
+        color: var(--concrete-100);
+        transition: color var(--dur) var(--ease);
+    }
+
+        .faq-item summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .faq-item summary::after {
+            content: "\002B";
+            flex: 0 0 auto;
+            font-size: 1.5rem;
+            line-height: 1;
+            color: var(--hivis-500);
+            transition: transform var(--dur) var(--ease);
+        }
+
+        .faq-item summary:hover {
+            color: var(--hivis-400);
+        }
+
+    .faq-item[open] summary::after {
+        transform: rotate(45deg);
+    }
+
+.faq-answer {
+    padding: 0 1.4rem 1.35rem;
+    color: var(--concrete-300);
+    line-height: 1.75;
+}
+
+    .faq-answer p:last-child {
+        margin-bottom: 0;
+    }
+
+/* --------------------------------------------------------------------------
+   7.9 · Contact call-to-action panel
+   -------------------------------------------------------------------------- */
+
+.home-section-cta {
+    overflow: hidden;
+    background: var(--asphalt-900);
+}
+
+    /* The glow stays on the panel outline, it must not bleed under the text */
+    .home-section-cta::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        z-index: 0;
+        width: min(1100px, 92%);
+        height: 420px;
+        transform: translate(-50%, -50%);
+        background: radial-gradient(ellipse at center, rgba(239, 127, 26, 0.16), transparent 68%);
+        pointer-events: none;
+    }
+
+    .home-section-cta .container {
+        position: relative;
+        z-index: 1;
+    }
+
+.cta-panel {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1.6fr) minmax(260px, 0.85fr);
+    gap: clamp(1.75rem, 4vw, 3.5rem);
+    align-items: center;
+    padding: clamp(1.75rem, 4vw, 3.25rem);
+    overflow: hidden;
+    background: linear-gradient(140deg, var(--asphalt-800), var(--asphalt-850));
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    box-shadow: var(--shadow-lg);
+}
+
+    /* Hi-vis tape along the left edge of the panel */
+    .cta-panel::before {
+        content: "";
+        position: absolute;
+        inset: 0 auto 0 0;
+        width: 6px;
+        background-image: repeating-linear-gradient( 135deg, var(--hivis-600) 0 12px, var(--asphalt-950) 12px 24px );
+    }
+
+.cta-panel-body {
+    min-width: 0;
+}
+
+.cta-title {
+    font-size: clamp(1.7rem, 3.2vw, 2.7rem);
+    text-transform: uppercase;
+    color: var(--concrete-050);
+    margin-bottom: 0.9rem;
+}
+
+    .cta-title em {
+        font-style: normal;
+        color: var(--hivis-500);
+    }
+
+.cta-text {
+    max-width: 54ch;
+    color: var(--concrete-300);
+    font-size: 1.05rem;
+    line-height: 1.7;
+    margin-bottom: 1.75rem;
+}
+
+.cta-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.85rem;
+}
+
+.cta-panel-aside {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.35rem;
+    min-width: 0;
+    padding-left: clamp(1.25rem, 3vw, 2.5rem);
+    border-left: 1px solid var(--line);
+}
+
+.cta-aside-label,
+.cta-aside-hours {
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--concrete-500);
+}
+
+.cta-phone {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: var(--font-display);
+    font-size: clamp(1.6rem, 2.6vw, 2.3rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: 0.01em;
+    color: var(--concrete-050);
+    white-space: nowrap;
+    transition: color var(--dur) var(--ease), transform var(--dur) var(--ease);
+}
+
+    .cta-phone i {
+        color: var(--hivis-500);
+        font-size: 0.72em;
+        transition: transform var(--dur) var(--ease);
+    }
+
+    .cta-phone:hover {
+        color: var(--hivis-400);
+        transform: translateX(3px);
+    }
+
+        .cta-phone:hover i {
+            transform: rotate(-14deg) scale(1.1);
+        }
+
+/* --------------------------------------------------------------------------
+   7.10 · Manufacturers
+   -------------------------------------------------------------------------- */
+
+.partners-title {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: var(--concrete-500);
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+}
+
+.partners-logos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: clamp(1.5rem, 4vw, 3.5rem);
+    flex-wrap: wrap;
+}
+
+    .partners-logos img {
+        width: 118px;
+        height: auto;
+        max-height: 44px;
+        object-fit: contain;
+        filter: grayscale(100%) brightness(2.2) contrast(0.7);
+        opacity: 0.55;
+        transition: filter var(--dur-slow) var(--ease), opacity var(--dur-slow) var(--ease), transform var(--dur-slow) var(--ease);
+    }
+
+        .partners-logos img:hover {
+            filter: none;
+            opacity: 1;
+            transform: scale(1.06);
+        }

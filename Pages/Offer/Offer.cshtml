@@ -1,68 +1,103 @@
-﻿@page "/oferta"
+@page "/oferta"
 @model GamexBusinessPage.Pages.OfertaModel
 
+@await Html.PartialAsync("_Breadcrumb", new List<(string, string?)>
+{
+    ("Strona główna", Url.Page("/Index")),
+    ("Oferta", null)
+})
 
 <div class="oferta-page">
-    <div class="container py-5">
-        <header class="oferta-hero text-center">
-            <h1 class="display-4 fw-bold">Nasza <span>Oferta</span></h1>
-            <p class="lead mx-auto" style="max-width: 700px;">
-                Dostarczamy kompleksowe rozwiązania dla budownictwa drogowego.
-                Wybierz interesujący Cię obszar, aby dowiedzieć się więcej.
+    <section class="page-hero">
+        <div class="container">
+            <p class="eyebrow">Oferta GAMEX</p>
+            <h1>Maszyny budowlane, <span>drogi i transport</span></h1>
+            <p class="lead">
+                Wynajmujemy maszyny z operatorem, budujemy drogi i chodniki, wozimy kruszywa i sprzęt.
+                Możesz zamówić u nas jedną rzecz albo całość – wtedy nie musisz pilnować, czy ekipy
+                dogadają się między sobą.
             </p>
-        </header>
+        </div>
+    </section>
 
-        <section class="pb-5">
-            <div class="row g-4 justify-content-center">
+    <div class="subpage-body">
+        <div class="container">
+            <div class="row g-4">
 
                 <div class="col-lg-4 col-md-6">
-                    <div class="oferta-card card-machinery">
+                    <article class="oferta-card card-machinery">
                         <div class="card-content">
-                            <div class="card-icon">🚜</div>
-                            <h3>Wypożyczenie maszyn</h3>
-                            <p>Profesjonalny sprzęt budowlany wraz z doświadczoną obsługą operatorską dla Twojej inwestycji.</p>
+                            <span class="card-icon"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-truck-monster"></use></svg></span>
+                            <h2>Wynajem maszyn budowlanych</h2>
+                            <p>
+                                Koparki, koparko-ładowarki, minikoparki, walce, rozkładarki asfaltu i frezarki.
+                                Zawsze z operatorem, rozliczane od godziny.
+                            </p>
+                            <ul class="oferta-list">
+                                <li>Serwis i przeglądy po naszej stronie</li>
+                                <li>Na dwa dni albo na dwa miesiące</li>
+                                <li>Dowóz własną naczepą</li>
+                            </ul>
                             <a asp-page="/Offer/MachineRental/MachineRental" class="btn-gamex btn-primary-gamex">
                                 Zobacz maszyny
                             </a>
                         </div>
-                    </div>
+                    </article>
                 </div>
 
                 <div class="col-lg-4 col-md-6">
-                    <div class="oferta-card card-roads">
+                    <article class="oferta-card card-roads">
                         <div class="card-content">
-                            <div class="card-icon">🛣️</div>
-                            <h3>Usługi</h3>
-                            <p>Kompleksowa budowa i modernizacja nawierzchni bitumicznych, chodników oraz infrastruktury towarzyszącej.</p>
+                            <span class="card-icon"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-road"></use></svg></span>
+                            <h2>Budowa dróg i chodników</h2>
+                            <p>
+                                Od wykopu po warstwę ścieralną. Kostka brukowa, krawężniki, parkingi
+                                i place manewrowe.
+                            </p>
+                            <ul class="oferta-list">
+                                <li>Drogi gminne i osiedlowe</li>
+                                <li>Chodniki, zjazdy, kostka brukowa</li>
+                                <li>Przygotowanie terenu pod inwestycję</li>
+                            </ul>
                             <a asp-page="/Offer/Services/Services" class="btn-gamex btn-secondary-gamex">
                                 Sprawdź szczegóły
                             </a>
                         </div>
-                    </div>
+                    </article>
                 </div>
 
                 <div class="col-lg-4 col-md-6">
-                    <div class="oferta-card card-transport">
+                    <article class="oferta-card card-transport">
                         <div class="card-content">
-                            <div class="card-icon">🚚</div>
-                            <h3>Transport</h3>
-                            <p>Transport materiałów sypkich, maszyn i ładunków HDS z szybką realizacją na terenie województwa Małopolskiego, Śląskiego oraz Świętokrzyskiego.</p>
+                            <span class="card-icon"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-truck-ramp-box"></use></svg></span>
+                            <h2>Transport i HDS</h2>
+                            <p>
+                                Kruszywa i materiały sypkie wywrotką, maszyny na naczepie niskopodwoziowej,
+                                a tam gdzie nie ma dojazdu – rozładunek dźwigiem.
+                            </p>
+                            <ul class="oferta-list">
+                                <li>Kruszywo, piasek, ziemia, gruz</li>
+                                <li>Naczepa niskopodwoziowa i laweta</li>
+                                <li>Załadunek i rozładunek HDS</li>
+                            </ul>
                             <a asp-page="/Offer/Transport/Transport" class="btn-gamex btn-secondary-gamex">
                                 Zobacz opcje
                             </a>
                         </div>
-                    </div>
+                    </article>
                 </div>
 
             </div>
-            <div class="row mt-4 justify-content-center">
-                <div class="col-auto">
-                    <a href="~/pdf/gamex-oferta.pdf" class="btn-gamex btn-secondary-gamex" download="Oferta Gamex.pdf">
-                        Pobierz ofertę PDF
-                    </a>
-                </div>
+
+            <div class="mt-5 d-flex flex-wrap gap-3 justify-content-center">
+                <a asp-page="/Contact" asp-fragment="kontakt-formularz" class="btn-gamex btn-primary-gamex btn-lg">
+                    <svg class="ico" aria-hidden="true" focusable="false"><use href="#i-file-invoice"></use></svg>Poproś o wycenę
+                </a>
+                <a href="~/pdf/gamex-oferta.pdf" class="btn-gamex btn-secondary-gamex btn-lg" download="Oferta-GAMEX.pdf">
+                    <svg class="ico" aria-hidden="true" focusable="false"><use href="#i-file-pdf"></use></svg>Pobierz ofertę PDF
+                </a>
             </div>
-        </section>
+        </div>
     </div>
 </div>
 

@@ -1,26 +1,61 @@
-﻿@page "/oferta/wypozyczenie-maszyn"
+@page "/oferta/wypozyczenie-maszyn"
 @model GamexBusinessPage.Pages.MachineRental.MachineRentalModel
 
-<div class="offer-subpage">
-    <div class="machine-rental-page">
-        <div class="container-fluid">
-            <header class="machine-rental-hero text-center">
-                <h1 class="display-5 fw-bold">Wypożyczalnia maszyn budowlanych</h1>
-                <p class="lead mx-auto">
-                    Poznaj nasz park maszynowy. Każda maszyna jest dostępna z obsługą operatorską i gotowa do pracy w województwie Małopolskim, Śląskim oraz Świętokrzyskim.
-                </p>
-            </header>
+@await Html.PartialAsync("_Breadcrumb", new List<(string, string?)>
+{
+    ("Strona główna", Url.Page("/Index")),
+    ("Oferta", Url.Page("/Offer/Offer")),
+    ("Wypożyczalnia maszyn", Model.SelectedCategoryName is null ? null : Url.Page("/Offer/MachineRental/MachineRental")),
+    (Model.SelectedCategoryName ?? string.Empty, null)
+}.Where(item => !string.IsNullOrEmpty(item.Item1)).ToList())
 
+<div class="offer-subpage">
+    <section class="page-hero">
+        <div class="container">
+            <p class="eyebrow">Park maszynowy</p>
+            @if (Model.SelectedCategoryName is not null)
+            {
+                <h1>Wynajem: <span>@Model.SelectedCategoryName</span></h1>
+                <p class="lead">
+                    @Model.SelectedCategoryName do wynajęcia z operatorem. Niżej konkretne modele
+                    z rocznikiem, masą i wyposażeniem. Sprzęt dowozimy własną naczepą – Małopolska,
+                    Śląsk, Świętokrzyskie.
+                </p>
+            }
+            else
+            {
+                <h1>Wypożyczalnia <span>maszyn budowlanych</span></h1>
+                <p class="lead">
+                    Koparki, koparko-ładowarki, minikoparki, walce, rozkładarki asfaltu, frezarki, ładowarki
+                    teleskopowe, zagęszczarki. Każda maszyna z operatorem, rozliczana od godziny.
+                    Dowozimy własną naczepą po Małopolsce, Śląsku i Świętokrzyskiem.
+                </p>
+            }
+
+            <div class="d-flex flex-wrap gap-3 mt-4">
+                <a href="tel:+48601450146" class="btn-gamex btn-primary-gamex">
+                    <svg class="ico" aria-hidden="true" focusable="false"><use href="#i-phone-volume"></use></svg>601 450 146
+                </a>
+                <a asp-page="/Contact" asp-fragment="kontakt-formularz" class="btn-gamex btn-secondary-gamex">
+                    <svg class="ico" aria-hidden="true" focusable="false"><use href="#i-file-invoice"></use></svg>Zapytaj o dostępność
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <div class="machine-rental-page">
+        <div class="container">
             <div class="row g-4">
-                <aside class="col-lg-2">
+                <aside class="col-lg-3">
                     @await Html.PartialAsync("_MachineCategoryList", new GamexBusinessPage.Models.CategoryLinkViewModel(Model.CategoryLinks))
                 </aside>
 
-                <section class="col-lg-9">
+                <section class="col-lg-9" aria-label="Lista maszyn">
                     @if (Model.Machines.Count == 0)
                     {
                         <div class="machine-empty-state">
-                            Brak maszyn w tej kategorii. Wybierz inną kategorię lub sprawdź wszystkie maszyny.
+                            Brak maszyn w tej kategorii.
+                            <a asp-page="/Offer/MachineRental/MachineRental">Zobacz wszystkie dostępne maszyny</a>.
                         </div>
                     }
                     else
@@ -29,34 +64,56 @@
                             @foreach (var machine in Model.Machines)
                             {
                                 <div class="col-md-6 col-xl-4">
-                                    <div class="machine-card">
+                                    <article class="machine-card">
                                         <div class="machine-card-media">
                                             @{ var imagePath = machine.MainImagePath; }
                                             @if (!string.IsNullOrWhiteSpace(imagePath))
                                             {
-                                                <img src="@Url.Content($"~/{imagePath.TrimStart('~', '/')}" )" alt="@machine.DisplayName - @machine.CategoryDisplayName na wynajem w Gamex Olkusz" loading="lazy" />
+                                                <img src="@Url.Content($"~/{imagePath.TrimStart('~', '/')}")"
+                                                     alt="@machine.DisplayName – @machine.CategoryDisplayName na wynajem w GAMEX Olkusz"
+                                                     loading="lazy" decoding="async" />
                                             }
                                             else
                                             {
-                                                <div class="machine-placeholder">Brak zdjęcia</div>
+                                                <div class="machine-placeholder">Zdjęcie wkrótce</div>
                                             }
                                         </div>
                                         <div class="machine-card-body">
                                             <div class="machine-card-header">
                                                 <p class="machine-card-category">@machine.CategoryDisplayName</p>
-                                                <h3 class="machine-card-title">@machine.DisplayName</h3>
+                                                <h2 class="machine-card-title">@machine.DisplayName</h2>
                                             </div>
                                             <div class="machine-card-actions">
-                                                <a class="btn-gamex machine-card-cta" asp-page="/Offer/MachineRental/Details" asp-route-slug="@machine.Slug">
+                                                <a class="btn-gamex machine-card-cta"
+                                                   asp-page="/Offer/MachineRental/Details"
+                                                   asp-route-slug="@machine.Slug">
                                                     Zobacz szczegóły
                                                 </a>
                                             </div>
                                         </div>
-                                    </div>
+                                    </article>
                                 </div>
                             }
                         </div>
                     }
+
+                    <div class="machine-detail-card mt-5">
+                        <h2>Jak działa wynajem maszyn w GAMEX?</h2>
+                        <p class="section-text">
+                            Maszyna przyjeżdża z naszym operatorem, więc nie potrzebujesz uprawnień ani warsztatu.
+                            Liczymy godziny albo doby, przy dłuższych kontraktach schodzimy z ceny. Transport na budowę
+                            robimy sami – naczepami niskopodwoziowymi, lawetą i zestawem z HDS.
+                        </p>
+                        <p class="section-text mb-0">
+                            Najczęściej wynajmowane pozycje to
+                            <a asp-page="/Offer/MachineRental/MachineRental" asp-route-category="Koparki">koparki</a>,
+                            <a asp-page="/Offer/MachineRental/MachineRental" asp-route-category="Minikoparki">minikoparki</a>,
+                            <a asp-page="/Offer/MachineRental/MachineRental" asp-route-category="Walce">walce drogowe</a>
+                            oraz <a asp-page="/Offer/MachineRental/MachineRental" asp-route-category="Rozkładarki asfaltu">rozkładarki asfaltu</a>.
+                            Potrzebujesz całej ekipy? Sprawdź nasze
+                            <a asp-page="/Offer/Services/Services">usługi drogowe i brukarskie</a>.
+                        </p>
+                    </div>
                 </section>
             </div>
         </div>

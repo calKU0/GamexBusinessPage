@@ -1,4 +1,4 @@
-using GamexBusinessPage.Services; // Zakładam, że tu masz SchemaFactory
+using GamexBusinessPage.Services;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.OutputCaching;
 using System.Text.Encodings.Web;
@@ -14,8 +14,9 @@ namespace GamexBusinessPage.Pages
 
         public void OnGet()
         {
-            ViewData["Title"] = "Usługi i maszyny budowlane w Małopolsce | Oferta Gamex Olkusz";
-            ViewData["Description"] = "Szeroki zakres usług: od wynajmu koparek po kompleksowe roboty drogowe i transport HDS. Zobacz, jak Gamex wspiera inwestycje w Olkuszu, całej Małopolce oraz okolicach";
+            ViewData["Title"] = "Oferta: wynajem maszyn, budowa dróg i transport | GAMEX Olkusz";
+            ViewData["CanonicalUrl"] = "https://gamex-olkusz.pl/oferta";
+            ViewData["Description"] = "Wynajem maszyn budowlanych z operatorem, budowa i remonty dróg, chodników i placów oraz transport kruszyw i maszyn HDS. GAMEX Olkusz – woj. małopolskie, śląskie i świętokrzyskie.";
             ViewData["Keywords"] = "Gamex, Olkusz, oferta, wynajem maszyn budowlanych, remonty dróg, usługi budowlane, Małopolska, Śląsk, Świętokrzyskie";
 
             var baseUrl = "https://gamex-olkusz.pl";
@@ -45,31 +46,34 @@ namespace GamexBusinessPage.Pages
             {
                 new Dictionary<string, object?> {
                     ["@type"] = "Service",
-                    ["name"] = "Wypożyczenie maszyn budowlanych",
-                    ["description"] = "Wynajem profesjonalnego sprzętu budowlanego z obsługą operatorską.",
+                    ["name"] = "Wynajem maszyn budowlanych z operatorem",
+                    ["description"] = "Wynajem koparek, ładowarek, walców i rozkładarek asfaltu wraz z operatorem, rozliczany godzinowo.",
                     ["provider"] = new Dictionary<string, object?> { ["@id"] = localBusiness["@id"] },
                     ["url"] = $"{baseUrl}/oferta/wypozyczenie-maszyn"
                 },
                 new Dictionary<string, object?> {
                     ["@type"] = "Service",
                     ["name"] = "Usługi drogowe i budowlane",
-                    ["description"] = "Kompleksowa budowa i modernizacja dróg oraz infrastruktury towarzyszącej.",
+                    ["description"] = "Budowa i remonty dróg, chodników, parkingów i placów wraz z robotami ziemnymi i odwodnieniem.",
                     ["provider"] = new Dictionary<string, object?> { ["@id"] = localBusiness["@id"] },
                     ["url"] = $"{baseUrl}/oferta/uslugi"
                 },
                 new Dictionary<string, object?> {
                     ["@type"] = "Service",
                     ["name"] = "Transport ciężarowy i HDS",
-                    ["description"] = "Transport materiałów sypkich i maszyn na terenie województwa Małopolskiego, Śląskiego oraz Świętokrzyskiego.",
+                    ["description"] = "Przewóz kruszyw i materiałów sypkich, transport niskopodwoziowy maszyn oraz rozładunek dźwigiem HDS.",
                     ["provider"] = new Dictionary<string, object?> { ["@id"] = localBusiness["@id"] },
                     ["url"] = $"{baseUrl}/oferta/transport"
                 }
             };
 
+            var graphNodes = new List<object> { breadcrumbSchema, localBusiness };
+            graphNodes.AddRange(servicesSchema);
+
             var schemaGraph = new Dictionary<string, object?>
             {
                 ["@context"] = "https://schema.org",
-                ["@graph"] = new object[] { breadcrumbSchema, localBusiness, servicesSchema }
+                ["@graph"] = graphNodes
             };
 
             SchemaJson = JsonSerializer.Serialize(schemaGraph, new JsonSerializerOptions

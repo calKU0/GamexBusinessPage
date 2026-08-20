@@ -1,0 +1,131 @@
+/* ==========================================================================
+   04 · BUTTONS
+   One base (.btn-gamex) plus colour and size variants.
+   ========================================================================== */
+
+.btn-gamex,
+.kontakt-submit,
+.machine-card-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem;
+    padding: 0.85rem 1.75rem;
+    border: 1px solid transparent;
+    border-radius: var(--r-sm);
+    font-family: var(--font-display);
+    font-size: 1.02rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    white-space: nowrap;
+    transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease), background-color var(--dur) var(--ease), border-color var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+
+    .btn-gamex:active,
+    .kontakt-submit:active {
+        transform: translateY(0) scale(0.985);
+    }
+
+/* --- Primary: hi-vis --- */
+.btn-primary-gamex,
+.kontakt-submit {
+    background: var(--hivis-grad);
+    color: var(--asphalt-950);
+    box-shadow: var(--hivis-glow);
+}
+
+    .btn-primary-gamex:hover,
+    .btn-primary-gamex:focus-visible,
+    .kontakt-submit:hover,
+    .kontakt-submit:focus-visible {
+        color: var(--asphalt-950);
+        transform: translateY(-3px);
+        box-shadow: 0 20px 46px rgba(239, 127, 26, 0.5);
+    }
+
+/* Sheen sweeping across the button surface */
+.btn-primary-gamex::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: -60%;
+    width: 45%;
+    background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+    transform: skewX(-18deg);
+    transition: left var(--dur-slow) var(--ease);
+}
+
+.btn-primary-gamex:hover::after {
+    left: 130%;
+}
+
+/* --- Secondary: glass --- */
+.btn-secondary-gamex,
+.machine-card-cta {
+    background: var(--glass);
+    color: var(--concrete-100);
+    border-color: var(--line-strong);
+    backdrop-filter: blur(6px);
+}
+
+    .btn-secondary-gamex:hover,
+    .btn-secondary-gamex:focus-visible {
+        background: var(--steel-soft);
+        border-color: var(--steel-500);
+        color: var(--concrete-050);
+        transform: translateY(-3px);
+    }
+
+/* --- Outline --- */
+.btn-ghost-gamex {
+    background: transparent;
+    color: var(--hivis-400);
+    border-color: rgba(239, 127, 26, 0.45);
+}
+
+    .btn-ghost-gamex:hover,
+    .btn-ghost-gamex:focus-visible {
+        background: var(--hivis-soft);
+        border-color: var(--hivis-500);
+        color: var(--hivis-400);
+        transform: translateY(-3px);
+    }
+
+/* --- Sizes --- */
+.btn-lg.btn-gamex {
+    padding: 1rem 2.1rem;
+    font-size: 1.12rem;
+}
+
+.btn-sm.btn-gamex {
+    padding: 0.55rem 1.1rem;
+    font-size: 0.9rem;
+}
+
+/* --- Catalog card button: full width, hi-vis on hover --- */
+.machine-card-cta {
+    width: 100%;
+    padding: 0.7rem 1.2rem;
+    font-size: 0.95rem;
+    letter-spacing: 0.08em;
+}
+
+    .machine-card-cta:hover {
+        background: var(--hivis-grad);
+        border-color: transparent;
+        color: var(--asphalt-950);
+    }
+
+/* --- Form submit --- */
+.kontakt-submit {
+    border: none;
+    padding: 0.8rem 2rem;
+    font-size: 1.05rem;
+    letter-spacing: 0.08em;
+}

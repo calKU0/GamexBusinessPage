@@ -1,21 +1,22 @@
 {
-  "Koparko \u0142adowarki": [
+  "Koparko ładowarki": [
     {
-      "model": "3CX \u002B zamiatarka/frezarka",
+      "model": "3CX + zamiatarka/frezarka",
       "brand": "JCB",
       "images": [],
       "production_year": 2016,
       "weight": "8t",
       "equipment": [
-        "D\u017Awignie X",
-        "\u0141y\u017Cka skarpowa, \u0142y\u017Cka 30cm, 60 cm",
-        "Szybkoz\u0142\u0105cze ty\u0142",
-        "\u0141y\u017Cka prz\u00F3d 4w1"
+        "Dźwignie X",
+        "Łyżka skarpowa, łyżka 30cm, 60 cm",
+        "Szybkozłącze tył",
+        "Łyżka przód 4w1"
       ],
-      "rental_options": "Mo\u017Cliwo\u015B\u0107 wynajmu z zamiatark\u0105 2,75m i frezark\u0105 40cm lub m\u0142otem do kucia",
+      "rental_options": "Możliwość wynajmu z zamiatarką 2,75m i frezarką 40cm lub młotem do kucia",
       "specifications": {},
       "notes": "",
-      "type": ""
+      "type": "",
+      "description": "Koparko-ładowarka to najbardziej uniwersalna maszyna na małym i średnim placu budowy: z przodu ładuje i pryzmuje, z tyłu kopie wykopy pod przyłącza, fundamenty i studnie. Ten egzemplarz jest przygotowany pod prace drogowe — dobieramy do niego zamiatarkę, frezarkę do lokalnych ubytków w nawierzchni albo młot do kucia betonu. Łyżka przednia 4w1 pozwala ładować, spychać i chwytać bez zmiany osprzętu."
     },
     {
       "model": "4CX",
@@ -26,17 +27,18 @@
       "equipment": [
         "Joystick",
         "Dualdrive",
-        "Szybkoz\u0142\u0105cze prz\u00F3d, ty\u0142",
-        "\u0141y\u017Cka skarpowa uchylna, \u0142y\u017Cka 30cm, 60 cm",
-        "\u0141y\u017Cka przed 4w1",
-        "O\u015Bwietlenie led",
+        "Szybkozłącze przód, tył",
+        "Łyżka skarpowa uchylna, łyżka 30cm, 60 cm",
+        "Łyżka przed 4w1",
+        "Oświetlenie led",
         "Fotel pneumatyczny",
         "Radio"
       ],
       "rental_options": "",
       "specifications": {},
       "notes": "",
-      "type": ""
+      "type": "",
+      "description": "Największa z naszych koparko-ładowarek, z napędem na cztery koła równej wielkości, co daje lepszą stabilność i trakcję w błocie oraz na nierównym terenie. Sterowanie joystickiem i szybkozłącza z przodu i z tyłu skracają czas zmiany osprzętu, więc maszyna sprawdza się tam, gdzie w ciągu dnia trzeba wielokrotnie przechodzić między kopaniem, załadunkiem i profilowaniem."
     },
     {
       "model": "3CX1",
@@ -46,14 +48,15 @@
       "weight": "",
       "equipment": [
         "Joystick",
-        "\u0141y\u017Cka skarpowa, \u0142y\u017Cka 30cm, 60 cm",
-        "Szybkoz\u0142\u0105cze ty\u0142",
-        "\u0141y\u017Cka prz\u00F3d 4w1"
+        "Łyżka skarpowa, łyżka 30cm, 60 cm",
+        "Szybkozłącze tył",
+        "Łyżka przód 4w1"
       ],
       "rental_options": "",
       "specifications": {},
       "notes": "",
-      "type": ""
+      "type": "",
+      "description": "Klasyczna koparko-ładowarka do robót ziemnych i przyłączeniowych: wykopy liniowe pod wodociąg, kanalizację i kable, zasypywanie, załadunek gruzu i ziemi. Łyżka skarpowa pozwala wyprofilować dno wykopu i skarpy, a łyżka przednia 4w1 zastępuje osobną spycharkę przy plantowaniu terenu."
     }
   ],
   "Minikoparki": [
@@ -64,13 +67,14 @@
       "production_year": 2018,
       "weight": "1,7t",
       "equipment": [
-        "\u0141y\u017Cka skarpowa uchylna",
-        "Lemiesz rozk\u0142adany",
+        "Łyżka skarpowa uchylna",
+        "Lemiesz rozkładany",
         "Rozsuwane podwozie",
-        "G\u0105sienice gumowe",
+        "Gąsienice gumowe",
         "Kogut"
       ],
-      "specifications": {}
+      "specifications": {},
+      "description": "Minikoparka do prac tam, gdzie większy sprzęt nie wjedzie: wykopy w ogrodach, przyłącza przy istniejących budynkach, drenaże, prace w wąskich przejazdach. Rozsuwane podwozie pozwala przecisnąć maszynę przez bramę, a po rozłożeniu daje stabilność przy kopaniu. Gumowe gąsienice nie niszczą kostki brukowej ani trawnika."
     },
     {
       "model": "19-C1",
@@ -79,15 +83,16 @@
       "production_year": 2025,
       "weight": "1,9t",
       "equipment": [
-        "\u0141y\u017Cka skarpowa uchylna",
-        "Szybkoz\u0142\u0105cze mechaniczne",
-        "Lemiesz rozk\u0142adany",
+        "Łyżka skarpowa uchylna",
+        "Szybkozłącze mechaniczne",
+        "Lemiesz rozkładany",
         "Rozsuwane podwozie",
-        "G\u0105sienice gumowe",
+        "Gąsienice gumowe",
         "Kogut",
         "Radio"
       ],
-      "specifications": {}
+      "specifications": {},
+      "description": "Minikoparka o nieco większym zasięgu i udźwigu od modelu 16-C1, przy zachowaniu możliwości pracy w ciasnych miejscach. Szybkozłącze mechaniczne skraca zmianę łyżek, a uchylna łyżka skarpowa ułatwia profilowanie skarp i dna wykopu bez przestawiania maszyny. Rozsuwane podwozie i gumowe gąsienice pozwalają pracować na utwardzonych nawierzchniach."
     }
   ],
   "Midikoparki": [
@@ -98,15 +103,16 @@
       "production_year": 2025,
       "weight": "5t",
       "equipment": [
-        "\u0141y\u017Cka skarpowa uchylna, \u0142y\u017Cka 60cm, 30cm",
-        "Szybkoz\u0142\u0105cze mechaniczne",
+        "Łyżka skarpowa uchylna, łyżka 60cm, 30cm",
+        "Szybkozłącze mechaniczne",
         "3 linie hydrauliczne",
         "Lemiesz",
-        "G\u0105sienice gumowe",
+        "Gąsienice gumowe",
         "Kogut",
         "Radio"
       ],
-      "specifications": {}
+      "specifications": {},
+      "description": "Midikoparka wypełnia lukę między minikoparką a maszyną pełnowymiarową: ma zasięg wystarczający do wykopów pod fundamenty i zbiorniki, a wciąż mieści się na typowej działce. Zerowy promień obrotu tyłu pozwala pracować przy samej ścianie budynku lub ogrodzeniu. Trzy linie hydrauliczne umożliwiają podpięcie młota, świdra lub innego osprzętu."
     }
   ],
   "Koparki": [
@@ -117,16 +123,17 @@
       "production_year": 2016,
       "weight": "17t",
       "equipment": [
-        "\u0141y\u017Cka skarpowa uchylna, \u0142y\u017Cka kopi\u0105ca 90cm (z\u0119by lub lemiesz)",
-        "Szybkoz\u0142\u0105cze atlas",
+        "Łyżka skarpowa uchylna, łyżka kopiąca 90cm (zęby lub lemiesz)",
+        "Szybkozłącze atlas",
         "Radio",
         "Klimatyzacja",
         "Fotel pneumatyczny",
         "Lemiesz",
         "Kogut",
-        "O\u015Bwietlenie led"
+        "Oświetlenie led"
       ],
-      "specifications": {}
+      "specifications": {},
+      "description": "Koparka kołowa porusza się po drogach publicznych bez lawety, więc sprawdza się przy robotach liniowych rozciągniętych na dłuższym odcinku i przy pracach w mieście. Krótki tył ułatwia pracę w pasie drogowym przy ruchu ulicznym. Uchylna łyżka skarpowa pozwala profilować rowy i skarpy bez przestawiania maszyny."
     },
     {
       "model": "ECR 235",
@@ -135,18 +142,19 @@
       "production_year": 2015,
       "weight": "27t",
       "equipment": [
-        "Kr\u00F3tki ty\u0142",
+        "Krótki tył",
         "Banan",
-        "G\u0142owica uchylno-obrotowa",
-        "\u0141y\u017Cka skandynawska, \u0142y\u017Cka 90cm, wid\u0142y",
+        "Głowica uchylno-obrotowa",
+        "Łyżka skandynawska, łyżka 90cm, widły",
         "Lemiesz",
         "Fotel pneumatyczny",
-        "O\u015Bwietlenie led 360*",
+        "Oświetlenie led 360*",
         "Radio",
         "Klimatyzacja",
         "Kogut"
       ],
-      "specifications": {}
+      "specifications": {},
+      "description": "Koparka gąsienicowa o skróconym tyle, przeznaczona do robót przy istniejącej zabudowie i w pasie drogowym, gdzie zwykła maszyna tej klasy nie zmieściłaby się w obrocie. Głowica uchylno-obrotowa daje pełną kontrolę nad kątem łyżki, co przyspiesza profilowanie skarp i wykopów o nieregularnym kształcie. Widły pozwalają przenosić kręgi i materiały."
     },
     {
       "model": "EC300EL",
@@ -155,15 +163,16 @@
       "production_year": 2017,
       "weight": "35t",
       "equipment": [
-        "Szybkoz\u0142\u0105cze hydrauliczne",
-        "\u0141y\u017Cka kopi\u0105ca z lemieszem 1,4m",
+        "Szybkozłącze hydrauliczne",
+        "Łyżka kopiąca z lemieszem 1,4m",
         "Radio",
-        "O\u015Bwietlenie led 360",
+        "Oświetlenie led 360",
         "Klimatyzacja",
         "Fotel pneumatyczny",
         "Kogut"
       ],
-      "specifications": {}
+      "specifications": {},
+      "description": "Ciężka koparka gąsienicowa do dużych wykopów, robót ziemnych o znacznej kubaturze i załadunku na wywrotki. Sprawdza się przy budowie dróg, zbiorników i przy zdejmowaniu warstw humusu na dużych powierzchniach. Szybkozłącze hydrauliczne pozwala zmieniać osprzęt bez schodzenia z kabiny, a oświetlenie LED 360° umożliwia pracę po zmroku."
     },
     {
       "model": "175 Wsr",
@@ -172,26 +181,27 @@
       "production_year": 2025,
       "weight": "18t",
       "equipment": [
-        "D\u0142ugi wysi\u0119gnik 2x \u0142amany",
-        "G\u0142owica uchylno-obrotowa",
-        "\u0141y\u017Cki: skarpowa 2m, skandynawska, kopi\u0105ca 80cm, trapezowa",
-        "Osprz\u0119t: wid\u0142y, n\u00F3\u017C do asfaltu, zrywak",
-        "2x szybkoz\u0142\u0105cze hydrauliczne",
+        "Długi wysięgnik 2x łamany",
+        "Głowica uchylno-obrotowa",
+        "Łyżki: skarpowa 2m, skandynawska, kopiąca 80cm, trapezowa",
+        "Osprzęt: widły, nóż do asfaltu, zrywak",
+        "2x szybkozłącze hydrauliczne",
         "Radio",
         "Klimatyzacja",
         "Fotel pneumatyczny",
         "Lemiesz",
         "Podpory",
         "Kogut",
-        "O\u015Bwietlenie led"
+        "Oświetlenie led"
       ],
       "rental_options": "",
       "specifications": {},
       "notes": "",
-      "type": ""
+      "type": "",
+      "description": "Koparka kołowa z długim, dwukrotnie łamanym wysięgnikiem — sięga dalej i głębiej niż standardowa maszyna tej klasy, co pozwala oczyszczać rowy i zbiorniki z jednego ustawienia. Bogaty zestaw łyżek, od skarpowej 2 m po trapezową, obejmuje profilowanie rowów melioracyjnych i przydrożnych oraz zwykłe roboty ziemne."
     }
   ],
-  "Mini \u0142adowarki": [
+  "Mini ładowarki": [
     {
       "model": "S76",
       "brand": "Bobcat",
@@ -199,19 +209,20 @@
       "production_year": 2025,
       "weight": "3,7t",
       "equipment": [
-        "Szybkoz\u0142\u0105cze mechaniczne",
-        "\u0141y\u017Cka \u0142aduj\u0105ca z z\u0119bami",
-        "Wid\u0142y",
+        "Szybkozłącze mechaniczne",
+        "Łyżka ładująca z zębami",
+        "Widły",
         "Kamera cofania",
         "Zamiatarka",
         "Radio",
         "Klimatyzacja",
         "Kogut"
       ],
-      "specifications": {}
+      "specifications": {},
+      "description": "Miniładowarka burtowa obraca się w miejscu, dzięki czemu pracuje tam, gdzie nie da się manewrować większym sprzętem: place manewrowe, hale, wąskie podwórka. Wymiana osprzętu na szybkozłączu zamienia ją z ładowarki w zamiatarkę do sprzątania placu budowy albo w wózek widłowy do rozładunku palet."
     }
   ],
-  "\u0141adowarki teleskopowe": [
+  "Ładowarki teleskopowe": [
     {
       "model": "MRT 2260",
       "brand": "Manitou",
@@ -219,21 +230,22 @@
       "production_year": 2025,
       "weight": "18t",
       "equipment": [
-        "Wid\u0142y",
+        "Widły",
         "Kosz",
-        "Wci\u0105garka",
+        "Wciągarka",
         "Klimatyzacja",
         "Fotel pneumatyczny",
         "Kogut"
       ],
       "rental_options": "",
       "specifications": {
-        "Maks. ud\u017Awig": "6t",
-        "Maks. wysoko\u015B\u0107 podnoszenia": "21m",
-        "Maks. zasi\u0119g": "18m"
+        "Maks. udźwig": "6t",
+        "Maks. wysokość podnoszenia": "21m",
+        "Maks. zasięg": "18m"
       },
       "notes": "",
-      "type": ""
+      "type": "",
+      "description": "Ładowarka teleskopowa z obrotową wieżą podnosi materiał na wysokość kondygnacji i jednocześnie pozwala obrócić ładunek bez przestawiania maszyny — kluczowe przy pracy na ciasnym placu. Z widłami rozładowuje palety, z koszem służy jako podnośnik do prac na wysokości, a wciągarka pozwala podnosić ładunki na linie."
     }
   ],
   "Przesiewacze": [
@@ -245,11 +257,12 @@
       "weight": "23t",
       "equipment": [],
       "specifications": {
-        "Typ": "Dwupok\u0142adowy",
-        "Pojemno\u015B\u0107 zasobnika": "6 m3",
-        "Wydajno\u015B\u0107": "do 420 t/godz.",
+        "Typ": "Dwupokładowy",
+        "Pojemność zasobnika": "6 m3",
+        "Wydajność": "do 420 t/godz.",
         "Wymiary sita": "3.6 m x 1.3 m"
-      }
+      },
+      "description": "Przesiewacz mobilny rozdziela urobek na frakcje bezpośrednio na budowie. Pozwala odzyskać kruszywo z ziemi z wykopu albo z gruzu i wykorzystać je ponownie na miejscu, zamiast wywozić materiał na składowisko i dowozić nowy. Przy większych robotach ziemnych bardzo szybko zwraca się na kosztach transportu."
     }
   ],
   "Walce": [
@@ -260,31 +273,33 @@
       "production_year": 2013,
       "weight": "4t",
       "equipment": [
-        "B\u0119bny stalowe",
-        "Zraszanie wod\u0105",
-        "Zagniatacz kraw\u0119dzi",
+        "Bębny stalowe",
+        "Zraszanie wodą",
+        "Zagniatacz krawędzi",
         "Kogut",
-        "O\u015Bwietlenie"
+        "Oświetlenie"
       ],
-      "specifications": {}
+      "specifications": {},
+      "description": "Walec do zagęszczania podbudowy i warstw asfaltu na mniejszych powierzchniach: drogi osiedlowe, parkingi, zjazdy, place. Zraszanie wodą zapobiega przyklejaniu się masy do bębnów, a zagniatacz krawędzi formuje bok warstwy asfaltu, dzięki czemu krawędź nie kruszy się po oddaniu nawierzchni."
     },
     {
-      "model": "DV\u002B 70i",
+      "model": "DV+ 70i",
       "brand": "Hamm",
       "images": [],
       "production_year": 2015,
       "weight": "7t",
       "equipment": [
-        "B\u0119bny stalowe dzielone",
-        "Zraszanie wod\u0105",
-        "Wibracja \u002B oscylacja",
-        "Zagniatacz kraw\u0119dzi",
+        "Bębny stalowe dzielone",
+        "Zraszanie wodą",
+        "Wibracja + oscylacja",
+        "Zagniatacz krawędzi",
         "Klimatyzacja",
-        "O\u015Bwietlenie led 360",
+        "Oświetlenie led 360",
         "Radio",
         "Kogut"
       ],
-      "specifications": {}
+      "specifications": {},
+      "description": "Walec z bębnami dzielonymi skręca bez ścinania i marszczenia świeżo ułożonej masy, co ma znaczenie na łukach, rondach i zjazdach. Oscylacja zagęszcza warstwę bez przenoszenia drgań w grunt, dlatego można nim pracować blisko budynków i instalacji podziemnych, gdzie zwykła wibracja jest ryzykowna."
     },
     {
       "model": "BW 154 ACP-5 AM",
@@ -293,20 +308,21 @@
       "production_year": 2025,
       "weight": "8,5t",
       "equipment": [
-        "B\u0119ben stalowy prz\u00F3d (wibracja/oscylacja)",
-        "B\u0119ben gumowy ty\u0142",
-        "Zraszanie wod\u0105",
-        "Zagniatacz kraw\u0119dzi",
-        "N\u00F3\u017C do kraw\u0119dzi",
-        "O\u015Bwietlenie led 360",
+        "Bęben stalowy przód (wibracja/oscylacja)",
+        "Bęben gumowy tył",
+        "Zraszanie wodą",
+        "Zagniatacz krawędzi",
+        "Nóż do krawędzi",
+        "Oświetlenie led 360",
         "Kamery 360",
         "Klimatyzacja",
         "Kogut"
       ],
-      "specifications": {}
+      "specifications": {},
+      "description": "Walec kombinowany: bęben stalowy z przodu zagęszcza, a gumowe koła z tyłu domykają i uszczelniają powierzchnię asfaltu, poprawiając jej szczelność i wygląd. Przełączana wibracja i oscylacja pozwalają dobrać sposób pracy do warstwy i otoczenia. Nóż do krawędzi i zagniatacz formują bok warstwy w jednym przejeździe."
     }
   ],
-  "Rozk\u0142adarki asfaltu": [
+  "Rozkładarki asfaltu": [
     {
       "model": "S800i",
       "brand": "Vogele",
@@ -314,14 +330,15 @@
       "production_year": 2024,
       "weight": "6,5t",
       "equipment": [
-        "O\u015Bwietlenie robocze",
+        "Oświetlenie robocze",
         "Kogut"
       ],
       "specifications": {
-        "Szeroko\u015B\u0107 robocza": "1,2m-2,2m (3,5m z poszerzeniami)",
+        "Szerokość robocza": "1,2m-2,2m (3,5m z poszerzeniami)",
         "System poziomowania": "Vogele",
-        "Podgrzewanie sto\u0142u": "Elektryczne"
-      }
+        "Podgrzewanie stołu": "Elektryczne"
+      },
+      "description": "Mała rozkładarka do wąskich powierzchni: ścieżki rowerowe, chodniki, zjazdy, drogi wewnętrzne i naprawy odcinkowe. Układa masę równomiernie w miejscach, w których duża maszyna po prostu się nie mieści, a ręczne rozkładanie daje gorszą równość i szybciej traci temperaturę."
     },
     {
       "model": "1800-3i",
@@ -330,15 +347,16 @@
       "production_year": 2024,
       "weight": "22t",
       "equipment": [
-        "Urz\u0105dzenie zraszania maszyny",
-        "O\u015Bwietlenie robocze",
+        "Urządzenie zraszania maszyny",
+        "Oświetlenie robocze",
         "Kogut"
       ],
       "specifications": {
-        "Szeroko\u015B\u0107 robocza": "2,55m-5m (7m z poszerzeniami)",
+        "Szerokość robocza": "2,55m-5m (7m z poszerzeniami)",
         "System poziomowania": "Vogele",
-        "Podgrzewanie sto\u0142u": "Elektryczne"
-      }
+        "Podgrzewanie stołu": "Elektryczne"
+      },
+      "description": "Rozkładarka do dróg o pełnej szerokości jezdni, placów i parkingów. Układa warstwę bitumiczną w jednym przejeździe z zachowaniem równości wymaganej przy odbiorach, co eliminuje spoiny podłużne będące najsłabszym miejscem nawierzchni. Podstawowa maszyna przy większych kontraktach drogowych."
     },
     {
       "model": "ABG7280B",
@@ -347,14 +365,15 @@
       "production_year": 2011,
       "weight": "20,5t",
       "equipment": [
-        "O\u015Bwietlenie robocze",
+        "Oświetlenie robocze",
         "Kogut"
       ],
       "specifications": {
-        "Szeroko\u015B\u0107 robocza": "2,55m-5m (6,5m z poszerzeniami)",
+        "Szerokość robocza": "2,55m-5m (6,5m z poszerzeniami)",
         "System poziomowania": "Moba",
-        "Podgrzewanie sto\u0142u": "Brak (tylko do kruszywa, betonu)"
-      }
+        "Podgrzewanie stołu": "Brak (tylko do kruszywa, betonu)"
+      },
+      "description": "Rozkładarka gąsienicowa do układania mas bitumicznych na drogach i placach. Gąsienicowe podwozie daje równomierny nacisk i lepszą trakcję na świeżej podbudowie niż podwozie kołowe, dlatego sprawdza się na słabszym, niedogęszczonym podłożu i przy grubszych warstwach."
     }
   ],
   "Frezarki": [
@@ -365,17 +384,18 @@
       "production_year": 2024,
       "weight": "24,5t",
       "equipment": [
-        "O\u015Bwietlenie robocze led",
+        "Oświetlenie robocze led",
         "Kogut"
       ],
       "specifications": {
-        "Szeroko\u015B\u0107 robocza": "1,5m",
-        "Maks. g\u0142\u0119boko\u015B\u0107 pracy": "30cm"
+        "Szerokość robocza": "1,5m",
+        "Maks. głębokość pracy": "30cm"
       },
-      "notes": "Wynajem tylko z operatorem"
+      "notes": "Wynajem tylko z operatorem",
+      "description": "Frezarka zdejmuje zużytą warstwę asfaltu przed ułożeniem nowej — bez tego nawierzchnia podnosiłaby się z każdym remontem ponad krawężniki i wpusty. Pozwala też sfrezować koleiny i wyrównać profil jezdni. Zebrany destrukt nadaje się do ponownego wykorzystania na podbudowy i drogi tymczasowe."
     }
   ],
-  "Wozid\u0142a": [
+  "Wozidła": [
     {
       "model": "Revotruck",
       "brand": "Mecalac",
@@ -385,13 +405,14 @@
       "equipment": [
         "Obrotowa kabina",
         "Obrotowy kiper",
-        "4 ko\u0142a skr\u0119tne",
-        "O\u015Bwietlenie robocze",
+        "4 koła skrętne",
+        "Oświetlenie robocze",
         "Kogut"
       ],
       "specifications": {
-        "\u0141adowno\u015B\u0107": "9t"
-      }
+        "Ładowność": "9t"
+      },
+      "description": "Wozidło do przewozu urobku i kruszywa w terenie, gdzie zwykła wywrotka nie dojedzie: błoto, nierówności, ciasne place budowy. Obrotowa kabina pozwala jechać i rozładowywać przodem w obu kierunkach bez zawracania, a obrotowy kiper wysypuje ładunek na bok, więc maszyna nie musi ustawiać się prostopadle do miejsca zsypu."
     }
   ],
   "Zasilacze pneumatyczne": [
@@ -402,15 +423,16 @@
       "production_year": 2025,
       "weight": "749kg",
       "equipment": [
-        "Regulowana wysoko\u015B\u0107 zaczepu",
-        "M\u0142ot do kucia"
+        "Regulowana wysokość zaczepu",
+        "Młot do kucia"
       ],
       "specifications": {
-        "Ci\u015Bnienie robocze": "7 bar"
-      }
+        "Ciśnienie robocze": "7 bar"
+      },
+      "description": "Przewoźna sprężarka zasila narzędzia pneumatyczne tam, gdzie nie ma zasilania ani miejsca na cięższy sprzęt. W komplecie z młotem do kucia służy do rozbiórek betonu, kucia posadzek i wyburzeń punktowych. Regulowana wysokość zaczepu pozwala podpiąć ją pod różne pojazdy holujące."
     }
   ],
-  "Zag\u0119szczarki": [
+  "Zagęszczarki": [
     {
       "model": "Bomag BPR 60/65 D",
       "brand": "Bomag",
@@ -419,23 +441,25 @@
       "weight": "460kg",
       "equipment": [
         "Ekonomizer",
-        "Biegi prz\u00F3d-ty\u0142",
+        "Biegi przód-tył",
         "Odpalanie rozrusznikiem"
       ],
-      "specifications": {}
+      "specifications": {},
+      "description": "Zagęszczarka rewersyjna zagęszcza podsypkę i podbudowę pod kostkę brukową, chodniki i fundamenty. Biegi w przód i w tył pozwalają pracować w wykopach i wąskich pasach bez zawracania maszyny. Rozrusznik zamiast linki skraca przestoje przy pracy zmianowej."
     },
     {
       "model": "Copco1",
       "brand": "Atlas",
       "images": [],
       "equipment": [
-        "Biegi prz\u00F3d-ty\u0142",
+        "Biegi przód-tył",
         "Odpalanie rozrusznikiem"
       ],
-      "specifications": {}
+      "specifications": {},
+      "description": "Zagęszczarka rewersyjna do podsypek, zasypek wykopów i podbudów pod nawierzchnie. Praca w obu kierunkach pozwala zagęszczać dno wąskiego wykopu bez wyciągania i obracania maszyny. Uruchamiana rozrusznikiem."
     }
   ],
-  "Ci\u0105gniki": [
+  "Ciągniki": [
     {
       "model": "6499",
       "brand": "Massey Ferguson",
@@ -448,19 +472,20 @@
         "Przyczepa 2 osiowa",
         "Fotel pneumatyczny",
         "Amortyzacja przedniego mostu",
-        "Wyj\u015Bcie pneumatyczne",
+        "Wyjście pneumatyczne",
         "Radio",
-        "Obci\u0105\u017Cnik z przodu"
+        "Obciążnik z przodu"
       ],
       "rental_options": "",
       "specifications": {
-        "Nap\u0119d": "4x4",
-        "\u0141adowno\u015B\u0107 przyczepy": "20t",
-        "Skrzynia bieg\u00F3w": "Dynashift 4 \u002B 4 p\u00F3\u0142biegi",
-        "Pr\u0119dko\u015B\u0107": "40 km/h"
+        "Napęd": "4x4",
+        "Ładowność przyczepy": "20t",
+        "Skrzynia biegów": "Dynashift 4 + 4 półbiegi",
+        "Prędkość": "40 km/h"
       },
       "notes": "",
-      "type": "Traktor \u002B przyczepa"
+      "type": "Traktor + przyczepa",
+      "description": "Ciągnik z dwuosiową przyczepą do przewozu kruszywa, ziemi i materiałów na trasach, gdzie samochód ciężarowy nie dojedzie lub nie ma sensu ekonomicznego: drogi polne, place budowy bez utwardzonego dojazdu, krótkie przewozy wahadłowe. Trzy linie hydrauliczne i wyjście pneumatyczne pozwalają podpiąć maszyny towarzyszące."
     }
   ]
 }

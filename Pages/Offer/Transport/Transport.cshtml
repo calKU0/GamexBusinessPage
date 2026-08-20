@@ -1,44 +1,67 @@
 @page "/oferta/transport"
 @model GamexBusinessPage.Pages.Transport.TransportModel
 
-<div class="offer-subpage">
-    <div class="transport-page">
-        <div class="container-fluid">
-            <header class="transport-hero text-center">
-                <h1 class="display-5 fw-bold">Transport materiałów i maszyn</h1>
-                <p class="lead mx-auto">
-                    Własna flota transportowa gwarantuje szybkie i bezpieczne dostawy kruszyw, maszyn oraz ładunków specjalnych.
-                </p>
-            </header>
+@await Html.PartialAsync("_Breadcrumb", new List<(string, string?)>
+{
+    ("Strona główna", Url.Page("/Index")),
+    ("Oferta", Url.Page("/Offer/Offer")),
+    ("Transport", null)
+})
 
+<div class="offer-subpage">
+    <section class="page-hero">
+        <div class="container">
+            <p class="eyebrow">Własna flota</p>
+            <h1>Transport materiałów <span>sypkich i maszyn</span></h1>
+            <p class="lead">
+                Wywrotki do kruszywa, piasku, ziemi i gruzu. Naczepy niskopodwoziowe i laweta do maszyn.
+                Do tego zestaw z dźwigiem HDS, kiedy trzeba coś postawić tam, gdzie samochód nie podjedzie.
+                Jeździmy po Małopolsce, Śląsku i Świętokrzyskiem.
+            </p>
+
+            <div class="d-flex flex-wrap gap-3 mt-4">
+                <a href="tel:+48601450146" class="btn-gamex btn-primary-gamex">
+                    <svg class="ico" aria-hidden="true" focusable="false"><use href="#i-phone-volume"></use></svg>601 450 146
+                </a>
+                <a asp-page="/Contact" asp-fragment="kontakt-formularz" class="btn-gamex btn-secondary-gamex">
+                    <svg class="ico" aria-hidden="true" focusable="false"><use href="#i-file-invoice"></use></svg>Wyceń transport
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <div class="transport-page">
+        <div class="container">
             <div class="row g-4">
-                <aside class="col-lg-2">
+                <aside class="col-lg-3">
                     @await Html.PartialAsync("_MachineCategoryList", new GamexBusinessPage.Models.CategoryLinkViewModel(Model.CategoryLinks))
                 </aside>
 
-                <section class="col-lg-9">
+                <section class="col-lg-9" aria-label="Rodzaje transportu">
                     <div class="transport-grid">
                         @foreach (var category in Model.FilteredCategories)
                         {
                             <section class="transport-category">
                                 <div class="transport-category-header">
                                     <h2>@category.DisplayName</h2>
-                                    <p>Wybierz rozwiązanie dopasowane do rodzaju ładunku.</p>
+                                    <p>Dobierz zestaw do tego, co masz do przewiezienia.</p>
                                 </div>
 
                                 <div class="row g-4">
                                     @foreach (var transport in category.Transports)
                                     {
                                         <div class="col-md-6 col-xl-4">
-                                            <a class="transport-card service-card-link" asp-page="/Contact">
+                                            <a class="transport-card service-card-link" asp-page="/Contact" asp-fragment="kontakt-formularz">
                                                 <div class="transport-card-media">
                                                     @if (!string.IsNullOrWhiteSpace(transport.MainImagePath))
                                                     {
-                                                        <img src="@Url.Content(transport.MainImagePath)" alt="@transport.Vehicle - @transport.CategoryDisplayName w Gamex Olkusz" loading="lazy" />
+                                                        <img src="@Url.Content(transport.MainImagePath)"
+                                                             alt="@transport.Vehicle – @transport.CategoryDisplayName w ofercie GAMEX Olkusz"
+                                                             loading="lazy" decoding="async" />
                                                     }
                                                     else
                                                     {
-                                                        <div class="machine-placeholder">Brak zdjęcia</div>
+                                                        <div class="machine-placeholder">Zdjęcie wkrótce</div>
                                                     }
                                                 </div>
                                                 <div class="transport-card-body">
@@ -47,7 +70,7 @@
                                                     <p>@transport.Description</p>
                                                     @if (!string.IsNullOrWhiteSpace(transport.WeightLimit))
                                                     {
-                                                        <div class="transport-limit">Maksymalna ładowość: @transport.WeightLimit</div>
+                                                        <div class="transport-limit">Ładowność: @transport.WeightLimit</div>
                                                     }
                                                     @if (!string.IsNullOrWhiteSpace(transport.Highlight))
                                                     {
@@ -60,6 +83,17 @@
                                 </div>
                             </section>
                         }
+                    </div>
+
+                    <div class="machine-detail-card mt-5">
+                        <h2>Transport bez pośredników</h2>
+                        <p class="section-text mb-0">
+                            Nie wynajmujemy przewoźnika, więc nie doliczamy jego marży ani nie czekamy na jego wolny
+                            termin. Wozimy kruszywa i materiały sypkie, przewozimy maszyny z
+                            <a asp-page="/Offer/MachineRental/MachineRental">naszej wypożyczalni</a>
+                            i obsługujemy własne budowy prowadzone w ramach
+                            <a asp-page="/Offer/Services/Services">usług drogowych</a>.
+                        </p>
                     </div>
                 </section>
             </div>

@@ -50,7 +50,13 @@
                     <label asp-for="MachineInput.Weight" class="form-label text-light">Waga</label>
                     <input asp-for="MachineInput.Weight" class="form-control bg-dark text-light border-secondary" />
                 </div>
-                <div class="col-md-6">
+                <div class="col-12">
+                    <label asp-for="MachineInput.Description" class="form-label text-light">Opis (widoczny na karcie maszyny, ważny dla SEO)</label>
+                    <textarea asp-for="MachineInput.Description" class="form-control bg-dark text-light border-secondary" rows="4"
+                              placeholder="Do czego ta maszyna się nadaje, gdzie się sprawdza, co wyróżnia ten egzemplarz."></textarea>
+                </div>
+
+                <div class="col-12">
                     <label asp-for="MachineInput.RentalOptions" class="form-label text-light">Opcje wynajmu</label>
                     <input asp-for="MachineInput.RentalOptions" class="form-control bg-dark text-light border-secondary" />
                 </div>

@@ -1,3 +1,15 @@
 User-agent: *
+Allow: /
+
+# Admin panel and technical endpoints stay out of the index
 Disallow: /admin
+Disallow: /admin/
+Disallow: /error
+
+# returnUrl addresses are technical form variants, not separate content
+Disallow: /*?returnUrl=
+
+# Category views (?category=) are deliberately crawlable - they have their own
+# titles, descriptions and canonical URLs, and they link through to machine pages.
+
 Sitemap: https://gamex-olkusz.pl/sitemap.xml

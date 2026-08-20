@@ -75,11 +75,36 @@ public class DetailsModel : PageModel
 
         ContactForm = new ContactFormViewModel(machines, Machine.Slug, true, null, ContactFormStatusMessage, ContactFormStatusSuccess);
 
-        ViewData["Title"] = $"Wynajem {Machine.DisplayName} – {Machine.CategoryDisplayName} w Małopolsce | Gamex Olkusz";
-        ViewData["Description"] = $"Szukasz {Machine.DisplayName}? Oferujemy wynajem krótko i długoterminowy z profesjonalną obsługą operatorską w Małopolce, Śląsku i Świętokrzyskim. Zadzwoń po wycenę!";
+        ViewData["Title"] = $"Wynajem {Machine.DisplayName} | GAMEX Olkusz";
+        // When a machine carries its own description, its first sentence becomes the
+        // meta description, so every card gets unique copy rather than a variant of
+        // the same template.
+        var firstSentence = string.IsNullOrWhiteSpace(Machine.Description)
+            ? null
+            : Machine.Description.Split(". ", StringSplitOptions.RemoveEmptyEntries).FirstOrDefault()?.Trim().TrimEnd('.');
+
+        var prefix = $"{Machine.DisplayName} na wynajem z operatorem. ";
+        const string suffix = " GAMEX Olkusz.";
+        const int limit = 160;
+
+        if (!string.IsNullOrWhiteSpace(firstSentence))
+        {
+            // Google truncates the description around 160 characters. Cut on a word
+            // boundary so the result does not end mid-word.
+            var budget = limit - prefix.Length - suffix.Length;
+            if (firstSentence.Length > budget && budget > 20)
+            {
+                var trimmed = firstSentence[..budget];
+                var lastSpace = trimmed.LastIndexOf(' ');
+                firstSentence = (lastSpace > 0 ? trimmed[..lastSpace] : trimmed).TrimEnd(',', ' ') + "…";
+            }
+        }
+
+        ViewData["Description"] = string.IsNullOrWhiteSpace(firstSentence)
+            ? $"{Machine.DisplayName} do wynajęcia z operatorem – {Machine.CategoryDisplayName}. Rozliczenie godzinowe, dowóz na budowę. GAMEX Olkusz."
+            : prefix + firstSentence + "." + suffix;
         ViewData["Keywords"] = $"{Machine.Brand}, {Machine.Model}, wynajem {Machine.CategoryDisplayName}, maszyny budowlane Olkusz, Małopolska, Śląsk, Świętokrzyskie";
 
-        var priceValidUntil = "2026-12-31";
         var baseUrl = "https://gamex-olkusz.pl";
         if (!string.IsNullOrWhiteSpace(Machine.MainImagePath))
         {
@@ -134,21 +159,21 @@ public class DetailsModel : PageModel
                 ["@type"] = "Offer",
                 ["url"] = detailsUrl,
                 ["priceCurrency"] = "PLN",
-                ["price"] = "100",
-                ["priceValidUntil"] = priceValidUntil,
+                // Stawki ustalamy indywidualnie. Kwota "0" z opisem to zalecany przez Google
+                // zapis "cena na zapytanie" - podanie zmyslonej ceny grozi kara za dane strukturalne.
+                ["price"] = "0",
                 ["itemCondition"] = "https://schema.org/UsedCondition",
                 ["availability"] = "https://schema.org/InStock",
                 ["priceSpecification"] = new Dictionary<string, object?>
                 {
                     ["@type"] = "UnitPriceSpecification",
                     ["priceCurrency"] = "PLN",
-                    ["lowPrice"] = "100",
-                    ["description"] = "Cena za dobę, uzależniona od długości najmu",
+                    ["description"] = "Stawka godzinowa lub dobowa ustalana indywidualnie – wycena bezpłatna",
                     ["referenceQuantity"] = new Dictionary<string, object?>
                     {
                         ["@type"] = "QuantitativeValue",
                         ["value"] = "1",
-                        ["unitCode"] = "DAY"
+                        ["unitCode"] = "HUR"
                     }
                 },
                 ["seller"] = new Dictionary<string, object?>
@@ -158,7 +183,10 @@ public class DetailsModel : PageModel
                 ["businessFunction"] = "http://purl.org/goodrelations/v1#LeaseOut"
             },
             ["name"] = Machine.DisplayName,
-            ["description"] = $"Wynajem: {Machine.DisplayName}. Oferujemy profesjonalny sprzęt budowlany z transportem do klienta w województwie małopolskim, śląskim i świętokrzyskim. {Machine.RentalOptions}",
+            // Opis maszyny, jesli istnieje, jest znacznie lepszym sygnalem niz szablon.
+            ["description"] = string.IsNullOrWhiteSpace(Machine.Description)
+                ? $"{Machine.DisplayName} do wynajęcia z operatorem. Rozliczenie godzinowe, dowóz na budowę własnym transportem. {Machine.RentalOptions}".Trim()
+                : Machine.Description,
             ["image"] = string.IsNullOrWhiteSpace(Machine.MainImagePath) ? $"{baseUrl}/images/machines/default-machine.webp" : $"{baseUrl}{Machine.MainImagePath}",
             ["brand"] = string.IsNullOrWhiteSpace(Machine.Brand)
                 ? null

@@ -1,0 +1,182 @@
+/* ==========================================================================
+   10 · REMAINING SUBPAGES
+   Cards on /oferta and the EU grant page.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   10.1 · Offer page cards
+   -------------------------------------------------------------------------- */
+
+.oferta-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 2.5rem 2rem;
+    overflow: hidden;
+    text-align: left;
+}
+
+    .oferta-card .card-content {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+
+        .oferta-card .card-content .btn-gamex {
+            margin-top: auto;
+            align-self: flex-start;
+        }
+
+    .oferta-card h2,
+    .oferta-card h3 {
+        margin-bottom: 0.75rem;
+        font-size: 1.55rem;
+        text-transform: uppercase;
+    }
+
+    .oferta-card p {
+        margin-bottom: 1.5rem;
+        color: var(--concrete-300);
+    }
+
+    .oferta-card:hover .card-icon {
+        transform: translateY(-3px) scale(1.06);
+    }
+
+.oferta-list {
+    margin-bottom: 1.75rem;
+    gap: 0.45rem;
+}
+
+    .oferta-list li {
+        font-size: 0.95rem;
+    }
+
+/* Colour variants of the offer cards */
+.card-roads::before,
+.card-transport::before {
+    background: var(--steel-grad);
+}
+
+.card-roads:hover,
+.card-transport:hover {
+    border-color: rgba(0, 160, 227, 0.4);
+}
+
+.card-roads .card-icon,
+.card-transport .card-icon {
+    background: var(--steel-soft);
+    border-color: rgba(0, 160, 227, 0.28);
+    color: var(--steel-400);
+}
+
+.card-icon {
+    width: 62px;
+    height: 62px;
+    font-size: 1.7rem;
+    margin-bottom: 1.35rem;
+}
+
+/* --------------------------------------------------------------------------
+   10.2 · EU grants
+   -------------------------------------------------------------------------- */
+
+.dotacje-hero {
+    padding-block: var(--section-y-tight) clamp(1.5rem, 3vw, 2.5rem);
+    text-align: center;
+}
+
+.dotacje-hero-logo {
+    max-height: 110px;
+    width: auto;
+    margin-bottom: 1.5rem;
+    padding: 0.85rem 1.25rem;
+    background: #fff;
+    border-radius: var(--r-sm);
+}
+
+.dotacje-title {
+    margin-bottom: 0.5rem;
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+    text-transform: uppercase;
+    color: var(--concrete-050);
+}
+
+.dotacje-subtitle {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--hivis-500);
+}
+
+.dotacje-content {
+    padding-bottom: clamp(3rem, 6vw, 4.5rem);
+}
+
+.dotacje-card {
+    padding: clamp(1.5rem, 4vw, 3rem);
+    box-shadow: var(--shadow-md);
+}
+
+    .dotacje-card h2 {
+        margin-top: 2.25rem;
+        margin-bottom: 0.85rem;
+        font-size: 1.35rem;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: var(--hivis-500);
+    }
+
+        .dotacje-card h2:first-of-type {
+            margin-top: 1.5rem;
+        }
+
+    .dotacje-card p,
+    .dotacje-card li {
+        color: var(--concrete-300);
+        line-height: 1.75;
+    }
+
+.dotacje-list {
+    margin-bottom: 1rem;
+}
+
+.dotacje-values {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.25rem;
+    margin-top: 2.5rem;
+    padding-top: 1.75rem;
+    border-top: 1px solid var(--line-soft);
+}
+
+    .dotacje-values > div {
+        padding: 1.15rem 1.25rem;
+        background: var(--asphalt-950);
+        border: 1px solid var(--line-soft);
+        border-radius: var(--r-sm);
+    }
+
+    .dotacje-values span {
+        display: block;
+        margin-bottom: 0.3rem;
+        color: var(--concrete-500);
+        font-size: 0.82rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+    }
+
+    .dotacje-values strong {
+        font-family: var(--font-display);
+        font-size: 1.5rem;
+        color: var(--hivis-400);
+    }
+
+.dotacje-hashtags {
+    margin-top: 2rem;
+    margin-bottom: 0;
+    color: var(--concrete-700);
+    font-size: 0.9rem;
+}

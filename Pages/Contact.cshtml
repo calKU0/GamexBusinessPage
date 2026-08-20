@@ -1,55 +1,79 @@
-﻿@page "/kontakt"
+@page "/kontakt"
 @model GamexBusinessPage.Pages.KontaktModel
 
+@await Html.PartialAsync("_Breadcrumb", new List<(string, string?)>
+{
+    ("Strona główna", Url.Page("/Index")),
+    ("Kontakt", null)
+})
 
 <div class="kontakt-page">
-    <div class="container py-5">
-        <section class="kontakt-hero text-center">
-            <h1 class="kontakt-title">Kontakt</h1>
-            <p class="kontakt-subtitle">
-                Skontaktuj się z nami — chętnie odpowiemy na Twoje pytania
+    <section class="page-hero">
+        <div class="container">
+            <p class="eyebrow">Kontakt</p>
+            <h1>Porozmawiajmy o <span>Twojej inwestycji</span></h1>
+            <p class="lead">
+                Napisz, co jest do zrobienia, gdzie i na kiedy. Wycena wynajmu maszyn albo robót drogowych
+                nic nie kosztuje, a odpowiedź wysyłamy zwykle jeszcze tego samego dnia roboczego.
             </p>
-        </section>
+        </div>
+    </section>
 
-        <section class="kontakt-content">
-            <div class="row g-4">
+    <div class="subpage-body">
+        <div class="container">
+            <section class="kontakt-content">
+                <div class="row g-4">
 
-            <!-- CONTACT INFO -->
-            <div class="col-lg-4">
-                <div class="kontakt-card">
-                    <h3>Dane firmy</h3>
+                    <div class="col-lg-4">
+                        <div class="kontakt-card">
+                            <h2>Dane firmy</h2>
 
-                    <p class="firma-name">
-                        P.P.U.H. „GAMEX”<br />
-                        Grzegorz Żurek
-                    </p>
+                            <p class="firma-name">
+                                P.P.U.H. „GAMEX”<br />
+                                Grzegorz Żurek
+                            </p>
 
-                    <ul class="kontakt-list">
-                        <li>📍 Osiek 233, 32-300 Osiek</li>
-                        <li>📞 <a href="tel:601450146">601 450 146</a></li>
-                        <li>✉️ <a href="mailto:gamexolkusz@poczta.fm">gamexolkusz@poczta.fm</a></li>
-                    </ul>
+                            <ul class="kontakt-list">
+                                <li>
+                                    <svg class="ico" aria-hidden="true" focusable="false"><use href="#i-location-dot"></use></svg>
+                                    <address class="mb-0">Osiek 233<br />32-300 Osiek</address>
+                                </li>
+                                <li>
+                                    <svg class="ico" aria-hidden="true" focusable="false"><use href="#i-phone"></use></svg>
+                                    <a href="tel:+48601450146">+48 601 450 146</a>
+                                </li>
+                                <li>
+                                    <svg class="ico" aria-hidden="true" focusable="false"><use href="#i-envelope"></use></svg>
+                                    <a href="mailto:gamexolkusz@poczta.fm">gamexolkusz@poczta.fm</a>
+                                </li>
+                            </ul>
 
-                    <div class="kontakt-meta">
-                        <div><strong>NIP:</strong> 6370112668</div>
-                        <div><strong>REGON:</strong> 271726184</div>
+                            <div class="kontakt-hours">
+                                <b>Godziny pracy</b>
+                                poniedziałek – sobota, 6:00 – 16:00
+                            </div>
+
+                            <div class="kontakt-meta">
+                                <div><strong>NIP:</strong> 6370112668</div>
+                                <div><strong>REGON:</strong> 271726184</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-8" id="kontakt-formularz">
+                        <div class="kontakt-card">
+                            <h2>Formularz kontaktowy</h2>
+                            @await Html.PartialAsync("_ContactForm", Model.ContactForm)
+                        </div>
                     </div>
                 </div>
-            </div>
-
-            <!-- CONTACT FORM -->
-            <div class="col-lg-8" id="kontakt-formularz">
-                <div class="kontakt-card">
-                    <h3>Formularz kontaktowy</h3>
-                    @await Html.PartialAsync("_ContactForm", Model.ContactForm)
-                </div>
-            </div>
+            </section>
         </div>
-        </section>
     </div>
 
-    <section class="kontakt-map">
+    <section class="kontakt-map" aria-label="Lokalizacja siedziby GAMEX na mapie">
         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2550.7531826499626!2d19.604183876479876!3d50.25919390503484!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4716e4cb3150e78f%3A0xdd51896c72ba8d41!2sPPUH%20Gamex%20mgr.in%C5%BC%20Grzegorz%20%C5%BBurek!5e0!3m2!1spl!2spl!4v1724447808821!5m2!1spl!2spl"
+                title="Mapa dojazdu do siedziby GAMEX, Osiek 233, 32-300 Osiek"
                 loading="lazy"
                 allowfullscreen
                 referrerpolicy="no-referrer-when-downgrade">

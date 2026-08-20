@@ -1,0 +1,260 @@
+/* ==========================================================================
+   12 · ANIMATIONS
+   Rule: animate "transform" and "opacity" only. Both are composited on the GPU
+   without a layout pass, so motion causes no content shift (CLS).
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   12.1 · Keyframes
+   -------------------------------------------------------------------------- */
+
+@keyframes gxFadeUp {
+    from {
+        opacity: 0;
+        transform: translate3d(0, 28px, 0);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@keyframes gxFadeDown {
+    from {
+        opacity: 0;
+        transform: translate3d(0, -18px, 0);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@keyframes gxLineUp {
+    from {
+        opacity: 0;
+        transform: translate3d(0, 100%, 0);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@keyframes gxHeroPan {
+    from {
+        transform: scale(1.04);
+    }
+
+    to {
+        transform: scale(1.16) translate3d(-2%, -1.5%, 0);
+    }
+}
+
+@keyframes gxTicker {
+    from {
+        transform: translate3d(0, 0, 0);
+    }
+
+    to {
+        transform: translate3d(-50%, 0, 0);
+    }
+}
+
+@keyframes gxScrollNudge {
+    0%, 100% {
+        transform: translate(-50%, 0);
+        opacity: 0.45;
+    }
+
+    50% {
+        transform: translate(-50%, 10px);
+        opacity: 1;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   12.2 · On-load entrance
+   Applied directly in the markup (hero), without JavaScript.
+   -------------------------------------------------------------------------- */
+
+.anim-fade-up {
+    animation: gxFadeUp 0.85s var(--ease) both;
+}
+
+.anim-fade-down {
+    animation: gxFadeDown 0.7s var(--ease) both;
+}
+
+.anim-d1 {
+    animation-delay: 0.3s;
+}
+
+.anim-d2 {
+    animation-delay: 0.45s;
+}
+
+.anim-d3 {
+    animation-delay: 0.6s;
+}
+
+/* The hero heading slides in line by line from behind a mask */
+.anim-hero-title .anim-line {
+    display: block;
+    overflow: hidden;
+    animation: gxLineUp 0.95s var(--ease) both;
+    will-change: transform;
+}
+
+    .anim-hero-title .anim-line:nth-child(1) {
+        animation-delay: 0.06s;
+    }
+
+    .anim-hero-title .anim-line:nth-child(2) {
+        animation-delay: 0.16s;
+    }
+
+    .anim-hero-title .anim-line:nth-child(3) {
+        animation-delay: 0.26s;
+    }
+
+    .anim-hero-title .anim-line.accent {
+        color: var(--hivis-500);
+    }
+
+/* --------------------------------------------------------------------------
+   12.3 · On-scroll entrance (.reveal)
+   The initial state is applied only when JavaScript is running (class "js" on
+   the html element). Without a script all content is simply visible, which
+   matters for crawlers and as a fallback.
+   -------------------------------------------------------------------------- */
+
+.js .reveal {
+    opacity: 0;
+    transform: translate3d(0, 28px, 0);
+    transition: opacity 0.75s var(--ease), transform 0.75s var(--ease);
+    will-change: opacity, transform;
+}
+
+    .js .reveal.is-visible {
+        opacity: 1;
+        transform: none;
+        will-change: auto;
+    }
+
+/* Cascade: the parent only fades in, the children carry the motion */
+.js .reveal-stagger {
+    transform: none;
+}
+
+.js .reveal-stagger.is-visible > * {
+    animation: gxFadeUp 0.7s var(--ease) both;
+}
+
+.js .reveal-stagger.is-visible > *:nth-child(1)  { animation-delay: 0.02s; }
+.js .reveal-stagger.is-visible > *:nth-child(2)  { animation-delay: 0.09s; }
+.js .reveal-stagger.is-visible > *:nth-child(3)  { animation-delay: 0.16s; }
+.js .reveal-stagger.is-visible > *:nth-child(4)  { animation-delay: 0.23s; }
+.js .reveal-stagger.is-visible > *:nth-child(5)  { animation-delay: 0.30s; }
+.js .reveal-stagger.is-visible > *:nth-child(6)  { animation-delay: 0.37s; }
+.js .reveal-stagger.is-visible > *:nth-child(7)  { animation-delay: 0.42s; }
+.js .reveal-stagger.is-visible > *:nth-child(8)  { animation-delay: 0.47s; }
+.js .reveal-stagger.is-visible > *:nth-child(9)  { animation-delay: 0.52s; }
+.js .reveal-stagger.is-visible > *:nth-child(n+10) { animation-delay: 0.56s; }
+
+/* FAQ answer expansion */
+.faq-item[open] .faq-answer {
+    animation: gxFadeUp 0.35s var(--ease) both;
+}
+
+/* --------------------------------------------------------------------------
+   12.4 · Reduced motion
+   Disables the motion the system setting is about: entrances, parallax,
+   infinite loops and background zoom. Short colour transitions on hover stay.
+   -------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    .anim-fade-up,
+    .anim-fade-down,
+    .anim-hero-title .anim-line,
+    .js .reveal,
+    .js .reveal.is-visible,
+    .js .reveal-stagger.is-visible > *,
+    .faq-item[open] .faq-answer {
+        animation: none !important;
+        transition: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+    }
+
+    .home-hero-bg,
+    .home-ticker-track,
+    .home-hero-scroll {
+        animation: none !important;
+    }
+
+    .home-hero-bg {
+        translate: none !important;
+    }
+
+    /* A frozen tape would look like a list cut in half, because some items sit
+       outside the frame. Without animation it wraps to a few rows instead and
+       shows the full set of links. */
+    .home-ticker {
+        padding-block: 0.55rem;
+    }
+
+    .home-ticker-track {
+        flex-wrap: wrap;
+        justify-content: center;
+        width: auto;
+        row-gap: 0.25rem;
+    }
+
+    /* "display: contents" lifts the links straight into the tape container.
+       Without it the group stays one unbreakable flex item and the list still
+       runs off the edge instead of wrapping. */
+    .home-ticker-group {
+        display: contents;
+    }
+
+        /* The duplicate only serves the seamless loop - without motion it is noise */
+        .home-ticker-group[aria-hidden="true"] {
+            display: none;
+        }
+
+    /* Tighter rhythm and no asterisks - in a wrapped list they only take up
+       room, where in running text they acted as separators. */
+    .home-ticker a {
+        padding-inline: 0.55rem;
+        font-size: 0.95rem;
+    }
+
+        .home-ticker a::after {
+            display: none;
+        }
+
+    /* Spatial hover motion is disabled too - only the colour change stays */
+    .hover-lift:hover,
+    .value-card:hover,
+    .pillar-card:hover,
+    .machine-card:hover,
+    .service-card:hover,
+    .transport-card:hover,
+    .oferta-card:hover,
+    .process-step:hover,
+    .area-card:hover,
+    .cat-tile:hover,
+    .btn-gamex:hover,
+    .section-image-wrapper:hover img,
+    .partners-logos img:hover {
+        transform: none !important;
+    }
+}

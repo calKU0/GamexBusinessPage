@@ -1,0 +1,381 @@
+/* ==========================================================================
+   15 · RESPONSIVE AND PRINT
+   Loaded last so the overrides work without raising specificity.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   15.1 · Dropdown on large screens
+   -------------------------------------------------------------------------- */
+
+/* The bar expands only from 1200 px (navbar-expand-xl): five links, the phone
+   number, the CTA and the grant logo do not fit on one row at 992-1100 px.
+   Below that breakpoint the hamburger menu takes over. */
+@media (min-width: 1200px) {
+    .nav-item.dropdown {
+        position: relative;
+    }
+
+    /* !important is required to beat Bootstrap's .dropdown-menu{display:none}.
+       The two-column variant must therefore use !important as well, or the rules
+       above override its display and the grid never turns on. */
+    .gamex-dropdown {
+        display: block !important;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        margin-top: 12px !important;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(10px);
+        pointer-events: none;
+        transition: opacity var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease), visibility var(--dur-fast) var(--ease);
+    }
+
+    .nav-item.dropdown:hover > .dropdown-hover-wrapper > .gamex-dropdown,
+    .nav-item.dropdown:focus-within > .dropdown-hover-wrapper > .gamex-dropdown {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+        pointer-events: auto;
+    }
+
+    .gamex-dropdown--wide {
+        display: grid !important;
+    }
+
+    /* Invisible bridge so the cursor does not lose the menu on the way down */
+    .gamex-dropdown::before {
+        content: "";
+        position: absolute;
+        top: -16px;
+        left: 0;
+        right: 0;
+        height: 16px;
+        background: transparent;
+    }
+
+}
+
+@media (min-width: 992px) {
+    /* The expanded category list is visible by default */
+    .expandable-section {
+        display: block;
+    }
+
+        .expandable-section .animated-list {
+            opacity: 1;
+            transform: none;
+            padding-top: 0.25rem;
+        }
+
+    .machine-category-more-btn {
+        display: none;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   15.2 · Below 1200 px
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 1199.98px) {
+    .home-hero-trust {
+        gap: 0.75rem 1rem;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   15.3 · Tablet and below
+   -------------------------------------------------------------------------- */
+
+/* Vertical navigation - up to the bar expand breakpoint (1200 px) */
+@media (max-width: 1199.98px) {
+    .gamex-navbar .navbar-collapse {
+        margin-top: 0.75rem;
+        padding: 0.75rem 0 0.5rem;
+        border-top: 1px solid var(--line-soft);
+    }
+
+    .gamex-navbar .navbar-nav {
+        align-items: stretch !important;
+        gap: 0.15rem;
+    }
+
+    .gamex-navbar .nav-link {
+        padding: 0.7rem 0.25rem;
+    }
+
+    /* An expanded menu can be taller than a phone screen. Without its own
+       scrolling the only way to reach the bottom items was scrolling the whole
+       page, and the sticky header travelled with it.
+       "overscroll-behavior: contain" stops the scroll at the list boundary, so a
+       finger swipe over the menu does not carry over to the document. */
+    .gamex-navbar .navbar-collapse.show {
+        /* The reserve covers the contact bar, the logo row and the list's own
+           margin, which lies outside the area max-height accounts for. */
+        max-height: calc(100vh - 9rem);
+        max-height: calc(100dvh - 9rem);
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* The submenu starts collapsed - the button next to the link expands it. */
+    .gamex-dropdown {
+        display: none;
+        position: static;
+        padding-left: 1rem;
+        margin-top: 0.2rem;
+        background: transparent;
+        border: none;
+        box-shadow: none;
+    }
+
+    .dropdown-hover-wrapper.is-open .gamex-dropdown {
+        display: block;
+    }
+
+    .submenu-toggle {
+        display: inline-flex;
+    }
+
+    /* The parent link must not stretch across the whole row, or the disclosure
+       button would end up outside the touch area. */
+    .nav-parent .nav-link {
+        flex: 1 1 auto;
+    }
+
+    .gamex-navbar .nav-phone,
+    .gamex-navbar .nav-cta {
+        justify-content: center;
+        margin-top: 0.5rem;
+        text-align: center;
+    }
+
+    .nav-dotacje {
+        margin-left: 0;
+        margin-top: 0.85rem;
+    }
+
+    .dotacje-link {
+        justify-content: center;
+    }
+
+    /* Collapse the contact bar on scroll on large screens only - in the vertical
+       layout the menu is hidden behind the toggle anyway. */
+    .gamex-header.is-scrolled .gamex-topbar {
+        max-height: 6rem;
+        opacity: 1;
+    }
+}
+
+@media (max-width: 991.98px) {
+    :root {
+        --nav-h: 68px;
+    }
+
+    .gamex-topbar .container {
+        justify-content: center;
+    }
+
+    .topbar-badge {
+        display: none;
+    }
+
+    /* --- Hero --- */
+    .home-hero {
+        min-height: auto;
+        padding-block: clamp(3rem, 8vh, 5rem);
+    }
+
+    .home-hero-content {
+        max-width: 100%;
+    }
+
+    .home-hero-overlay {
+        background: linear-gradient(180deg, rgba(7, 8, 13, 0.9) 0%, rgba(7, 8, 13, 0.82) 55%, rgba(7, 8, 13, 0.95) 100%);
+    }
+
+    .home-hero-scroll {
+        display: none;
+    }
+
+    .home-hero-trust {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    /* --- Content --- */
+    .section-image-wrapper::before,
+    .section-image-wrapper::after {
+        width: 32px;
+        height: 32px;
+    }
+
+    .feature-list {
+        grid-template-columns: 1fr;
+    }
+
+    .cta-panel {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 1.75rem;
+    }
+
+    .cta-panel-aside {
+        width: 100%;
+        padding-left: 0;
+        padding-top: 1.5rem;
+        border-left: 0;
+        border-top: 1px solid var(--line);
+    }
+
+    /* --- Category panel: not sticky, collapsible --- */
+    .machine-category-panel {
+        position: static;
+        margin-bottom: 1.5rem;
+    }
+
+    .expandable-section {
+        display: grid;
+        grid-template-rows: 0fr;
+        overflow: hidden;
+        transition: grid-template-rows 0.4s var(--ease);
+    }
+
+        .expandable-section .animated-list {
+            min-height: 0;
+            padding-top: 0.25rem;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+    .category-logic-check:checked + .machine-category-list + .expandable-section {
+        grid-template-rows: 1fr;
+    }
+
+        .category-logic-check:checked + .machine-category-list + .expandable-section .animated-list {
+            opacity: 1;
+            transform: translateY(0);
+            transition-delay: 0.1s;
+        }
+
+    .machine-category-more-btn {
+        display: flex;
+        justify-content: center;
+        width: calc(100% - 1rem);
+        cursor: pointer;
+    }
+
+    .category-logic-check:checked ~ .machine-category-more-btn .show-more-text {
+        display: none;
+    }
+
+    .category-logic-check:checked ~ .machine-category-more-btn .show-less-text {
+        display: inline;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   15.4 · Phone
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 767.98px) {
+    /* g-5 gutters give a negative margin larger than the container padding,
+       which pushes the row out of view on narrow screens. */
+    .row.g-5 {
+        --bs-gutter-x: 1.5rem;
+    }
+
+    .machine-parameters-list {
+        grid-template-columns: 1fr;
+        gap: 0.35rem;
+    }
+
+        .machine-parameters-list dt {
+            font-weight: 600;
+        }
+
+        .machine-parameters-list dd {
+            margin-bottom: 0.75rem;
+        }
+
+    .machine-basic-info dt,
+    .machine-basic-info dd {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
+    .machine-basic-info dt {
+        margin-bottom: 0.15rem;
+    }
+
+    .machine-basic-info dd {
+        margin-bottom: 0.7rem;
+    }
+
+    .topbar-meta {
+        gap: 1rem;
+        font-size: 0.8rem;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .home-hero-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .btn-gamex {
+        width: 100%;
+    }
+
+    .pillar-card .btn-gamex,
+    .oferta-card .card-content .btn-gamex {
+        align-self: stretch;
+    }
+
+    .cat-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .cat-tile {
+        padding: 0.8rem 0.9rem;
+        font-size: 0.95rem;
+    }
+
+    .a11y-widget {
+        right: 0.75rem;
+        bottom: 0.75rem;
+    }
+
+    .topbar-meta .topbar-hide-xs {
+        display: none;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   15.5 · Print
+   -------------------------------------------------------------------------- */
+
+@media print {
+    .gamex-navbar,
+    .gamex-topbar,
+    .a11y-widget,
+    .home-ticker,
+    .kontakt-map,
+    .home-hero-scroll,
+    .gamex-footer::before {
+        display: none !important;
+    }
+
+    html,
+    body {
+        background: #fff !important;
+        color: #000 !important;
+    }
+
+    a {
+        color: #000 !important;
+        text-decoration: underline;
+    }
+}

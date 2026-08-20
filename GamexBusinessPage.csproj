@@ -1,9 +1,19 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk.Web" InitialTargets="BundleGamexStyles">
 
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <!--
+    Static asset compression is disabled for development builds. site.css is
+    produced by concatenating Styles/, and a stale .gz variant made the server
+    return an empty response body. Release builds keep compression on: publish
+    generates every variant from scratch out of the finished file.
+  -->
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <CompressionEnabled>false</CompressionEnabled>
   </PropertyGroup>
 
   <ItemGroup>
@@ -32,5 +42,86 @@
     <PackageReference Include="SixLabors.ImageSharp" Version="3.1.12" />
     <PackageReference Include="SixLabors.ImageSharp.Web" Version="3.2.0" />
   </ItemGroup>
+
+  <!--
+    Stylesheets are authored in Styles/, split by topic, and concatenated into a
+    single wwwroot/css/site.css on every build: the source stays readable while
+    the browser fetches one file instead of several render-blocking <link>s.
+
+    Styles/ is outside wwwroot, so its contents are never served.
+  -->
+  <ItemGroup>
+    <None Include="Styles\**\*.css" />
+    <Watch Include="Styles\**\*.css" />
+  </ItemGroup>
+
+  <!--
+    An inline C# task rather than ReadLinesFromFile/WriteLinesToFile: those two
+    treat text as an MSBuild item list and split it on semicolons, which would
+    destroy every declaration in a stylesheet.
+  -->
+  <UsingTask TaskName="ConcatCssFiles"
+             TaskFactory="RoslynCodeTaskFactory"
+             AssemblyFile="$([MSBuild]::NormalizePath('$(MSBuildToolsPath)', 'Microsoft.Build.Tasks.Core.dll'))">
+    <ParameterGroup>
+      <SourceDirectory ParameterType="System.String" Required="true" />
+      <OutputFile ParameterType="System.String" Required="true" />
+    </ParameterGroup>
+    <Task>
+      <Using Namespace="System" />
+      <Using Namespace="System.IO" />
+      <Using Namespace="System.Linq" />
+      <Using Namespace="System.Text" />
+      <Code Type="Fragment" Language="cs">
+        <![CDATA[
+        var files = Directory.GetFiles(SourceDirectory, "*.css")
+                             .OrderBy(path => Path.GetFileName(path), StringComparer.Ordinal)
+                             .ToArray();
+
+        var builder = new StringBuilder();
+        builder.AppendLine("/* GENERATED FILE - DO NOT EDIT DIRECTLY.");
+        builder.AppendLine("   Built by concatenating Styles/ during compilation");
+        builder.AppendLine("   (BundleGamexStyles target in GamexBusinessPage.csproj).");
+        builder.AppendLine("   Make changes in Styles/*.css and run dotnet build. */");
+        builder.AppendLine();
+
+        foreach (var file in files)
+        {
+            builder.AppendLine(File.ReadAllText(file).TrimEnd());
+            builder.AppendLine();
+        }
+
+        var content = builder.ToString();
+        var outputDirectory = Path.GetDirectoryName(OutputFile);
+        if (!Directory.Exists(outputDirectory))
+        {
+            Directory.CreateDirectory(outputDirectory);
+        }
+
+        // Write only on a real change - otherwise every build would produce a new
+        // fingerprint and invalidate the browser cache.
+        if (!File.Exists(OutputFile) || File.ReadAllText(OutputFile) != content)
+        {
+            File.WriteAllText(OutputFile, content, new UTF8Encoding(false));
+            Log.LogMessage(MessageImportance.High, "Bundled " + files.Length + " stylesheets from Styles/ into wwwroot/css/site.css");
+        }
+        ]]>
+      </Code>
+    </Task>
+  </UsingTask>
+
+  <!--
+    Hooked up through InitialTargets on <Project> rather than BeforeTargets.
+    Writing to wwwroot mid-build happened after the static asset pipeline had
+    already computed fingerprints and prepared the gzip variants, so the server
+    returned an empty response for site.css. InitialTargets runs before any other
+    target, so the stylesheet is ready before the SDK starts collecting assets.
+  -->
+  <Target Name="BundleGamexStyles">
+    <!-- NormalizePath yields the separators of whichever system runs the build
+         (Windows locally, Ubuntu in CI). -->
+    <ConcatCssFiles SourceDirectory="$([MSBuild]::NormalizeDirectory('$(MSBuildProjectDirectory)', 'Styles'))"
+                    OutputFile="$([MSBuild]::NormalizePath('$(MSBuildProjectDirectory)', 'wwwroot', 'css', 'site.css'))" />
+  </Target>
 
 </Project>
