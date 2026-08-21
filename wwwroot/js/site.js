@@ -23,6 +23,15 @@
     var header = document.getElementById("gamexHeader");
     var headerHeight = 0;
 
+    // The header sits in normal flow, so collapsing it shortens the document and
+    // moves every section up by the difference. Anything caching a section's
+    // position has to be told to measure again once that has happened.
+    var geometryListeners = [];
+
+    var remeasureGeometry = function () {
+        geometryListeners.forEach(function (listener) { listener(); });
+    };
+
     var measureHeader = function () {
         headerHeight = header ? header.offsetHeight : 0;
     };
@@ -56,7 +65,10 @@
         // The transitions run on descendants - the contact bar's grid row and
         // the logo's height - never on the header itself, so this listens for
         // the events bubbling up rather than for a transition on the header.
-        header.addEventListener("transitionend", measureHeader);
+        header.addEventListener("transitionend", function () {
+            measureHeader();
+            remeasureGeometry();
+        });
     }
 
     /* ----------------------------------------------------------------------
@@ -119,10 +131,234 @@
         };
 
         remeasure();
+        geometryListeners.push(remeasure);
         // Late-arriving fonts and images shift sections, so measure again once
         // the page has fully settled.
         window.addEventListener("load", remeasure);
         window.addEventListener("resize", remeasure, { passive: true });
+    }
+
+    /* ----------------------------------------------------------------------
+       1c. Category sidebar on the catalog listings
+
+       Each category has its own URL, because those pages carry their own title,
+       description and canonical and are what rank for the category phrases.
+       Only the "all" view lists every category at once, and there the sidebar
+       tracks whichever section the reader has reached.
+       ---------------------------------------------------------------------- */
+    var categoryItems = [];
+
+    var updateCategorySpy = function () {
+        if (categoryItems.length < 2) return;
+
+        // A heading counts as reached once it sits at or above the bottom edge
+        // of the sticky header.
+        var line = window.scrollY + headerHeight + 8;
+        var active = categoryItems[0];
+
+        categoryItems.forEach(function (item) {
+            if (item.top <= line) active = item;
+        });
+
+        // At the very bottom the last section may never cross the line, so the
+        // final category takes over once the page bottoms out.
+        if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 2) {
+            active = categoryItems[categoryItems.length - 1];
+        }
+
+        categoryItems.forEach(function (item) {
+            item.link.classList.toggle("is-active", item === active);
+        });
+    };
+
+    var measureCategories = function () {
+        categoryItems.forEach(function (item) {
+            item.top = item.section.getBoundingClientRect().top + window.scrollY;
+        });
+    };
+
+    // Rebuilt after a swap, because the sidebar and the sections are replaced.
+    var setupCategorySpy = function () {
+        categoryItems = [];
+
+        var panel = document.querySelector(".machine-category-panel");
+        if (!panel) return;
+
+        // Spying only makes sense while every category is on the page. On a
+        // filtered view the server already marks the selected one.
+        var sections = document.querySelectorAll(
+            ".machine-category, .services-category, .transport-category"
+        );
+        if (sections.length < 2) return;
+
+        // Every link carries the id of its section, rendered from the same
+        // category key as the section itself, so the two are paired exactly.
+        // Matching on the visible label instead broke as soon as a heading was
+        // worded or marked up differently from the sidebar.
+        panel.querySelectorAll("a[data-section]").forEach(function (link) {
+            var section = document.getElementById(link.getAttribute("data-section"));
+            if (section) categoryItems.push({ link: link, section: section, top: 0 });
+        });
+
+        measureCategories();
+        updateCategorySpy();
+    };
+
+    var remeasureCategories = function () {
+        measureHeader();
+        measureCategories();
+        updateCategorySpy();
+    };
+
+    setupCategorySpy();
+    geometryListeners.push(remeasureCategories);
+    window.addEventListener("load", remeasureCategories);
+    window.addEventListener("resize", remeasureCategories, { passive: true });
+
+    /* ----------------------------------------------------------------------
+       1e. Switching category without reloading the page
+
+       The categories stay separate documents for search engines, but for a
+       visitor a full reload between them is a white flash and a lost scroll
+       position. The new page is fetched and its <main> swapped in, so the URL,
+       title and markup end up exactly as the server rendered them - just
+       without the reload. Anything unexpected falls back to normal navigation.
+       ---------------------------------------------------------------------- */
+    var catalogMain = document.querySelector("main");
+
+    if (catalogMain && document.querySelector(".machine-category-panel")) {
+        var swapping = false;
+        var currentCatalogUrl = window.location.pathname + window.location.search;
+
+        var applyDocument = function (doc) {
+            var incoming = doc.querySelector("main");
+            if (!incoming) return false;
+
+            catalogMain.innerHTML = incoming.innerHTML;
+            document.title = doc.title;
+
+            var canonical = document.querySelector('link[rel="canonical"]');
+            var incomingCanonical = doc.querySelector('link[rel="canonical"]');
+            if (canonical && incomingCanonical) {
+                canonical.setAttribute("href", incomingCanonical.getAttribute("href"));
+            }
+
+            // The reveal observer only watches elements present when it was
+            // created, so freshly swapped sections would stay hidden.
+            catalogMain.querySelectorAll(".reveal").forEach(function (el) {
+                el.classList.add("is-visible");
+            });
+
+            setupCategorySpy();
+            return true;
+        };
+
+        var loadCategory = function (href, addHistory) {
+            if (swapping) return;
+            swapping = true;
+            document.body.classList.add("is-catalog-loading");
+
+            window.fetch(href, { headers: { "X-Requested-With": "fetch" } })
+                .then(function (response) {
+                    if (!response.ok) throw new Error("HTTP " + response.status);
+                    return response.text();
+                })
+                .then(function (html) {
+                    var doc = new DOMParser().parseFromString(html, "text/html");
+
+                    var commit = function () {
+                        if (!applyDocument(doc)) throw new Error("no main element");
+                        if (addHistory) window.history.pushState({ catalog: true }, "", href);
+                        currentCatalogUrl = href;
+                    };
+
+                    // Runs once the new markup is in place. With a view
+                    // transition the swap is asynchronous, so measuring here
+                    // rather than straight after the call is what keeps this
+                    // reading the new list instead of the old one.
+                    var settle = function () {
+                        var listing = document.querySelector(
+                            ".machine-grid, .services-grid, .transport-grid, .machine-empty-state"
+                        );
+                        if (!listing) return;
+
+                        var top = listing.getBoundingClientRect().top + window.scrollY - anchorOffset();
+                        if (window.scrollY > top) {
+                            window.scrollTo({
+                                top: Math.max(top, 0),
+                                behavior: reduceMotion ? "auto" : "smooth"
+                            });
+                        }
+                    };
+
+                    // A cross-fade where the browser offers one; elsewhere the
+                    // swap is simply instant, which is still no worse than a
+                    // reload.
+                    if (!reduceMotion && document.startViewTransition) {
+                        var transition = document.startViewTransition(commit);
+
+                        // The browser skips the animation whenever the document
+                        // cannot paint it - a hidden tab, a second click before
+                        // the first settled. The DOM is still updated, so these
+                        // rejections are expected and must not surface as
+                        // uncaught errors.
+                        var ignore = function () { };
+                        if (transition.ready) transition.ready.catch(ignore);
+                        if (transition.finished) transition.finished.catch(ignore);
+
+                        if (transition.updateCallbackDone) {
+                            // updateCallbackDone reports the swap itself, not the
+                            // animation, so a rejection here means commit failed
+                            // and the visitor still has to reach the page.
+                            transition.updateCallbackDone.then(settle, function () {
+                                window.location.href = href;
+                            });
+                        } else {
+                            settle();
+                        }
+                    } else {
+                        commit();
+                        settle();
+                    }
+                })
+                .catch(function () {
+                    window.location.href = href;
+                })
+                .then(function () {
+                    swapping = false;
+                    document.body.classList.remove("is-catalog-loading");
+                });
+        };
+
+        document.addEventListener("click", function (event) {
+            if (event.defaultPrevented || event.button !== 0) return;
+            if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+
+            var link = event.target.closest ? event.target.closest(".machine-category-link") : null;
+            if (!link || !link.getAttribute("href") || link.getAttribute("href").charAt(0) === "#") return;
+
+            var url;
+            try { url = new URL(link.href, window.location.href); } catch (e) { return; }
+            if (url.origin !== window.location.origin) return;
+            if (url.pathname !== window.location.pathname) return;
+
+            event.preventDefault();
+            loadCategory(url.pathname + url.search, true);
+        });
+
+        window.addEventListener("popstate", function () {
+            if (!document.querySelector(".machine-category-panel")) return;
+
+            // Anchor clicks push history entries too. Those differ only by hash
+            // and the listing on screen is already the right one, so re-fetching
+            // and re-swapping it would throw away the reader's position for
+            // nothing.
+            var target = window.location.pathname + window.location.search;
+            if (target === currentCatalogUrl) return;
+
+            currentCatalogUrl = target;
+            loadCategory(target, false);
+        });
     }
 
     // A single scroll listener, batched into one animation frame: the class
@@ -134,9 +370,66 @@
         window.requestAnimationFrame(function () {
             setHeaderState();
             updateSpy();
+            updateCategorySpy();
             scrollPending = false;
         });
     }, { passive: true });
+
+    /* ----------------------------------------------------------------------
+       1d. Smooth scrolling for in-page anchors
+
+       CSS scroll-behavior only covers navigation the browser performs itself,
+       and it is switched off under prefers-reduced-motion. Handling the click
+       here keeps the offset identical to scroll-padding-top, moves focus to the
+       target for keyboard and screen reader users, and leaves a history entry
+       so Back returns to where the reader was.
+       ---------------------------------------------------------------------- */
+    var anchorOffset = function () {
+        var declared = parseFloat(
+            window.getComputedStyle(document.documentElement).scrollPaddingTop
+        );
+        return isNaN(declared) ? headerHeight + 16 : declared;
+    };
+
+    document.addEventListener("click", function (event) {
+        if (event.defaultPrevented || event.button !== 0) return;
+        if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+
+        var link = event.target.closest ? event.target.closest('a[href]') : null;
+        if (!link || link.hasAttribute("download") || link.target === "_blank") return;
+
+        var url;
+        try { url = new URL(link.href, window.location.href); } catch (e) { return; }
+
+        // Same document only. A link to another page keeps its normal
+        // navigation, fragment and all.
+        if (url.origin !== window.location.origin) return;
+        if (url.pathname !== window.location.pathname) return;
+        if (!url.hash || url.hash === "#") return;
+
+        var id = decodeURIComponent(url.hash.slice(1));
+        var target = document.getElementById(id);
+        if (!target) return;
+
+        event.preventDefault();
+
+        var top = target.getBoundingClientRect().top + window.scrollY - anchorOffset();
+        window.scrollTo({
+            top: Math.max(top, 0),
+            behavior: reduceMotion ? "auto" : "smooth"
+        });
+
+        if (window.history && window.history.pushState) {
+            window.history.pushState(null, "", url.hash);
+        }
+
+        // Without this the next Tab press would resume from the link, not from
+        // the section just jumped to. preventScroll keeps the smooth scroll.
+        if (!target.hasAttribute("tabindex")) {
+            target.setAttribute("tabindex", "-1");
+        }
+        target.focus({ preventScroll: true });
+    });
 
     /* ----------------------------------------------------------------------
        2. Section reveal on scroll
@@ -180,14 +473,16 @@
             var suffix = el.getAttribute("data-count-suffix") || "";
             if (isNaN(target)) return;
 
-            var duration = 1100;
+            var duration = 1400;
             var started = null;
 
             var step = function (now) {
                 if (started === null) started = now;
                 var progress = Math.min((now - started) / duration, 1);
-                // fast start, soft landing on the target value
-                var eased = 1 - Math.pow(1 - progress, 3);
+                // Eases towards the target, but gently: a cubic curve put 87% of
+                // the count into the first half and then crawled, which read as
+                // the number arriving rather than counting.
+                var eased = 1 - Math.pow(1 - progress, 2);
                 el.textContent = Math.round(target * eased) + suffix;
                 if (progress < 1) window.requestAnimationFrame(step);
             };
@@ -195,11 +490,68 @@
             window.requestAnimationFrame(step);
         };
 
+        // The trust bar is in view the moment the page loads, but it fades in on
+        // a delay. Counting immediately meant the numbers had almost landed
+        // before the bar appeared; waiting for the fade to finish left visible
+        // zeros sitting there instead. So it starts when the fade starts - the
+        // numbers climb while the bar is coming in.
+        var whenEntranceStarts = function (el, run) {
+            var animated = el.closest(".anim-fade-up, .anim-fade-down, .anim-hero-title");
+            if (!animated) {
+                run();
+                return;
+            }
+
+            var styles = window.getComputedStyle(animated);
+            if (!styles.animationName || styles.animationName === "none") {
+                run();
+                return;
+            }
+
+            // If the fade is already under way we have missed its start event.
+            var running = animated.getAnimations ? animated.getAnimations() : [];
+            for (var i = 0; i < running.length; i++) {
+                if (running[i].currentTime > 0) {
+                    run();
+                    return;
+                }
+            }
+
+            var done = false;
+            var go = function () {
+                if (done) return;
+                done = true;
+                run();
+            };
+
+            animated.addEventListener("animationstart", function (event) {
+                // Animations on children bubble up here too.
+                if (event.target === animated) go();
+            });
+
+            // Nothing may report back - an interrupted animation, or an
+            // environment that never runs it - and the numbers still have to
+            // reach their target.
+            var delay = (parseFloat(styles.animationDelay) || 0) * 1000;
+            window.setTimeout(go, delay + 250);
+        };
+
+        // The markup carries the final number, so that a reader without
+        // JavaScript still sees it. Reset to the starting value now, while the
+        // bar is still faded out, or the count would visibly snap back from the
+        // final figure to zero the moment it appears.
+        var primeCounter = function (el) {
+            var target = parseInt(el.getAttribute("data-count-to"), 10);
+            if (isNaN(target)) return;
+            el.textContent = "0" + (el.getAttribute("data-count-suffix") || "");
+        };
+
         var counterObserver = new IntersectionObserver(function (entries) {
             entries.forEach(function (entry) {
                 if (!entry.isIntersecting) return;
-                runCounter(entry.target);
                 counterObserver.unobserve(entry.target);
+                primeCounter(entry.target);
+                whenEntranceStarts(entry.target, function () { runCounter(entry.target); });
             });
         }, { threshold: 0.6 });
 

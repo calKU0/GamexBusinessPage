@@ -31,46 +31,42 @@ public class TransportModel : PageModel
 
     public void OnGet(string? category)
     {
-        ViewData["Title"] = "Transport kruszyw i maszyn budowlanych – HDS, laweta | GAMEX Olkusz";
-        ViewData["Description"] = "Oferujemy transport kruszyw, piasku oraz przewóz maszyn budowlanych lawetą i HDS. Szybka realizacja na terenie województwa małopolskiego, śląskiego i świętokrzyskiego.";
-        ViewData["Keywords"] = "Gamex, Olkusz, transport materiałów, transport maszyn, HDS, laweta, niskopodwoziowy, wywrotka, Małopolska";
-        ViewData["CanonicalUrl"] = "https://gamex-olkusz.pl/oferta/transport";
-
         var catalog = _catalogCache.GetTransportCatalog();
         Categories = catalog.Categories;
-        SelectedCategoryKey = category;
 
-        var categoryLinks = new List<CategoryLinkItem>
+        var selected = string.IsNullOrWhiteSpace(category)
+            ? null
+            : Categories.FirstOrDefault(item =>
+                string.Equals(item.Key, category, StringComparison.OrdinalIgnoreCase));
+
+        // See the services listing: an unknown key must not leave the sidebar
+        // with nothing marked.
+        SelectedCategoryKey = selected?.Key;
+        FilteredCategories = selected is null ? Categories : new[] { selected };
+
+        const string listUrl = "https://gamex-olkusz.pl/oferta/transport";
+
+        if (selected is not null)
         {
-            new(
-                "Wszystkie opcje",
-                Url.Page("/oferta/transport") ?? "#",
-                string.IsNullOrWhiteSpace(SelectedCategoryKey))
-        };
-
-        foreach (var transportCategory in Categories)
-        {
-            categoryLinks.Add(new CategoryLinkItem(
-                transportCategory.DisplayName,
-                Url.Page("/oferta/transport", new { category = transportCategory.Key }) ?? "#",
-                string.Equals(SelectedCategoryKey, transportCategory.Key, StringComparison.OrdinalIgnoreCase)));
-        }
-
-        CategoryLinks = categoryLinks;
-
-        if (string.IsNullOrWhiteSpace(category))
-        {
-            FilteredCategories = Categories;
+            ViewData["Title"] = $"{selected.DisplayName} – transport | GAMEX Olkusz";
+            ViewData["Description"] = $"{selected.DisplayName} – GAMEX Olkusz. Własny tabor, realizacja na terenie województwa małopolskiego, śląskiego i świętokrzyskiego.";
+            ViewData["Keywords"] = $"{selected.DisplayName.ToLowerInvariant()}, transport, GAMEX Olkusz, Małopolska, Śląsk, Świętokrzyskie";
+            ViewData["CanonicalUrl"] = $"{listUrl}?category={Uri.EscapeDataString(selected.Key)}";
         }
         else
         {
-            var filteredCategory = Categories.FirstOrDefault(transportCategory =>
-                string.Equals(transportCategory.Key, category, StringComparison.OrdinalIgnoreCase));
-
-            FilteredCategories = filteredCategory is null
-                ? Categories
-                : new[] { filteredCategory };
+            ViewData["Title"] = "Transport kruszyw i maszyn budowlanych – HDS, laweta | GAMEX Olkusz";
+            ViewData["Description"] = "Oferujemy transport kruszyw, piasku oraz przewóz maszyn budowlanych lawetą i HDS. Szybka realizacja na terenie województwa małopolskiego, śląskiego i świętokrzyskiego.";
+            ViewData["Keywords"] = "Gamex, Olkusz, transport materiałów, transport maszyn, HDS, laweta, niskopodwoziowy, wywrotka, Małopolska";
+            ViewData["CanonicalUrl"] = listUrl;
         }
+
+        CategoryLinks = CategoryFilterLinks.Build(
+            Url,
+            "/Offer/Transport/Transport",
+            "Wszystkie opcje",
+            Categories.Select(item => (item.Key, item.DisplayName)),
+            SelectedCategoryKey);
 
         var baseUrl = "https://gamex-olkusz.pl";
 
