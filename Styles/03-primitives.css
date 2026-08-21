@@ -216,6 +216,11 @@
 .section-image-wrapper {
     position: relative;
     width: 100%;
+    transition: transform var(--dur-slow) var(--ease);
+}
+
+.section-image-wrapper:hover {
+    transform: translateY(-6px) scale(1.012);
 }
 
     .section-image-wrapper img {
@@ -224,10 +229,17 @@
         display: block;
         border-radius: var(--r-md);
         box-shadow: var(--shadow-lg);
-        transition: transform var(--dur-slow) var(--ease), box-shadow var(--dur-slow) var(--ease);
+        transition: box-shadow var(--dur-slow) var(--ease);
     }
 
-    /* crosshair corners */
+    /* Crosshair corners.
+
+       The lift and scale sit on the wrapper rather than on the image, so these
+       corners - pseudo-elements of that same wrapper - travel with it. Their own
+       translate is then purely the outward movement and reads the same on every
+       corner. With the transform on the image alone the top-left bracket drifted
+       into the picture instead of away from it: the image rose 6px while the
+       bracket rose only 5, so that gap closed while the others opened. */
     .section-image-wrapper::before,
     .section-image-wrapper::after {
         content: "";
@@ -253,7 +265,6 @@
     }
 
     .section-image-wrapper:hover img {
-        transform: translateY(-6px) scale(1.012);
         box-shadow: 0 36px 80px rgba(0, 0, 0, 0.55);
     }
 

@@ -38,13 +38,12 @@
                 </aside>
 
                 <section class="col-lg-9" aria-label="Zakres usług">
-                    <div class="services-grid">
+                    <div class="services-grid" id="@GamexBusinessPage.Models.CategoryFilterLinks.AllAnchorId">
                         @foreach (var category in Model.FilteredCategories)
                         {
-                            <section class="services-category" id="@GamexBusinessPage.Models.MachineCatalog.BuildSlug(category.Key)">
+                            <section class="services-category" id="@GamexBusinessPage.Models.CategoryFilterLinks.AnchorFor(category.Key)">
                                 <div class="services-category-header">
                                     <h2>@category.DisplayName</h2>
-                                    <p>Prowadzimy temat od projektu roboczego po odbiór.</p>
                                 </div>
 
                                 <div class="row g-4">

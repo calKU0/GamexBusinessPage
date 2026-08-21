@@ -174,27 +174,31 @@
    -------------------------------------------------------------------------- */
 
 .services-grid,
-.transport-grid {
+.transport-grid,
+.machine-grid {
     display: grid;
     gap: clamp(2.5rem, 5vw, 3.75rem);
 }
 
 .services-category-header,
-.transport-category-header {
+.transport-category-header,
+.machine-category-header {
     margin-bottom: 1.75rem;
     padding-bottom: 0.85rem;
     border-bottom: 1px solid var(--line-soft);
 }
 
     .services-category-header h2,
-    .transport-category-header h2 {
+    .transport-category-header h2,
+    .machine-category-header h2 {
         margin-bottom: 0.35rem;
         font-size: clamp(1.5rem, 2.6vw, 2rem);
         text-transform: uppercase;
     }
 
     .services-category-header p,
-    .transport-category-header p {
+    .transport-category-header p,
+    .machine-category-header p {
         margin-bottom: 0;
         color: var(--concrete-500);
         font-size: 0.97rem;
@@ -573,4 +577,38 @@
     color: var(--concrete-300);
     font-size: 1.05rem;
     line-height: 1.75;
+}
+
+/* --------------------------------------------------------------------------
+   8.6 · Switching category
+
+   The categories are separate pages; the sidebar fetches the next one and
+   swaps it in rather than reloading. This is the brief in-between state, kept
+   subtle so it reads as the list settling rather than as a spinner.
+   -------------------------------------------------------------------------- */
+
+.machine-grid,
+.services-grid,
+.transport-grid {
+    transition: opacity var(--dur-fast) var(--ease);
+}
+
+body.is-catalog-loading .machine-grid,
+body.is-catalog-loading .services-grid,
+body.is-catalog-loading .transport-grid {
+    opacity: 0.55;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .machine-grid,
+    .services-grid,
+    .transport-grid {
+        transition: none;
+    }
+
+    body.is-catalog-loading .machine-grid,
+    body.is-catalog-loading .services-grid,
+    body.is-catalog-loading .transport-grid {
+        opacity: 1;
+    }
 }

@@ -50,23 +50,14 @@ public class DetailsModel : PageModel
 
         SelectedCategoryKey = Machine.CategoryKey;
 
-        var categoryLinks = new List<CategoryLinkItem>
-        {
-            new(
-                "Wszystkie maszyny",
-                Url.Page("/oferta/wypozyczenie-maszyn") ?? "#",
-                string.IsNullOrWhiteSpace(SelectedCategoryKey))
-        };
-
-        foreach (var category in Categories)
-        {
-            categoryLinks.Add(new CategoryLinkItem(
-                category.DisplayName,
-                Url.Page("/oferta/wypozyczenie-maszyn", new { category = category.Key }) ?? "#",
-                string.Equals(SelectedCategoryKey, category.Key, StringComparison.OrdinalIgnoreCase)));
-        }
-
-        CategoryLinks = categoryLinks;
+        // Url.Page takes a page path, not a routed URL. Passing the URL returned
+        // null here, which left every link as "#".
+        CategoryLinks = CategoryFilterLinks.Build(
+            Url,
+            "/Offer/MachineRental/MachineRental",
+            "Wszystkie maszyny",
+            Categories.Select(item => (item.Key, item.DisplayName)),
+            SelectedCategoryKey);
 
         var machines = catalog.Machines
             .OrderBy(machine => machine.CategoryDisplayName)

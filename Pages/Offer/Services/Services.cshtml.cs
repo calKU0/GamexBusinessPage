@@ -31,46 +31,43 @@ namespace GamexBusinessPage.Pages.Services
 
         public void OnGet(string? category)
         {
-            ViewData["Title"] = "Budowa dróg, chodników i placów – usługi drogowe | GAMEX Olkusz";
-            ViewData["Description"] = "Budowa i remonty dróg, chodników, parkingów i placów. Roboty ziemne, podbudowy, nawierzchnie asfaltowe i kostka brukowa. GAMEX Olkusz – Małopolska, Śląsk, Świętokrzyskie.";
-            ViewData["Keywords"] = "Gamex, Olkusz, remonty dróg, usługi drogowe, nawierzchnie asfaltowe, usługi budowlane, Małopolska, Śląsk, Świętokrzyskie";
-            ViewData["CanonicalUrl"] = "https://gamex-olkusz.pl/oferta/uslugi";
-
             var catalog = _catalogCache.GetServiceCatalog();
             Categories = catalog.Categories;
-            SelectedCategoryKey = category;
 
-            var categoryLinks = new List<CategoryLinkItem>
+            var selected = string.IsNullOrWhiteSpace(category)
+                ? null
+                : Categories.FirstOrDefault(item =>
+                    string.Equals(item.Key, category, StringComparison.OrdinalIgnoreCase));
+
+            // Only a key that actually matched, so an unknown value falls back to
+            // the full listing with the "all" link marked, rather than leaving
+            // every link inactive.
+            SelectedCategoryKey = selected?.Key;
+            FilteredCategories = selected is null ? Categories : new[] { selected };
+
+            const string listUrl = "https://gamex-olkusz.pl/oferta/uslugi";
+
+            if (selected is not null)
             {
-                new(
-                    "Wszystkie usługi",
-                    Url.Page("/oferta/uslugi") ?? "#",
-                    string.IsNullOrWhiteSpace(SelectedCategoryKey))
-            };
-
-            foreach (var serviceCategory in Categories)
-            {
-                categoryLinks.Add(new CategoryLinkItem(
-                    serviceCategory.DisplayName,
-                    Url.Page("/oferta/uslugi", new { category = serviceCategory.Key }) ?? "#",
-                    string.Equals(SelectedCategoryKey, serviceCategory.Key, StringComparison.OrdinalIgnoreCase)));
-            }
-
-            CategoryLinks = categoryLinks;
-
-            if (string.IsNullOrWhiteSpace(category))
-            {
-                FilteredCategories = Categories;
+                ViewData["Title"] = $"{selected.DisplayName} – usługi budowlane i drogowe | GAMEX Olkusz";
+                ViewData["Description"] = $"{selected.DisplayName} – GAMEX Olkusz. Realizacje na terenie Małopolski, Śląska i Świętokrzyskiego. Własne maszyny i operatorzy, wycena w jeden dzień roboczy.";
+                ViewData["Keywords"] = $"{selected.DisplayName.ToLowerInvariant()}, usługi drogowe, GAMEX Olkusz, Małopolska, Śląsk, Świętokrzyskie";
+                ViewData["CanonicalUrl"] = $"{listUrl}?category={Uri.EscapeDataString(selected.Key)}";
             }
             else
             {
-                var filteredCategory = Categories.FirstOrDefault(serviceCategory =>
-                    string.Equals(serviceCategory.Key, category, StringComparison.OrdinalIgnoreCase));
-
-                FilteredCategories = filteredCategory is null
-                    ? Categories
-                    : new[] { filteredCategory };
+                ViewData["Title"] = "Budowa dróg, chodników i placów – usługi drogowe | GAMEX Olkusz";
+                ViewData["Description"] = "Budowa i remonty dróg, chodników, parkingów i placów. Roboty ziemne, podbudowy, nawierzchnie asfaltowe i kostka brukowa. GAMEX Olkusz – Małopolska, Śląsk, Świętokrzyskie.";
+                ViewData["Keywords"] = "Gamex, Olkusz, remonty dróg, usługi drogowe, nawierzchnie asfaltowe, usługi budowlane, Małopolska, Śląsk, Świętokrzyskie";
+                ViewData["CanonicalUrl"] = listUrl;
             }
+
+            CategoryLinks = CategoryFilterLinks.Build(
+                Url,
+                "/Offer/Services/Services",
+                "Wszystkie usługi",
+                Categories.Select(item => (item.Key, item.DisplayName)),
+                SelectedCategoryKey);
 
             var baseUrl = "https://gamex-olkusz.pl";
 

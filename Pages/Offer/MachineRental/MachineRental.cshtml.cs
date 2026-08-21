@@ -23,24 +23,33 @@ namespace GamexBusinessPage.Pages.MachineRental
 
         public IReadOnlyList<MachineItem> Machines { get; private set; } = Array.Empty<MachineItem>();
 
-        public string? SelectedCategoryKey { get; private set; }
-
         public IReadOnlyList<CategoryLinkItem> CategoryLinks { get; private set; } = Array.Empty<CategoryLinkItem>();
 
         public string? SchemaJson { get; private set; }
 
+        public string? SelectedCategoryKey { get; private set; }
+
         public string? SelectedCategoryName { get; private set; }
+
+        public IReadOnlyList<MachineCategory> FilteredCategories { get; private set; } = Array.Empty<MachineCategory>();
 
         public void OnGet(string? category)
         {
             var catalog = _catalogCache.GetMachineCatalog();
             Categories = catalog.Categories;
-            SelectedCategoryKey = category;
 
             var selectedCategory = string.IsNullOrWhiteSpace(category)
                 ? null
                 : Categories.FirstOrDefault(item => string.Equals(item.Key, category, StringComparison.OrdinalIgnoreCase));
+
+            // Only a key that actually matched, so an unknown value falls back to
+            // the full listing with the "all" link marked.
+            SelectedCategoryKey = selectedCategory?.Key;
             SelectedCategoryName = selectedCategory?.DisplayName;
+
+            FilteredCategories = selectedCategory is null
+                ? Categories
+                : new[] { selectedCategory };
 
             Machines = selectedCategory is null
                 ? catalog.Machines
@@ -48,12 +57,12 @@ namespace GamexBusinessPage.Pages.MachineRental
 
             const string listUrl = "https://gamex-olkusz.pl/oferta/wypozyczenie-maszyn";
 
-            if (SelectedCategoryName is not null)
+            if (selectedCategory is not null)
             {
                 ViewData["Title"] = $"Wynajem: {SelectedCategoryName} | Wypożyczalnia maszyn GAMEX Olkusz";
                 ViewData["Description"] = $"{SelectedCategoryName} do wynajęcia z operatorem – GAMEX Olkusz. Dostępne maszyny: {Machines.Count}. Transport na budowę własnym sprzętem. Woj. małopolskie, śląskie i świętokrzyskie.";
-                ViewData["Keywords"] = $"wynajem {SelectedCategoryName.ToLowerInvariant()}, wypożyczalnia maszyn budowlanych, GAMEX Olkusz, Małopolska, Śląsk, Świętokrzyskie";
-                ViewData["CanonicalUrl"] = $"{listUrl}?category={Uri.EscapeDataString(selectedCategory!.Key)}";
+                ViewData["Keywords"] = $"wynajem {SelectedCategoryName!.ToLowerInvariant()}, wypożyczalnia maszyn budowlanych, GAMEX Olkusz, Małopolska, Śląsk, Świętokrzyskie";
+                ViewData["CanonicalUrl"] = $"{listUrl}?category={Uri.EscapeDataString(selectedCategory.Key)}";
             }
             else
             {
@@ -63,23 +72,12 @@ namespace GamexBusinessPage.Pages.MachineRental
                 ViewData["CanonicalUrl"] = listUrl;
             }
 
-            var categoryLinks = new List<CategoryLinkItem>
-            {
-                new(
-                    "Wszystkie maszyny",
-                    Url.RouteUrl(new { page = "/Offer/MachineRental/MachineRental" }) ?? "#",
-                    string.IsNullOrWhiteSpace(SelectedCategoryKey))
-            };
-
-            foreach (var machineCategory in Categories)
-            {
-                categoryLinks.Add(new CategoryLinkItem(
-                    machineCategory.DisplayName,
-                    Url.RouteUrl(new { page = "/Offer/MachineRental/MachineRental", category = machineCategory.Key }) ?? "#",
-                    string.Equals(SelectedCategoryKey, machineCategory.Key, StringComparison.OrdinalIgnoreCase)));
-            }
-
-            CategoryLinks = categoryLinks;
+            CategoryLinks = CategoryFilterLinks.Build(
+                Url,
+                "/Offer/MachineRental/MachineRental",
+                "Wszystkie maszyny",
+                Categories.Select(item => (item.Key, item.DisplayName)),
+                SelectedCategoryKey);
 
             var baseUrl = "https://gamex-olkusz.pl";
             var breadcrumbSchema = new Dictionary<string, object?>

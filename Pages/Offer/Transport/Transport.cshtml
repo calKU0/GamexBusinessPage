@@ -38,13 +38,12 @@
                 </aside>
 
                 <section class="col-lg-9" aria-label="Rodzaje transportu">
-                    <div class="transport-grid">
+                    <div class="transport-grid" id="@GamexBusinessPage.Models.CategoryFilterLinks.AllAnchorId">
                         @foreach (var category in Model.FilteredCategories)
                         {
-                            <section class="transport-category">
+                            <section class="transport-category" id="@GamexBusinessPage.Models.CategoryFilterLinks.AnchorFor(category.Key)">
                                 <div class="transport-category-header">
                                     <h2>@category.DisplayName</h2>
-                                    <p>Dobierz zestaw do tego, co masz do przewiezienia.</p>
                                 </div>
 
                                 <div class="row g-4">

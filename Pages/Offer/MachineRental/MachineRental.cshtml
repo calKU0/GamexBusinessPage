@@ -60,39 +60,50 @@
                     }
                     else
                     {
-                        <div class="row g-4">
-                            @foreach (var machine in Model.Machines)
+                        <div class="machine-grid" id="@GamexBusinessPage.Models.CategoryFilterLinks.AllAnchorId">
+                            @foreach (var category in Model.FilteredCategories)
                             {
-                                <div class="col-md-6 col-xl-4">
-                                    <article class="machine-card">
-                                        <div class="machine-card-media">
-                                            @{ var imagePath = machine.MainImagePath; }
-                                            @if (!string.IsNullOrWhiteSpace(imagePath))
-                                            {
-                                                <img src="@Url.Content($"~/{imagePath.TrimStart('~', '/')}")"
-                                                     alt="@machine.DisplayName – @machine.CategoryDisplayName na wynajem w GAMEX Olkusz"
-                                                     loading="lazy" decoding="async" />
-                                            }
-                                            else
-                                            {
-                                                <div class="machine-placeholder">Zdjęcie wkrótce</div>
-                                            }
-                                        </div>
-                                        <div class="machine-card-body">
-                                            <div class="machine-card-header">
-                                                <p class="machine-card-category">@machine.CategoryDisplayName</p>
-                                                <h2 class="machine-card-title">@machine.DisplayName</h2>
+                                <section class="machine-category" id="@GamexBusinessPage.Models.CategoryFilterLinks.AnchorFor(category.Key)">
+                                    <div class="machine-category-header">
+                                        <h2>@category.DisplayName</h2>
+                                    </div>
+
+                                    <div class="row g-4">
+                                        @foreach (var machine in category.Machines)
+                                        {
+                                            <div class="col-md-6 col-xl-4">
+                                                <article class="machine-card">
+                                                    <div class="machine-card-media">
+                                                        @{ var imagePath = machine.MainImagePath; }
+                                                        @if (!string.IsNullOrWhiteSpace(imagePath))
+                                                        {
+                                                            <img src="@Url.Content($"~/{imagePath.TrimStart('~', '/')}")"
+                                                                 alt="@machine.DisplayName – @machine.CategoryDisplayName na wynajem w GAMEX Olkusz"
+                                                                 loading="lazy" decoding="async" />
+                                                        }
+                                                        else
+                                                        {
+                                                            <div class="machine-placeholder">Zdjęcie wkrótce</div>
+                                                        }
+                                                    </div>
+                                                    <div class="machine-card-body">
+                                                        <div class="machine-card-header">
+                                                            <p class="machine-card-category">@machine.CategoryDisplayName</p>
+                                                            <h3 class="machine-card-title">@machine.DisplayName</h3>
+                                                        </div>
+                                                        <div class="machine-card-actions">
+                                                            <a class="btn-gamex machine-card-cta"
+                                                               asp-page="/Offer/MachineRental/Details"
+                                                               asp-route-slug="@machine.Slug">
+                                                                Zobacz szczegóły
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </article>
                                             </div>
-                                            <div class="machine-card-actions">
-                                                <a class="btn-gamex machine-card-cta"
-                                                   asp-page="/Offer/MachineRental/Details"
-                                                   asp-route-slug="@machine.Slug">
-                                                    Zobacz szczegóły
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </article>
-                                </div>
+                                        }
+                                    </div>
+                                </section>
                             }
                         </div>
                     }
