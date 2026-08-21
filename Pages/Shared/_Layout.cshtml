@@ -1,4 +1,5 @@
 @inject GamexBusinessPage.Services.CatalogCache CatalogCache
+@inject GamexBusinessPage.Services.InlineStylesheet InlineStylesheet
 @{
     // The largest equipment categories form the second column of the "Oferta" menu.
     // These are the most searched phrases, and a link from every subpage strengthens them.
@@ -66,7 +67,7 @@
            preloads one file and then downloads another. *@
         <link rel="preload" as="image" fetchpriority="high"
               href="/images/road-renovation-1.webp"
-              imagesrcset="/images/road-renovation-1-1280.webp 1280w, /images/road-renovation-1.webp 1920w"
+              imagesrcset="/images/road-renovation-1-800.webp 800w, /images/road-renovation-1-1280.webp 1280w, /images/road-renovation-1.webp 1920w"
               imagesizes="100vw">
     }
 
@@ -77,7 +78,18 @@
     <link rel="preload" href="/fonts/barlow-condensed-700-latin.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="/fonts/barlow-400-latin.woff2" as="font" type="font/woff2" crossorigin>
 
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    @* The stylesheet goes in the document rather than behind a link: fetching it
+       is a round trip on the critical path, and on a throttled connection that
+       round trip - not the 14 KB - was what held up the first paint. *@
+    @{ var inlineCss = InlineStylesheet.Css; }
+    @if (inlineCss.Value!.Length > 0)
+    {
+        <style>@inlineCss</style>
+    }
+    else
+    {
+        <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    }
     @await RenderSectionAsync("Styles", required: false)
     @await RenderSectionAsync("Schema", required: false)
 </head>

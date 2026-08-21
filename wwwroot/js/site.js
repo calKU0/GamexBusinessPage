@@ -62,12 +62,28 @@
         // taken the moment the class flips catches it mid-transition. Settle it
         // once the animation has finished.
         //
-        // The transitions run on descendants - the contact bar's grid row and
-        // the logo's height - never on the header itself, so this listens for
-        // the events bubbling up rather than for a transition on the header.
-        header.addEventListener("transitionend", function () {
-            measureHeader();
-            remeasureGeometry();
+        // The transitions run on descendants - never on the header itself - so
+        // this listens for the events bubbling up. Both filters matter: only two
+        // properties change how tall the header is, the contact bar's grid row
+        // and the logo's height, while colours, shadows, backgrounds and the
+        // link underlines all bubble the same event. Unfiltered that was 68
+        // events per toggle, each re-reading the header and every tracked
+        // section - 340 forced layout reads on the home page and 1292 on the
+        // machine listing. Coalescing into one frame takes it to a single pass.
+        var settlePending = false;
+
+        header.addEventListener("transitionend", function (event) {
+            if (event.propertyName !== "grid-template-rows" && event.propertyName !== "height") {
+                return;
+            }
+            if (settlePending) return;
+
+            settlePending = true;
+            window.requestAnimationFrame(function () {
+                settlePending = false;
+                measureHeader();
+                remeasureGeometry();
+            });
         });
     }
 
