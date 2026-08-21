@@ -23,6 +23,7 @@ builder.Services.AddMemoryCache();
 // on their models.
 builder.Services.AddOutputCache();
 builder.Services.AddSingleton<CatalogCache>();
+builder.Services.AddSingleton<InlineStylesheet>();
 builder.Services.AddSingleton<AdminCatalogService>();
 builder.Services.AddScoped<ImageService>();
 builder.Services.Configure<SmtpSettings>(builder.Configuration.GetSection("Smtp"));
