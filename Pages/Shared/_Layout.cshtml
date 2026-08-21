@@ -62,7 +62,12 @@
 
     @if (preloadHero)
     {
-        <link rel="preload" href="~/images/road-renovation-1.webp" as="image" fetchpriority="high">
+        @* Must list the same candidates as the hero <img>, or the browser
+           preloads one file and then downloads another. *@
+        <link rel="preload" as="image" fetchpriority="high"
+              href="/images/road-renovation-1.webp"
+              imagesrcset="/images/road-renovation-1-1280.webp 1280w, /images/road-renovation-1.webp 1920w"
+              imagesizes="100vw">
     }
 
     @* The heading face is preloaded - it paints the largest text on screen. *@

@@ -80,11 +80,6 @@
                              .ToArray();
 
         var builder = new StringBuilder();
-        builder.AppendLine("/* GENERATED FILE - DO NOT EDIT DIRECTLY.");
-        builder.AppendLine("   Built by concatenating Styles/ during compilation");
-        builder.AppendLine("   (BundleGamexStyles target in GamexBusinessPage.csproj).");
-        builder.AppendLine("   Make changes in Styles/*.css and run dotnet build. */");
-        builder.AppendLine();
 
         foreach (var file in files)
         {
@@ -92,7 +87,108 @@
             builder.AppendLine();
         }
 
-        var content = builder.ToString();
+        var joined = builder.ToString();
+
+        // Minify. The sources are heavily commented on purpose, and comments plus
+        // indentation were about a third of the bundle - all of it shipped to every
+        // visitor on the render-blocking path.
+        //
+        // Deliberately conservative: quoted strings are copied through untouched
+        // because they carry data URIs full of ; and ,, and whitespace is only
+        // dropped next to characters where it can never be significant. Nothing is
+        // removed around - + > ~, so calc() and combinators survive.
+        Func<string, string> minify = css =>
+        {
+            const string dropWhenBefore = "{};,)";
+            const string dropWhenAfter = "{};:,(";
+
+            var output = new StringBuilder(css.Length);
+            var pendingSpace = false;
+            var previous = '\0';
+
+            for (var i = 0; i < css.Length; i++)
+            {
+                var c = css[i];
+
+                if (c == '"' || c == '\'')
+                {
+                    if (pendingSpace)
+                    {
+                        if (previous != '\0' && dropWhenAfter.IndexOf(previous) < 0)
+                        {
+                            output.Append(' ');
+                        }
+                        pendingSpace = false;
+                    }
+
+                    var quote = c;
+                    output.Append(c);
+                    i++;
+                    while (i < css.Length)
+                    {
+                        output.Append(css[i]);
+                        if (css[i] == '\\' && i + 1 < css.Length)
+                        {
+                            i++;
+                            output.Append(css[i]);
+                        }
+                        else if (css[i] == quote)
+                        {
+                            break;
+                        }
+                        i++;
+                    }
+
+                    previous = quote;
+                    continue;
+                }
+
+                if (c == '/' && i + 1 < css.Length && css[i + 1] == '*')
+                {
+                    var end = css.IndexOf("*/", i + 2);
+                    i = end < 0 ? css.Length : end + 1;
+                    // A comment can stand between two tokens, so it leaves a space
+                    // behind rather than gluing them together.
+                    pendingSpace = true;
+                    continue;
+                }
+
+                if (c == ' ' || c == '\t' || c == '\r' || c == '\n')
+                {
+                    pendingSpace = true;
+                    continue;
+                }
+
+                if (pendingSpace)
+                {
+                    pendingSpace = false;
+                    if (previous != '\0'
+                        && dropWhenAfter.IndexOf(previous) < 0
+                        && dropWhenBefore.IndexOf(c) < 0)
+                    {
+                        output.Append(' ');
+                    }
+                }
+
+                // The last semicolon in a block carries no meaning.
+                if (c == '}' && previous == ';')
+                {
+                    output.Length -= 1;
+                }
+
+                output.Append(c);
+                previous = c;
+            }
+
+            return output.ToString().Trim();
+        };
+
+        var minified = minify(joined);
+
+        var content = "/* GENERATED FILE - DO NOT EDIT DIRECTLY. Bundled and minified from"
+                    + " Styles/*.css by the BundleGamexStyles target in GamexBusinessPage.csproj."
+                    + " Edit the sources there and run dotnet build. */\n"
+                    + minified + "\n";
         var outputDirectory = Path.GetDirectoryName(OutputFile);
         if (!Directory.Exists(outputDirectory))
         {
@@ -104,7 +200,8 @@
         if (!File.Exists(OutputFile) || File.ReadAllText(OutputFile) != content)
         {
             File.WriteAllText(OutputFile, content, new UTF8Encoding(false));
-            Log.LogMessage(MessageImportance.High, "Bundled " + files.Length + " stylesheets from Styles/ into wwwroot/css/site.css");
+            Log.LogMessage(MessageImportance.High, "Bundled " + files.Length + " stylesheets into wwwroot/css/site.css: "
+                + joined.Length.ToString("n0") + " -> " + content.Length.ToString("n0") + " bytes");
         }
         ]]>
       </Code>
