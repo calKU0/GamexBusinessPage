@@ -87,6 +87,10 @@
 
     var updateSpy = function () { };
 
+    // Set by the reveal block below; the batched scroll handler calls it so the
+    // safety net can still notice a broken observer once the reader scrolls.
+    var revealFallback = function () { };
+
     if (spyTargets.length) {
         // Section positions are measured once instead of on every scroll event.
         // Reading layout inside a scroll handler, right after the header has
@@ -371,6 +375,7 @@
             setHeaderState();
             updateSpy();
             updateCategorySpy();
+            revealFallback();
             scrollPending = false;
         });
     }, { passive: true });
@@ -446,7 +451,10 @@
         if (reduceMotion || !("IntersectionObserver" in window)) {
             revealAll();
         } else {
+            var observerReported = false;
+
             var observer = new IntersectionObserver(function (entries) {
+                observerReported = true;
                 entries.forEach(function (entry) {
                     if (!entry.isIntersecting) return;
                     entry.target.classList.add("is-visible");
@@ -456,9 +464,36 @@
 
             revealables.forEach(function (el) { observer.observe(el); });
 
-            // Safety net: should the observer fail for any reason, the content
-            // still has to appear. Losing the animation beats losing a section.
-            window.setTimeout(revealAll, 3000);
+            // Safety net for the case where the observer never reports and the
+            // page would stay blank.
+            //
+            // This used to be a plain revealAll on a three second timer, which
+            // also revealed every section further down the page: anything the
+            // reader reached after that was already visible and never animated.
+            // It now waits for actual evidence that the observer is broken -
+            // something inside the viewport that it should have reported and
+            // did not - so sections below the fold keep their entrance.
+            revealFallback = function () {
+                if (observerReported) {
+                    revealFallback = function () { };
+                    return;
+                }
+
+                var viewportHeight = window.innerHeight;
+                for (var i = 0; i < revealables.length; i++) {
+                    var el = revealables[i];
+                    if (el.classList.contains("is-visible")) continue;
+
+                    var rect = el.getBoundingClientRect();
+                    if (rect.top < viewportHeight && rect.bottom > 0) {
+                        revealAll();
+                        revealFallback = function () { };
+                        return;
+                    }
+                }
+            };
+
+            window.setTimeout(function () { revealFallback(); }, 3000);
         }
     }
 
