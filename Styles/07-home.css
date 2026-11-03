@@ -401,19 +401,6 @@
    7.5 · Values
    -------------------------------------------------------------------------- */
 
-/* The client's own three words, set in display type rather than body copy so
-   they read as the answer to the heading. */
-.values-motto {
-    margin-bottom: 0.75rem;
-    color: var(--hivis-500);
-    font-family: var(--font-display);
-    font-size: clamp(1.4rem, 2.6vw, 2rem);
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    line-height: 1.2;
-    text-transform: uppercase;
-}
-
 .value-card {
     position: relative;
     height: 100%;
@@ -453,6 +440,10 @@
         color: var(--concrete-300);
         margin: 0;
     }
+
+        .value-card p strong {
+            color: var(--concrete-100);
+        }
 
 /* --------------------------------------------------------------------------
    7.6 · Process
