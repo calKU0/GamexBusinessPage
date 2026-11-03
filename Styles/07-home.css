@@ -802,3 +802,21 @@
             opacity: 1;
             transform: scale(1.06);
         }
+
+    /* Manufacturer named in type where no logo file is available, sized to sit
+       in the same strip as the image logos. */
+    .partner-wordmark {
+        font-family: var(--font-display);
+        font-size: clamp(1.35rem, 2.4vw, 1.75rem);
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: var(--concrete-300);
+        opacity: 0.6;
+        transition: opacity var(--dur-slow) var(--ease), color var(--dur-slow) var(--ease);
+    }
+
+        .partner-wordmark:hover {
+            color: var(--concrete-100);
+            opacity: 1;
+        }
