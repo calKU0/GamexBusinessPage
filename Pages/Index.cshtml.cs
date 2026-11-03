@@ -22,7 +22,7 @@ namespace GamexBusinessPage.Pages
 
         public string? SchemaJson { get; private set; }
 
-        /// <summary>Equipment categories with their machine counts - they feed the tiles linking to the rental listing.</summary>
+        /// <summary>Equipment categories with their machine counts, in the order set on /admin/order - they feed the tiles linking to the rental listing.</summary>
         public IReadOnlyList<MachineCategory> MachineCategories { get; private set; } = Array.Empty<MachineCategory>();
 
         public int MachineCount { get; private set; }
@@ -64,10 +64,7 @@ namespace GamexBusinessPage.Pages
             ViewData["PreloadHero"] = true;
 
             var catalog = _catalogCache.GetMachineCatalog();
-            MachineCategories = catalog.Categories
-                .OrderByDescending(category => category.Machines.Count)
-                .ThenBy(category => category.DisplayName, StringComparer.CurrentCulture)
-                .ToList();
+            MachineCategories = catalog.Categories;
             MachineCount = catalog.Machines.Count;
             FleetBrands = catalog.Machines
                 .Where(machine => !string.IsNullOrWhiteSpace(machine.Brand))

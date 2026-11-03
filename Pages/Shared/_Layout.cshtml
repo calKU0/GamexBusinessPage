@@ -1,11 +1,10 @@
 @inject GamexBusinessPage.Services.CatalogCache CatalogCache
 @inject GamexBusinessPage.Services.InlineStylesheet InlineStylesheet
 @{
-    // The largest equipment categories form the second column of the "Oferta" menu.
-    // These are the most searched phrases, and a link from every subpage strengthens them.
+    // The first six equipment categories, in the order set on /admin/order, form the
+    // second column of the "Oferta" menu. These are the most searched phrases, and a
+    // link from every subpage strengthens them - so the admin decides which lead.
     var navCategories = CatalogCache.GetMachineCatalog().Categories
-        .OrderByDescending(category => category.Machines.Count)
-        .ThenBy(category => category.DisplayName, StringComparer.CurrentCulture)
         .Take(6)
         .ToList();
 
