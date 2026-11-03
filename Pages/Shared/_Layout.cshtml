@@ -116,7 +116,12 @@
         <nav class="navbar navbar-expand-xl gamex-navbar" id="gamexMainNav" aria-label="Nawigacja główna">
             <div class="container">
                 <a class="navbar-brand d-flex align-items-center" asp-area="" asp-page="/Index" aria-label="GAMEX Olkusz – strona główna">
-                    <img src="~/images/logo.svg" alt="GAMEX Olkusz – wynajem maszyn budowlanych i budowa dróg" class="navbar-logo" width="160" height="52" />
+                    @* Unfingerprinted on purpose. The FTP upload rewrites line endings in .svg
+                       and .txt files (LF to CRLF, one extra byte per line), so on the server
+                       this file is 28 bytes longer than the build manifest records. Through
+                       the fingerprinted URL the response is cut to the manifest length and the
+                       SVG loses its closing tags; the plain path is served at its real size. *@
+                    <img src="/images/logo.svg" alt="GAMEX Olkusz – wynajem maszyn budowlanych i budowa dróg" class="navbar-logo" width="160" height="52" />
                 </a>
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -266,7 +271,7 @@
             <div class="row g-4">
                 <div class="col-lg-4 col-md-6">
                     <div class="footer-info">
-                        <img src="~/images/logo.svg" alt="GAMEX Olkusz – logo firmy" class="footer-logo mb-3" width="140" height="46" loading="lazy" />
+                        <img src="/images/logo.svg" alt="GAMEX Olkusz – logo firmy" class="footer-logo mb-3" width="140" height="46" loading="lazy" />
                         <p class="footer-description">
                             P.P.U.H. „GAMEX” Grzegorz Żurek z Olkusza. Od 1994 roku budujemy drogi,
                             chodniki i place, a nasz sprzęt wynajmujemy z operatorem – w Małopolsce,
