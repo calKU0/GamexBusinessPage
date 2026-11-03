@@ -4,8 +4,8 @@ namespace GamexBusinessPage.Models;
 
 public sealed class ContactFormInputModel
 {
-    [Required(ErrorMessage = "Podaj imię i nazwisko.")]
-    [StringLength(100, ErrorMessage = "Imię i nazwisko może mieć maksymalnie 100 znaków.")]
+    [Required(ErrorMessage = "Podaj imię i nazwisko albo nazwę firmy.")]
+    [StringLength(100, ErrorMessage = "To pole może mieć maksymalnie 100 znaków.")]
     public string Name { get; set; } = string.Empty;
 
     [Required(ErrorMessage = "Podaj adres e-mail.")]

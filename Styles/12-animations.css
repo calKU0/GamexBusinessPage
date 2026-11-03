@@ -253,8 +253,7 @@
     .area-card:hover,
     .cat-tile:hover,
     .btn-gamex:hover,
-    .section-image-wrapper:hover img,
-    .partners-logos img:hover {
+    .section-image-wrapper:hover img {
         transform: none !important;
     }
 }

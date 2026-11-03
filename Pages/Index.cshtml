@@ -103,7 +103,7 @@
                 <h3>Wynajem maszyn budowlanych</h3>
                 <p>
                     Koparki, koparko-ładowarki, minikoparki, walce, rozkładarki asfaltu, frezarki
-                    i zagęszczarki. Zawsze z operatorem, rozliczane od godziny.
+                    i zagęszczarki. Standardowo z operatorem, rozliczane od godziny.
                 </p>
                 <ul class="pillar-tags">
                     <li>z operatorem</li>
@@ -161,7 +161,7 @@
             <p class="eyebrow">Park maszynowy</p>
             <h2 class="section-title" id="kategorie-title">Jaką <em>maszynę</em> chcesz wynająć?</h2>
             <p class="section-text">
-                @(Model.MachineCount) maszyn marek JCB, Caterpillar, Komatsu, Bobcat i Manitou.
+                @(Model.MachineCount) maszyn@(Model.FleetBrands.Count > 0 ? " marek " + string.Join(", ", Model.FleetBrands) + " i innych" : "").
                 Wejdź w kategorię, a zobaczysz konkretne modele z rocznikiem, masą i wyposażeniem.
             </p>
         </div>
@@ -348,7 +348,7 @@
                 <article class="value-card">
                     <div class="value-icon"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-bullseye"></use></svg></div>
                     <h3>Robimy raz</h3>
-                    <p>Od wytyczenia po warstwę ścieralną pilnujemy rzędnych i zagęszczenia. Odbiory przechodzimy za pierwszym podejściem.</p>
+                    <p><strong>Szybko, fachowo i solidnie.</strong> Od wytyczenia po warstwę ścieralną pilnujemy rzędnych i zagęszczenia. Odbiory przechodzimy za pierwszym podejściem.</p>
                 </article>
             </div>
             <div class="col-md-4">
@@ -493,19 +493,22 @@
 </section>
 
 @* ============================ PARTNERS ============================ *@
-<section class="home-section-partners" aria-labelledby="partnerzy-title">
-    <div class="container">
-        <h2 class="partners-title" id="partnerzy-title">Pracujemy na sprzęcie renomowanych producentów</h2>
+@* Managed in the admin panel (/admin/manufacturers). *@
+@if (Model.Manufacturers.Count > 0)
+{
+    <section class="home-section-partners" aria-labelledby="partnerzy-title">
+        <div class="container">
+            <h2 class="partners-title" id="partnerzy-title">Pracujemy na sprzęcie renomowanych producentów</h2>
 
-        <div class="partners-logos reveal reveal-stagger">
-            <img src="~/images/producenci/Bobcat.webp" alt="Bobcat – maszyny w parku GAMEX" loading="lazy" decoding="async" width="120" height="40" />
-            <img src="~/images/producenci/Caterpillar.webp" alt="Caterpillar – maszyny w parku GAMEX" loading="lazy" decoding="async" width="120" height="40" />
-            <img src="~/images/producenci/JCB.webp" alt="JCB – maszyny w parku GAMEX" loading="lazy" decoding="async" width="120" height="40" />
-            <img src="~/images/producenci/Komatsu.webp" alt="Komatsu – maszyny w parku GAMEX" loading="lazy" decoding="async" width="120" height="40" />
-            <img src="~/images/producenci/Manitou.webp" alt="Manitou – maszyny w parku GAMEX" loading="lazy" decoding="async" width="120" height="40" />
+            <ul class="partners-logos reveal reveal-stagger">
+                @foreach (var manufacturer in Model.Manufacturers)
+                {
+                    <li class="partner"><partial name="_ManufacturerMark" model="manufacturer" /></li>
+                }
+            </ul>
         </div>
-    </div>
-</section>
+    </section>
+}
 
 @section Schema {
     @if (!string.IsNullOrWhiteSpace(Model.SchemaJson))

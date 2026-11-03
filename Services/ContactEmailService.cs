@@ -79,7 +79,7 @@ public sealed class ContactEmailService : IContactEmailService
         return $"""
 Nowa wiadomość z formularza kontaktowego.
 
-Imię i nazwisko: {inputModel.Name}
+Imię i nazwisko / firma: {inputModel.Name}
 E-mail: {inputModel.Email}
 Telefon: {inputModel.Phone ?? "nie podano"}
 Maszyna: {inputModel.Machine ?? "nie wybrano"}
@@ -116,7 +116,7 @@ Treść wiadomości:
                         <td style="padding:24px;">
                             <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
                                 <tr>
-                                    <td style="padding:8px 0;font-weight:700;width:180px;">Imię i nazwisko:</td>
+                                    <td style="padding:8px 0;font-weight:700;width:180px;">Imię i nazwisko / firma:</td>
                                     <td style="padding:8px 0;">{name}</td>
                                 </tr>
                                 <tr>

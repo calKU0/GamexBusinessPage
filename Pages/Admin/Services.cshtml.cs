@@ -63,7 +63,8 @@ public class ServicesModel : PageModel
     private void LoadData()
     {
         var serviceData = _catalogService.LoadServiceData();
-        ServiceCategoryKeys = serviceData.Keys.OrderBy(key => key).ToList();
+        // File order, which is the order the public pages use - set on /admin/order.
+        ServiceCategoryKeys = serviceData.Keys.ToList();
 
         Services = serviceData.SelectMany(category => category.Value.Select(item => new ServiceListItem
             {
@@ -73,8 +74,6 @@ public class ServicesModel : PageModel
             }))
             .Where(item => MatchesFilter(item.CategoryKey, item.Name, ServiceCategoryFilter, ServiceSearch)
                 || MatchesFilter(item.CategoryKey, item.Description, ServiceCategoryFilter, ServiceSearch))
-            .OrderBy(item => item.CategoryKey)
-            .ThenBy(item => item.Name)
             .ToList();
     }
 

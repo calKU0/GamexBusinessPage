@@ -1,0 +1,60 @@
+@page "/admin/manufacturers/edit"
+@model GamexBusinessPage.Pages.Admin.ManufacturerEditModel
+@{
+    Layout = "_AdminLayout";
+}
+
+<div class="container py-5 text-light admin-page">
+    <partial name="_AdminHeader" model="@(new GamexBusinessPage.Pages.Admin.AdminHeaderViewModel(Model.IsEdit ? "Edytuj producenta" : "Dodaj producenta", "Nazwa i logo w pasku producentów na stronie głównej.", new[]
+    {
+        new GamexBusinessPage.Pages.Admin.AdminHeaderAction("Wróć", "/Admin/Manufacturers", "btn-gamex btn-secondary-gamex")
+    }))" />
+
+    <div class="card bg-dark border-secondary text-light shadow-sm rounded-4">
+        <div class="card-body">
+            <form method="post" enctype="multipart/form-data" asp-route-name="@Model.OriginalName" class="row g-3">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="col-md-6">
+                    <label asp-for="Input.Name" class="form-label text-light">Nazwa</label>
+                    <input asp-for="Input.Name" class="form-control bg-dark text-light border-secondary" autocomplete="off" />
+                    <span asp-validation-for="Input.Name" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label asp-for="Input.LogoFile" class="form-label text-light">@(Model.Current?.HasLogo == true ? "Nowe logo" : "Logo")</label>
+                    <input asp-for="Input.LogoFile" type="file" accept=".png,.webp,.jpg,.jpeg,.gif" class="form-control bg-dark text-light border-secondary" />
+                    <span asp-validation-for="Input.LogoFile" class="text-danger"></span>
+                    <div class="form-text text-secondary">
+                        Najlepiej PNG z przezroczystym tłem. Białe tło usuwamy automatycznie.
+                        Logo jest pokazywane jednym kolorem, jak napisy obok – liczy się jego kształt.
+                        Bez logo na stronie pojawi się sama nazwa.
+                    </div>
+                </div>
+
+                @if (Model.Current?.HasLogo == true)
+                {
+                    <div class="col-12">
+                        <span class="form-label text-light d-block">Obecne logo – tak wygląda na stronie</span>
+                        <div class="manufacturer-preview manufacturer-preview--large partner mb-2">
+                            <partial name="_ManufacturerMark" model="Model.Current" />
+                        </div>
+                        <div class="form-check">
+                            <input asp-for="Input.RemoveLogo" class="form-check-input" />
+                            <label asp-for="Input.RemoveLogo" class="form-check-label">Usuń logo i pokazuj samą nazwę</label>
+                        </div>
+                    </div>
+                }
+
+                <div class="col-12 d-flex gap-2">
+                    <button type="submit" class="btn-gamex btn-primary-gamex">Zapisz</button>
+                    <a asp-page="/Admin/Manufacturers" class="btn-gamex btn-secondary-gamex">Anuluj</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
