@@ -785,38 +785,51 @@
     align-items: center;
     gap: clamp(1.5rem, 4vw, 3.5rem);
     flex-wrap: wrap;
+    margin: 0;
+    padding: 0;
+    list-style: none;
 }
 
-    .partners-logos img {
-        width: 118px;
-        height: auto;
-        max-height: 44px;
-        object-fit: contain;
-        filter: grayscale(100%) brightness(2.2) contrast(0.7);
-        opacity: 0.55;
-        transition: filter var(--dur-slow) var(--ease), opacity var(--dur-slow) var(--ease), transform var(--dur-slow) var(--ease);
+/* Logos and names share one colour, so the strip reads as a set whatever the
+   uploaded files look like, and follows the light and high-contrast themes. */
+.partner {
+    color: var(--concrete-300);
+    opacity: 0.6;
+    transition: opacity var(--dur-slow) var(--ease), color var(--dur-slow) var(--ease);
+}
+
+    .partner:hover {
+        color: var(--concrete-100);
+        opacity: 1;
     }
 
-        .partners-logos img:hover {
-            filter: none;
-            opacity: 1;
-            transform: scale(1.06);
-        }
+/* A logo is drawn as a mask: its shape, filled with the text colour. The
+   aspect ratio comes from the file (set inline), so the space is held before
+   the image loads; very wide logos are capped by max-width and scale down. */
+.partner-logo {
+    display: block;
+    height: clamp(1.4rem, 2.2vw, 1.85rem);
+    max-width: 10rem;
+    background-color: currentColor;
+    -webkit-mask: var(--logo) center / contain no-repeat;
+    mask: var(--logo) center / contain no-repeat;
+}
 
-    /* Manufacturer named in type where no logo file is available, sized to sit
-       in the same strip as the image logos. */
-    .partner-wordmark {
-        font-family: var(--font-display);
-        font-size: clamp(1.35rem, 2.4vw, 1.75rem);
-        font-weight: 700;
-        letter-spacing: 0.04em;
-        text-transform: uppercase;
-        color: var(--concrete-300);
-        opacity: 0.6;
-        transition: opacity var(--dur-slow) var(--ease), color var(--dur-slow) var(--ease);
+/* Name set in type where there is no logo, sized to sit among the logos. */
+.partner-wordmark {
+    display: block;
+    font-family: var(--font-display);
+    font-size: clamp(1.35rem, 2.4vw, 1.75rem);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    line-height: 1;
+    text-transform: uppercase;
+}
+
+/* Forced colours drop backgrounds, which would make every mask vanish. */
+@media (forced-colors: active) {
+    .partner-logo {
+        forced-color-adjust: none;
+        background-color: CanvasText;
     }
-
-        .partner-wordmark:hover {
-            color: var(--concrete-100);
-            opacity: 1;
-        }
+}

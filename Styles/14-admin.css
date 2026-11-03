@@ -207,3 +207,18 @@
     color: var(--hivis-400);
     font-weight: 600;
 }
+
+/* Manufacturer preview: drawn by the home page partial on the strip's own
+   background, so the admin sees the logo exactly as visitors will. */
+.manufacturer-preview {
+    display: inline-flex;
+    align-items: center;
+    min-height: 3.25rem;
+    padding: 0.6rem 1rem;
+    border-radius: var(--r-sm);
+    background: var(--asphalt-950);
+}
+
+.manufacturer-preview--large {
+    padding: 1.25rem 2rem;
+}

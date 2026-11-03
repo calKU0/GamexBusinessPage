@@ -9,7 +9,7 @@ using System.Text.Json.Serialization;
 
 namespace GamexBusinessPage.Pages.MachineRental;
 
-[OutputCache(Duration = 3600, VaryByRouteValueNames = new[] { "slug" })]
+[OutputCache(Duration = 3600, VaryByRouteValueNames = new[] { "slug" }, Tags = new[] { CatalogCache.PageTag })]
 public class DetailsModel : PageModel
 {
     private readonly CatalogCache _catalogCache;

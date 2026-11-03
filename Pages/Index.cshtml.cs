@@ -8,7 +8,7 @@ using System.Text.Json.Serialization;
 
 namespace GamexBusinessPage.Pages
 {
-    [OutputCache(Duration = 3600)]
+    [OutputCache(Duration = 3600, Tags = new[] { CatalogCache.PageTag })]
     public class IndexModel : PageModel
     {
         private const string BaseUrl = "https://gamex-olkusz.pl";
@@ -26,6 +26,12 @@ namespace GamexBusinessPage.Pages
         public IReadOnlyList<MachineCategory> MachineCategories { get; private set; } = Array.Empty<MachineCategory>();
 
         public int MachineCount { get; private set; }
+
+        /// <summary>The makes most of the fleet comes from, most machines first - named in the equipment intro.</summary>
+        public IReadOnlyList<string> FleetBrands { get; private set; } = Array.Empty<string>();
+
+        /// <summary>The "renomowanych producentów" strip, in the order set in the admin panel.</summary>
+        public IReadOnlyList<Manufacturer> Manufacturers { get; private set; } = Array.Empty<Manufacturer>();
 
         /// <summary>Single source of truth for the FAQ section - the same text goes into the HTML and into the structured data.</summary>
         public IReadOnlyList<(string Question, string Answer)> Faq { get; } = new List<(string, string)>
@@ -63,6 +69,18 @@ namespace GamexBusinessPage.Pages
                 .ThenBy(category => category.DisplayName, StringComparer.CurrentCulture)
                 .ToList();
             MachineCount = catalog.Machines.Count;
+            FleetBrands = catalog.Machines
+                .Where(machine => !string.IsNullOrWhiteSpace(machine.Brand))
+                .GroupBy(machine => machine.Brand!.Trim(), StringComparer.OrdinalIgnoreCase)
+                .OrderByDescending(brand => brand.Count())
+                .ThenBy(brand => brand.Key, StringComparer.CurrentCulture)
+                .Select(brand => brand.Key)
+                .Take(5)
+                .ToList();
+
+            Manufacturers = _catalogCache.GetManufacturers()
+                .Where(manufacturer => !string.IsNullOrWhiteSpace(manufacturer.Name))
+                .ToList();
 
             SchemaJson = BuildSchema();
         }

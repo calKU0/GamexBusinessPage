@@ -7,7 +7,7 @@ using System.Text.Json.Serialization;
 
 namespace GamexBusinessPage.Pages
 {
-    [OutputCache(Duration = 3600)]
+    [OutputCache(Duration = 3600, Tags = new[] { CatalogCache.PageTag })]
     public class OfertaModel : PageModel
     {
         public string? SchemaJson { get; private set; }

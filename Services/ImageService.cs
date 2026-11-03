@@ -1,11 +1,20 @@
+using GamexBusinessPage.Models;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats.Webp;
+using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
 
 namespace GamexBusinessPage.Services;
 
 public class ImageService
 {
+    private const string LogoFolder = "producenci";
+    private const int LogoMaxWidth = 600;
+    private const int LogoMaxHeight = 200;
+
+    // Pixels at or below this alpha count as background when trimming a logo.
+    private const byte VisibleAlpha = 10;
+
     private readonly IWebHostEnvironment _environment;
     private readonly ILogger<ImageService> _logger;
 
@@ -89,6 +98,158 @@ public class ImageService
         }
     }
 
+    /// <summary>
+    /// Saves an uploaded manufacturer logo for the home page strip. Returns null
+    /// when the file is not a readable image or has nothing visible in it.
+    /// </summary>
+    public async Task<SavedLogo?> ProcessLogoAsync(IFormFile file, string manufacturerName)
+    {
+        if (file.Length == 0 || !IsValidImageFile(file))
+            return null;
+
+        try
+        {
+            using var image = await Image.LoadAsync<Rgba32>(file.OpenReadStream());
+            if (!PrepareLogo(image))
+                return null;
+
+            var targetDirectory = Path.Combine(_environment.WebRootPath, "images", LogoFolder);
+            Directory.CreateDirectory(targetDirectory);
+
+            // The path ends up inside a CSS url(), so the name is reduced to a slug.
+            var stem = MachineCatalog.BuildSlug(manufacturerName);
+            var fileName = $"{(stem.Length > 0 ? stem : "logo")}-{Guid.NewGuid():N}.webp";
+
+            // Lossless: logos are flat shapes with hard edges, and small either way.
+            await image.SaveAsync(Path.Combine(targetDirectory, fileName), new WebpEncoder { FileFormat = WebpFileFormatType.Lossless });
+
+            _logger.LogInformation("Processed and saved logo: {FileName} -> {SavedName}", file.FileName, fileName);
+            return new SavedLogo($"/images/{LogoFolder}/{fileName}", image.Width, image.Height);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error processing logo {FileName}", file.FileName);
+            return null;
+        }
+    }
+
+    /// <summary>
+    /// Turns a logo into what the strip needs. The strip draws only the logo's
+    /// shape, in the text colour (a CSS mask), so the result is that shape alone:
+    /// a logo uploaded on a white background has the white made transparent, the
+    /// colour is dropped, the empty margin trimmed, and the size capped at
+    /// 600 x 200 px. Returns false when nothing visible is left.
+    /// </summary>
+    public static bool PrepareLogo(Image<Rgba32> image)
+    {
+        if (IsFullyOpaque(image))
+        {
+            MakeWhiteTransparent(image);
+        }
+
+        KeepShapeOnly(image);
+
+        var bounds = FindVisibleBounds(image);
+        if (bounds is null)
+        {
+            return false;
+        }
+
+        image.Mutate(x => x.Crop(bounds.Value));
+
+        if (image.Width > LogoMaxWidth || image.Height > LogoMaxHeight)
+        {
+            image.Mutate(x => x.Resize(new ResizeOptions
+            {
+                Mode = ResizeMode.Max,
+                Size = new Size(LogoMaxWidth, LogoMaxHeight)
+            }));
+        }
+
+        return true;
+    }
+
+    private static bool IsFullyOpaque(Image<Rgba32> image)
+    {
+        var opaque = true;
+        image.ProcessPixelRows(accessor =>
+        {
+            for (var y = 0; y < accessor.Height && opaque; y++)
+            {
+                foreach (var pixel in accessor.GetRowSpan(y))
+                {
+                    if (pixel.A < 250)
+                    {
+                        opaque = false;
+                        break;
+                    }
+                }
+            }
+        });
+
+        return opaque;
+    }
+
+    // Opacity follows the distance from white: near-white, JPEG noise included,
+    // becomes fully transparent, anything clearly darker stays solid, and the
+    // band in between keeps anti-aliased edges smooth.
+    private static void MakeWhiteTransparent(Image<Rgba32> image)
+    {
+        image.ProcessPixelRows(accessor =>
+        {
+            for (var y = 0; y < accessor.Height; y++)
+            {
+                foreach (ref var pixel in accessor.GetRowSpan(y))
+                {
+                    var distance = 255 - Math.Min(pixel.R, Math.Min(pixel.G, pixel.B));
+                    pixel.A = (byte)Math.Clamp((distance - 16) * 3, 0, 255);
+                }
+            }
+        });
+    }
+
+    // Only the alpha channel is ever drawn, so colour is dropped; it would
+    // otherwise be most of the file, JPEG noise and all.
+    private static void KeepShapeOnly(Image<Rgba32> image)
+    {
+        image.ProcessPixelRows(accessor =>
+        {
+            for (var y = 0; y < accessor.Height; y++)
+            {
+                foreach (ref var pixel in accessor.GetRowSpan(y))
+                {
+                    pixel = new Rgba32(0, 0, 0, pixel.A);
+                }
+            }
+        });
+    }
+
+    private static Rectangle? FindVisibleBounds(Image<Rgba32> image)
+    {
+        int left = int.MaxValue, top = int.MaxValue, right = -1, bottom = -1;
+        image.ProcessPixelRows(accessor =>
+        {
+            for (var y = 0; y < accessor.Height; y++)
+            {
+                var row = accessor.GetRowSpan(y);
+                for (var x = 0; x < row.Length; x++)
+                {
+                    if (row[x].A <= VisibleAlpha)
+                    {
+                        continue;
+                    }
+
+                    left = Math.Min(left, x);
+                    right = Math.Max(right, x);
+                    top = Math.Min(top, y);
+                    bottom = y;
+                }
+            }
+        });
+
+        return right < 0 ? null : Rectangle.FromLTRB(left, top, right + 1, bottom + 1);
+    }
+
     private async Task<string> ProcessImageAsync(IFormFile file, string targetDirectory)
     {
         var fileNameWithoutExtension = Path.GetFileNameWithoutExtension(file.FileName);
@@ -145,3 +306,5 @@ public class ImageService
         return string.IsNullOrEmpty(sanitized) ? "image" : sanitized.ToLowerInvariant();
     }
 }
+
+public sealed record SavedLogo(string Path, int Width, int Height);

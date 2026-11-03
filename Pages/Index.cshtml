@@ -161,7 +161,7 @@
             <p class="eyebrow">Park maszynowy</p>
             <h2 class="section-title" id="kategorie-title">Jaką <em>maszynę</em> chcesz wynająć?</h2>
             <p class="section-text">
-                @(Model.MachineCount) maszyn marek JCB, Caterpillar, Komatsu, Bobcat i Manitou.
+                @(Model.MachineCount) maszyn@(Model.FleetBrands.Count > 0 ? " marek " + string.Join(", ", Model.FleetBrands) + " i innych" : "").
                 Wejdź w kategorię, a zobaczysz konkretne modele z rocznikiem, masą i wyposażeniem.
             </p>
         </div>
@@ -494,22 +494,22 @@
 </section>
 
 @* ============================ PARTNERS ============================ *@
-<section class="home-section-partners" aria-labelledby="partnerzy-title">
-    <div class="container">
-        <h2 class="partners-title" id="partnerzy-title">Pracujemy na sprzęcie renomowanych producentów</h2>
+@* Managed in the admin panel (/admin/manufacturers). *@
+@if (Model.Manufacturers.Count > 0)
+{
+    <section class="home-section-partners" aria-labelledby="partnerzy-title">
+        <div class="container">
+            <h2 class="partners-title" id="partnerzy-title">Pracujemy na sprzęcie renomowanych producentów</h2>
 
-        <div class="partners-logos reveal reveal-stagger">
-            @* Set as text until official logo files are supplied for these makes; the
-               previous strip showed Caterpillar and Komatsu, neither of which is in
-               the fleet. *@
-            <span class="partner-wordmark">Vögele</span>
-            <span class="partner-wordmark">Wirtgen</span>
-            <span class="partner-wordmark">Atlas</span>
-            <span class="partner-wordmark">Volvo</span>
-            <span class="partner-wordmark">Liebherr</span>
+            <ul class="partners-logos reveal reveal-stagger">
+                @foreach (var manufacturer in Model.Manufacturers)
+                {
+                    <li class="partner"><partial name="_ManufacturerMark" model="manufacturer" /></li>
+                }
+            </ul>
         </div>
-    </div>
-</section>
+    </section>
+}
 
 @section Schema {
     @if (!string.IsNullOrWhiteSpace(Model.SchemaJson))

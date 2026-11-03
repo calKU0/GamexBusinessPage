@@ -1,0 +1,13 @@
+@model GamexBusinessPage.Models.Manufacturer
+@* One manufacturer in the home page strip: the logo's shape filled with the
+   strip's text colour (see .partner-logo), or the name set in type when there is
+   no logo. The admin list uses this too, as its preview. *@
+@if (Model.HasLogo)
+{
+    <span class="partner-logo" role="img" aria-label="@Model.Name"
+          style="--logo: url('@Model.Logo'); aspect-ratio: @Model.LogoWidth / @Model.LogoHeight"></span>
+}
+else
+{
+    <span class="partner-wordmark">@Model.Name</span>
+}

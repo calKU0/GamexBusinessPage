@@ -38,6 +38,12 @@ public sealed class AdminCatalogService
         return LoadData<TransportItem>(GetDataPath("transport.json"));
     }
 
+    /// <summary>The home page manufacturer strip, in display order.</summary>
+    public List<Manufacturer> LoadManufacturers()
+    {
+        return ManufacturerList.Load(_environment.ContentRootPath);
+    }
+
     public void SaveMachineData(Dictionary<string, List<MachineItem>> data)
     {
         SaveData(GetDataPath("machines.json"), data);
@@ -54,6 +60,12 @@ public sealed class AdminCatalogService
     {
         SaveData(GetDataPath("transport.json"), data);
         _catalogCache.ClearTransportCatalog();
+    }
+
+    public void SaveManufacturers(List<Manufacturer> manufacturers)
+    {
+        SaveData(GetDataPath(ManufacturerList.FileName), manufacturers);
+        _catalogCache.ClearManufacturers();
     }
 
     public bool ReorderMachines(IReadOnlyList<CategoryOrder> order, out string? error)
@@ -169,7 +181,7 @@ public sealed class AdminCatalogService
         return new Dictionary<string, List<TItem>>(data, StringComparer.OrdinalIgnoreCase);
     }
 
-    private void SaveData<TItem>(string path, Dictionary<string, List<TItem>> data)
+    private void SaveData<TData>(string path, TData data)
     {
         var directory = Path.GetDirectoryName(path);
         if (!string.IsNullOrWhiteSpace(directory))
