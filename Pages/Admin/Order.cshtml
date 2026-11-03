@@ -1,0 +1,166 @@
+@page "/admin/order"
+@model GamexBusinessPage.Pages.Admin.OrderModel
+@{
+    Layout = "_AdminLayout";
+}
+
+<div class="container py-5 text-light admin-page">
+    <partial name="_AdminHeader" model="@(new GamexBusinessPage.Pages.Admin.AdminHeaderViewModel("Kolejność na stronie", "Ustaw, w jakiej kolejności kategorie i pozycje pokazują się na stronie.", new[]
+    {
+        new GamexBusinessPage.Pages.Admin.AdminHeaderAction("Wróć do listy", Model.ListPage, "btn-gamex btn-secondary-gamex"),
+        new GamexBusinessPage.Pages.Admin.AdminHeaderAction("Panel", "/Admin/Index", "btn-gamex btn-secondary-gamex")
+    }))" />
+
+    <partial name="_AdminStatus" model="Model.StatusMessage" />
+
+    <nav class="order-tabs mb-4" aria-label="Wybór oferty">
+        @foreach (var catalog in GamexBusinessPage.Pages.Admin.OrderModel.Catalogs)
+        {
+            var current = catalog.Key == Model.Catalog;
+            <a asp-page="/Admin/Order" asp-route-catalog="@catalog.Key"
+               class="btn-gamex @(current ? "btn-primary-gamex" : "btn-secondary-gamex")"
+               aria-current="@(current ? "page" : null)">@catalog.Title</a>
+        }
+    </nav>
+
+    <p class="text-secondary mb-4">
+        Chwyć za <i class="fa-solid fa-grip-vertical" aria-hidden="true"></i> i przeciągnij albo użyj strzałek.
+        Kategorie przesuwasz razem z całą zawartością, pozycje – w obrębie swojej kategorii.
+        Zmiany trafiają na stronę dopiero po zapisaniu.
+    </p>
+
+    <noscript>
+        <div class="alert alert-warning">Ta strona wymaga włączonego JavaScriptu.</div>
+    </noscript>
+
+    @if (Model.Categories.Count == 0)
+    {
+        <p class="text-secondary">Brak pozycji do ustawienia.</p>
+    }
+    else
+    {
+        <form method="post" asp-route-catalog="@Model.Catalog" id="order-form">
+            <input type="hidden" name="OrderJson" id="order-json" />
+
+            <ol class="order-categories" data-order-categories>
+                @foreach (var category in Model.Categories)
+                {
+                    <li class="order-category" data-category="@category.Key">
+                        <div class="order-row order-row--category">
+                            <span class="order-handle" data-category-handle title="Przeciągnij kategorię">
+                                <i class="fa-solid fa-grip-vertical" aria-hidden="true"></i>
+                            </span>
+                            <span class="order-label">
+                                <strong>@category.Key</strong>
+                                <span class="text-secondary">(@category.Items.Count)</span>
+                            </span>
+                            <span class="order-moves">
+                                <button type="button" class="btn btn-sm btn-outline-light" data-move="up"
+                                        aria-label="Przesuń kategorię @category.Key wyżej"><i class="fa-solid fa-arrow-up" aria-hidden="true"></i></button>
+                                <button type="button" class="btn btn-sm btn-outline-light" data-move="down"
+                                        aria-label="Przesuń kategorię @category.Key niżej"><i class="fa-solid fa-arrow-down" aria-hidden="true"></i></button>
+                            </span>
+                        </div>
+
+                        <ol class="order-items" data-order-items>
+                            @foreach (var item in category.Items)
+                            {
+                                <li class="order-item" data-index="@item.Index">
+                                    <span class="order-handle" data-item-handle title="Przeciągnij pozycję">
+                                        <i class="fa-solid fa-grip-vertical" aria-hidden="true"></i>
+                                    </span>
+                                    <span class="order-label">@item.Label</span>
+                                    <span class="order-moves">
+                                        <button type="button" class="btn btn-sm btn-outline-light" data-move="up"
+                                                aria-label="Przesuń @item.Label wyżej"><i class="fa-solid fa-arrow-up" aria-hidden="true"></i></button>
+                                        <button type="button" class="btn btn-sm btn-outline-light" data-move="down"
+                                                aria-label="Przesuń @item.Label niżej"><i class="fa-solid fa-arrow-down" aria-hidden="true"></i></button>
+                                    </span>
+                                </li>
+                            }
+                        </ol>
+                    </li>
+                }
+            </ol>
+
+            <div class="order-actions">
+                <span class="order-dirty" data-order-dirty hidden>Masz niezapisane zmiany.</span>
+                <a asp-page="/Admin/Order" asp-route-catalog="@Model.Catalog" class="btn-gamex btn-secondary-gamex">Odrzuć zmiany</a>
+                <button type="submit" class="btn-gamex btn-primary-gamex">Zapisz kolejność</button>
+            </div>
+        </form>
+    }
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+    <script>
+        (function () {
+            const form = document.getElementById('order-form');
+            if (!form) return;
+
+            const categories = form.querySelector('[data-order-categories]');
+            const dirtyNote = form.querySelector('[data-order-dirty]');
+            const markDirty = function () { dirtyNote.hidden = false; };
+
+            // Dragging is a convenience. The arrow buttons do the same thing and
+            // are what keyboard and many touch users rely on.
+            if (window.Sortable) {
+                new Sortable(categories, {
+                    animation: 150,
+                    handle: '[data-category-handle]',
+                    draggable: '.order-category',
+                    ghostClass: 'sortable-ghost',
+                    onEnd: markDirty
+                });
+
+                // One instance per list, so an item cannot be dropped into another
+                // category: that would change what it is, not where it appears.
+                categories.querySelectorAll('[data-order-items]').forEach(function (list) {
+                    new Sortable(list, {
+                        animation: 150,
+                        handle: '[data-item-handle]',
+                        draggable: '.order-item',
+                        ghostClass: 'sortable-ghost',
+                        onEnd: markDirty
+                    });
+                });
+            }
+
+            form.addEventListener('click', function (event) {
+                const button = event.target.closest('[data-move]');
+                if (!button) return;
+
+                // The closest <li> is the item for item buttons and the category
+                // for the buttons in a category's own row.
+                const row = button.closest('li');
+                const sibling = button.dataset.move === 'up'
+                    ? row.previousElementSibling
+                    : row.nextElementSibling;
+                if (!sibling) return;
+
+                if (button.dataset.move === 'up') {
+                    row.parentNode.insertBefore(row, sibling);
+                } else {
+                    row.parentNode.insertBefore(sibling, row);
+                }
+
+                // Moving the element drops focus; put it back on the same button so
+                // repeated presses keep moving the same row.
+                button.focus();
+                markDirty();
+            });
+
+            form.addEventListener('submit', function () {
+                const order = Array.from(categories.querySelectorAll(':scope > .order-category')).map(function (category) {
+                    return {
+                        key: category.dataset.category,
+                        items: Array.from(category.querySelectorAll(':scope > [data-order-items] > .order-item'))
+                            .map(function (item) { return parseInt(item.dataset.index, 10); })
+                    };
+                });
+                document.getElementById('order-json').value = JSON.stringify(order);
+            });
+        })();
+    </script>
+}

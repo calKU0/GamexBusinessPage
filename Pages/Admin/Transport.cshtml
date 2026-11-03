@@ -8,6 +8,7 @@
     <partial name="_AdminHeader" model="@(new GamexBusinessPage.Pages.Admin.AdminHeaderViewModel("Transport", "Zarządzaj ofertą transportu.", new[]
     {
         new GamexBusinessPage.Pages.Admin.AdminHeaderAction("Dodaj transport", "/Admin/TransportEdit", "btn-gamex btn-primary-gamex"),
+        new GamexBusinessPage.Pages.Admin.AdminHeaderAction("Ustaw kolejność", "/Admin/Order", "btn-gamex btn-secondary-gamex", new Dictionary<string, string?> { ["catalog"] = "transport" }),
         new GamexBusinessPage.Pages.Admin.AdminHeaderAction("Wróć", "/Admin/Index", "btn-gamex btn-secondary-gamex")
     }))" />
 

@@ -8,6 +8,7 @@
     <partial name="_AdminHeader" model="@(new GamexBusinessPage.Pages.Admin.AdminHeaderViewModel("Maszyny", "Zarządzaj maszynami do wypożyczenia.", new[]
     {
         new GamexBusinessPage.Pages.Admin.AdminHeaderAction("Dodaj maszynę", "/Admin/MachineEdit", "btn-gamex btn-primary-gamex"),
+        new GamexBusinessPage.Pages.Admin.AdminHeaderAction("Ustaw kolejność", "/Admin/Order", "btn-gamex btn-secondary-gamex", new Dictionary<string, string?> { ["catalog"] = "machines" }),
         new GamexBusinessPage.Pages.Admin.AdminHeaderAction("Wróć", "/Admin/Index", "btn-gamex btn-secondary-gamex")
     }))" />
 

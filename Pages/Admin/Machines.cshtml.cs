@@ -63,7 +63,8 @@ public class MachinesModel : PageModel
     private void LoadData()
     {
         var machineData = _catalogService.LoadMachineData();
-        MachineCategoryKeys = machineData.Keys.OrderBy(key => key).ToList();
+        // File order, which is the order the public pages use - set on /admin/order.
+        MachineCategoryKeys = machineData.Keys.ToList();
 
         Machines = machineData.SelectMany(category => category.Value.Select(item => new MachineListItem
             {
@@ -74,8 +75,6 @@ public class MachinesModel : PageModel
                 Slug = item.Slug
             }))
             .Where(item => MatchesFilter(item.CategoryKey, item.DisplayName, MachineCategoryFilter, MachineSearch))
-            .OrderBy(item => item.CategoryKey)
-            .ThenBy(item => item.DisplayName)
             .ToList();
     }
 

@@ -63,7 +63,8 @@ public class TransportModel : PageModel
     private void LoadData()
     {
         var transportData = _catalogService.LoadTransportData();
-        TransportCategoryKeys = transportData.Keys.OrderBy(key => key).ToList();
+        // File order, which is the order the public pages use - set on /admin/order.
+        TransportCategoryKeys = transportData.Keys.ToList();
 
         Transports = transportData.SelectMany(category => category.Value.Select(item => new TransportListItem
             {
@@ -73,8 +74,6 @@ public class TransportModel : PageModel
             }))
             .Where(item => MatchesFilter(item.CategoryKey, item.Vehicle, TransportCategoryFilter, TransportSearch)
                 || MatchesFilter(item.CategoryKey, item.WeightLimit, TransportCategoryFilter, TransportSearch))
-            .OrderBy(item => item.CategoryKey)
-            .ThenBy(item => item.Vehicle)
             .ToList();
     }
 

@@ -113,3 +113,97 @@
     [data-drag-handle]:active {
         cursor: grabbing;
     }
+
+/* Category and item ordering (/admin/order) */
+.order-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.order-categories,
+.order-items {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.order-categories {
+    display: grid;
+    gap: 1rem;
+}
+
+.order-category {
+    border: 1px solid var(--line);
+    border-radius: var(--r-md);
+    background: var(--asphalt-800);
+    overflow: hidden;
+}
+
+.order-items {
+    padding: 0.35rem 0.75rem 0.75rem 2.75rem;
+}
+
+.order-row,
+.order-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.order-row--category {
+    padding: 0.75rem 1rem;
+    background: var(--asphalt-700);
+    border-bottom: 1px solid var(--line-soft);
+}
+
+.order-item {
+    padding: 0.45rem 0.5rem;
+    border-bottom: 1px solid var(--line-soft);
+}
+
+    .order-item:last-child {
+        border-bottom: 0;
+    }
+
+.order-label {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.order-moves {
+    display: flex;
+    gap: 0.35rem;
+    flex: 0 0 auto;
+}
+
+.order-handle {
+    flex: 0 0 auto;
+    cursor: grab;
+    color: var(--concrete-500);
+    padding: 0.25rem;
+    touch-action: none;
+}
+
+    .order-handle:active {
+        cursor: grabbing;
+    }
+
+.sortable-ghost {
+    opacity: 0.4;
+}
+
+.order-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+}
+
+.order-dirty {
+    margin-right: auto;
+    color: var(--hivis-400);
+    font-weight: 600;
+}
