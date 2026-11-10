@@ -783,14 +783,34 @@
     text-transform: uppercase;
 }
 
+/* Endless slider, built like the category tape: the track holds the list twice
+   and gxTicker moves it by exactly one copy. The edges fade out. */
+.partners-marquee {
+    --partner-gap: clamp(2rem, 4vw, 3.5rem);
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+    mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+}
+
+.partners-track {
+    display: flex;
+    width: max-content;
+    animation: gxTicker var(--marquee-duration, 30s) linear infinite;
+}
+
+.partners-marquee:hover .partners-track {
+    animation-play-state: paused;
+}
+
+/* The space after the last logo matches the gap between logos, so the join
+   between the two copies looks like any other gap. */
 .partners-logos {
     display: flex;
-    justify-content: center;
+    flex: 0 0 auto;
     align-items: center;
-    gap: clamp(1.5rem, 4vw, 3.5rem);
-    flex-wrap: wrap;
+    gap: var(--partner-gap);
     margin: 0;
-    padding: 0;
+    padding: 0 var(--partner-gap) 0 0;
     list-style: none;
 }
 

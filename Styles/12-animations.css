@@ -196,6 +196,7 @@
 
     .home-hero-bg,
     .home-ticker-track,
+    .partners-track,
     .home-hero-scroll {
         animation: none !important;
     }
@@ -227,6 +228,29 @@
 
         /* The duplicate only serves the seamless loop - without motion it is noise */
         .home-ticker-group[aria-hidden="true"] {
+            display: none;
+        }
+
+    /* The manufacturer slider does the same: one still, centred list without
+       the fade, the second copy or the repeats that pad a short list. */
+    .partners-marquee {
+        -webkit-mask-image: none;
+        mask-image: none;
+    }
+
+    .partners-track {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1.5rem var(--partner-gap);
+        width: auto;
+    }
+
+    .partners-logos {
+        display: contents;
+    }
+
+        .partners-logos[aria-hidden="true"],
+        .partner--repeat {
             display: none;
         }
 
