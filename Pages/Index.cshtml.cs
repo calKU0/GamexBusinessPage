@@ -33,6 +33,13 @@ namespace GamexBusinessPage.Pages
         /// <summary>The "renomowanych producentów" strip, in the order set in the admin panel.</summary>
         public IReadOnlyList<Manufacturer> Manufacturers { get; private set; } = Array.Empty<Manufacturer>();
 
+        /// <summary>
+        /// How many times one loop of the manufacturer slider repeats the list. A loop
+        /// needs about ten logos to be wider than the page, or a gap would show before
+        /// the next loop slides in, so a short list is repeated.
+        /// </summary>
+        public int ManufacturerRepeats => Manufacturers.Count == 0 ? 0 : (int)Math.Ceiling(10.0 / Manufacturers.Count);
+
         /// <summary>Single source of truth for the FAQ section - the same text goes into the HTML and into the structured data.</summary>
         public IReadOnlyList<(string Question, string Answer)> Faq { get; } = new List<(string, string)>
         {

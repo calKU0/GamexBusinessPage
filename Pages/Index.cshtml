@@ -500,12 +500,29 @@
         <div class="container">
             <h2 class="partners-title" id="partnerzy-title">Pracujemy na sprzęcie renomowanych producentów</h2>
 
-            <ul class="partners-logos reveal reveal-stagger">
-                @foreach (var manufacturer in Model.Manufacturers)
-                {
-                    <li class="partner"><partial name="_ManufacturerMark" model="manufacturer" /></li>
-                }
-            </ul>
+            @* An endless slider. The track holds the loop twice and moves by exactly one
+               copy, so it has no seam. Only the first pass of the first copy is read out;
+               the repeats are decoration, hidden from screen readers, and dropped when
+               motion is reduced (the strip then wraps as a still list). *@
+            <div class="partners-marquee reveal" style="--marquee-duration: @(Model.Manufacturers.Count * Model.ManufacturerRepeats * 3)s">
+                <div class="partners-track">
+                    @for (var copy = 0; copy < 2; copy++)
+                    {
+                        <ul class="partners-logos" aria-hidden="@(copy > 0 ? "true" : null)">
+                            @for (var pass = 0; pass < Model.ManufacturerRepeats; pass++)
+                            {
+                                var repeat = pass > 0;
+                                foreach (var manufacturer in Model.Manufacturers)
+                                {
+                                    <li class="partner@(repeat ? " partner--repeat" : "")" aria-hidden="@(repeat ? "true" : null)">
+                                        <partial name="_ManufacturerMark" model="manufacturer" />
+                                    </li>
+                                }
+                            }
+                        </ul>
+                    }
+                </div>
+            </div>
         </div>
     </section>
 }

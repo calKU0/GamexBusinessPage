@@ -34,8 +34,8 @@ public static class ManufacturerList
 
     /// <summary>
     /// The list in display order. Until the list is first saved in the admin
-    /// panel there is no file - Data/ is not deployed - so the makes the client
-    /// asked for are used, followed by the ones the strip showed before, with
+    /// panel there is no file - Data/ is not deployed - so the makes the strip
+    /// showed before are used, followed by the ones the client asked for, with
     /// the logos that ship with the site.
     /// </summary>
     public static List<Manufacturer> Load(string contentRootPath)
@@ -61,15 +61,15 @@ public static class ManufacturerList
 
     private static List<Manufacturer> CreateDefaults() =>
     [
-        new() { Name = "Vögele", Logo = "/images/producenci/Vogele.webp", LogoWidth = 600, LogoHeight = 125 },
-        new() { Name = "Wirtgen", Logo = "/images/producenci/Wirtgen.webp", LogoWidth = 600, LogoHeight = 108 },
-        new() { Name = "Atlas" },
-        new() { Name = "Volvo", Logo = "/images/producenci/Volvo.webp", LogoWidth = 600, LogoHeight = 83 },
-        new() { Name = "Liebherr", Logo = "/images/producenci/Liebherr.webp", LogoWidth = 600, LogoHeight = 81 },
         new() { Name = "Bobcat", Logo = "/images/producenci/Bobcat.webp", LogoWidth = 238, LogoHeight = 64 },
         new() { Name = "Caterpillar", Logo = "/images/producenci/Caterpillar.webp", LogoWidth = 240, LogoHeight = 145 },
         new() { Name = "JCB", Logo = "/images/producenci/JCB.webp", LogoWidth = 240, LogoHeight = 75 },
         new() { Name = "Komatsu", Logo = "/images/producenci/Komatsu.webp", LogoWidth = 240, LogoHeight = 47 },
-        new() { Name = "Manitou", Logo = "/images/producenci/Manitou.webp", LogoWidth = 240, LogoHeight = 37 }
+        new() { Name = "Manitou", Logo = "/images/producenci/Manitou.webp", LogoWidth = 240, LogoHeight = 37 },
+        new() { Name = "Vögele", Logo = "/images/producenci/Vogele.webp", LogoWidth = 600, LogoHeight = 125 },
+        new() { Name = "Wirtgen", Logo = "/images/producenci/Wirtgen.webp", LogoWidth = 600, LogoHeight = 108 },
+        new() { Name = "Atlas" },
+        new() { Name = "Volvo", Logo = "/images/producenci/Volvo.webp", LogoWidth = 600, LogoHeight = 83 },
+        new() { Name = "Liebherr", Logo = "/images/producenci/Liebherr.webp", LogoWidth = 600, LogoHeight = 81 }
     ];
 }
