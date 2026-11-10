@@ -49,7 +49,7 @@
     position: relative;
     flex: 0 0 auto;
     aspect-ratio: 4 / 3;
-    height: clamp(200px, 18vw, 290px);
+    height: clamp(180px, 15vw, 230px);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -83,6 +83,17 @@
     gap: 0.65rem;
     padding: var(--card-pad);
 }
+
+    /* The gap does the spacing. The browser's default top margin on p and h3
+       would add to it, doubling every space in the card. */
+    .machine-card-body p,
+    .machine-card-body h3,
+    .service-card-body p,
+    .service-card-body h3,
+    .transport-card-body p,
+    .transport-card-body h3 {
+        margin: 0;
+    }
 
 .machine-card-header {
     display: flex;
