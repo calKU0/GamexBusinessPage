@@ -79,7 +79,7 @@
     --section-y: clamp(4rem, 8vw, 7rem);
     --section-y-tight: clamp(2.5rem, 5vw, 4rem);
     --nav-h: 76px;
-    --card-pad: 1.6rem 1.5rem;
+    --card-pad: 1.25rem;
 
     /* --- typography --- */
     --font-display: "Barlow Condensed", "Arial Narrow", Impact, sans-serif;
