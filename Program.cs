@@ -25,6 +25,7 @@ builder.Services.AddOutputCache();
 builder.Services.AddSingleton<CatalogCache>();
 builder.Services.AddSingleton<InlineStylesheet>();
 builder.Services.AddSingleton<AdminCatalogService>();
+builder.Services.AddSingleton<SiteMarkdown>();
 builder.Services.AddScoped<ImageService>();
 builder.Services.Configure<SmtpSettings>(builder.Configuration.GetSection("Smtp"));
 builder.Services.Configure<ContactFormSettings>(builder.Configuration.GetSection("ContactForm"));
@@ -93,6 +94,9 @@ app.MapRazorPages()
    .WithStaticAssets();
 
 app.UseOutputCache();
+
+// /llms.txt and Markdown versions of the content pages, for AI agents.
+SiteMarkdown.MapEndpoints(app);
 
 app.MapGet("/sitemap.xml", async (CatalogCache catalogCache, IWebHostEnvironment environment, HttpContext context) =>
 {

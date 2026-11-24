@@ -56,6 +56,7 @@ namespace GamexBusinessPage.Pages.MachineRental
                 : selectedCategory.Machines;
 
             const string listUrl = "https://gamex-olkusz.pl/oferta/wypozyczenie-maszyn";
+            ViewData["MarkdownUrl"] = SiteMarkdown.MarkdownUrlFor(SiteMarkdown.MachinesPath);
 
             if (selectedCategory is not null)
             {

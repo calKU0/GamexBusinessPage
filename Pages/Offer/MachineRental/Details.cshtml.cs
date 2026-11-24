@@ -67,6 +67,7 @@ public class DetailsModel : PageModel
         ContactForm = new ContactFormViewModel(machines, Machine.Slug, true, null, ContactFormStatusMessage, ContactFormStatusSuccess);
 
         ViewData["Title"] = $"Wynajem {Machine.DisplayName} | GAMEX Olkusz";
+        ViewData["MarkdownUrl"] = SiteMarkdown.MarkdownUrlFor($"{SiteMarkdown.MachinesPath}/{Machine.Slug}");
         // When a machine carries its own description, its first sentence becomes the
         // meta description, so every card gets unique copy rather than a variant of
         // the same template.

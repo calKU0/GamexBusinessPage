@@ -45,6 +45,7 @@ public class TransportModel : PageModel
         FilteredCategories = selected is null ? Categories : new[] { selected };
 
         const string listUrl = "https://gamex-olkusz.pl/oferta/transport";
+        ViewData["MarkdownUrl"] = SiteMarkdown.MarkdownUrlFor(SiteMarkdown.TransportPath);
 
         if (selected is not null)
         {

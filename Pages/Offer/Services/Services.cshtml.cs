@@ -46,6 +46,7 @@ namespace GamexBusinessPage.Pages.Services
             FilteredCategories = selected is null ? Categories : new[] { selected };
 
             const string listUrl = "https://gamex-olkusz.pl/oferta/uslugi";
+            ViewData["MarkdownUrl"] = SiteMarkdown.MarkdownUrlFor(SiteMarkdown.ServicesPath);
 
             if (selected is not null)
             {
