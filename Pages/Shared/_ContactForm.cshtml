@@ -15,31 +15,41 @@
     </div>
 }
 
-<form method="post" asp-page="/Contact" asp-route-returnUrl="@returnUrl" class="kontakt-form" novalidate autocomplete="on">
+@* The tool* attributes describe this form to AI agents in the browser (WebMCP,
+   https://developer.chrome.com/docs/ai/webmcp/declarative-api). An agent can
+   fill the fields; sending still takes the user's own click, as the form has no
+   toolautosubmit. Browsers without WebMCP ignore the attributes. *@
+<form method="post" asp-page="/Contact" asp-route-returnUrl="@returnUrl" class="kontakt-form" novalidate autocomplete="on"
+      toolname="send_inquiry"
+      tooldescription="Wysyła zapytanie do firmy GAMEX Olkusz: wynajem maszyn budowlanych z operatorem, roboty drogowe i ziemne albo transport. Wiadomość trafia e-mailem do biura, a odpowiedź przychodzi na podany e-mail lub telefon. Wycena jest bezpłatna.">
     <div class="row g-3">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
         <div class="form-group col-md-6">
             <label for="contact-name" class="form-label">Imię i nazwisko / firma</label>
-            <input asp-for="Input.Name" type="text" id="contact-name" class="form-control" autocomplete="on"/>
+            <input asp-for="Input.Name" type="text" id="contact-name" class="form-control" autocomplete="on"
+                   toolparamdescription="Imię i nazwisko osoby pytającej albo nazwa firmy." />
             <span asp-validation-for="Input.Name" class="text-danger"></span>
         </div>
 
         <div class="form-group col-md-6">
             <label for="contact-email" class="form-label">Adres e-mail</label>
-            <input asp-for="Input.Email" type="email" id="contact-email" class="form-control" autocomplete="on" />
+            <input asp-for="Input.Email" type="email" id="contact-email" class="form-control" autocomplete="on"
+                   toolparamdescription="Adres e-mail, na który ma przyjść odpowiedź." />
             <span asp-validation-for="Input.Email" class="text-danger"></span>
         </div>
 
         <div class="form-group col-md-6">
             <label for="contact-phone" class="form-label">Telefon</label>
-            <input asp-for="Input.Phone" type="tel" id="contact-phone" class="form-control" autocomplete="on" />
+            <input asp-for="Input.Phone" type="tel" id="contact-phone" class="form-control" autocomplete="on"
+                   toolparamdescription="Numer telefonu do kontaktu w sprawie zapytania." />
             <span asp-validation-for="Input.Phone" class="text-danger"></span>
         </div>
 
         <div class="form-group col-md-6">
             <label for="contact-subject" class="form-label">Temat</label>
-            <input asp-for="Input.Subject" type="text" id="contact-subject" class="form-control" autocomplete="on" />
+            <input asp-for="Input.Subject" type="text" id="contact-subject" class="form-control" autocomplete="on"
+                   toolparamdescription="Krótki temat, np. „Wynajem koparki z operatorem” albo „Wycena remontu drogi”." />
             <span asp-validation-for="Input.Subject" class="text-danger"></span>
         </div>
 
@@ -89,13 +99,15 @@
 
         <div class="form-group col-12">
             <label for="contact-message" class="form-label">Wiadomość</label>
-            <textarea asp-for="Input.Message" id="contact-message" rows="5" class="form-control" autocomplete="on"></textarea>
+            <textarea asp-for="Input.Message" id="contact-message" rows="5" class="form-control" autocomplete="on"
+                      toolparamdescription="Treść zapytania: czego dotyczy (konkretna maszyna, usługa lub transport), miejsce i przewidywany termin prac, a przy wynajmie także szacowany czas pracy maszyny."></textarea>
             <span asp-validation-for="Input.Message" class="text-danger"></span>
         </div>
 
         <div class="d-none" aria-hidden="true">
             <label asp-for="Input.Website">Website</label>
-            <input asp-for="Input.Website" autocomplete="off" tabindex="-1" />
+            <input asp-for="Input.Website" autocomplete="off" tabindex="-1"
+                   toolparamdescription="Pole techniczne. Zostaw puste." />
         </div>
 
         <input asp-for="Input.FormToken" type="hidden" />
@@ -112,6 +124,29 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
+
+        /* The hidden Website field is a trap for spam bots: when it is filled,
+           the server reports success without sending anything. An AI agent
+           filling the form for a real person (WebMCP) could fill it too, so it
+           is cleared once an agent has filled the form, and again on an
+           agent-invoked submit. */
+        const form = document.querySelector(".kontakt-form");
+        const trap = document.getElementById("Input_Website");
+        if (form && trap) {
+            const clearTrap = function () { trap.value = ""; };
+
+            document.modelContext?.addEventListener("toolactivated", function (e) {
+                if (e.toolName === form.getAttribute("toolname")) {
+                    clearTrap();
+                }
+            });
+
+            form.addEventListener("submit", function (e) {
+                if (e.agentInvoked) {
+                    clearTrap();
+                }
+            });
+        }
 
         const select = document.getElementById("machineSelect");
         if (!select) return;

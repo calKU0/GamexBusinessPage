@@ -35,6 +35,14 @@
 
     <link rel="canonical" href="@canonical" />
 
+    @* For AI agents (https://llmstxt.org): the site overview, and this page in
+       Markdown where one exists. Both are served by SiteMarkdown. *@
+    <link rel="describedby" type="text/markdown" href="/llms.txt" />
+    @if (ViewData["MarkdownUrl"] is string markdownUrl)
+    {
+        <link rel="alternate" type="text/markdown" href="@markdownUrl" />
+    }
+
     <meta name="geo.region" content="PL-MA" />
     <meta name="geo.placename" content="Olkusz, Małopolska" />
     <meta name="geo.position" content="50.259966;19.603288" />
